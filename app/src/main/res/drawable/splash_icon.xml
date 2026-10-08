@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Loading-screen icon: the app tile with a soft blue glow, sized for Android's 288dp icon area -->
+<!--
+  Loading-screen icon: the app tile with a soft blue glow. Android stretches every layer to the full
+  icon area and shows only the middle two-thirds, so sizes are set with percentage insets.
+-->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <shape android:shape="rectangle">
-            <size android:width="288dp" android:height="288dp" />
-            <solid android:color="@android:color/transparent" />
-        </shape>
+        <inset android:inset="16.7%">
+            <shape android:shape="oval">
+                <gradient android:type="radial" android:gradientRadius="50%p"
+                    android:startColor="#5978AAFF" android:centerColor="#2678AAFF" android:endColor="#0078AAFF" />
+            </shape>
+        </inset>
     </item>
-    <item android:gravity="center" android:width="192dp" android:height="192dp">
-        <shape android:shape="oval">
-            <gradient android:type="radial" android:gradientRadius="96dp"
-                android:startColor="#5978AAFF" android:centerColor="#2678AAFF" android:endColor="#0078AAFF" />
-        </shape>
+    <item>
+        <inset android:drawable="@drawable/app_tile" android:inset="28.5%" />
     </item>
-    <item android:gravity="center" android:width="124dp" android:height="124dp" android:drawable="@drawable/app_tile" />
 </layer-list>

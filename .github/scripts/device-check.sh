@@ -16,6 +16,7 @@ cp -r app/build/outputs/androidTest-results screens/test-results 2>/dev/null || 
 adb uninstall "$PKG.test" || true
 adb uninstall "$PKG" || true
 adb install AWE-v*.apk
+adb logcat -c
 adb shell cmd alarm set-timezone America/Los_Angeles || true
 
 launch() {
@@ -53,6 +54,9 @@ adb exec-out screencap -p > screens/location-popup.png
 adb shell input keyevent KEYCODE_BACK
 sleep 1
 adb exec-out screencap -p > screens/after-back.png
+
+# Android's log for the app (crashes, web view errors), kept with the screenshots
+adb logcat -d -v time | grep -E "AndroidRuntime|FATAL|prostellis|chromium|ActivityTaskManager|ActivityManager: (Force|Process|Killing)|WebView|ANR" > screens/logcat.txt || true
 
 # The app must still be running (no crash)
 adb shell pidof "$PKG"
