@@ -37,9 +37,8 @@ sleep 14
 adb exec-out screencap -p > screens/app-light.png
 
 # Scroll to the bottom to show the footer line
-adb shell input swipe 540 1800 540 300 300
-adb shell input swipe 540 1800 540 300 300
-adb shell input swipe 540 1800 540 300 300
+read -r W H < <(adb shell wm size | grep -oE '[0-9]+x[0-9]+' | tail -1 | tr x ' ')
+for _ in 1 2 3 4 5 6; do adb shell input swipe $((W / 2)) $((H * 85 / 100)) $((W / 2)) $((H * 15 / 100)) 250; done
 sleep 1
 adb exec-out screencap -p > screens/app-light-footer.png
 
