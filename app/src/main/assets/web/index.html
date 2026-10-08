@@ -38,6 +38,7 @@
   --dusk-1: #c8a6cf; --dusk-2: #f8c99c; --dusk-sun: #ff9a52;
   --moon-ink: #fdf2c9; --moon-icon: #dfe2e7; --moon-icon-crater: #c3c8d0; --moon-dark: rgba(60, 76, 98, .38);
   --flash: #ffffff;
+  --rise-ink: #e8862a; --set-ink: #7b6fd1;
 
   /* scene palettes (light) */
   --clear-1: #b9dcff; --clear-2: #fff3d1; --clear-sun: #ffc23d; --clear-hill: #a9cfa4;
@@ -71,6 +72,7 @@
     --dusk-1: #2a2546; --dusk-2: #6d4433; --dusk-sun: #e8834a;
     --moon-ink: #f1e9c6; --moon-icon: #b8bcc3; --moon-icon-crater: #969ba4; --moon-dark: rgba(255, 255, 255, .09);
     --flash: #dfe8ff;
+    --rise-ink: #f5a356; --set-ink: #a99ff0;
 
     --clear-1: #1d3e66; --clear-2: #3a4a5c; --clear-sun: #e8a93a; --clear-hill: #24423a;
     --partly-1: #22384f; --partly-2: #2c3a4a; --partly-sun: #d9a23e; --partly-cloud: #4a5a6d; --partly-cloud-2: #3a4859; --partly-hill: #26403a;
@@ -297,6 +299,11 @@ button { cursor: pointer; }
 .facts .ic { font-size: 15px; color: var(--ink-3); }
 .facts .rain .ic { color: var(--rain-ink); }
 .facts .sun .ic { color: var(--sun-ink); }
+.arw { width: .8em; height: .8em; vertical-align: -.06em; margin-right: 1px; }
+.arw.up { fill: var(--rise-ink); }
+.arw.down { fill: var(--set-ink); }
+.sun-times { white-space: nowrap; }
+.sun-times .arw.down { margin-left: 6px; }
 .facts .moon-evt { color: var(--ink); font-weight: 600; }
 .facts .moon-evt .ic { font-size: 15px; }
 .ic.moon-new { opacity: .55; }
@@ -1044,7 +1051,9 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
   const UI = {
     drop: svg('<path d="M12 3.5c3 4 5.5 7 5.5 10a5.5 5.5 0 0 1-11 0c0-3 2.5-6 5.5-10z"/>'),
     wind: svg('<path d="M3 9h11a3 3 0 1 0-3-3"/><path d="M3 14h15a3 3 0 1 1-3 3"/><path d="M3 19h6"/>'),
-    sunrise: svg('<path d="M4 18h16"/><path d="M7.5 18a4.5 4.5 0 0 1 9 0"/><path d="M12 5v4"/><path d="M9.5 7.5L12 5l2.5 2.5"/><path d="M4.5 13.5l1.4.8M19.5 13.5l-1.4.8"/>'),
+    sunPath: svg('<path d="M3 18a9 9 0 0 1 18 0" style="stroke:var(--ink-3);stroke-dasharray:1.6 2.2"/><path d="M2 18h20" style="stroke:var(--ink-3)"/><circle cx="12" cy="9" r="3" style="fill:var(--sun-ink);stroke:var(--sun-ink)"/>'),
+    sunUp: '<svg class="arw up" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l7 9h-4.5v7h-5v-7H5z"/></svg>',
+    sunDown: '<svg class="arw down" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20l7-9h-4.5V4h-5v7H5z"/></svg>',
     snow: svg('<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/>'),
     pin: svg('<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>'),
     alert: svg('<path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/>'),
@@ -1853,12 +1862,17 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     }
     return `rgb(${TEMP_STOPS[TEMP_STOPS.length - 1][1]})`;
   }
-  // Where this day's low→high sits within the whole week's range
+  // Where this day's high→low sits within the whole week's range: hot on the left, cool on the right.
+  // The ends sit a little past the week's extremes, leaning toward 100° and 32°, so only those touch the edges.
+  const BAR_HOT = 100, BAR_COLD = 32, BAR_EDGE = .15;
   function rangeBar(d, wMin, wMax, cls = "") {
-    if (d.lo == null || d.hi == null || wMax <= wMin) return "";
-    const left = ((d.lo - wMin) / (wMax - wMin)) * 100, width = ((d.hi - d.lo) / (wMax - wMin)) * 100;
-    return `<div class="range ${cls}" role="img" aria-label="Temperature range ${round(d.lo)}° to ${round(d.hi)}° within this week's ${round(wMin)}° to ${round(wMax)}°">
-      <span style="left:${left.toFixed(1)}%;width:${width.toFixed(1)}%;background:linear-gradient(90deg, ${tempColor(d.lo)}, ${tempColor(d.hi)})"></span></div>`;
+    if (d.lo == null || d.hi == null) return "";
+    const hot = wMax >= BAR_HOT ? wMax : wMax + (BAR_HOT - wMax) * BAR_EDGE;
+    const cold = wMin <= BAR_COLD ? wMin : wMin - (wMin - BAR_COLD) * BAR_EDGE;
+    if (hot <= cold) return "";
+    const left = ((hot - d.hi) / (hot - cold)) * 100, width = ((d.hi - d.lo) / (hot - cold)) * 100;
+    return `<div class="range ${cls}" role="img" aria-label="Temperature range ${round(d.hi)}° to ${round(d.lo)}° within this week's ${round(wMax)}° to ${round(wMin)}°">
+      <span style="left:${left.toFixed(1)}%;width:${width.toFixed(1)}%;background:linear-gradient(90deg, ${tempColor(d.hi)}, ${tempColor(d.lo)})"></span></div>`;
   }
 
   function renderCards(days) {
@@ -1891,7 +1905,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
               <li class="rain">${UI.drop}<span><b>${d.pop == null ? "—" : d.pop + "%"}</b>${amt ? ` · ${amt}` : ""}</span></li>
               ${snow ? `<li>${UI.snow}<span>Snow <b>${snow}</b></span></li>` : ""}
               <li>${UI.wind}<span>${windText(d.wind, d.gust)}</span></li>
-              <li class="sun">${UI.sunrise}<span>${fmtClock(d.sunrise, true)} – ${fmtClock(d.sunset, true)}</span></li>
+              <li class="sun" aria-label="Sunrise ${fmtClock(d.sunrise, true)}, sunset ${fmtClock(d.sunset, true)}">${UI.sunPath}<span class="sun-times">${UI.sunUp}${fmtClock(d.sunrise, true)}${UI.sunDown}${fmtClock(d.sunset, true)}</span></li>
               ${evt ? `<li class="moon-evt">${moonEventIcon(evt)}<span>${moonEventLabel(evt)}</span></li>` : ""}
             </ul>
           </div>
@@ -2021,7 +2035,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
         <span class="d-name">${esc(name)}</span>
         ${day ? `<span class="d-sum num">${weatherIcon(day.cat)}${esc(day.label)} · ${deg(day.hi)} / ${deg(day.lo)}</span>
         ${rangeBar(day, wMin, wMax, "d-range")}
-        <span class="d-sun num">${UI.sunrise}${fmtClock(day.sunrise)} – ${fmtClock(day.sunset)}</span>` : ""}
+        <span class="d-sun num" aria-label="Sunrise ${fmtClock(day.sunrise)}, sunset ${fmtClock(day.sunset)}">${UI.sunPath}<span class="sun-times">${UI.sunUp}${fmtClock(day.sunrise)}${UI.sunDown}${fmtClock(day.sunset)}</span></span>` : ""}
       </div>`);
       for (let i = 0; i < h.time.length; i++) {
         const t = h.time[i];
