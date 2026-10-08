@@ -15,6 +15,8 @@
     <string name="settings_transparency_help">Slide to see the change in the preview above.</string>
     <string name="settings_solid">Solid</string>
     <string name="settings_see_through">See-through</string>
+    <string name="settings_show_current">Show current weather</string>
+    <string name="settings_show_current_help">Temperature and conditions at the top</string>
     <string name="settings_refresh">Refresh</string>
     <string name="settings_refresh_30">Every 30 minutes</string>
     <string name="settings_refresh_30_default">· default</string>

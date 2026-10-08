@@ -10,7 +10,7 @@ enum class Cat { CLEAR, PARTLY, CLOUDY, FOG, DRIZZLE, RAIN, SNOW, STORM;
 }
 
 /** One day column on the forecast widget. */
-data class Day(val ymd: String, val cat: Cat, val hi: Double?, val lo: Double?, val pop: Double?, val precip: Double?)
+data class Day(val ymd: String, val cat: Cat, val hi: Double?, val lo: Double?, val precip: Double?)
 
 /** How "day" the sky is right now: 0 = night … 1 = full day, and which twilight we're in. */
 data class Daylight(val d: Double, val rising: Boolean, val isDay: Boolean)
@@ -21,7 +21,6 @@ data class WidgetModel(
     val nowCat: Cat,
     val nowText: String,
     val temp: Int,
-    val feels: Int,
     val light: Daylight,
     val days: List<Day>,
     val fetchedAt: Long,
@@ -101,7 +100,6 @@ object WeatherLogic {
                 cat = dominantCat(f, ymd),
                 hi = f.daily.max[i],
                 lo = overnightLow(f, ymd) ?: f.daily.min[i],
-                pop = f.daily.pop[i],
                 precip = f.daily.precip[i],
             )
         }
@@ -135,7 +133,6 @@ object WeatherLogic {
         nowCat = wmoCat(f.current.code),
         nowText = wmoText(f.current.code),
         temp = jsRound(f.current.temp),
-        feels = jsRound(f.current.feels),
         light = daylight(f, nowMs),
         days = buildDays(f, nowMs, dayCount),
         fetchedAt = fetchedAt,
@@ -144,9 +141,6 @@ object WeatherLogic {
     /** "0.08 in" when there's measurable precipitation, otherwise nothing (the web app's threshold). */
     fun precipText(v: Double?): String? =
         if (v == null || v < 0.005) null else String.format(Locale.US, "%.2f in", v)
-
-    /** Rain bar shows from a 10% chance up. */
-    fun showsRainBar(pop: Double?): Boolean = pop != null && pop >= 10
 
     /* ---------- Colors (ARGB ints, worked out without Android so they can be unit-tested) ---------- */
 

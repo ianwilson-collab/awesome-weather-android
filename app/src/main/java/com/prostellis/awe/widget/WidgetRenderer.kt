@@ -53,6 +53,7 @@ class WidgetRenderer(private val context: Context) {
         transparency: Int,
         theme: WidgetTheme,
         skyDark: Boolean,
+        showCurrent: Boolean = true,
     ): Rendered {
         val w = max(widthDp, 40f)
         val h = max(heightDp, 40f)
@@ -63,7 +64,7 @@ class WidgetRenderer(private val context: Context) {
         drawSky(canvas, w, h, model?.nowCat ?: Cat.PARTLY, model?.light ?: Daylight(1.0, false, true), skyDark, bgAlpha)
         return when (kind) {
             WidgetKind.SMALL -> drawSmall(canvas, bitmap, w, h, model, theme)
-            WidgetKind.FORECAST -> drawForecast(canvas, bitmap, w, h, model, theme, transparency)
+            WidgetKind.FORECAST -> drawForecast(canvas, bitmap, w, h, model, theme, transparency, showCurrent)
         }
     }
 
@@ -112,8 +113,12 @@ class WidgetRenderer(private val context: Context) {
     /* ---------------- Small (2×1) ---------------- */
 
     private fun drawSmall(canvas: Canvas, bitmap: Bitmap, w: Float, h: Float, m: WidgetModel?, t: WidgetTheme): Rendered {
-        val icon = 40f
-        val top = (h - 62f) / 2f
+        // Grows with the widget: designed at 150 × 80 dp
+        val s = min(h / 80f, w / 150f).coerceIn(.85f, 1.4f)
+        val icon = 42f * s
+        val tempSize = 28f * s; val condSize = 13f * s; val lineSize = 11f * s
+        val blockH = tempSize * .95f + condSize * 1.3f + lineSize * 1.3f
+        val top = (h - blockH) / 2f
         val refresh = ButtonSpot(w - 8f - 15f - 7f - 7.5f, 8f + 7.5f, 15f)
         val gear = ButtonSpot(w - 8f - 7.5f, 8f + 7.5f, 15f)
         if (m == null) {
@@ -125,92 +130,83 @@ class WidgetRenderer(private val context: Context) {
         // Shrinks a little for temperatures like 105° or -12° so it never runs into the refresh button
         val tempText = "${m.temp}°"
         val room = refresh.centerX - refresh.iconSize / 2 - 4f - x
-        val tempSize = min(26f, 26f * room / measure(tempText, 26f, 600))
-        text(canvas, tempText, x, top + 24f, tempSize, 600, t.ink, t)
+        val fittedTemp = min(tempSize, tempSize * room / measure(tempText, tempSize, 600))
+        text(canvas, tempText, x, top + tempSize * .9f, fittedTemp, 600, t.ink, t)
         val textW = w - x - 8f
-        text(canvas, fit(m.nowText, 12f, 500, textW), x, top + 43f, 12f, 500, t.ink2, t)
+        val condBase = top + tempSize * .95f + condSize * 1.15f
+        text(canvas, fit(m.nowText, condSize, 600, textW), x, condBase, condSize, 600, t.ink2, t)
         val line3 = "${m.place.name} · ${timeFormat.format(Date(m.fetchedAt))}"
-        text(canvas, fit(line3, 10f, 400, textW), x, top + 58f, 10f, 400, t.ink3, t)
+        text(canvas, fit(line3, lineSize, 400, textW), x, condBase + lineSize * 1.35f, lineSize, 400, t.ink3, t)
         return Rendered(bitmap, refresh, gear, t.ink2)
     }
 
-    /* ---------------- Forecast (4×2, 7 days when wide) ---------------- */
+    /* ---------------- Forecast (5 days, 7 when wide) ---------------- */
 
-    private fun drawForecast(canvas: Canvas, bitmap: Bitmap, w: Float, h: Float, m: WidgetModel?, t: WidgetTheme, transparency: Int): Rendered {
+    /** Text and icon sizes for the forecast widget at a given scale (1 = the approved mock-up). */
+    private class Sizes(s: Float) {
+        val bandH = 50f * s; val bandIcon = 36f * s; val bandTemp = 34f * s
+        val cond = 16.5f * s; val place = 13.5f * s; val updated = 11.5f
+        val name = 15f * s; val icon = 28f * s; val hi = 18f * s; val lo = 16f * s; val amt = 12f * s
+        val bar = 4.5f * s
+    }
+
+    private fun drawForecast(
+        canvas: Canvas, bitmap: Bitmap, w: Float, h: Float, m: WidgetModel?, t: WidgetTheme,
+        transparency: Int, showCurrent: Boolean,
+    ): Rendered {
         val sevenDay = isSevenDay(w)
-        val compact = sevenDay
-        val pad = 8f
-        val bandH = if (compact) 40f else 52f
-        val band = RectF(pad, pad, w - pad, pad + bandH)
-        val panelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        val dayCount = if (sevenDay) 7 else 5
+        val padX = 8f; val padTop = 8f; val padBottom = 5f; val gap = 6f
+        val colW = (w - 2 * padX - 2f * (dayCount - 1)) / dayCount
+        // Grows with the widget: designed at 204 dp tall with 53 dp columns
+        val z = Sizes(min(h / 204f, colW / 53f).coerceIn(.8f, 1.35f))
+        val bandH = if (showCurrent) z.bandH else 32f
+        val band = RectF(padX, padTop, w - padX, padTop + bandH)
+        val panel = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = t.panel
             alpha = (((t.panel ushr 24) and 0xFF) * (1f - transparency * .7f / 100f)).toInt()
         }
-        canvas.drawRoundRect(band, 15f, 15f, panelPaint)
+        canvas.drawRoundRect(band, 15f, 15f, panel)
 
-        // Right side of the band: [AWE] ↻ ⚙ above the city
-        val toolsY = if (compact) band.top + 3f + 9f else band.top + 5f + 9f
+        // Right side of the band: [AWE] ↻ ⚙, with the update time under them when current weather shows
+        val toolsY = if (showCurrent) band.top + (bandH - 37f) / 2f + 9f else band.centerY()
         val gear = ButtonSpot(band.right - 10f - 9f, toolsY, 18f)
         val refresh = ButtonSpot(gear.centerX - 9f - 11f - 9f, toolsY, 18f)
         if (m == null) {
-            text(canvas, "Loading forecast…", band.left + 12f, band.centerY() + 4f, 12.5f, 600, t.ink, t)
+            text(canvas, "Loading forecast…", band.left + 12f, band.centerY() + 5f, 14f, 600, t.ink, t)
             return Rendered(bitmap, refresh, gear, t.ink2)
         }
-        val city = m.place.shortLabel
-        val cityW = measure(city, 11.5f, 600)
-        val toolsLeft = refresh.centerX - 9f
-        val aweW = measure("AWE", 11f, 800) + .6f * 2
-        val awePossibleLeft = toolsLeft - 11f - aweW
+        val aweW = measure("AWE", 12f, 800, .6f)
+        val aweLeft = refresh.centerX - 9f - 11f - 2f - aweW
+        val aweBaseline = toolsY + 4.3f
 
-        // Left side: icon, temperature, then condition and details
-        val iconSize = if (compact) 30f else 38f
-        WeatherIcons.draw(canvas, m.nowCat, m.light.isDay, band.left + 7f, band.centerY() - iconSize / 2, iconSize, t.icons, t.textShadow)
-        val tempSize = if (compact) 26f else 30f
-        val tempText = "${m.temp}°"
-        val tempX = band.left + 7f + iconSize + 8f
-        text(canvas, tempText, tempX, band.centerY() + tempSize * .36f, tempSize, 600, t.ink, t, letterSpacingDp = -1f)
-        val midX = tempX + measure(tempText, tempSize, 600, -1f) + 8f
-        val updated = "Updated ${timeFormat.format(Date(m.fetchedAt))}"
-        val feels = "Feels like ${m.feels}°"
-        val subLine = if (compact) "$feels · $updated" else null
+        if (showCurrent) {
+            val updated = "Updated ${timeFormat.format(Date(m.fetchedAt))}"
+            val updatedW = measure(updated, z.updated, 400)
+            text(canvas, updated, band.right - 10f - updatedW, band.top + (bandH - 37f) / 2f + 18f + 6f + 10.5f, z.updated, 400, t.ink3, t)
 
-        // The AWE mark is always on the 7-day widget; on 5 days only when the details still fit beside it.
-        val rightWithAwe = min(awePossibleLeft, band.right - 10f - cityW) - 8f
-        val rightWithout = min(toolsLeft, band.right - 10f - cityW) - 8f
-        val widest = maxOf(
-            measure(m.nowText, 12.5f, 600),
-            if (compact) measure(subLine!!, 10.5f, 400) else max(measure(feels, 10.5f, 400), measure(updated, 9.5f, 400)),
-        )
-        val showAwe = sevenDay || widest <= rightWithAwe - midX
-        val midW = (if (showAwe) rightWithAwe else rightWithout) - midX
-        if (showAwe) drawAwe(canvas, awePossibleLeft, toolsY + 4f, 11f, t)
-
-        if (compact) {
-            text(canvas, fit(m.nowText, 12.5f, 600, midW), midX, band.centerY() - 2f, 12.5f, 600, t.ink, t)
-            drawFeelsUpdated(canvas, feels, updated, midX, band.centerY() + 12f, midW, t)
-            text(canvas, city, band.right - 10f - cityW, band.bottom - 6f, 11.5f, 600, t.ink, t)
+            WeatherIcons.draw(canvas, m.nowCat, m.light.isDay, band.left + 9f, band.centerY() - z.bandIcon / 2, z.bandIcon, t.icons, t.textShadow)
+            val tempText = "${m.temp}°"
+            val tempX = band.left + 9f + z.bandIcon + 9f
+            text(canvas, tempText, tempX, band.centerY() + z.bandTemp * .36f, z.bandTemp, 600, t.ink, t, letterSpacingDp = -1f)
+            val midX = tempX + measure(tempText, z.bandTemp, 600, -1f) + 9f
+            val place = m.place.shortLabel
+            val widest = max(measure(m.nowText, z.cond, 600), measure(place, z.place, 600))
+            // AWE always shows on the 7-day widget; on 5 days only when the details still fit beside it
+            val withAwe = min(aweLeft, band.right - 10f - updatedW) - 8f - midX
+            val without = min(refresh.centerX - 9f, band.right - 10f - updatedW) - 8f - midX
+            val showAwe = sevenDay || widest <= withAwe
+            if (showAwe) drawAwe(canvas, aweLeft, aweBaseline, 12f, t)
+            val midW = if (showAwe) withAwe else without
+            text(canvas, fit(m.nowText, z.cond, 600, midW), midX, band.centerY() - 2f, z.cond, 600, t.ink, t)
+            text(canvas, fit(place, z.place, 600, midW), midX, band.centerY() + z.place + 1f, z.place, 600, t.ink2, t)
         } else {
-            text(canvas, fit(m.nowText, 12.5f, 600, midW), midX, band.top + 17f, 12.5f, 600, t.ink, t)
-            text(canvas, fit(feels, 10.5f, 400, midW), midX, band.top + 31f, 10.5f, 400, t.ink2, t)
-            text(canvas, fit(updated, 9.5f, 400, midW), midX, band.top + 44f, 9.5f, 400, t.ink3, t)
-            text(canvas, city, band.right - 10f - cityW, band.bottom - 8f, 11.5f, 600, t.ink, t)
+            drawAwe(canvas, aweLeft, aweBaseline, 12f, t)
+            text(canvas, fit(m.place.shortLabel, 14.5f, 600, aweLeft - 8f - band.left - 12f), band.left + 12f, band.centerY() + 5f, 14.5f, 600, t.ink, t)
         }
 
-        drawDays(canvas, RectF(pad, band.bottom + 6f, w - pad, h - pad), m.days.take(if (sevenDay) 7 else 5), t)
+        drawDays(canvas, RectF(padX, band.bottom + gap, w - padX, h - padBottom), m.days.take(dayCount), z, t)
         return Rendered(bitmap, refresh, gear, t.ink2)
-    }
-
-    private fun drawFeelsUpdated(canvas: Canvas, feels: String, updated: String, x: Float, y: Float, maxW: Float, t: WidgetTheme) {
-        val dot = " · "
-        val feelsW = measure(feels, 10.5f, 400)
-        val dotW = measure(dot, 10.5f, 400)
-        if (feelsW + dotW + measure(updated, 10.5f, 400) <= maxW) {
-            text(canvas, feels, x, y, 10.5f, 400, t.ink2, t)
-            text(canvas, dot, x + feelsW, y, 10.5f, 400, t.ink3, t)
-            text(canvas, updated, x + feelsW + dotW, y, 10.5f, 400, t.ink3, t)
-        } else {
-            text(canvas, fit(feels, 10.5f, 400, maxW), x, y, 10.5f, 400, t.ink2, t)
-        }
     }
 
     private fun drawAwe(canvas: Canvas, x: Float, baseline: Float, size: Float, t: WidgetTheme) {
@@ -221,19 +217,22 @@ class WidgetRenderer(private val context: Context) {
         }
     }
 
-    private fun drawDays(canvas: Canvas, area: RectF, days: List<com.prostellis.awe.weather.Day>, t: WidgetTheme) {
+    private fun drawDays(canvas: Canvas, area: RectF, days: List<com.prostellis.awe.weather.Day>, z: Sizes, t: WidgetTheme) {
         if (days.isEmpty()) return
         val gap = 2f
         val colW = (area.width() - gap * (days.size - 1)) / days.size
-        val his = days.mapNotNull { it.hi }; val los = days.mapNotNull { it.lo }
-        val wMax = (his + los).maxOrNull() ?: 0.0
-        val wMin = (his + los).minOrNull() ?: 0.0
-        val nameH = 13f; val iconH = 21f; val amtH = 12f
-        val tempsTop = area.top + 3f + nameH + iconH
-        val tempsH = area.bottom - 2f - amtH - tempsTop
-        val lab = 13f
-        val travel = tempsH - 2 * lab - 2f
-        fun y(v: Double) = tempsTop + lab + 1f + (if (wMax > wMin) ((wMax - v) / (wMax - wMin)).toFloat() * travel else travel / 2)
+        val temps = days.flatMap { listOfNotNull(it.hi, it.lo) }
+        val wMax = temps.maxOrNull() ?: 0.0
+        val wMin = temps.minOrNull() ?: 0.0
+        val colTop = 4f; val amtBottom = 3f
+        val nameH = z.name * 1.15f; val iconH = z.icon + 1f; val amtH = z.amt * 1.1f
+        val tempsTop = area.top + colTop + nameH + iconH
+        val tempsH = area.bottom - amtBottom - amtH - 4f - tempsTop
+        val labHi = z.hi * 1.08f; val labLo = z.lo * 1.08f
+        val minBar = 12f
+        val travel = max(minBar, tempsH - labHi - labLo - 6f)
+        fun y(v: Double) = tempsTop + labHi + 3f +
+            (if (wMax > wMin) ((wMax - v) / (wMax - wMin)).toFloat() else .5f) * (travel - minBar)
 
         days.forEachIndexed { i, d ->
             val left = area.left + i * (colW + gap)
@@ -242,30 +241,28 @@ class WidgetRenderer(private val context: Context) {
             if (i == 0) canvas.drawRoundRect(col, 12f, 12f, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = t.today })
 
             val name = if (i == 0) "Today" else dayFormat.format(java.sql.Date.valueOf(d.ymd))
-            centered(canvas, name, cx, area.top + 3f + 10.5f, 11.5f, 600, if (i == 0) t.todayName else t.ink, t)
-            WeatherIcons.draw(canvas, d.cat, true, cx - 10f, area.top + 3f + nameH + 1f, 20f, t.icons, t.textShadow)
+            centered(canvas, name, cx, area.top + colTop + z.name * .95f, z.name, 600, if (i == 0) t.todayName else t.ink, t)
+            WeatherIcons.draw(canvas, d.cat, true, cx - z.icon / 2, area.top + colTop + nameH, z.icon, t.icons, t.textShadow)
 
-            if (WeatherLogic.showsRainBar(d.pop)) {
-                val bh = max(4f, (d.pop!! / 100.0).toFloat() * tempsH)
-                val r = RectF(col.left + 7f, tempsTop + tempsH - bh, col.right - 7f, tempsTop + tempsH)
-                val p = Paint(Paint.ANTI_ALIAS_FLAG)
-                val rgb = t.rainBlock and 0xFFFFFF
-                p.shader = LinearGradient(0f, r.top, 0f, r.bottom, (0x6B shl 24) or rgb, (0x29 shl 24) or rgb, Shader.TileMode.CLAMP)
-                canvas.drawPath(Path().apply {
-                    addRoundRect(r, floatArrayOf(4f, 4f, 4f, 4f, 2f, 2f, 2f, 2f), Path.Direction.CW)
-                }, p)
-            }
             if (d.hi != null && d.lo != null) {
-                val top = y(d.hi); val bottom = y(d.lo)
+                val top = y(d.hi)
+                val bottom = y(d.lo) + minBar
                 val bar = Paint(Paint.ANTI_ALIAS_FLAG)
-                bar.shader = LinearGradient(0f, top, 0f, max(bottom, top + 1f),
-                    WeatherLogic.tempColor(d.hi), WeatherLogic.tempColor(d.lo), Shader.TileMode.CLAMP)
-                canvas.drawRoundRect(RectF(cx - 2.5f, top, cx + 2.5f, max(bottom, top + 5f)), 3f, 3f, bar)
-                centered(canvas, "${WeatherLogic.jsRound(d.hi)}°", cx, top - 2.5f, 12f, 600, t.ink, t)
-                centered(canvas, "${WeatherLogic.jsRound(d.lo)}°", cx, max(bottom, top + 5f) + 10.5f, 12f, 500, t.ink2, t)
+                bar.shader = LinearGradient(0f, top, 0f, bottom, WeatherLogic.tempColor(d.hi), WeatherLogic.tempColor(d.lo), Shader.TileMode.CLAMP)
+                canvas.drawRoundRect(RectF(cx - z.bar / 2, top, cx + z.bar / 2, bottom), z.bar, z.bar, bar)
+                centered(canvas, "${WeatherLogic.jsRound(d.hi)}°", cx, top - 4f, z.hi, 700, t.ink, t)
+                centered(canvas, "${WeatherLogic.jsRound(d.lo)}°", cx, bottom + 2f + z.lo * .92f, z.lo, 500, t.ink2, t)
             }
-            WeatherLogic.precipText(d.precip)?.let {
-                centered(canvas, it, cx, area.bottom - 2f - 2.5f, 9.5f, 600, t.amount, t)
+
+            // Rain amount in a soft blue pill, pinned to the bottom of the column
+            WeatherLogic.precipText(d.precip)?.let { amount ->
+                val tw = measure(amount, z.amt, 600)
+                val pillH = z.amt * 1.3f
+                val pill = RectF(cx - tw / 2 - 4f, area.bottom - amtBottom - pillH, cx + tw / 2 + 4f, area.bottom - amtBottom)
+                canvas.drawRoundRect(pill, pillH / 2, pillH / 2, Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                    color = (0x2E shl 24) or (t.rainBlock and 0xFFFFFF)
+                })
+                centered(canvas, amount, cx, pill.centerY() + z.amt * .35f, z.amt, 600, t.amount, t)
             }
         }
     }

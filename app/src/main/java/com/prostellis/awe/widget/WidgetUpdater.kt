@@ -62,14 +62,14 @@ object WidgetUpdater {
     }
 
     /** Draws one widget from the saved forecast, with settings that may not be saved yet (for the settings preview). */
-    fun renderFor(context: Context, kind: WidgetKind, widthDp: Float, heightDp: Float, transparency: Int): Rendered {
+    fun renderFor(context: Context, kind: WidgetKind, widthDp: Float, heightDp: Float, transparency: Int, showCurrent: Boolean): Rendered {
         val store = Store(context)
         val saved = store.forecastForCurrentPlace()
         val now = System.currentTimeMillis()
         val model = saved?.let { WeatherLogic.model(store.place, it.forecast, it.fetchedAt, now, 7) }
         val dark = phoneIsDark(context)
         val theme = WidgetTheme.pick(dark, transparency, wallpaperWantsDarkText(context))
-        return WidgetRenderer(context).render(kind, model, widthDp, heightDp, transparency, theme, dark)
+        return WidgetRenderer(context).render(kind, model, widthDp, heightDp, transparency, theme, dark, showCurrent)
     }
 
     /** Redraws a widget. With [spinning], the refresh button shows the spinner instead. */
@@ -77,7 +77,7 @@ object WidgetUpdater {
         val kind = kindOf(context, id) ?: return
         val (w, h) = sizeDp(context, id, kind)
         val settings = Store(context).widgetSettings(id)
-        val r = renderFor(context, kind, w, h, settings.transparency)
+        val r = renderFor(context, kind, w, h, settings.transparency, settings.showCurrent)
 
         AppWidgetManager.getInstance(context).updateAppWidget(id, buildViews(context, id, r, spinning))
     }

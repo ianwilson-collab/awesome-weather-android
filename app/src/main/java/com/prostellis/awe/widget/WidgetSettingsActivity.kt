@@ -28,6 +28,7 @@ class WidgetSettingsActivity : Activity() {
     private lateinit var store: Store
     private var transparency = 0
     private var refresh = RefreshMode.EVERY_30
+    private var showCurrent = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class WidgetSettingsActivity : Activity() {
         val saved = store.widgetSettings(widgetId)
         transparency = saved.transparency
         refresh = saved.refresh
+        showCurrent = saved.showCurrent
 
         setContentView(R.layout.activity_widget_settings)
         fitSystemBars()
@@ -65,6 +67,14 @@ class WidgetSettingsActivity : Activity() {
             override fun onStartTrackingTouch(bar: SeekBar) = Unit
             override fun onStopTrackingTouch(bar: SeekBar) = Unit
         })
+
+        // The current-weather switch only applies to the forecast widget
+        findViewById<android.view.View>(R.id.show_current_card).visibility =
+            if (kind == WidgetKind.FORECAST) android.view.View.VISIBLE else android.view.View.GONE
+        findViewById<android.widget.Switch>(R.id.show_current).apply {
+            isChecked = showCurrent
+            setOnCheckedChangeListener { _, on -> showCurrent = on; drawPreview() }
+        }
 
         val group = findViewById<RadioGroup>(R.id.refresh_group)
         group.check(
@@ -113,7 +123,7 @@ class WidgetSettingsActivity : Activity() {
     private fun drawPreview() {
         val preview = findViewById<ImageView>(R.id.preview)
         val (w, h) = WidgetUpdater.sizeDp(this, widgetId, kind)
-        val r = WidgetUpdater.renderFor(this, kind, w, h, transparency)
+        val r = WidgetUpdater.renderFor(this, kind, w, h, transparency, showCurrent)
         val density = resources.displayMetrics.density
         // Real size when it fits; otherwise scaled down to the screen width.
         val container = findViewById<android.view.View>(R.id.preview_container)
@@ -141,7 +151,7 @@ class WidgetSettingsActivity : Activity() {
     }
 
     private fun save() {
-        store.saveWidgetSettings(widgetId, WidgetSettings(transparency, refresh))
+        store.saveWidgetSettings(widgetId, WidgetSettings(transparency, refresh, showCurrent))
         WidgetUpdater.update(this, widgetId)
         Refresh.schedule(this)
     }

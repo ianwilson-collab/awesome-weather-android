@@ -26,7 +26,6 @@ class WeatherLogicTest {
         assertEquals(71.2, forecast.current.temp, 0.0)
         assertEquals(2, forecast.current.code)
         assertEquals(-25200, forecast.utcOffsetSeconds)
-        assertNull(forecast.daily.pop.last())
     }
 
     @Test fun buildsSevenDaysWithOvernightLowsLikeTheWebApp() {
@@ -87,14 +86,11 @@ class WeatherLogicTest {
         assertEquals(0xFF97BD75.toInt(), WeatherLogic.tempColor(57.5))
     }
 
-    @Test fun rainTextAndBar() {
+    @Test fun rainAmountText() {
         assertNull(WeatherLogic.precipText(null))
         assertNull(WeatherLogic.precipText(0.004))
         assertEquals("0.08 in", WeatherLogic.precipText(0.08))
         assertEquals("1.25 in", WeatherLogic.precipText(1.25))
-        assertFalse(WeatherLogic.showsRainBar(5.0))
-        assertTrue(WeatherLogic.showsRainBar(10.0))
-        assertFalse(WeatherLogic.showsRainBar(null))
     }
 
     @Test fun roundingMatchesJavaScript() {

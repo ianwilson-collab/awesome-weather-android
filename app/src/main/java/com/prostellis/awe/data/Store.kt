@@ -12,9 +12,9 @@ enum class RefreshMode(val minutes: Int?) {
 }
 
 /** Settings for one widget on the home screen. */
-data class WidgetSettings(val transparency: Int, val refresh: RefreshMode) {
+data class WidgetSettings(val transparency: Int, val refresh: RefreshMode, val showCurrent: Boolean) {
     companion object {
-        val DEFAULT = WidgetSettings(transparency = 0, refresh = RefreshMode.EVERY_30)
+        val DEFAULT = WidgetSettings(transparency = 0, refresh = RefreshMode.EVERY_30, showCurrent = true)
     }
 }
 
@@ -63,10 +63,15 @@ class Store(context: Context) {
         transparency = prefs.getInt("w$id.transparency", WidgetSettings.DEFAULT.transparency),
         refresh = prefs.getString("w$id.refresh", null)
             ?.let { runCatching { RefreshMode.valueOf(it) }.getOrNull() } ?: WidgetSettings.DEFAULT.refresh,
+        showCurrent = prefs.getBoolean("w$id.showCurrent", WidgetSettings.DEFAULT.showCurrent),
     )
 
     fun saveWidgetSettings(id: Int, s: WidgetSettings) {
-        prefs.edit().putInt("w$id.transparency", s.transparency).putString("w$id.refresh", s.refresh.name).apply()
+        prefs.edit()
+            .putInt("w$id.transparency", s.transparency)
+            .putString("w$id.refresh", s.refresh.name)
+            .putBoolean("w$id.showCurrent", s.showCurrent)
+            .apply()
     }
 
     /** When this widget last showed newly downloaded data. */
@@ -77,7 +82,7 @@ class Store(context: Context) {
     }
 
     fun forgetWidget(id: Int) {
-        prefs.edit().remove("w$id.transparency").remove("w$id.refresh").remove("w$id.updated").apply()
+        prefs.edit().remove("w$id.transparency").remove("w$id.refresh").remove("w$id.showCurrent").remove("w$id.updated").apply()
     }
 
     private fun download(url: String): String {

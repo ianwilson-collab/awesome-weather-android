@@ -54,14 +54,13 @@ data class Place(
     }
 }
 
-data class Current(val time: String, val temp: Double, val feels: Double, val code: Int, val isDay: Boolean)
+data class Current(val time: String, val temp: Double, val code: Int, val isDay: Boolean)
 
 data class Daily(
     val time: List<String>,
     val code: List<Int?>,
     val max: List<Double?>,
     val min: List<Double?>,
-    val pop: List<Double?>,
     val precip: List<Double?>,
     val sunrise: List<String>,
     val sunset: List<String>,
@@ -80,9 +79,8 @@ data class Forecast(
         /** Request fields: a subset of what the web app asks for, plus 8 days so day 7 has its overnight low. */
         fun url(place: Place): String =
             "https://api.open-meteo.com/v1/forecast?latitude=${place.lat}&longitude=${place.lon}" +
-                "&current=temperature_2m,apparent_temperature,weather_code,is_day" +
-                "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max," +
-                "precipitation_sum,sunrise,sunset" +
+                "&current=temperature_2m,weather_code,is_day" +
+                "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,sunrise,sunset" +
                 "&hourly=temperature_2m,weather_code" +
                 "&temperature_unit=fahrenheit&precipitation_unit=inch&timezone=auto&forecast_days=8"
 
@@ -96,7 +94,6 @@ data class Forecast(
                 current = Current(
                     time = c.getString("time"),
                     temp = c.getDouble("temperature_2m"),
-                    feels = c.getDouble("apparent_temperature"),
                     code = c.getInt("weather_code"),
                     isDay = c.optInt("is_day", 1) == 1,
                 ),
@@ -105,7 +102,6 @@ data class Forecast(
                     code = d.getJSONArray("weather_code").ints(),
                     max = d.getJSONArray("temperature_2m_max").doubles(),
                     min = d.getJSONArray("temperature_2m_min").doubles(),
-                    pop = d.getJSONArray("precipitation_probability_max").doubles(),
                     precip = d.getJSONArray("precipitation_sum").doubles(),
                     sunrise = d.getJSONArray("sunrise").strings(),
                     sunset = d.getJSONArray("sunset").strings(),

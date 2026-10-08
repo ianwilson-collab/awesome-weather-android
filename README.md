@@ -4,8 +4,8 @@
 
 - **The app** is the web app's `index.html`, bundled unchanged inside the APK, so it opens instantly and works offline with the last saved forecast.
 - **Current weather widget (2×1):** temperature, conditions, place and update time.
-- **Forecast widget (4×2):** current conditions plus 5 days. Stretch it wider and it shows 7 days.
-- **Widget settings** (gear button on each widget): background transparency with a live preview, and refresh every 30 minutes, every 60 minutes, or only when you tap refresh.
+- **Forecast widget (4×2):** current conditions plus 5 days; 7 days when it's wide enough. Each day shows its icon, high and low with a temperature bar, and the rain amount. Text and icons grow to fill a larger widget.
+- **Widget settings** (gear button on each widget): background transparency with a live preview, show or hide the current weather (forecast widget), and refresh every 30 minutes, every 60 minutes, or only when you tap refresh.
 - **Location:** the widgets follow the place saved in the app.
 
 Forecasts come from [Open-Meteo](https://open-meteo.com) (free, no key). The app also uses the U.S. National Weather Service, as the web app does.

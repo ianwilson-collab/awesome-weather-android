@@ -63,6 +63,17 @@ class WidgetRenderTest {
         }
     }
 
+    /** Version 1.1 layout at the size of the widget on Ian's phone (full width, 204 dp tall) and at 4 cells on a 5-column screen. */
+    @Test fun drawsBothWidthsWithAndWithoutCurrentWeather() {
+        for (show in listOf(true, false)) {
+            val tag = if (show) "current-on" else "current-off"
+            save("v11-7day-$tag", renderer.render(WidgetKind.FORECAST, model(morning), 388f, 204f, 0, WidgetTheme.DARK, true, show), null)
+            save("v11-5day-$tag", renderer.render(WidgetKind.FORECAST, model(morning), 310f, 204f, 0, WidgetTheme.DARK, true, show), null)
+        }
+        save("v11-7day-light-tall", renderer.render(WidgetKind.FORECAST, model(morning), 388f, 240f, 0, WidgetTheme.LIGHT, false), null)
+        save("v11-small-tall", renderer.render(WidgetKind.SMALL, model(morning), 180f, 96f, 0, WidgetTheme.DARK, true), null)
+    }
+
     @Test fun drawsTransparencyOverAWallpaper() {
         for (t in listOf(0, 50, 80)) {
             val theme = WidgetTheme.pick(phoneDark = false, transparency = t, wallpaperSupportsDarkText = false)
@@ -73,7 +84,7 @@ class WidgetRenderTest {
 
     @Test fun drawsExtremeTemperaturesWithoutOverlap() {
         for ((name, temp) in listOf("hot" to 105, "cold" to -12)) {
-            val m = model(morning).copy(temp = temp, feels = temp)
+            val m = model(morning).copy(temp = temp)
             save("small-$name", renderer.render(WidgetKind.SMALL, m, 150f, 76f, 0, WidgetTheme.LIGHT, false), null)
             save("forecast-$name", renderer.render(WidgetKind.FORECAST, m, 310f, 184f, 0, WidgetTheme.LIGHT, false), null)
         }
