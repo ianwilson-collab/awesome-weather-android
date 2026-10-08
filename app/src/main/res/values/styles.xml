@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Awe.Card">
+    <style name="Awe.Card" parent="">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">12dp</item>
@@ -10,7 +10,7 @@
         <item name="android:paddingVertical">14dp</item>
     </style>
 
-    <style name="Awe.CardTitle">
+    <style name="Awe.CardTitle" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/dm_sans</item>
@@ -19,7 +19,7 @@
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="Awe.Help">
+    <style name="Awe.Help" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">2dp</item>
@@ -28,7 +28,7 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="Awe.Radio">
+    <style name="Awe.Radio" parent="">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:buttonTint">@color/accent</item>
