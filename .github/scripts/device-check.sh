@@ -16,7 +16,7 @@ cp -r app/build/outputs/androidTest-results screens/test-results 2>/dev/null || 
 adb uninstall "$PKG.test" || true
 adb uninstall "$PKG" || true
 adb install AWE-v*.apk
-adb shell setprop persist.sys.timezone America/Los_Angeles
+adb shell cmd alarm set-timezone America/Los_Angeles || true
 
 launch() {
   adb shell am force-stop "$PKG"
