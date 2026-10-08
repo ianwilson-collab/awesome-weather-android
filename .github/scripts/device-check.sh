@@ -4,10 +4,13 @@ set -euo pipefail
 
 PKG=com.prostellis.awe
 mkdir -p screens/widgets
+exec > >(tee -a screens/device-check.log) 2>&1
+trap 'echo "::error title=Device check::Stopped at line $LINENO: $BASH_COMMAND"' ERR
 
 # Widget drawings and the home-screen view check (debug build; left installed so the pictures can be pulled)
 bash .github/scripts/gradle.sh connectedDebugAndroidTest -Pandroid.injected.androidTest.leaveApksInstalledAfterRun=true
 adb pull "/sdcard/Android/data/$PKG/files/renders/." screens/widgets/
+cp -r app/build/outputs/androidTest-results screens/test-results 2>/dev/null || true
 
 # Swap in the signed release APK (different signature, so the debug build comes off first)
 adb uninstall "$PKG.test" || true

@@ -96,6 +96,18 @@ jobs:
           name: screenshots
           path: screens/
 
+      - name: Keep screenshots on the ci-screens branch for review
+        if: always()
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          [ -d screens ] || exit 0
+          cd screens
+          git init -q -b ci-screens
+          git add -A
+          git -c user.name="AWE build" -c user.email="actions@users.noreply.github.com" commit -qm "Screenshots for ${GITHUB_SHA::7}"
+          git push -fq "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}" ci-screens
+
   release:
     name: Publish the APK
     needs: [build, device-check]
