@@ -25,14 +25,14 @@ New versions install over the old one and keep your location and widgets.
 Every push to `main` runs [`.github/workflows/build.yml`](.github/workflows/build.yml):
 
 1. **Unit tests**, then a **signed APK** (named `AWE-v<version>.apk`).
-2. **On-device checks** on an Android 14 emulator: draws every widget variation, checks the home-screen views load, and screenshots the real app (light, dark, loading screen, location popup). The pictures are saved with the run as `screenshots`.
-3. Pushing a version tag (for example `v1.0`) also **publishes the APK** on the Releases page.
+2. **On-device checks** on an Android 14 emulator: draws every widget variation, checks the home-screen views load, and screenshots the real app (light, dark, loading screen, location popup). The pictures are saved with the run as `screenshots` and on the `ci-screens` branch.
+3. When `versionName` is new, the APK is also **published** on the Releases page (as `v<version>`).
 
 ## Updating the web app inside the APK
 
 1. Copy the new `index.html` from the web app over `app/src/main/assets/web/index.html`.
 2. Raise `versionCode` (by 1) and `versionName` in `app/build.gradle.kts`.
-3. Push, then tag the new version (for example `v1.1`).
+3. Push. Once the checks pass, the new version appears on the Releases page.
 
 ## Signing key
 

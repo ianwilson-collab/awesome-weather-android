@@ -1,11 +1,10 @@
 name: Build
 
 # Every push to main: unit tests, signed APK, on-device checks with screenshots.
-# Pushing a version tag (for example v1.0) also publishes the APK on the Releases page.
+# When versionName in app/build.gradle.kts is new, the APK is also published on the Releases page.
 on:
   push:
     branches: [main]
-    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
@@ -15,6 +14,9 @@ jobs:
   build:
     name: Tests and signed APK
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      publish: ${{ steps.version.outputs.publish }}
     steps:
       - uses: actions/checkout@v5
 
@@ -46,10 +48,19 @@ jobs:
           AWE_KEY_PASSWORD: ${{ secrets.AWE_KEY_PASSWORD }}
         run: bash .github/scripts/gradle.sh assembleRelease
 
-      - name: Name the APK
+      - name: Name the APK and check whether this version is new
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           version=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
           cp app/build/outputs/apk/release/app-release.apk "AWE-v$version.apk"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if gh release view "v$version" -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
@@ -111,7 +122,7 @@ jobs:
   release:
     name: Publish the APK
     needs: [build, device-check]
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: needs.build.outputs.publish == 'true' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
@@ -120,7 +131,9 @@ jobs:
 
       - uses: softprops/action-gh-release@v2
         with:
-          name: AWE ${{ github.ref_name }} · Awesome Weather for Android
+          tag_name: v${{ needs.build.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          name: AWE v${{ needs.build.outputs.version }} · Awesome Weather for Android
           files: AWE-v*.apk
           body: |
             **To install on your phone:** open this page in Chrome on your phone, tap the `.apk` file below, then tap **Open** and **Install**.
