@@ -24,8 +24,12 @@ launch() {
   adb shell am start -n "$PKG/.MainActivity" > /dev/null
 }
 
-# Loading screen (captured right after launch), then the app once the forecast has loaded
+# Warm-up: a freshly started emulator restarts Google Play services in its first minutes, which closes any app using it
 adb shell cmd uimode night no
+launch
+sleep 45
+
+# Loading screen (captured right after launch), then the app once the forecast has loaded
 launch
 sleep 0.4
 adb exec-out screencap -p > screens/loading-screen.png
