@@ -122,7 +122,11 @@ class WidgetRenderer(private val context: Context) {
         }
         WeatherIcons.draw(canvas, m.nowCat, m.light.isDay, 12f, (h - icon) / 2f, icon, t.icons, t.textShadow)
         val x = 12f + icon + 8f
-        text(canvas, "${m.temp}°", x, top + 24f, 26f, 600, t.ink, t)
+        // Shrinks a little for temperatures like 105° or -12° so it never runs into the refresh button
+        val tempText = "${m.temp}°"
+        val room = refresh.centerX - refresh.iconSize / 2 - 4f - x
+        val tempSize = min(26f, 26f * room / measure(tempText, 26f, 600))
+        text(canvas, tempText, x, top + 24f, tempSize, 600, t.ink, t)
         val textW = w - x - 8f
         text(canvas, fit(m.nowText, 12f, 500, textW), x, top + 43f, 12f, 500, t.ink2, t)
         val line3 = "${m.place.name} · ${timeFormat.format(Date(m.fetchedAt))}"

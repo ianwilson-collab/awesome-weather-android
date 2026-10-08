@@ -71,6 +71,14 @@ class WidgetRenderTest {
         }
     }
 
+    @Test fun drawsExtremeTemperaturesWithoutOverlap() {
+        for ((name, temp) in listOf("hot" to 105, "cold" to -12)) {
+            val m = model(morning).copy(temp = temp, feels = temp)
+            save("small-$name", renderer.render(WidgetKind.SMALL, m, 150f, 76f, 0, WidgetTheme.LIGHT, false), null)
+            save("forecast-$name", renderer.render(WidgetKind.FORECAST, m, 310f, 184f, 0, WidgetTheme.LIGHT, false), null)
+        }
+    }
+
     @Test fun drawsLoadingStateBeforeTheFirstDownload() {
         save("forecast-loading", renderer.render(WidgetKind.FORECAST, null, 310f, 184f, 0, WidgetTheme.LIGHT, false), null)
         save("small-loading", renderer.render(WidgetKind.SMALL, null, 150f, 76f, 0, WidgetTheme.LIGHT, false), null)
