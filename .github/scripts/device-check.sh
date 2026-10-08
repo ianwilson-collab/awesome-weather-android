@@ -6,7 +6,7 @@ PKG=com.prostellis.awe
 mkdir -p screens/widgets
 
 # Widget drawings and the home-screen view check (debug build; left installed so the pictures can be pulled)
-./gradlew --no-daemon connectedDebugAndroidTest -Pandroid.injected.androidTest.leaveApksInstalledAfterRun=true
+bash .github/scripts/gradle.sh connectedDebugAndroidTest -Pandroid.injected.androidTest.leaveApksInstalledAfterRun=true
 adb pull "/sdcard/Android/data/$PKG/files/renders/." screens/widgets/
 
 # Swap in the signed release APK (different signature, so the debug build comes off first)
