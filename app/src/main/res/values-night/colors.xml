@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The web app's dark theme -->
+    <color name="bg">#0E141B</color>
+    <color name="card">#161F29</color>
+    <color name="ink">#E8EEF4</color>
+    <color name="ink2">#A8B5C2</color>
+    <color name="ink3">#7C8996</color>
+    <color name="accent">#6EA1FF</color>
+    <color name="line">#14FFFFFF</color>
+
+    <!-- AWE colors: ProStellis logo green and blue, sun gold -->
+    <color name="awe_gold">#FFC24A</color>
+    <color name="awe_green">#95DABD</color>
+    <color name="awe_blue">#6CB4D5</color>
+</resources>

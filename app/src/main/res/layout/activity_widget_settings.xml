@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- No background on the root: the preview area shows the real wallpaper. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="12dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_back"
+            android:padding="11dp"
+            android:src="@drawable/ic_back"
+            android:tint="@color/ink" />
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="10dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/app_tile" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dm_sans"
+                android:fontVariationSettings="'wght' 700"
+                android:letterSpacing="0.3"
+                android:text="@string/wordmark_awesome"
+                android:textColor="@color/awe_gold"
+                android:textSize="8.5sp" />
+
+            <TextView
+                android:id="@+id/wordmark_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:fontFamily="@font/dm_sans"
+                android:fontVariationSettings="'wght' 700"
+                android:text="@string/wordmark_weather"
+                android:textColor="@color/awe_green"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dm_sans"
+                android:textColor="@color/ink3"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Live preview over the wallpaper -->
+    <FrameLayout
+        android:id="@+id/preview_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="14dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/dm_sans"
+            android:fontVariationSettings="'wght' 600"
+            android:letterSpacing="0.05"
+            android:shadowColor="#80000000"
+            android:shadowDy="1"
+            android:shadowRadius="3"
+            android:text="@string/settings_preview"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp">
+
+            <ImageView
+                android:id="@+id/preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/preview_refresh"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="top|start"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_refresh" />
+
+            <ImageView
+                android:id="@+id/preview_gear"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="top|start"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_gear" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/bg"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="14dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="20dp">
+
+            <LinearLayout style="@style/Awe.Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Awe.CardTitle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/settings_transparency" />
+
+                    <TextView
+                        android:id="@+id/transparency_value"
+                        style="@style/Awe.CardTitle"
+                        android:textColor="@color/accent" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Awe.Help"
+                    android:text="@string/settings_transparency_help" />
+
+                <SeekBar
+                    android:id="@+id/transparency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:progressTint="@color/accent"
+                    android:thumbTint="@color/accent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="4dp">
+
+                    <TextView
+                        style="@style/Awe.Help"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/settings_solid" />
+
+                    <TextView
+                        style="@style/Awe.Help"
+                        android:text="@string/settings_see_through" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout style="@style/Awe.Card">
+
+                <TextView
+                    style="@style/Awe.CardTitle"
+                    android:text="@string/settings_refresh" />
+
+                <RadioGroup
+                    android:id="@+id/refresh_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp">
+
+                    <RadioButton
+                        android:id="@+id/refresh_30"
+                        style="@style/Awe.Radio"
+                        android:text="@string/settings_refresh_30" />
+
+                    <RadioButton
+                        android:id="@+id/refresh_60"
+                        style="@style/Awe.Radio"
+                        android:text="@string/settings_refresh_60" />
+
+                    <RadioButton
+                        android:id="@+id/refresh_manual"
+                        style="@style/Awe.Radio"
+                        android:text="@string/settings_refresh_manual" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/location_row"
+                style="@style/Awe.Card"
+                android:background="@drawable/card_clickable"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Awe.CardTitle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/settings_location" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/location_value"
+                        style="@style/Awe.CardTitle" />
+
+                    <TextView
+                        style="@style/Awe.Help"
+                        android:layout_marginTop="0dp"
+                        android:text="@string/settings_location_hint" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="6dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_chevron"
+                    android:tint="@color/ink3" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/done"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/button_done"
+                android:fontFamily="@font/dm_sans"
+                android:fontVariationSettings="'wght' 700"
+                android:gravity="center"
+                android:text="@string/settings_done"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

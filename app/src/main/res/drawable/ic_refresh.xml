@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Same refresh symbol as the mock-ups -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
+    <path android:pathData="M20,11a8,8 0,0 0,-14.6 -4.5L4,8M4,3.5V8h4.5M4,13a8,8 0,0 0,14.6 4.5L20,16M20,20.5V16h-4.5"
+        android:strokeColor="#FFFFFFFF" android:strokeWidth="2" android:strokeLineCap="round" android:strokeLineJoin="round" />
+</vector>

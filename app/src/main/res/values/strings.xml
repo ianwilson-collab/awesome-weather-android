@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_label">AWE Weather</string>
+    <string name="widget_small_label">Current weather</string>
+    <string name="widget_small_description">Current temperature and conditions</string>
+    <string name="widget_forecast_label">Forecast</string>
+    <string name="widget_forecast_description">Now plus 5 days. Stretch it wider for 7 days.</string>
+
+    <string name="wordmark_awesome">AWESOME</string>
+    <string name="wordmark_weather">Weather</string>
+    <string name="settings_title_small">Current weather widget settings</string>
+    <string name="settings_title_forecast">Forecast widget settings</string>
+    <string name="settings_preview">LIVE PREVIEW</string>
+    <string name="settings_transparency">Background transparency</string>
+    <string name="settings_transparency_help">Slide to see the change in the preview above.</string>
+    <string name="settings_solid">Solid</string>
+    <string name="settings_see_through">See-through</string>
+    <string name="settings_refresh">Refresh</string>
+    <string name="settings_refresh_30">Every 30 minutes</string>
+    <string name="settings_refresh_30_default">· default</string>
+    <string name="settings_refresh_60">Every 60 minutes</string>
+    <string name="settings_refresh_manual">Only when I tap refresh</string>
+    <string name="settings_location">Location</string>
+    <string name="settings_location_hint">from the app · tap to change</string>
+    <string name="settings_done">Done</string>
+    <string name="percent">%1$d%%</string>
+    <string name="action_back">Back</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_settings">Widget settings</string>
+</resources>

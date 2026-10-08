@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The web app's light theme -->
+    <color name="bg">#EEF2F6</color>
+    <color name="card">#FFFFFF</color>
+    <color name="ink">#15202B</color>
+    <color name="ink2">#4A5A6A</color>
+    <color name="ink3">#75828F</color>
+    <color name="accent">#2F6FDB</color>
+    <color name="line">#1414202B</color>
+
+    <!-- AWE colors: deeper versions on light backgrounds so they stay readable -->
+    <color name="awe_gold">#C98A06</color>
+    <color name="awe_green">#2F9E78</color>
+    <color name="awe_blue">#2B7FB0</color>
+
+    <!-- Loading screen: the web app's night sky -->
+    <color name="splash_bg">#0F1D33</color>
+</resources>
