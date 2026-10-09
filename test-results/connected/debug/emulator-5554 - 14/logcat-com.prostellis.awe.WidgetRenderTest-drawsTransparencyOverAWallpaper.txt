@@ -1,0 +1,842 @@
+10-09 00:39:30.901  5014  5049 I TestRunner: started: drawsTransparencyOverAWallpaper(com.prostellis.awe.WidgetRenderTest)
+10-09 00:39:30.916  1459  1459 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
+10-09 00:39:30.918  4547  4658 I RcsClientLib: Disconnecting RcsEngineLifecycleService
+10-09 00:39:30.922   520   550 I AppBindingService: Stopping: com.google.android.apps.messaging/com.google.android.ims.binding.SystemBindingService u0
+10-09 00:39:30.927  4733  4733 I BugleRcsEngine: [2] SystemBindingService.onCreate: SystemBindingService onCreate
+10-09 00:39:30.929   520  1401 D ConnectivityService: requestNetwork for uid/pid:10130/4733 activeRequest: null callbackRequest: 125 [NetworkRequest [ REQUEST id=126, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+10-09 00:39:30.937   520   757 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=126, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:30.938   520   757 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=126, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:30.938   520   757 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=126, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:30.938   520   757 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=126, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:30.939   520   764 D ConnectivityService: NetReassign [126 : null → 100] [c 0] [a 6] [i 2]
+10-09 00:39:30.939  4733  4775 I BugleRcsEngine: [65] bptx.run: SystemBindingService: Starting JibeService
+10-09 00:39:30.941  1621  1621 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.apps.messaging.
+10-09 00:39:30.947  4733  4775 I BugleRcsEngine: [65] bsgz.b: EngineBroadcaster: Broadcasting provisioning intent rcs.intent.action.rcsSystemBinding to Bugle with extras redacted-pii:[null] from source SYSTEM_BINDING_SERVICE
+10-09 00:39:30.950  4547  4638 I BugleRcsProvisioning: RcsProvisioningTrigger: Schedule provisioning on system binding.
+10-09 00:39:30.951  4547  4638 I BugleRcsProvisioning: scheduleProvisioning using legacy code path
+10-09 00:39:30.951  4547  4638 W BugleRcsEngine: [46] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:30.952  4547  4638 I BugleRcsProvisioning: RcsProvisioningTrigger: DR is active, initializing DR provisioning. DUAL_REG
+10-09 00:39:30.952  4547  4645 W BugleRcsEngine: [53] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:30.953  4547  4658 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of com.google.android.apps.messaging.rcsprovisioning.RcsProvisioningBroadcastReceiver@4846f6a
+10-09 00:39:30.955  4547  4645 I BugleRcsEngine: [53] zzm.run: Skipping provisioning scheduling since RCS is disabled
+10-09 00:39:30.958  1621  3615 I AiAiEcho: AppIndexer Package:[com.google.android.apps.messaging] UserProfile:[0] Enabled:[true].
+10-09 00:39:30.958  1621  3615 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.apps.messaging], userId:[0], reason:[package is updated.].
+10-09 00:39:30.967  1404  1404 I ProximityAuth: [PhoneHubService] Destroying PhoneHubChimeraService.
+10-09 00:39:30.967  1404  1404 W ProximityAuth: [PhoneHubNotificationProcessor] shutdown(): context is null.
+10-09 00:39:30.968  1404  1404 I ProximityAuth: [PhoneHubService] All devices have disconnected. Performing cleanup...
+10-09 00:39:30.973  1404  1404 W ChimeraUtils: Module com.google.android.gms.auth_proximity missing resource null(0)
+10-09 00:39:31.013  4733  4775 W BugleRcsEngine: [65] bpxc.w: Unable to send diagnostic log
+10-09 00:39:31.021  1404  1493 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:31.022  1052  1352 D ImsResolver: maybeAddedImsService, packageName: com.google.android.gms
+10-09 00:39:31.036  4547  4645 I Bugle   : BugleStartup: Initializing RCS availability...
+10-09 00:39:31.036  4547  4645 I Bugle   : RcsAvailabilityUtilForProvisioningEngineV2: updateAvailabilityAsync, hint: NO_HINT
+10-09 00:39:31.037  4547  4645 I BugleRcsProvisioning: RcsAvailabilityUpdaterLocal: updateAvailabilityAsync: scheduling updateRcsAvailability call, hint: NO_HINT, enableWelcomePopupWithoutGoogleTos: false, reshowSuccessPopup: false
+10-09 00:39:31.037  4547  4645 I Bugle   : BugleStartup: Done with RCS availability.
+10-09 00:39:31.037  4547  4645 I Bugle   : BugleStartup: Done initializing with enabled individual init failures.
+10-09 00:39:31.042  4547  5104 I GnpSdk  : GrowthKit is disabled by Phenotype flag.
+10-09 00:39:31.045  4547  4635 I GnpSdk  : GrowthKit is disabled by Phenotype flag.
+10-09 00:39:31.049  1519  1853 I SP      : Sync for emoji succeeded in 3913 ms: {added: [60932fe37d5f6d7a3e60488d8a1755c4], metadata: false
+10-09 00:39:31.049  4547  4638 W BugleRcsEngine: [46] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:31.049  4547  4638 I BugleRcsProvisioning: RcsAvailabilityUpdaterLocal: RcsAvailability configuration availability and enabled status: simId: redacted-pii:sim_id[chars:20,last3:897], SipConnectionType: DUAL_REG, isConfigurationAvailableAndEnabled: false
+10-09 00:39:31.049  4547  4638 I BugleRcsProvisioning: RcsAvailabilityUpdaterLocal: updateRcsAvailability, currentAvailability: 2, newAvailability: 2, hint: NO_HINT
+10-09 00:39:31.050  4547  5104 I BugleRcsProvisioning: RcsProvisioningTrigger: onRcsAvailabilityUpdate : availability is updated to RCS is disabled for this carrier by Google, lastAvailability is RCS is disabled for this carrier by Google, simId hash = -6270669204025076707, simId = redacted-pii:sim_id[chars:20,last3:897], isPev3Enabled = true
+10-09 00:39:31.051  4547  4645 I BugleJobs: Starts to observe table change.
+10-09 00:39:31.058  1519  1853 I SP      : GC for 'emoji' (10) with ttl of 0 ms took 0 ms (0/0/0)
+10-09 00:39:31.060  4547  4635 I BugleJobs: Icing index repair service is not scheduled. [CONTEXT class_name="IcingMonitoringUtils" ]
+10-09 00:39:31.061  4547  4634 D CompatibilityChangeReporter: Compat change id reported: 147600208; UID 10130; state: ENABLED
+10-09 00:39:31.065  4733  4808 I BugleRcsEngine: [75] brnl.h: RCS Configuration storage in Bugle is disabled by p/h flag, using ProvisioningEngineStateCacheUtil.getProvisioningConfigurationForGivenSimIfExist()
+10-09 00:39:31.066  1519  4169 I EmojiSuperpacksManager: EmojiSuperpacksManager.processPackSet():498 processPackSet() : isBundled = false
+10-09 00:39:31.067  1519  1857 I EmojiShortcutsLoader: EmojiShortcutsLoader.call():63 0 emoji shortcut maps loaded.
+10-09 00:39:31.067  1519  1857 I EmojiShortcutsLoader: EmojiShortcutsLoader.call():72 Finished loading emoji shortcuts
+10-09 00:39:31.069  1404  4993 W ProximityAuth: [GetSyncedDevices] Attestation: No devices out of 0 passed verification.
+10-09 00:39:31.155   520  1858 W system_server: Long monitor contention with owner binder:520_7 (901) at android.os.storage.StorageVolume[] com.android.server.StorageManagerService.getVolumeList(int, java.lang.String, int)(StorageManagerService.java:3832) waiters=0 in boolean com.android.server.StorageManagerService.isUserKeyUnlocked(int) for 101ms
+10-09 00:39:31.216  4547  4644 I Forking : Starting analysis.
+10-09 00:39:31.217  4547  4644 I Misthreading: Starting analysis.
+10-09 00:39:31.237  4733  4761 I BugleRcsEngine: [52] ProvisioningEventReceiver.d: Received Provisioning Event: [Bugle information (100)]
+10-09 00:39:31.238  4733  4761 I BugleRcsEngine: [52] ProvisioningEventReceiver.d: JibeService is running, passing event to provisioning engine.
+10-09 00:39:31.254  4547  4645 W BugleAction: Null config in BugleSharedPrefs
+10-09 00:39:31.254  4547  4645 W BugleAction: Failed to get msisdn from Bugle
+10-09 00:39:31.255  4547  4645 W BugleAction: Failed to get msisdn from RcsProfileService
+10-09 00:39:31.259  4547  4645 W BugleAction: cksi: Jibe SDK Service not available. Is the Jibe SDK service running? Did you call connect() and wait for the notification before calling an API function?
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at cksa.b(PG:2)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at com.google.android.rcs.client.profile.RcsProfileService.g(PG:1)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at com.google.android.rcs.client.profile.RcsProfileService.getMsisdn(PG:3)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at awsw.aj(PG:17)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at awsw.u(PG:1)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at aule.g(PG:1)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at aule.d(PG:1)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at aops.e(PG:2)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at aopo.run(PG:4)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at cnpl.run(PG:1)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at ctfw.a(PG:1)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at ctet.run(PG:4)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at ctfx.run(PG:1)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at bxfd.run(PG:1)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at bxef.run(PG:2)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:31.259  4547  4645 W BugleAction: 	at bxfj.run(PG:5)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: Bugle: SubscriptionMetadataUtils get: unexpected subId = -2, replacing with -1
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: cpwb: FULL
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at bdsy.h(PG:6)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at bdvp.a(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at bgit.<init>(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at bgiu.a(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at awsw.ai(PG:3)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at awsw.aj(PG:25)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at awsw.u(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at aule.g(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at aule.d(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at aops.e(PG:2)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at aopo.run(PG:4)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at cnpl.run(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at ctfw.a(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at ctet.run(PG:4)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at ctfx.run(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at bxfd.run(PG:1)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at bxef.run(PG:2)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:31.262  4547  4645 W SubscriptionMetadataUti: 	at bxfj.run(PG:5)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: Bugle: SubscriptionMetadataUtils get: unexpected subId = -2, replacing with -1
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: cpwb: FULL
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at bdsy.h(PG:6)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at bgit.<init>(PG:2)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at bgiu.a(PG:1)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at awsw.ai(PG:3)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at awsw.aj(PG:25)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at awsw.u(PG:1)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at aule.g(PG:1)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at aule.d(PG:1)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at aops.e(PG:2)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at aopo.run(PG:4)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at cnpl.run(PG:1)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at ctfw.a(PG:1)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at ctet.run(PG:4)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at ctfx.run(PG:1)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at bxfd.run(PG:1)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at bxef.run(PG:2)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:31.263  4547  4645 W SubscriptionMetadataUti: 	at bxfj.run(PG:5)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: Bugle: SubscriptionMetadataUtils get: unexpected subId = -2, replacing with -1
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: cpwb: FULL
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at bdsy.h(PG:6)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at awsw.ai(PG:18)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at awsw.aj(PG:25)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at awsw.u(PG:1)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at aule.g(PG:1)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at aule.d(PG:1)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at aops.e(PG:2)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at aopo.run(PG:4)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at cnpl.run(PG:1)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at ctfw.a(PG:1)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at ctet.run(PG:4)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at ctfx.run(PG:1)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at bxfd.run(PG:1)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at bxef.run(PG:2)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:31.265  4547  4645 W SubscriptionMetadataUti: 	at bxfj.run(PG:5)
+10-09 00:39:31.266  4547  4645 I Bugle   : SubscriptionUtilsAsOfLMR1: getActiveSubscriptionInfo(): empty sub info for subscription{id:-1}
+10-09 00:39:31.266  4547  4645 I Bugle   : SubscriptionUtilsAsOfLMR1: getActiveSubscriptionInfo(): empty sub info for subscription{id:-1}
+10-09 00:39:31.266  4547  4645 W Bugle   : SubscriptionUtilsAsOfLMR1: getSelfRawNumber: subInfo is null for subscription{id:-1}
+10-09 00:39:31.268  4547  4645 W BugleAction: No default number, returning empty msisdn
+10-09 00:39:31.274  4547  4645 W BugleEtouffee: E2eeStartupTask: Skip prekey checking because MSISDN is empty.
+10-09 00:39:31.283  4547  4640 I FirebaseApp: Device unlocked: initializing all Firebase APIs for app [DEFAULT]
+10-09 00:39:31.293  1621  1621 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.gms.
+10-09 00:39:31.294  4547  5104 I BugleNetwork: FirebaseRegistrationStartupTask: Enabling Firebase component
+10-09 00:39:31.300  1621  2842 I AiAiEcho: AppIndexer Package:[com.google.android.gms] UserProfile:[0] Enabled:[true].
+10-09 00:39:31.300  1621  2842 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.gms], userId:[0], reason:[package is updated.].
+10-09 00:39:31.305  4733  4740 I s.messaging:rcs: Background concurrent copying GC freed 70838(3681KB) AllocSpace objects, 19(740KB) LOS objects, 49% free, 3307KB/6615KB, paused 43us,10us total 361.075ms
+10-09 00:39:31.311  2228  5081 D DownloadManager: [12] Finished with status SUCCESS
+10-09 00:39:31.339  1459  4404 W Icing   : Failed to get Lockbox signed-in status: java.util.concurrent.TimeoutException: Timed out waiting for Task
+10-09 00:39:31.339  1459  4404 W Icing   : getSignedInTimestampMs: Falling back to default value
+10-09 00:39:31.339  1459  4404 W Icing   : No valid account for uploading user actions
+10-09 00:39:31.357  4547  4658 I BugleWearable: Wear Companion app is not installed on phone. Skipping sync to wear devices. [CONTEXT class_name="SyncDataToWearableAppHandler" ]
+10-09 00:39:31.375  1404  1404 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.instantapps.START pkg=com.google.android.gms }
+10-09 00:39:31.385  4547  4645 I BugleRcsProvisioning: RcsProvisioningTrigger: Schedule provisioning on app startup
+10-09 00:39:31.385  4547  4645 I BugleRcsProvisioning: scheduleProvisioning using legacy code path
+10-09 00:39:31.386  4547  4645 W BugleRcsEngine: [53] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:31.386  4547  4645 I BugleRcsProvisioning: RcsProvisioningTrigger: DR is active, initializing DR provisioning. DUAL_REG
+10-09 00:39:31.388  4547  5101 W BugleRcsEngine: [78] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:31.389  4547  5103 I BugleNetwork: Startup: registering tachyon.
+10-09 00:39:31.390  4547  5101 I BugleRcsEngine: [78] zzm.run: Skipping provisioning scheduling since RCS is disabled
+10-09 00:39:31.399  4547  5103 I BugleNetwork: Startup: registering tachyon for phone.
+10-09 00:39:31.399  4547  5103 I BugleNetwork: Profile service is not connected at startup task.
+10-09 00:39:31.406  4547  5103 I BugleNetwork: RegistrationProvider: Getting Tachyon registration
+10-09 00:39:31.433  1459  1459 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.constellation.service.START pkg=com.google.android.gms }
+10-09 00:39:31.433  1459  1459 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.constellation.service.START pkg=com.google.android.gms }
+10-09 00:39:31.447   336  5124 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10130 0}
+10-09 00:39:31.449  1459  4404 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-09 00:39:31.453   336  5125 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-09 00:39:31.454   336  5125 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7375225ef8d0
+10-09 00:39:31.454   336  5125 I resolv  : doQuery: rcode=0, ancount=8, return value=278
+10-09 00:39:31.458  1404  1490 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:31.463   336  5126 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-09 00:39:31.463   336  5126 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7374725e45b0
+10-09 00:39:31.463   336  5126 I resolv  : doQuery: rcode=0, ancount=8, return value=182
+10-09 00:39:31.463  4547  5122 D TrafficStats: tagSocket(88) with statsTag=0x8001, statsUid=-1
+10-09 00:39:31.476   836  4368 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
+10-09 00:39:31.477   836  4368 I Role    : com.google.android.gms not qualified for android.app.role.SYSTEM_CALL_STREAMING due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.telecom.CallStreamingService', mCategories='[]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='android.permission.BIND_CALL_STREAMING_SERVICE', mQueryFlags=0, mMetaData=[]}
+10-09 00:39:31.477   836  4368 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.SYSTEM_CALL_STREAMING
+10-09 00:39:31.479  4547  5122 W DynamiteModule: Local module descriptor class for com.google.android.gms.providerinstaller.dynamite not found.
+10-09 00:39:31.486  1404  3013 W ProviderHelper: Unknown dynamite feature providerinstaller.dynamite
+10-09 00:39:31.486  4547  5122 I DynamiteModule: Considering local module com.google.android.gms.providerinstaller.dynamite:0 and remote module com.google.android.gms.providerinstaller.dynamite:0
+10-09 00:39:31.486  4547  5122 W ProviderInstaller: Failed to load providerinstaller module: No acceptable module com.google.android.gms.providerinstaller.dynamite found. Local version is 0 and remote version is 0.
+10-09 00:39:31.492  4547  5122 D nativeloader: Configuring clns-8 for other apk /system/framework/com.android.media.remotedisplay.jar. target_sdk_version=33, uses_libraries=ALL, library_path=/product/priv-app/PrebuiltGmsCore/lib/x86_64:/product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gms
+10-09 00:39:31.493  4547  5122 D nativeloader: Configuring clns-9 for other apk /system/framework/com.android.location.provider.jar. target_sdk_version=33, uses_libraries=ALL, library_path=/product/priv-app/PrebuiltGmsCore/lib/x86_64:/product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gms
+10-09 00:39:31.494  4547  5122 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+10-09 00:39:31.494  4547  5122 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+10-09 00:39:31.496  4547  5122 D nativeloader: Configuring product-clns-10 for unbundled product apk /product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk. target_sdk_version=33, uses_libraries=, library_path=/product/priv-app/PrebuiltGmsCore/lib/x86_64:/product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!/lib/x86_64:/product/lib64:/system/product/lib64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gms:/product/lib64:/system/product/lib64
+10-09 00:39:31.502  4547  5122 V NativeCrypto: Registering com/google/android/gms/org/conscrypt/NativeCrypto's 295 native methods...
+10-09 00:39:31.506  1404  1404 I Wear_Controller: Wearable module requires a companion app to be installed.
+10-09 00:39:31.506  1404  1404 I WearableService: onCreate: Wearable Services not starting. Wear is not available on this device.
+10-09 00:39:31.511  4547  5122 I ProviderInstaller: Installed default security provider GmsCore_OpenSSL
+10-09 00:39:31.511  1404  1490 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:31.526   836  4368 W Role    : Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
+10-09 00:39:31.546   520   550 I AppBindingService: Connected: com.google.android.apps.messaging/com.google.android.ims.binding.SystemBindingService u0
+10-09 00:39:31.552  1621  2024 W ogle.android.as: Long monitor contention with owner aiai-vc-0 (2943) at java.lang.Object erb.b()(PG:2) waiters=0 in java.lang.Object erb.b() for 643ms
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: Failed to set whitelist for augmented autofill service.
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: java.lang.SecurityException: caller is not user's Augmented Autofill Service
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at android.view.autofill.AutofillManager.setAugmentedAutofillWhitelist(AutofillManager.java:2676)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at cjj.c(PG:7)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at cju.g(PG:8)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at cju.i(Unknown Source:3)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at cju.h(PG:2)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at cjv.a(PG:3)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at dgq.run(PG:41)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at dgq.run(PG:69)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:307)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at dgq.run(PG:67)
+10-09 00:39:31.557  1621  2024 W AiAiAutofill: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: Failed to set whitelist for augmented autofill service.
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: java.lang.SecurityException: caller is not user's Augmented Autofill Service
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at android.view.autofill.AutofillManager.setAugmentedAutofillWhitelist(AutofillManager.java:2676)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at cjj.c(PG:7)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at cju.g(PG:8)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at cju.i(Unknown Source:3)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at cju.h(PG:2)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at cjv.a(PG:3)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at dgq.run(PG:41)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at dgq.run(PG:69)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:307)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at dgq.run(PG:67)
+10-09 00:39:31.566  1621  2024 W AiAiAutofill: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:31.654  1404  1404 W .gms.persistent: Long monitor contention with owner highpool[5] (3290) at java.io.InputStream android.content.res.AssetManager.openNonAsset(int, java.lang.String, int)(AssetManager.java:1027) waiters=1 in boolean android.content.res.AssetManager.isUpToDate() for 108ms
+10-09 00:39:31.694  1404  2679 W Looper  : Handler (acdu) {6cf7856} sendMessageAtTime() called with no mQueue
+10-09 00:39:31.694  1404  2679 W Looper  : java.lang.RuntimeException: Handler (acdu) {6cf7856} sendMessageAtTime() called with no mQueue
+10-09 00:39:31.694  1404  2679 W Looper  : 	at acdu.sendMessageAtTime(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.os.Handler.sendMessageDelayed(Handler.java:705)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.os.Handler.post(Handler.java:435)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.app.LoadedApk$ReceiverDispatcher.performReceive(LoadedApk.java:1893)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.app.LoadedApk$ReceiverDispatcher$InnerReceiver.performReceive(LoadedApk.java:1709)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.app.ActivityThread$ApplicationThread.scheduleRegisteredReceiver(ActivityThread.java:1324)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.app.IApplicationThread$Stub.onTransact(IApplicationThread.java:727)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.os.Binder.execTransactInternal(Binder.java:1344)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.os.Binder.execTransact(Binder.java:1275)
+10-09 00:39:31.694  1404  2679 W Looper  : Handler (acdu) {6cf7856} sendMessageAtTime() called with no mQueue
+10-09 00:39:31.694  1404  2679 W Looper  : java.lang.RuntimeException: Handler (acdu) {6cf7856} sendMessageAtTime() called with no mQueue
+10-09 00:39:31.694  1404  2679 W Looper  : 	at acdu.sendMessageAtTime(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.os.Handler.sendMessageDelayed(Handler.java:705)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.os.Handler.post(Handler.java:435)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.app.LoadedApk$ReceiverDispatcher.performReceive(LoadedApk.java:1893)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.app.LoadedApk$ReceiverDispatcher$InnerReceiver.performReceive(LoadedApk.java:1709)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.app.ActivityThread$ApplicationThread.scheduleRegisteredReceiver(ActivityThread.java:1324)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.app.IApplicationThread$Stub.onTransact(IApplicationThread.java:727)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.os.Binder.execTransactInternal(Binder.java:1344)
+10-09 00:39:31.694  1404  2679 W Looper  : 	at android.os.Binder.execTransact(Binder.java:1275)
+10-09 00:39:31.738  1404  1404 I NearbyFastPair: DynamicSupportModule: doReceive update intent [CONTEXT service_id=265 ]
+10-09 00:39:31.744  1404  1490 W .gms.persistent: Long monitor contention with owner highpool[5] (3290) at java.io.InputStream android.content.res.AssetManager.openNonAsset(int, java.lang.String, int)(AssetManager.java:1027) waiters=0 in java.lang.CharSequence android.content.res.AssetManager.getResourceText(int) for 217ms
+10-09 00:39:31.750  1459  4404 W Icing   : No valid account for uploading user actions
+10-09 00:39:31.768  4547  4638 D MddListenableWorkerFactory: createWorker for class: com.google.android.libraries.mdi.download.workmanager.workers.PeriodicWorker
+10-09 00:39:31.768  4547  4547 D MddPeriodicWorker: PeriodicWorker: startWork
+10-09 00:39:31.769  4547  4638 D MddListenableWorkerFactory: createWorker for class: com.google.android.libraries.mdi.download.workmanager.workers.PeriodicWorker
+10-09 00:39:31.770  4547  4547 D MddPeriodicWorker: PeriodicWorker: startWork
+10-09 00:39:31.780  4547  5104 I BugleMDD: MddBackgroundStartupTask: Scheduled MDD periodic tasks.
+10-09 00:39:31.791  1404  4993 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-09 00:39:31.791   520   901 D ConnectivityService: requestNetwork for uid/pid:10130/4547 activeRequest: null callbackRequest: 127 [NetworkRequest [ REQUEST id=128, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+10-09 00:39:31.797   520   764 D ConnectivityService: NetReassign [128 : null → 100] [c 0] [a 5] [i 0]
+10-09 00:39:31.797   520   757 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=128, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:31.797   520   757 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=128, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:31.797   520   757 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=128, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:31.797   520   757 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=128, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:31.801  1404  1493 I NearbyFastPair: DynamicSupportModule: onSupportStateUpdate start [CONTEXT service_id=265 ]
+10-09 00:39:31.814  1404  4993 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-09 00:39:31.817  4547  4638 D MddListenableWorkerFactory: createWorker for class: com.google.android.libraries.mdi.download.workmanager.workers.PeriodicWorker
+10-09 00:39:31.818  4547  4547 D MddPeriodicWorker: PeriodicWorker: startWork
+10-09 00:39:31.881  1404  4993 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-09 00:39:31.942  1404  4993 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-09 00:39:31.947  1459  4404 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-09 00:39:31.959  1404  4993 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-09 00:39:31.975  1404  5019 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-09 00:39:31.980  4547  5104 W MDD     : MDDManager Clearing MDD since FilesMetadata failed or needs migration.
+10-09 00:39:31.996  1404  1930 W WearableService: onGetService: Wear is not available on this device.
+10-09 00:39:32.001  1404  5019 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: UID for network attribution might be misset for tag 805307399 [CONTEXT service_id=39 ]
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: dhwp: FULL
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at d.N(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at aobf.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):14)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at aqzt.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):8)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at aqzk.d(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at aqzp.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at aqzk.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at aqzk.execute(:com.google.android.gms@231818047@23.18.18 (190800-535401451):8)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at aqzk.execute(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at apiy.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):51)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at apit.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-09 00:39:32.009  1404  4485 E GmsConnectionFactory: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.013  1621  1643 I ogle.android.as: Background young concurrent copying GC freed 171503(7655KB) AllocSpace objects, 2(104KB) LOS objects, 49% free, 8093KB/15MB, paused 20us,16us total 439.071ms
+10-09 00:39:32.016  1459  4404 I Icing   : updateResources: need to parse arkh{com.google.android.gms}
+10-09 00:39:32.046  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.046  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.048  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.048  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.048  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.048  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.048  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.048  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.048  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.049  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.050  4547  5101 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@b4c4e11} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.050  4547  5101 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cbeo.g(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.050  4547  5101 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@5e05577} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.050  4547  5101 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cbeo.g(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.050  4547  5101 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.051  4547  5101 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@396ba4d} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.051  4547  5101 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at cbeo.g(PG:1)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.051  4547  5101 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: UID for network attribution might be misset for tag 805307399 [CONTEXT service_id=39 ]
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: dhwp: FULL
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at d.N(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at aobf.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):14)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at aqzt.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):8)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at aqzk.d(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at aqzp.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at aqzk.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at aqzk.execute(:com.google.android.gms@231818047@23.18.18 (190800-535401451):8)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at aqzk.execute(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at apiy.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):51)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at apit.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-09 00:39:32.058  1404  4488 E GmsConnectionFactory: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.058  4547  5101 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@77ad213} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.058  4547  5101 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.g(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.058  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.058  4547  5101 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@667a34e} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.058  4547  5101 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.g(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.058  4547  5101 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.058  4547  5101 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@ff6fd7c} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.058  4547  5101 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.g(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.058  4547  5101 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@51ea65a} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.058  4547  5101 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.g(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.058  4547  5101 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@6747568} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.058  4547  5101 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cbeo.g(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.058  4547  5101 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.060  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.060  4547  4645 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@15b8a67} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.060  4547  4645 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.g(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.060  4547  4645 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@6d7d0bd} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.060  4547  4645 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.g(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.060  4547  4645 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@78c6603} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.060  4547  4645 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.g(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.060  4547  4645 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@5b5bbb9} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.060  4547  4645 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.g(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.060  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.060  4547  4645 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@b655f5f} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.060  4547  4645 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.g(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.060  4547  4645 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.060  4547  4645 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@3ed5a75} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.060  4547  4645 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cbeo.g(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.060  4547  4645 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.061  4547  4645 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@aa927b} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.061  4547  4645 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cbeo.g(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.061  4547  4645 E ctbc    : RuntimeException while executing runnable ctdz{cnpz@dc628f1} with executor MoreExecutors.directExecutor()
+10-09 00:39:32.061  4547  4645 E ctbc    : java.lang.NullPointerException: Attempt to read from field 'java.lang.String cayk.b' on a null object reference in method 'void ccdw.b(java.lang.Object)'
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ccdw.b(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cnpz.b(PG:3)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctdz.run(PG:6)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctdd.execute(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctbc.o(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctbc.b(PG:5)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cteg.r(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cnsl.k(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ccdy.a(PG:15)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at atyv.a(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cbeo.o(PG:3)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cbeo.s(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cbeo.g(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ccfb.a(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at cnpm.a(PG:3)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctfv.a(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctet.run(PG:4)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at ctfx.run(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at bxfd.run(PG:1)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at bxef.run(PG:2)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.061  4547  4645 E ctbc    : 	at bxfj.run(PG:5)
+10-09 00:39:32.063  4547  5101 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=6226b69c-9c33-4aad-9ae3-c05e4f57830f, tags={ com.google.android.libraries.mdi.download.workmanager.workers.PeriodicWorker, MDD.MAINTENANCE.PERIODIC.GCM.TASK } ]
+10-09 00:39:32.081   336  5144 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+10-09 00:39:32.085  1404  4434 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:32.092   336  5146 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-09 00:39:32.092   336  5146 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7374725e4710
+10-09 00:39:32.093   336  5146 I resolv  : doQuery: rcode=0, ancount=7, return value=161
+10-09 00:39:32.093   336  5148 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10130 0}
+10-09 00:39:32.093   336  5145 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-09 00:39:32.093   336  5145 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7374725e1850
+10-09 00:39:32.094   336  5145 I resolv  : doQuery: rcode=0, ancount=5, return value=177
+10-09 00:39:32.095  1404  4488 D TrafficStats: tagSocket(74) with statsTag=0x30000407, statsUid=-1
+10-09 00:39:32.095   336  5151 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-09 00:39:32.095   336  5151 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7374025e8010
+10-09 00:39:32.095   336  5151 I resolv  : doQuery: rcode=0, ancount=1, return value=49
+10-09 00:39:32.096   336  5150 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-09 00:39:32.096   336  5150 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7374025e9bd0
+10-09 00:39:32.096   336  5150 I resolv  : doQuery: rcode=0, ancount=1, return value=61
+10-09 00:39:32.096  4547  5147 D TrafficStats: tagSocket(98) with statsTag=0xffffffff, statsUid=-1
+10-09 00:39:32.117  1404  4434 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:32.129  1404  4488 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+10-09 00:39:32.129  1404  4488 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-09 00:39:32.129  1404  4488 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-09 00:39:32.153  1459  5055 I GmscoreIpa: Starting mediastore instant index [CONTEXT service_id=255 ]
+10-09 00:39:32.165  4547  4645 D cevx    : Starting download: https://www.gstatic.com/compose/manifest_configs/manifest_20230622.pb
+10-09 00:39:32.165  4547  4645 V cevx    : Is http uri, downloading (uri: https://www.gstatic.com/compose/manifest_configs/manifest_20230622.pb)
+10-09 00:39:32.167  4547  5154 D TrafficStats: tagSocket(101) with statsTag=0xffffffff, statsUid=-1
+10-09 00:39:32.168  1404  4992 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-09 00:39:32.174   336   336 I netd    : tetherGetStats() -> {[]} <0.24ms>
+10-09 00:39:32.177  1404  4488 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+10-09 00:39:32.177  1404  4488 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-09 00:39:32.177  1404  4488 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-09 00:39:32.194   336   336 I netd    : bandwidthSetGlobalAlert(2097152) <0.09ms>
+10-09 00:39:32.236  4547  5104 E MDD     : FileGroupManager: Trying to add expired group webref-model-local-index.
+10-09 00:39:32.236  4547  5104 W MDD     : MDDManager class cbkc
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: cbkc
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at cbqx.a(PG:90)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at cnpq.a(PG:3)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at ctbg.d(PG:2)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at ctbi.run(PG:9)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at ctfm.run(PG:4)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at bxfd.run(PG:1)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at bxef.run(PG:2)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at bxfj.run(PG:5)
+10-09 00:39:32.236  4547  5104 E MDD     : FileGroupManager: Trying to add expired group webref-model-local-index.
+10-09 00:39:32.236  4547  5104 W MDD     : MDDManager class cbkc
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: Failed to add file group
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: cbkc
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at cbqx.a(PG:90)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at cnpq.a(PG:3)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at ctbg.d(PG:2)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at ctbi.run(PG:9)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at ctfm.run(PG:4)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at bxfd.run(PG:1)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at bxef.run(PG:2)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:32.236  4547  5104 E PhFileGroupPop: 	at bxfj.run(PG:5)
+10-09 00:39:32.270  5014  5049 I TestRunner: finished: drawsTransparencyOverAWallpaper(com.prostellis.awe.WidgetRenderTest)

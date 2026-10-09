@@ -1,0 +1,5 @@
+10-09 00:39:36.255  5014  5049 I TestRunner: started: bitmapMatchesTheWidgetSize(com.prostellis.awe.WidgetRenderTest)
+10-09 00:39:36.306  5014  5024 I .prostellis.awe: NativeAlloc concurrent copying GC freed 14807(511KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 3126KB/6253KB, paused 17us,5us total 184.867ms
+10-09 00:39:36.342  1404  1493 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.384  1404  1493 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.454  5014  5049 I TestRunner: finished: bitmapMatchesTheWidgetSize(com.prostellis.awe.WidgetRenderTest)

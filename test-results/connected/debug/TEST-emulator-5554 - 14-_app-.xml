@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.prostellis.awe.WidgetRenderTest" tests="8" failures="0" errors="0" skipped="0" time="7.039" timestamp="2026-10-09T00:39:37" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 14" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="homeScreenViewsLoad" classname="com.prostellis.awe.WidgetRenderTest" time="0.749" />
+  <testcase name="drawsTransparencyOverAWallpaper" classname="com.prostellis.awe.WidgetRenderTest" time="1.365" />
+  <testcase name="drawsExtremeTemperaturesWithoutOverlap" classname="com.prostellis.awe.WidgetRenderTest" time="0.45" />
+  <testcase name="drawsLoadingStateBeforeTheFirstDownload" classname="com.prostellis.awe.WidgetRenderTest" time="0.157" />
+  <testcase name="drawsBothWidthsWithAndWithoutCurrentWeather" classname="com.prostellis.awe.WidgetRenderTest" time="1.432" />
+  <testcase name="drawsAllSizesInLightAndDark" classname="com.prostellis.awe.WidgetRenderTest" time="1.935" />
+  <testcase name="bitmapMatchesTheWidgetSize" classname="com.prostellis.awe.WidgetRenderTest" time="0.207" />
+  <testcase name="settingsScreenLoads" classname="com.prostellis.awe.WidgetRenderTest" time="0.205" />
+</testsuite>

@@ -1,0 +1,109 @@
+10-09 00:39:32.876  5014  5049 I TestRunner: started: drawsBothWidthsWithAndWithoutCurrentWeather(com.prostellis.awe.WidgetRenderTest)
+10-09 00:39:32.991  1404  4992 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-09 00:39:32.996  1404  5019 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-09 00:39:33.010  1459  4404 I Icing   : updateResources: need to parse arkh{com.google.android.gms}
+10-09 00:39:33.014   520   550 E system_server: No package ID 7f found for resource ID 0x7f08038b.
+10-09 00:39:33.073   520   550 E system_server: No package ID 7f found for resource ID 0x7f150be5.
+10-09 00:39:33.093   520   550 E system_server: No package ID 7f found for resource ID 0x7f150be5.
+10-09 00:39:33.110   520   550 E system_server: No package ID 7f found for resource ID 0x7f150be4.
+10-09 00:39:33.141  4547  5162 I BugleNetwork: NewLightTickleFcmHandler: Handling firebase new token
+10-09 00:39:33.141  4547  5162 I BugleNetwork: RegistrationProvider: Refresh Tachyon Registration Now
+10-09 00:39:33.142  4547  4645 I BugleNetwork: RegistrationProvider: Tachyon registration token is null, ignore immediate refresh
+10-09 00:39:33.142  4547  4645 I BugleNetwork: NewLightTickleFcmHandler: Successfully handled firebase new token.
+10-09 00:39:33.195  1404  5163 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:33.212  1404  5163 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:33.221  2948  3005 I DynamiteModule: Considering local module com.google.android.gms.googlecertificates:7 and remote module com.google.android.gms.googlecertificates:7
+10-09 00:39:33.221  2948  3005 I DynamiteModule: Selected local version of com.google.android.gms.googlecertificates
+10-09 00:39:33.260  2948  3005 W DG      : [flow tachyon_registration] DroidGuardRunner.newVmProcessForFastSignalCollection(): Fast program not found [CONTEXT service_id=25 ]
+10-09 00:39:33.270   336  5167 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+10-09 00:39:33.275   336  5169 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-09 00:39:33.280   336  5168 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-09 00:39:33.280   336  5168 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7375225f4090
+10-09 00:39:33.281   336  5169 I resolv  : res_nsend: used send_dg 164 terrno: 0
+10-09 00:39:33.282   336  5168 I resolv  : doQuery: rcode=0, ancount=8, return value=260
+10-09 00:39:33.282   336  5169 I resolv  : doQuery: rcode=0, ancount=8, return value=164
+10-09 00:39:33.283  2948  3407 D TrafficStats: tagSocket(115) with statsTag=0x1803, statsUid=10130
+10-09 00:39:33.331  3746  4373 I ConfigUpdater: Update downloaded, starting installation
+10-09 00:39:33.433   520  2002 I RemoteProvisionSysSvc: getRegistration(android.hardware.security.keymint.IRemotelyProvisionedComponent/default)
+10-09 00:39:33.454  1459  1459 W gle.android.gms: Long monitor contention with owner highpool[16] (4476) at boolean android.os.MessageQueue.enqueueMessage(android.os.Message, long)(MessageQueue.java:600) waiters=0 in android.os.Message android.os.MessageQueue.next() for 115ms
+10-09 00:39:33.506   520   520 I RegistrationProxy: onServiceConnected: com.android.rkpdapp.service.RemoteProvisioningService
+10-09 00:39:33.512   520  1797 I RegistrationProxy: IGetRegistrationCallback.onSuccess
+10-09 00:39:33.524   520  1401 I RemoteProvisionSysSvc: Fetching key 10131 for client 233088424
+10-09 00:39:33.525   520  1401 I RegistrationProxy: getKeyAsync operation started with callback 214165697
+10-09 00:39:33.532  3646  3720 I RkpdRegistrationBinder: Key requested for : android.hardware.security.keymint.IRemotelyProvisionedComponent/default, clientUid: 1017, keyId: 10131, callback: 155339023
+10-09 00:39:33.538  3646  3720 I RkpdRegistrationBinder: Key successfully assigned to client
+10-09 00:39:33.538   520   520 I RemoteProvisionSysSvc: Successfully fetched key for client 233088424
+10-09 00:39:33.561  1459  4404 I Icing   : Indexing com.google.android.gms-internal.3p:MobileApplication from com.google.android.gms
+10-09 00:39:33.585   520   550 I AppBindingService: Stopping: com.google.android.apps.messaging/com.google.android.ims.binding.SystemBindingService u0
+10-09 00:39:33.627  4733  4733 I BugleRcsEngine: [2] SystemBindingService.onCreate: SystemBindingService onCreate
+10-09 00:39:33.629  4733  4772 I BugleRcsEngine: [62] bptx.run: SystemBindingService: Starting JibeService
+10-09 00:39:33.631  4733  4772 I BugleRcsEngine: [62] bsgz.b: EngineBroadcaster: Broadcasting provisioning intent rcs.intent.action.rcsSystemBinding to Bugle with extras redacted-pii:[null] from source SYSTEM_BINDING_SERVICE
+10-09 00:39:33.633   520  1401 D ConnectivityService: requestNetwork for uid/pid:10130/4733 activeRequest: null callbackRequest: 129 [NetworkRequest [ REQUEST id=130, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+10-09 00:39:33.635  4733  4774 W BugleRcsEngine: [64] bpxc.w: Unable to send diagnostic log
+10-09 00:39:33.641   520   764 D ConnectivityService: NetReassign [130 : null → 100] [c 0] [a 7] [i 1]
+10-09 00:39:33.650   520   757 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=130, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:33.650   520   757 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=130, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:33.651   520   757 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=130, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:33.651   520   757 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=130, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:33.667  1621  1621 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.apps.messaging.
+10-09 00:39:33.678  2948  3005 W SystemServiceRegistry: No service published for: persistent_data_block
+10-09 00:39:33.717  1621  3614 I AiAiEcho: AppIndexer Package:[com.google.android.apps.messaging] UserProfile:[0] Enabled:[true].
+10-09 00:39:33.717  1621  3614 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.apps.messaging], userId:[0], reason:[package is updated.].
+10-09 00:39:33.718   836  4368 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
+10-09 00:39:33.719   836  4368 I Role    : com.google.android.gms not qualified for android.app.role.SYSTEM_CALL_STREAMING due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.telecom.CallStreamingService', mCategories='[]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='android.permission.BIND_CALL_STREAMING_SERVICE', mQueryFlags=0, mMetaData=[]}
+10-09 00:39:33.719   836  4368 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.SYSTEM_CALL_STREAMING
+10-09 00:39:33.720   836  4368 W Role    : Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
+10-09 00:39:33.729  4547  5103 I BugleRcsProvisioning: RcsProvisioningTrigger: Schedule provisioning on system binding.
+10-09 00:39:33.730  4547  5103 I BugleRcsProvisioning: scheduleProvisioning using legacy code path
+10-09 00:39:33.730  4547  5103 W BugleRcsEngine: [80] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:33.730  4547  5103 I BugleRcsProvisioning: RcsProvisioningTrigger: DR is active, initializing DR provisioning. DUAL_REG
+10-09 00:39:33.731  4547  5101 W BugleRcsEngine: [78] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:33.733  4547  4658 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of com.google.android.apps.messaging.rcsprovisioning.RcsProvisioningBroadcastReceiver@d587701
+10-09 00:39:33.733  4547  5101 I BugleRcsEngine: [78] zzm.run: Skipping provisioning scheduling since RCS is disabled
+10-09 00:39:33.767  1103  1955 D EGL_emulation: app_time_stats: avg=1665.94ms min=573.13ms max=2758.74ms count=2
+10-09 00:39:33.814   336  5175 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+10-09 00:39:33.814  2948  3005 D TrafficStats: tagSocket(122) with statsTag=0x1809, statsUid=-1
+10-09 00:39:33.815  2948  3005 D TrafficStats: tagSocket(122) with statsTag=0x1809, statsUid=-1
+10-09 00:39:33.816  2948  3005 D TrafficStats: tagSocket(122) with statsTag=0x1809, statsUid=-1
+10-09 00:39:33.835  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:33.840  1459  4404 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-09 00:39:33.841  1459  4404 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-09 00:39:33.842  5014  5024 I .prostellis.awe: NativeAlloc concurrent copying GC freed 63867(2933KB) AllocSpace objects, 10(200KB) LOS objects, 49% free, 3036KB/6072KB, paused 28us,6us total 463.207ms
+10-09 00:39:33.848  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:33.856  5014  5171 D ProfileInstaller: Installing profile for com.prostellis.awe
+10-09 00:39:33.899  1459  4404 I Icing   : Indexing done com.google.android.gms-apps
+10-09 00:39:33.964   520   550 I AppBindingService: Connected: com.google.android.apps.messaging/com.google.android.ims.binding.SystemBindingService u0
+10-09 00:39:33.967  4834  4834 D CompatibilityChangeReporter: Compat change id reported: 150939131; UID 10118; state: ENABLED
+10-09 00:39:33.979  1053  1081 D SettingsSliceProvider: onSlicePinned: content://com.android.settings.slices/action/gesture_double_tap_power
+10-09 00:39:33.979  1053  1081 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:33.982  1053  4467 D SettingsSliceProvider: content://com.android.settings.slices/action/gesture_double_tap_power loaded from cache
+10-09 00:39:33.994  1053  1074 D SliceBuilder: Creating slice for: com.android.settings.gestures.DoubleTapPowerPreferenceController
+10-09 00:39:34.027  1404  4434 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:34.086  1404  4434 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:34.119  2948  3005 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-09 00:39:34.120  2948  3005 W libc    : Access denied finding property "service.adb.tls.port"
+10-09 00:39:34.117  2948  2948 W binder:2948_3: type=1400 audit(0.0:121): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=292 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+10-09 00:39:34.117  2948  2948 W binder:2948_3: type=1400 audit(0.0:122): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=60 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+10-09 00:39:34.201  1053  2231 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:34.204  1053  2231 D SettingsSliceProvider: Built slice (content://com.android.settings.slices/action/gesture_double_tap_power) in: 3
+10-09 00:39:34.204  1053  1079 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:34.204  1053  1081 D SliceBuilder: Creating slice for: com.android.settings.deviceinfo.firmwareversion.FirmwareVersionDetailPreferenceController
+10-09 00:39:34.205  1053  4467 D SettingsSliceProvider: content://com.android.settings.slices/action/os_firmware_version loaded from cache
+10-09 00:39:34.213  4547  4645 W ziparchive: Unable to open '/data/user_de/0/com.google.android.gms/app_chimera/m/00000002/DynamiteLoader.dm': No such file or directory
+10-09 00:39:34.213  4547  4645 W ziparchive: Unable to open '/data/user_de/0/com.google.android.gms/app_chimera/m/00000002/DynamiteLoader.dm': No such file or directory
+10-09 00:39:34.216  4547  4645 I DynamiteModule: Considering local module com.google.android.gms.cronet_dynamite:0 and remote module com.google.android.gms.cronet_dynamite:2411
+10-09 00:39:34.216  4547  4645 I DynamiteModule: Selected remote version of com.google.android.gms.cronet_dynamite, version >= 2411
+10-09 00:39:34.216  4547  4645 V DynamiteModule: Dynamite loader version >= 2, using loadModule2NoCrashUtils
+10-09 00:39:34.228  4547  4645 W ziparchive: Unable to open '/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.dm': No such file or directory
+10-09 00:39:34.229  4547  4645 W ziparchive: Unable to open '/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.dm': No such file or directory
+10-09 00:39:34.243  4547  4645 D nativeloader: Configuring clns-11 for other apk . target_sdk_version=34, uses_libraries=ALL, library_path=/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.apk!/lib/x86_64:/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+10-09 00:39:34.250   520   595 D ConnectivityService: requestNetwork for uid/pid:10130/4547 activeRequest: null callbackRequest: 131 [NetworkRequest [ REQUEST id=132, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+10-09 00:39:34.251   520   764 D ConnectivityService: NetReassign [132 : null → 100] [c 0] [a 0] [i 1]
+10-09 00:39:34.251   520   757 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=132, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:34.251   520   757 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=132, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:34.251   520   757 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=132, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:34.251   520   757 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=132, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10130 RequestorUid: 10130 RequestorPkg: com.google.android.apps.messaging UnderlyingNetworks: Null] ]
+10-09 00:39:34.261  4547  4645 I cr_CronetLibraryLoader: Cronet version: 113.0.5672.51, arch: x86_64
+10-09 00:39:34.271   520   764 D ConnectivityService: NetReassign [no changes] [c 0] [a 1] [i 0]
+10-09 00:39:34.283  4547  4645 I BugleNetwork: Creating gRPC Managed channel with Cronet: instantmessaging-pa.googleapis.com:443
+10-09 00:39:34.308  5014  5049 I TestRunner: finished: drawsBothWidthsWithAndWithoutCurrentWeather(com.prostellis.awe.WidgetRenderTest)

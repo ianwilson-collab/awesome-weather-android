@@ -1,0 +1,191 @@
+10-09 00:39:29.926  5014  5049 I TestRunner: started: homeScreenViewsLoad(com.prostellis.awe.WidgetRenderTest)
+10-09 00:39:29.976  1459  4987 I Dck     : doesDeviceHaveSupportedWirelessCapabilities: wccSysProp:0, wccMendel:1, deviceWccOverride:false [CONTEXT service_id=289 ]
+10-09 00:39:29.976  1459  4987 I Dck     : isDckModuleEligible: isAtLeastR:true, hasWccSupport:false, downloadAllowed:false [CONTEXT service_id=289 ]
+10-09 00:39:29.977  1459  4987 W Dck     : Dck module not eligible for asynchronous downloading [CONTEXT service_id=289 ]
+10-09 00:39:29.994  1404  4981 I FontLog : Package com.prostellis.awe has no metadata [CONTEXT service_id=132 ]
+10-09 00:39:29.996  1404  5019 I ProximityAuth: [RecentAppsMediator] Package added: (user=UserHandle{0}) com.prostellis.awe
+10-09 00:39:30.047  1404  4980 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package: flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+10-09 00:39:30.049  1404  4981 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package: flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+10-09 00:39:30.050  1404  4981 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-09 00:39:30.052  1404  3210 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x5000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-09 00:39:30.060  1404  4993 I ProximityAuth: [FeatureLoader] auth_easyunlock module load status: 1, auth_magictether module load status: 1
+10-09 00:39:30.068  1404  3535 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x5000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-09 00:39:30.074  1519  1853 I SP      : <==== Finishing job {m:b:u:l, fg}, 2864 ms. elapsed since start
+10-09 00:39:30.074  1519  1853 I SuperpacksForegroundTaskService: SuperpacksForegroundTaskService.finishJob():54 SuperpacksForegroundTaskService.finishJob()
+10-09 00:39:30.080  1519  1853 I SP      : Download stopped: delight:main_en_840_2022102600_1, succeeded foreground, size: 20290852
+10-09 00:39:30.083  1519  1853 I SP      : Scheduling job with delay of 0s for {m:b:u:l, bg}, 1 candidates
+10-09 00:39:30.090  1621  1621 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.gms.
+10-09 00:39:30.091  1621  3615 I AiAiEcho: AppIndexer Package:[com.google.android.gms] UserProfile:[0] Enabled:[true].
+10-09 00:39:30.091  1621  3615 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.gms], userId:[0], reason:[package is updated.].
+10-09 00:39:30.102  1519  1519 I SpBackgroundTask: SuperpacksBackgroundJobService.onStartJob():23 onStartJob: android.app.job.JobParameters@3757ed6
+10-09 00:39:30.103  1519  1519 I SP      : ====> Starting job {m:b:u:l, bg}
+10-09 00:39:30.104  1404  1404 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.nearby.exposurenotification.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiServiceNoInstantApps }
+10-09 00:39:30.105  1404  1404 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.nearby.exposurenotification.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiServiceNoInstantApps }
+10-09 00:39:30.116  1404  1490 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:30.145   520   529 I system_server: Background young concurrent copying GC freed 708125(27MB) AllocSpace objects, 44(872KB) LOS objects, 44% free, 30MB/54MB, paused 629us,39us total 531.246ms
+10-09 00:39:30.145  1519  1853 I SP      : Scheduling: download stopped, 0 started, 0 paused, 1 scheduled, 1 pending: emoji:60932fe37d5f6d7a3e60488d8a1755c4 * {m:b:u:l, bg}
+10-09 00:39:30.160  1404  1404 I ProximityAuth: [PhoneHubService] Handling intent for PhoneHubChimeraService.
+10-09 00:39:30.179  4547  4638 I Bugle   : BugleStartup: Registering SIM change receiver...
+10-09 00:39:30.180  4547  4638 I Bugle   : BugleStartup: Updating app config...
+10-09 00:39:30.196   336  5089 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+10-09 00:39:30.197  1404  3535 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-09 00:39:30.199  1404  3535 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-09 00:39:30.203  4547  4638 I Bugle   : BugleStartup: Done with SIM change receiver & app config.
+10-09 00:39:30.203  4547  4638 I Bugle   : BugleStartup: Handling shared prefs upgrade & Load MMS Configuration...
+10-09 00:39:30.213   336  5091 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-09 00:39:30.215   336  5090 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-09 00:39:30.222  4547  4664 W Bugle   : BuglePhoneNumberUtils: canonicalizeMccMnc: invalid mccmnc. mcc: null, mnc: null
+10-09 00:39:30.243   336  5090 I resolv  : res_nsend: used send_dg 272 terrno: 0
+10-09 00:39:30.243   336  5090 I resolv  : doQuery: rcode=0, ancount=8, return value=272
+10-09 00:39:30.254  1519  1853 I SP      : Scheduling: job start ({m:b:u:l, bg}), 1 started, 0 paused, 0 scheduled, 1 pending: emoji:60932fe37d5f6d7a3e60488d8a1755c4 @ * {m:b:u:l, bg}
+10-09 00:39:30.254  1519  1853 I SP      : Requesting download of URL https://www.gstatic.com/android/keyboard/emoji/20230201113008/en_us.zip to 60932fe37d5f6d7a3e60488d8a1755c4.zip.fetched (constraints: m:b:u:l)
+10-09 00:39:30.254   336  5091 I resolv  : res_nsend: used send_dg 176 terrno: 0
+10-09 00:39:30.254   336  5091 I resolv  : doQuery: rcode=0, ancount=8, return value=176
+10-09 00:39:30.256  1519  1603 I SuperDelight: SuperDelightUnpacker$UnpackCancellableTask.execute():102 UnpackCancellableTask#execute(): fst-decompress /data/user/0/com.google.android.inputmethod.latin/files/superpacks/delight/main_en_840_2022102600_1.staged
+10-09 00:39:30.271   336  5094 I resolv  : GetAddrInfoHandler::run: {100 100 100 983140 10141 0}
+10-09 00:39:30.272   336  5095 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-09 00:39:30.272   336  5095 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7374025e9bd0
+10-09 00:39:30.272   336  5095 I resolv  : doQuery: rcode=0, ancount=1, return value=61
+10-09 00:39:30.279   336  5096 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-09 00:39:30.279   336  5096 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7374025e8010
+10-09 00:39:30.279   336  5096 I resolv  : doQuery: rcode=0, ancount=1, return value=49
+10-09 00:39:30.280  1519  5093 D TrafficStats: tagSocket(149) with statsTag=0xffffffff, statsUid=-1
+10-09 00:39:30.295  1404  4391 W BpBinder: Large outgoing transaction of 329840 bytes, interface descriptor , code 4
+10-09 00:39:30.302  1404  1413 W .gms.persistent: Cleared Reference was only reachable from finalizer (only reported once)
+10-09 00:39:30.310  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_birthdaydoodle_jar__name to integer.
+10-09 00:39:30.310  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_call_jar__name to integer.
+10-09 00:39:30.314  1621  1621 I AiAiEcho: AppFetcherImpl onPackageChanged com.prostellis.awe.
+10-09 00:39:30.318  1621  2595 I AiAiEcho: AppIndexer Package:[com.prostellis.awe] UserProfile:[0] Enabled:[true].
+10-09 00:39:30.318  1621  2595 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.prostellis.awe], userId:[0], reason:[package is updated.].
+10-09 00:39:30.318  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_canvas_jar__name to integer.
+10-09 00:39:30.321  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_chkpkg_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_crashtest_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_dining_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_doodle_notifications_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_imageviewer_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_ipa_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_jslocation_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_localintent_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_messaging_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_nativesrp_activity_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_nativesrp_presenter_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_nowcontent_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_recents_activity_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_save_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_searchresults_activity_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_test_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag AndroidGsaVelourJars__velour_weather_jar__name to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag bindle_flags__bloblobber_blob to integer.
+10-09 00:39:30.342  1749  2457 W A       : Can't format flag bindle_flags__velour_jar to integer.
+10-09 00:39:30.390  1749  2411 I A       : Refusing EXCLUSIVE task 24, it is already pending. Try again in 305 seconds.
+10-09 00:39:30.397  1749  2451 I FedAssExpListener: Fed-ass not supported for signed out users.
+10-09 00:39:30.402  1749  2451 I FedAssExpListener: Successfully processed experiments changed.
+10-09 00:39:30.419  1749  2449 I A       : NGA enabled in interactor.
+10-09 00:39:30.420  1749  2411 I OpaEligibilityChecker: send OpaEligibilityChange broadcast to CommonBroadcastReceiver
+10-09 00:39:30.424  1519  1853 I SP      : <==== Finishing job {m:b:u:l, bg}, 322 ms. elapsed since start
+10-09 00:39:30.426  1519  1853 I SP      : Download stopped: emoji:60932fe37d5f6d7a3e60488d8a1755c4, succeeded, size: 89667
+10-09 00:39:30.426  1404  1413 I .gms.persistent: Background concurrent copying GC freed 440837(17MB) AllocSpace objects, 1(20KB) LOS objects, 49% free, 17MB/35MB, paused 20us,41us total 2.482s
+10-09 00:39:30.430  5014  5049 W PathParser: Points are too far apart 4.733727810650888
+10-09 00:39:30.435  1103  1955 D EGL_emulation: app_time_stats: avg=1214.41ms min=2.12ms max=4518.09ms count=4
+10-09 00:39:30.551  1459  1466 I gle.android.gms: Background young concurrent copying GC freed 190844(8861KB) AllocSpace objects, 42(2200KB) LOS objects, 37% free, 17MB/27MB, paused 48us,18us total 278.525ms
+10-09 00:39:30.561   520   535 W system_server: Long monitor contention with owner CachedAppOptimizerThread (611) at void com.android.server.am.CachedAppOptimizer$FreezeHandler.handleMessage(android.os.Message)(CachedAppOptimizer.java:2144) waiters=0 in android.content.ComponentName com.android.server.am.ActivityManagerService.startService(android.app.IApplicationThread, android.content.Intent, java.lang.String, boolean, java.lang.String, java.lang.String, int, boolean, int, java.lang.String, java.lang.String) for 403ms
+10-09 00:39:30.563  1459  4988 W gle.android.gms: Long monitor contention with owner [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] idle (4987) at void hjm.run()(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3) waiters=0 in void hjm.run() for 348ms
+10-09 00:39:30.571  1459  2999 D TrafficStats: tagSocket(131) with statsTag=0x30004901, statsUid=10131
+10-09 00:39:30.577  1052  1052 D CarrierSvcBindHelper: onPackageModified: com.google.android.apps.messaging
+10-09 00:39:30.581  1028  1028 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-09 00:39:30.581  1404  5019 I ProximityAuth: [RecentAppsMediator] Package added: (user=UserHandle{0}) com.prostellis.awe.test
+10-09 00:39:30.581  1028  1028 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-09 00:39:30.581  1028  1028 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-09 00:39:30.581  1028  1028 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-09 00:39:30.581  1404  4980 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package: flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+10-09 00:39:30.581  1404  3535 I FontLog : Package com.prostellis.awe.test has no metadata [CONTEXT service_id=132 ]
+10-09 00:39:30.581  1404  3535 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package: flg=0x4000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+10-09 00:39:30.586  1052  1052 D CarrierSvcBindHelper: No carrier app for: 0
+10-09 00:39:30.591   835   835 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-09 00:39:30.592   520   623 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+10-09 00:39:30.599  4547  5098 I BugleRcsEngine: [76] bscg.c: do not delay first event
+10-09 00:39:30.599  4547  4633 I Bugle   : Upgrading shared prefs from -1 to 2
+10-09 00:39:30.603  1459  1459 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.auth.cryptauth.cryptauthservice.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+10-09 00:39:30.603  1459  1459 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.auth.cryptauth.cryptauthservice.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+10-09 00:39:30.606   836   962 I PermissionControllerServiceImpl: Updating user sensitive for uid 10130
+10-09 00:39:30.607  1404  5034 I ProximityAuth: [AccountEligibilityMediator] Cannot check accounts eligibility in cross profile, checking accounts in current profiles
+10-09 00:39:30.609   836   962 I PermissionControllerServiceImpl: Updating user sensitive for uid 10131
+10-09 00:39:30.614  4547  5098 I BugleRcsEngine: [76] bscd.o: (Sim): Processing an intent
+10-09 00:39:30.614  4547  5098 I BugleRcsEngine: [76] bscd.z: (Sim): SIM state LOADED
+10-09 00:39:30.617  4547  4644 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of bdxy@b10c71f
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: Invalid input from icing corpus JSON flag.
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: android.util.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line 123 column 2
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at android.util.JsonReader.syntaxError(JsonReader.java:1162)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at android.util.JsonReader.checkLenient(JsonReader.java:840)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at android.util.JsonReader.nextInArray(JsonReader.java:615)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at android.util.JsonReader.peek(JsonReader.java:345)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at android.util.JsonReader.hasNext(JsonReader.java:321)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at com.google.android.apps.gsa.searchbox.c.b.b.k.c(PG:7)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at com.google.android.apps.gsa.searchbox.c.b.b.j.a(Unknown Source:2)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at com.google.android.apps.gsa.search.core.i.r.run(PG:5)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at com.google.android.libraries.gsa.k.a.h.run(PG:2)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.util.c.a.cf.b(PG:1)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.util.c.a.ci.run(PG:1)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at com.google.android.libraries.i.ae.run(PG:1)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at com.google.android.libraries.i.k.run(PG:2)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at com.google.android.libraries.i.p.run(PG:4)
+10-09 00:39:30.617  1749  2411 W CorpusConfigHelper: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:30.627   520   623 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+10-09 00:39:30.629   835   879 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+10-09 00:39:30.643   835   879 D StylusManager: Stylus InputDevice changed: 11 virtio_input_multi_touch_8
+10-09 00:39:30.643   835   879 D StylusManager: Stylus InputDevice changed: 10 virtio_input_multi_touch_7
+10-09 00:39:30.646  4547  5098 I BugleRcsEngine: [76] bsgz.b: EngineBroadcaster: Broadcasting provisioning intent rcs.intent.action.rcsSimSwap to Bugle with extras redacted-pii:[chars:86] from source SIM_STATE_TRACKER
+10-09 00:39:30.647   835   879 D StylusManager: Stylus InputDevice changed: 8 virtio_input_multi_touch_5
+10-09 00:39:30.647   835   879 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+10-09 00:39:30.648   835   879 D StylusManager: Stylus InputDevice changed: 6 virtio_input_multi_touch_3
+10-09 00:39:30.648   835   879 D StylusManager: Stylus InputDevice changed: 12 virtio_input_multi_touch_9
+10-09 00:39:30.648   835   879 D StylusManager: Stylus InputDevice changed: 7 virtio_input_multi_touch_4
+10-09 00:39:30.648   835   879 D StylusManager: Stylus InputDevice changed: 14 virtio_input_multi_touch_11
+10-09 00:39:30.649   835   879 D StylusManager: Stylus InputDevice changed: 4 virtio_input_multi_touch_1
+10-09 00:39:30.649   835   879 D StylusManager: Stylus InputDevice changed: 9 virtio_input_multi_touch_6
+10-09 00:39:30.649   835   879 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+10-09 00:39:30.651   835   835 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-09 00:39:30.658  4547  5098 I BugleRcsEngine: [76] bscd.z: (Sim): SIM changed: true. current id: redacted-pii:sim_id[chars:20,last3:897]; stored id: redacted-pii:sim_id[chars:0,last3:]; isFiDevice: false; subId: 1; slotIndex: 0
+10-09 00:39:30.659  4547  4645 I BugleRcsProvisioning: RcsProvisioningTrigger: SIM swap detected, restarting provisioning
+10-09 00:39:30.659  4547  4645 I BugleRcsProvisioning: RcsProvisioningTrigger: updateRcsAvailability : hint = SIM_SWAP
+10-09 00:39:30.659  4547  4645 I Bugle   : RcsAvailabilityUtilForProvisioningEngineV2: updateAvailabilityAsync, hint: SIM_SWAP
+10-09 00:39:30.660  4547  4645 I BugleRcsProvisioning: RcsAvailabilityUpdaterLocal: updateAvailabilityAsync: scheduling updateRcsAvailability call, hint: SIM_SWAP, enableWelcomePopupWithoutGoogleTos: false, reshowSuccessPopup: false
+10-09 00:39:30.660  4547  4645 W BugleRcsEngine: [53] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:30.660  4547  4645 I BugleRcsEngine: [53] zzo.a: RcsAvailabilityLogWorkerScheduler is cancelled
+10-09 00:39:30.662  4547  4650 W BugleRcsEngine: [55] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:30.662  4547  4658 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of com.google.android.apps.messaging.rcsprovisioning.RcsProvisioningBroadcastReceiver@5c591dd
+10-09 00:39:30.663  4547  4650 I BugleRcsProvisioning: RcsAvailabilityUpdaterLocal: RcsAvailability configuration availability and enabled status: simId: redacted-pii:sim_id[chars:20,last3:897], SipConnectionType: DUAL_REG, isConfigurationAvailableAndEnabled: false
+10-09 00:39:30.672  4547  4638 I BugleRcsEngine: [46] zzl.apply: Cancel All Provisioning work operation result is: SUCCESS, trigger is SIM_SWAP
+10-09 00:39:30.672  4547  4652 W BugleRcsEngine: [57] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:30.674  4547  4652 W BugleRcsEngine: [57] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:30.674  4547  4652 I BugleRcsProvisioning: RcsAvailabilityUpdaterLocal: RcsAvailability configuration availability and enabled status: simId: redacted-pii:sim_id[chars:20,last3:897], SipConnectionType: DUAL_REG, isConfigurationAvailableAndEnabled: false
+10-09 00:39:30.686   336   336 I netd    : tetherGetStats() -> {[]} <0.27ms>
+10-09 00:39:30.692  4547  5098 I BugleRcsEngine: [76] bscd.z: (Sim): Skipping writing subId because this is main bugle process.
+10-09 00:39:30.701  4547  5098 I BugleRcsEngine: [76] bscd.z: (Sim): Updated SIM info: currentSimId: redacted-pii:sim_id[chars:20,last3:897]; imsi: redacted-pii:imsi[chars:15]; rawMsisdn: redacted-pii:phone_number[chars:12,last2:67]; formattedMsisdn: redacted-pii:phone_number[chars:0,last2:]; mccmnc: redacted-pii:sim_operator[chars:6]; gid1: redacted-pii:sim_gid[chars:0]; isFiDevice: false; subId: 1; slotIndex: 0
+10-09 00:39:30.701  4547  5098 I BugleRcsEngine: [76] bscd.z: (Sim): First update of the SIM info.
+10-09 00:39:30.705  1459  1459 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.mobstore.service.START pkg=com.google.android.gms }
+10-09 00:39:30.706  1459  2751 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.googlequicksearchbox componentName=agsa_icing_connection serviceId=32
+10-09 00:39:30.710  1459  4989 I SystemUpdate: [Installation,ReceiverIntentOperation] Received intent: Intent { act=com.google.android.gms.phenotype.com.google.android.gms.update.COMMITTED flg=0x10 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+10-09 00:39:30.713  1404  4980 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x5000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-09 00:39:30.722  1459  4984 W ModuleInitIntentOp: Dropping unexpected action com.google.android.gms.phenotype.COMMITTED
+10-09 00:39:30.727  1459  4975 W ModuleInitIntentOp: Dropping unexpected action com.google.android.gms.phenotype.COMMITTED
+10-09 00:39:30.727  1459  4986 V Backup  : [PhenotypeConfigIO] Phenotype broadcast received for different package
+10-09 00:39:30.728  1459  4719 W ModuleInitIntentOp: Dropping unexpected action com.google.android.gms.phenotype.COMMITTED
+10-09 00:39:30.730  1459  4986 I SyncIntentOperation: Handling the intent: Intent { act=com.google.android.gms.phenotype.COMMITTED flg=0x10 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }. [CONTEXT service_id=80 ]
+10-09 00:39:30.731  1459  4984 I MdiSyncModule: flag handling is skipping irrelevant intent.
+10-09 00:39:30.733  1459  4984 I MlBenchmarkInstaller: Intent: com.google.android.gms.phenotype.COMMITTED [CONTEXT service_id=340 ]
+10-09 00:39:30.733  1459  4984 I MlBenchmarkInstaller: COMMITTED Extra package name: com.google.android.gms.auth_authzen [CONTEXT service_id=340 ]
+10-09 00:39:30.738  1459  4986 W ModuleInitIntentOp: Dropping unexpected action com.google.android.gms.phenotype.COMMITTED
+10-09 00:39:30.738  1459  4986 I GmsSyncPolicyEngine: Periodic sync 1 disabled by policy, cancelled.
+10-09 00:39:30.739  1459  4986 I GmsSyncPolicyEngine: Periodic sync 2 disabled by policy, cancelled.
+10-09 00:39:30.739  4547  5098 I BugleRcsEngine: [76] bscd.I: (Sim): Broadcasting Intent { act=com.google.android.ims.SIM_LOADED (has extras) }
+10-09 00:39:30.740  4547  4547 I Bugle   : SimChangeReceiver: action: com.google.android.ims.SIM_LOADED
+10-09 00:39:30.740  4547  4645 I Bugle   : RcsAvailabilityUtilForProvisioningEngineV2: updateAvailabilityAsync, hint: NO_HINT
+10-09 00:39:30.740  4547  4645 I BugleRcsProvisioning: RcsAvailabilityUpdaterLocal: updateAvailabilityAsync: scheduling updateRcsAvailability call, hint: NO_HINT, enableWelcomePopupWithoutGoogleTos: false, reshowSuccessPopup: false
+10-09 00:39:30.741  1459  4986 I GmsSyncPolicyEngine: Periodic sync 3 disabled by policy, cancelled.
+10-09 00:39:30.746  4547  4726 W BugleRcsEngine: [66] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-09 00:39:30.746  4547  4726 I BugleRcsProvisioning: RcsAvailabilityUpdaterLocal: RcsAvailability configuration availability and enabled status: simId: redacted-pii:sim_id[chars:20,last3:897], SipConnectionType: DUAL_REG, isConfigurationAvailableAndEnabled: false
+10-09 00:39:30.747  1459  4984 I LocationHistory: [IntentOperation] Handling action com.google.android.gms.phenotype.COMMITTED [CONTEXT service_id=314 ]
+10-09 00:39:30.750  5014  5049 I TestRunner: finished: homeScreenViewsLoad(com.prostellis.awe.WidgetRenderTest)

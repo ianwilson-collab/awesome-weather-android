@@ -1,0 +1,18 @@
+10-09 00:39:32.709  5014  5049 I TestRunner: started: drawsLoadingStateBeforeTheFirstDownload(com.prostellis.awe.WidgetRenderTest)
+10-09 00:39:32.715  4547  5157 D TrafficStats: tagSocket(107) with statsTag=0xffffffff, statsUid=-1
+10-09 00:39:32.738   836  4368 I Role    : com.google.android.gms not qualified for android.app.role.SYSTEM_CALL_STREAMING due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.telecom.CallStreamingService', mCategories='[]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='android.permission.BIND_CALL_STREAMING_SERVICE', mQueryFlags=0, mMetaData=[]}
+10-09 00:39:32.738   836  4368 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.SYSTEM_CALL_STREAMING
+10-09 00:39:32.740   836  4368 W Role    : Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
+10-09 00:39:32.768  1052  1075 I m.android.phone: Background concurrent copying GC freed 77381(3612KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 3567KB/7135KB, paused 22us,12us total 400.772ms
+10-09 00:39:32.776  1052  1077 W System  : A resource failed to call AbstractCursor.close.
+10-09 00:39:32.776  1052  1077 W System  : A resource failed to call AbstractCursor.close.
+10-09 00:39:32.776  1052  1077 W System  : A resource failed to call AbstractCursor.close.
+10-09 00:39:32.776  1052  1077 W System  : A resource failed to call AbstractCursor.close.
+10-09 00:39:32.820  4547  4644 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of bdxy@b10c71f
+10-09 00:39:32.850  4547  5104 D PhFileGroupPop: Added file groups smart_actions_emotive_models
+10-09 00:39:32.852  4547  5104 D PhFileGroupPop: Added file groups smart_actions_emotive_models
+10-09 00:39:32.858  4547  5162 I BugleNetwork: NewLightTickleFcmHandler: Handling firebase new token
+10-09 00:39:32.863  4547  5162 I BugleNetwork: RegistrationProvider: Refresh Tachyon Registration Now
+10-09 00:39:32.875  4547  5101 I BugleNetwork: RegistrationProvider: Tachyon registration token is null, ignore immediate refresh
+10-09 00:39:32.875  4547  5101 I BugleNetwork: NewLightTickleFcmHandler: Successfully handled firebase new token.
+10-09 00:39:32.875  5014  5049 I TestRunner: finished: drawsLoadingStateBeforeTheFirstDownload(com.prostellis.awe.WidgetRenderTest)

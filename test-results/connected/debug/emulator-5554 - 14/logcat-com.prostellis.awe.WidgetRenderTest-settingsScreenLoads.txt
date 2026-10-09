@@ -1,0 +1,11 @@
+10-09 00:39:36.455  5014  5049 I TestRunner: started: settingsScreenLoads(com.prostellis.awe.WidgetRenderTest)
+10-09 00:39:36.490  5014  5049 D CompatibilityChangeReporter: Compat change id reported: 210923482; UID 10192; state: ENABLED
+10-09 00:39:36.501  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.509  5014  5049 D CompatibilityChangeReporter: Compat change id reported: 171228096; UID 10192; state: ENABLED
+10-09 00:39:36.546  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.612  1404  4434 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.612  1404  4434 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.625  1404  1490 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.625  1404  1490 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.672  1404  1493 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.673  5014  5049 I TestRunner: finished: settingsScreenLoads(com.prostellis.awe.WidgetRenderTest)

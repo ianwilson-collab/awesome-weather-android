@@ -1,0 +1,222 @@
+10-09 00:39:34.309  5014  5049 I TestRunner: started: drawsAllSizesInLightAndDark(com.prostellis.awe.WidgetRenderTest)
+10-09 00:39:34.347  3746  4373 I ConfigUpdater: doneInstall
+10-09 00:39:34.362  1053  2231 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:34.363  1053  2231 W SliceData: Highlight menu key res is empty: com.android.settings.deviceinfo.firmwareversion.FirmwareVersionDetailPreferenceController
+10-09 00:39:34.364  1053  2231 D SettingsSliceProvider: Built slice (content://com.android.settings.slices/action/os_firmware_version) in: 2
+10-09 00:39:34.364   336  5189 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10130 0}
+10-09 00:39:34.366  1053  1081 D SliceBuilder: Creating slice for: com.android.settings.deviceinfo.hardwareinfo.DeviceModelPreferenceController
+10-09 00:39:34.369   336  5191 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-09 00:39:34.369  1053  1074 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:34.370  1053  4467 D SettingsSliceProvider: content://com.android.settings.slices/action/hardware_info_device_model loaded from cache
+10-09 00:39:34.377   336  5190 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-09 00:39:34.408   336  5191 I resolv  : res_nsend: used send_dg 180 terrno: 0
+10-09 00:39:34.408   336  5191 I resolv  : doQuery: rcode=0, ancount=8, return value=180
+10-09 00:39:34.411   336  5190 I resolv  : res_nsend: used send_dg 276 terrno: 0
+10-09 00:39:34.411   336  5190 I resolv  : doQuery: rcode=0, ancount=8, return value=276
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: Could not register for notifications with InnerTube:
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: abqx: zvm: Precondition check failed.
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at abqn.apply(Unknown Source:4)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at yyi.r(PG:5)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at yyi.b(PG:2)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at abqp.d(PG:4)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at agsb.c(PG:63)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at agsb.j(PG:38)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at agsb.d(PG:3)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at agrz.run(Unknown Source:2)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at smg.run(PG:2)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at snu.run(PG:5)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: Caused by: zvm: Precondition check failed.
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at abpb.e(PG:5)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at zhp.f(PG:1)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at zhp.e(PG:1)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at zgl.run(PG:19)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at aosb.run(PG:3)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at yxr.run(PG:11)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at java.lang.Thread.run(Thread.java:1012)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: Caused by: efc
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	at zgl.run(PG:13)
+10-09 00:39:34.446  1740  2707 W YouTubeMusic: 	... 5 more
+10-09 00:39:34.453  4547  4596 I .apps.messaging: Background concurrent copying GC freed 14511(814KB) AllocSpace objects, 169(8664KB) LOS objects, 49% free, 11MB/22MB, paused 41us,15us total 151.582ms
+10-09 00:39:34.500  1053  2231 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:34.500  1053  2231 W SliceData: Highlight menu key res is empty: com.android.settings.deviceinfo.hardwareinfo.DeviceModelPreferenceController
+10-09 00:39:34.508  1053  2231 D SettingsSliceProvider: Built slice (content://com.android.settings.slices/action/hardware_info_device_model) in: 8
+10-09 00:39:34.511  1053  1074 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:34.511  1053  4467 D SettingsSliceProvider: content://com.android.settings.slices/action/screen_magnification_gestures_preference_screen loaded from cache
+10-09 00:39:34.514  1053  1081 D SliceBuilder: Creating slice for: com.android.settings.accessibility.MagnificationGesturesPreferenceController
+10-09 00:39:34.577  1459  4404 I Icing   : Indexing com.google.android.gms-internal.3p:MobileApplication from com.google.android.gms
+10-09 00:39:34.578  1459  4404 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-09 00:39:34.579  1459  4404 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-09 00:39:34.560  2228  5088 V DownloadManager: Deleting /data/data/com.android.providers.downloads/cache/en.fb.metadata via provider delete
+10-09 00:39:34.597  1631  1734 W ModernMediaScanner: Failed to visit /data/data/com.android.providers.downloads/cache/en.fb.metadata: java.nio.file.NoSuchFileException: /data/data/com.android.providers.downloads/cache/en.fb.metadata
+10-09 00:39:34.597  1631  1734 I MediaProvider: Scanned internal due to REASON_DEMAND, found 0 items in 1ms, 0 inserts 0 updates 0 deletes
+10-09 00:39:34.653  1519  1853 I SuperDelight: SuperDelightMergingStrategy.merge():55 SuperDelightMergingStrategy#merge(): selected[[main_en_us_2022101700_1]] synced[[main_en_840_2022102600_1]]
+10-09 00:39:34.653  1519  1853 I SP      : Sync for delight succeeded in 7660 ms: {added: [main_en_840_2022102600_1], metadata: false
+10-09 00:39:34.654  1404  5163 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:34.676  1519  1853 I SP      : GC for 'delight' (10) with ttl of 0 ms took 0 ms (0/0/0)
+10-09 00:39:34.676  1519  1602 I SuperDelight: SuperDelightManager$2.onSuccess():635 delight sync success, adding to data file manager
+10-09 00:39:34.677  1519  1602 I DataFileManager: DataFileManager.addDataWithoutNotify():166 adding data en-840 delight
+10-09 00:39:34.677  1519  1602 I DataFileManager: DataFileManager.addDataWithoutNotify():162 data en-US already exists
+10-09 00:39:34.686  1459  4404 I Icing   : Indexing done com.google.android.gms-apps
+10-09 00:39:34.696  1404  5163 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:34.714  1459  4404 I Icing   : Indexing com.google.android.gms-internal.3p:MobileApplication from com.google.android.gms
+10-09 00:39:34.716  1459  4404 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-09 00:39:34.717  1053  2231 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:34.720  1053  1079 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:34.733  1053  1074 D SliceBuilder: Creating slice for: com.android.settings.notification.MediaVolumePreferenceController
+10-09 00:39:34.733  1053  2231 D SettingsSliceProvider: Built slice (content://com.android.settings.slices/action/screen_magnification_gestures_preference_screen) in: 5
+10-09 00:39:34.738  1053  4467 D SettingsSliceProvider: content://com.android.settings.slices/action/media_volume loaded from cache
+10-09 00:39:34.758  4547  5183 I cr_CronetUrlRequestContext: destroyNativeStreamLocked org.chromium.net.impl.CronetBidirectionalStream@e9e2e0f
+10-09 00:39:34.773  4547  4645 I Bugle   : VerifiedSmsEnabledCheckerImpl: VSMS is disabled via Phenotype flag.
+10-09 00:39:34.780  4547  4640 I Bugle   : VerifiedSmsStartupTask: Checking if Verified SMS tasks should be enqueued. feature supported: false, feature enabled: false, eligible / has registered key: false, C11N: false
+10-09 00:39:34.780  4547  4640 I Bugle   : VerifiedSmsStartupTask: Not enqueuing VSMS periodic task, VSMS is disabled or not supported.
+10-09 00:39:34.780  4547  4644 I Bugle   : VerifiedSmsStartupTask: Not calling C11N to get phone numbers.
+10-09 00:39:34.784  2228  5088 V DownloadManager: Deleting /data/data/com.android.providers.downloads/cache/en.fb via provider delete
+10-09 00:39:34.788  1459  1459 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.asterism.service.START pkg=com.google.android.gms }
+10-09 00:39:34.836  1053  1074 D MediaVolumePreCtrl: The slice doesn't support end item
+10-09 00:39:34.880  1631  1734 W ModernMediaScanner: Failed to visit /data/data/com.android.providers.downloads/cache/en.fb: java.nio.file.NoSuchFileException: /data/data/com.android.providers.downloads/cache/en.fb
+10-09 00:39:34.880  1631  1734 I MediaProvider: Scanned internal due to REASON_DEMAND, found 0 items in 1ms, 0 inserts 0 updates 0 deletes
+10-09 00:39:34.907  1459  4404 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-09 00:39:34.915  4547  5104 D PhFileGroupPop: Added file groups smarts_expressive_content_scoped_v1
+10-09 00:39:34.916  1053  1074 D SliceBuilder: Creating slice for: com.android.settings.notification.MediaVolumePreferenceController
+10-09 00:39:34.918  1053  1079 D VolumeSliceHelper: Unregistering uri broadcast relay: content://com.android.settings.slices/action/media_volume
+10-09 00:39:34.918  1053  1053 D SettingsSliceProvider: Stopping background worker for: content://com.android.settings.slices/action/media_volume
+10-09 00:39:34.920  1053  1074 D MediaVolumePreCtrl: The slice doesn't support end item
+10-09 00:39:34.922  1053  1081 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:34.923  1053  2231 D SettingsSliceProvider: content://com.android.settings.slices/action/call_volume loaded from cache
+10-09 00:39:34.924  1053  1079 D SliceBuilder: Creating slice for: com.android.settings.notification.CallVolumePreferenceController
+10-09 00:39:34.930  1053  1074 D VolumeSliceHelper: Unregistering uri broadcast relay: content://com.android.settings.slices/action/call_volume
+10-09 00:39:34.930  1053  4467 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:34.931  1053  4467 D VolumeSliceHelper: Registering uri for broadcast relay: content://com.android.settings.slices/action/call_volume
+10-09 00:39:34.931  1053  4467 D SettingsSliceProvider: Built slice (content://com.android.settings.slices/action/call_volume) in: 1
+10-09 00:39:34.932  1053  1074 D SliceBuilder: Creating slice for: com.android.settings.notification.SeparateRingVolumePreferenceController
+10-09 00:39:34.932  1053  4405 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:34.933  1053  2231 D SettingsSliceProvider: content://com.android.settings.slices/action/separate_ring_volume loaded from cache
+10-09 00:39:34.946  4547  5104 D PhFileGroupPop: Added file groups smart_actions_sensitive_classifier_models
+10-09 00:39:34.950  1459  4404 I Icing   : Indexing done com.google.android.gms-apps
+10-09 00:39:34.957  1459  4404 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-09 00:39:34.958  1459  4404 I Icing   : Indexing done com.google.android.gms-apps
+10-09 00:39:34.970  4547  5104 D PhFileGroupPop: Added file groups smarts_expressive_content_scoped_v1
+10-09 00:39:34.985  4547  5104 D PhFileGroupPop: Added file groups scripted_reply
+10-09 00:39:34.987  4547  5104 D PhFileGroupPop: Added file groups smart_actions_sensitive_classifier_models
+10-09 00:39:35.004  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.008  4547  5104 D PhFileGroupPop: Added file groups multitask_experiment
+10-09 00:39:35.010  4547  5104 D PhFileGroupPop: Added file groups scripted_reply
+10-09 00:39:35.019   520   529 I system_server: Background concurrent copying GC freed 751612(27MB) AllocSpace objects, 34(812KB) LOS objects, 48% free, 25MB/49MB, paused 38us,36us total 105.115ms
+10-09 00:39:35.019  4547  5104 D PhFileGroupPop: Added file groups spam_verdict_enforcement_policy_config
+10-09 00:39:35.021  1053  1079 D SliceBuilder: Creating slice for: com.android.settings.notification.SeparateRingVolumePreferenceController
+10-09 00:39:35.025  1053  1079 D VolumeSliceHelper: Unregistering uri broadcast relay: content://com.android.settings.slices/action/separate_ring_volume
+10-09 00:39:35.027  4547  5104 D PhFileGroupPop: Added file groups smart_suggestion_reranker_models
+10-09 00:39:35.027  4547  5104 D PhFileGroupPop: Added file groups multitask_experiment
+10-09 00:39:35.030  1053  1079 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:35.033  1053  4405 D SliceBuilder: Creating slice for: com.android.settings.notification.NotificationVolumePreferenceController
+10-09 00:39:35.041  1053  4467 D SettingsSliceProvider: content://com.android.settings.slices/action/notification_volume loaded from cache
+10-09 00:39:35.054  4547  5104 D PhFileGroupPop: Added file groups supersort_us_grammars
+10-09 00:39:35.054  4547  5104 D PhFileGroupPop: Added file groups spam_verdict_enforcement_policy_config
+10-09 00:39:35.055  4547  5104 D PhFileGroupPop: Added file groups smart_suggestion_reranker_models
+10-09 00:39:35.058  1053  1074 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:35.060  1053  4405 D SliceBuilder: Creating slice for: com.android.settings.notification.AlarmVolumePreferenceController
+10-09 00:39:35.063  1053  2231 D SettingsSliceProvider: content://com.android.settings.slices/action/alarm_volume loaded from cache
+10-09 00:39:35.067  1053  4405 D SliceBuilder: Creating slice for: com.android.settings.notification.NotificationVolumePreferenceController
+10-09 00:39:35.068  1053  1074 D VolumeSliceHelper: Unregistering uri broadcast relay: content://com.android.settings.slices/action/notification_volume
+10-09 00:39:35.076  4547  5104 D PhFileGroupPop: Added file groups nudge
+10-09 00:39:35.076  4547  5104 D PhFileGroupPop: Added file groups supersort_us_grammars
+10-09 00:39:35.081  1053  1074 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:35.082  1053  4467 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:35.082  1053  4467 D VolumeSliceHelper: Registering uri for broadcast relay: content://com.android.settings.slices/action/notification_volume
+10-09 00:39:35.090  1053  4467 D SettingsSliceProvider: Built slice (content://com.android.settings.slices/action/notification_volume) in: 8
+10-09 00:39:35.097  1053  4405 D SliceBuilder: Creating slice for: com.android.settings.network.AirplaneModePreferenceController
+10-09 00:39:35.102  4547  5104 D PhFileGroupPop: Added file groups calendar_appointment_grammar
+10-09 00:39:35.102  4547  5104 D PhFileGroupPop: Added file groups nudge
+10-09 00:39:35.111  4547  5104 D PhFileGroupPop: Added file groups birthday_suggestion
+10-09 00:39:35.111  4547  5104 D PhFileGroupPop: Added file groups calendar_appointment_grammar
+10-09 00:39:35.116  1053  1079 D SliceBuilder: Creating slice for: com.android.settings.fuelgauge.batterysaver.BatterySaverButtonPreferenceController
+10-09 00:39:35.130  1053  4405 D SliceBuilder: Creating slice for: com.android.settings.network.AirplaneModePreferenceController
+10-09 00:39:35.138  1053  4405 D SliceBuilder: Creating slice for: com.android.settings.fuelgauge.batterysaver.BatterySaverButtonPreferenceController
+10-09 00:39:35.165  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.166  1053  1079 D SliceBuilder: Creating slice for: com.android.settings.notification.AlarmVolumePreferenceController
+10-09 00:39:35.166  1053  1074 D VolumeSliceHelper: Unregistering uri broadcast relay: content://com.android.settings.slices/action/alarm_volume
+10-09 00:39:35.169  1053  1079 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:35.170  1053  2231 D SettingsSliceProvider: content://android.settings.slices/action/airplane_mode loaded from cache
+10-09 00:39:35.170  3746  4373 I ConfigUpdater: Update downloaded, starting installation
+10-09 00:39:35.179  1053  1079 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:35.181  4547  5104 D PhFileGroupPop: Added file groups birthday_grammars
+10-09 00:39:35.181  4547  5104 D PhFileGroupPop: Added file groups birthday_suggestion
+10-09 00:39:35.181  4547  5104 D PhFileGroupPop: Added file groups birthday_grammars
+10-09 00:39:35.183  1053  4467 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:35.184  1053  4467 D VolumeSliceHelper: Registering uri for broadcast relay: content://com.android.settings.slices/action/media_volume
+10-09 00:39:35.184  1053  1053 D SettingsSliceProvider: Starting background worker for: content://com.android.settings.slices/action/media_volume
+10-09 00:39:35.185  1053  2231 D SettingsSliceProvider: content://android.settings.slices/action/battery_saver loaded from cache
+10-09 00:39:35.192  1459  4404 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-09 00:39:35.193  1053  2231 W LocalMediaManager: BluetoothAdapter is null or muting expected device not exist
+10-09 00:39:35.195  1053  4467 D SettingsSliceProvider: Built slice (content://com.android.settings.slices/action/media_volume) in: 12
+10-09 00:39:35.199  1053  1074 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:35.200   336  5197 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10130 0}
+10-09 00:39:35.208   336  5199 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-09 00:39:35.208   336  5199 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7374025e8010
+10-09 00:39:35.208   336  5199 I resolv  : doQuery: rcode=0, ancount=1, return value=49
+10-09 00:39:35.209  1053  2231 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:35.211   336  5198 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-09 00:39:35.211   336  5198 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7374025e9bd0
+10-09 00:39:35.211   336  5198 I resolv  : doQuery: rcode=0, ancount=1, return value=61
+10-09 00:39:35.213  4547  5196 D TrafficStats: tagSocket(129) with statsTag=0xffffffff, statsUid=-1
+10-09 00:39:35.216  1053  2231 D SettingsSliceProvider: Built slice (content://android.settings.slices/action/airplane_mode) in: 7
+10-09 00:39:35.225  1459  4404 I Icing   : Indexing done com.google.android.gms-apps
+10-09 00:39:35.239  1404  5163 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.244  1053  1074 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:35.249  1404  5163 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.271  1053  4467 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:35.272  1053  4467 D SettingsSliceProvider: Built slice (content://android.settings.slices/action/battery_saver) in: 1
+10-09 00:39:35.330  1053  1074 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:35.330  1053  2231 D SlicesIndexer: Slices already indexed - returning.
+10-09 00:39:35.331  1053  2231 D VolumeSliceHelper: Registering uri for broadcast relay: content://com.android.settings.slices/action/alarm_volume
+10-09 00:39:35.341  1053  2231 D SettingsSliceProvider: Built slice (content://com.android.settings.slices/action/alarm_volume) in: 11
+10-09 00:39:35.392  1053  1074 W ElapsedTimeUtils: getElapsedTime: sSuwFinishedTimeStamp is null
+10-09 00:39:35.402  1053  4467 D SettingsSliceProvider: content://com.android.settings.slices/action/media_volume loaded from cache
+10-09 00:39:35.454  1404  1490 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.462  1404  1490 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.612  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.613  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.690  1459  4404 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-09 00:39:35.690  1459  4404 I Icing   : Indexing done com.google.android.gms-apps
+10-09 00:39:35.723  1404  4434 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.723  1404  4434 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.766  3746  4373 I ConfigUpdater: doneInstall
+10-09 00:39:35.783  2228  5194 V DownloadManager: Deleting /data/data/com.android.providers.downloads/cache/en.model.metadata via provider delete
+10-09 00:39:35.784  1631  1734 W ModernMediaScanner: Failed to visit /data/data/com.android.providers.downloads/cache/en.model.metadata: java.nio.file.NoSuchFileException: /data/data/com.android.providers.downloads/cache/en.model.metadata
+10-09 00:39:35.785  1631  1734 I MediaProvider: Scanned internal due to REASON_DEMAND, found 0 items in 0ms, 0 inserts 0 updates 0 deletes
+10-09 00:39:35.792  1459  4404 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-09 00:39:35.800  1404  1493 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.875  2228  5194 V DownloadManager: Deleting /data/data/com.android.providers.downloads/cache/en.model via provider delete
+10-09 00:39:35.879  1631  1750 W ModernMediaScanner: Failed to visit /data/data/com.android.providers.downloads/cache/en.model: java.nio.file.NoSuchFileException: /data/data/com.android.providers.downloads/cache/en.model
+10-09 00:39:35.881  1404  1493 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:35.934  1631  1750 I MediaProvider: Scanned internal due to REASON_DEMAND, found 0 items in 57ms, 0 inserts 0 updates 0 deletes
+10-09 00:39:35.942  1459  4404 I Icing   : Indexing done com.google.android.gms-apps
+10-09 00:39:35.966  1459  4404 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-09 00:39:35.966  1459  4404 I Icing   : Indexing done com.google.android.gms-apps
+10-09 00:39:36.009   835   835 D StatusBarIconController: ignoring old pipeline callbacks, because the new mobile icons are enabled
+10-09 00:39:36.018   835   880 D EGL_emulation: app_time_stats: avg=7267.91ms min=7267.91ms max=7267.91ms count=1
+10-09 00:39:36.051  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.108  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.211  4547  4547 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_EXECUTE_QUEUED_FixupMessageStatusOnStartupAction elapsedRealTime: 117861 currentTimeMillis: 1791506376211
+10-09 00:39:36.212  4547  4547 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_EXECUTE_QUEUED_ProcessPendingMessagesAction elapsedRealTime: 117861 currentTimeMillis: 1791506376212
+10-09 00:39:36.219  4547  4638 I BugleDataModel: FixupMessageStatusOnStartupAction: sendFailedCnt: 0, downloadFailedCnt: 0, partsProcessingFailedCnt: 0
+10-09 00:39:36.233  4547  4638 I BugleDataModel: PendingMessagesProcessor: process from FixupMessageStatusOnStartupAction due to connectivity changed with delay 0 with queues:
+10-09 00:39:36.233  4547  4638 I BugleDataModel: ProcessPendingMessagesTimers: cleared next retry time for channel sms_send
+10-09 00:39:36.234  4547  4638 I BugleDataModel: ProcessPendingMessagesTimers: cleared next retry time for channel mms_send
+10-09 00:39:36.234  4547  4638 I BugleDataModel: ProcessPendingMessagesTimers: cleared next retry time for channel mms_download
+10-09 00:39:36.234  4547  4638 I BugleDataModel: ProcessPendingMessagesTimers: cleared next retry time for channel rcs_send
+10-09 00:39:36.234  4547  4638 I BugleDataModel: ProcessPendingMessagesTimers: cleared next retry time for channel rcs_ft_upload
+10-09 00:39:36.234  4547  4638 I BugleDataModel: ProcessPendingMessagesTimers: cleared next retry time for channel rcs_ft_download
+10-09 00:39:36.234  4547  4638 I BugleDataModel: ProcessPendingMessagesTimers: cleared next retry time for channel cloud_sync_send
+10-09 00:39:36.234  4547  4638 I BugleDataModel: ProcessPendingMessagesTimers: cleared next retry time for channel cloud_sync_attachment_download
+10-09 00:39:36.238  4547  4638 I BugleDataModel: PendingMessagesProcessor: process from ProcessPendingMessagesAction due to scheduled processing with delay 0 with queues:
+10-09 00:39:36.243  1404  5163 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.244  1404  5163 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:36.253  5014  5049 I TestRunner: finished: drawsAllSizesInLightAndDark(com.prostellis.awe.WidgetRenderTest)

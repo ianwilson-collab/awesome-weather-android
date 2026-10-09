@@ -1,0 +1,37 @@
+10-09 00:39:32.272  5014  5049 I TestRunner: started: drawsExtremeTemperaturesWithoutOverlap(com.prostellis.awe.WidgetRenderTest)
+10-09 00:39:32.290   520   533 D WifiNl80211Manager: Scan result ready event
+10-09 00:39:32.290   520   533 D WifiNative: Scan result ready event
+10-09 00:39:32.341  1052  1052 D CarrierSvcBindHelper: onPackageModified: com.google.android.apps.messaging
+10-09 00:39:32.341  1028  1028 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-09 00:39:32.342  1028  1028 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-09 00:39:32.342   520   623 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+10-09 00:39:32.351   835   835 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-09 00:39:32.352   836   962 I PermissionControllerServiceImpl: Updating user sensitive for uid 10130
+10-09 00:39:32.353   835   879 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+10-09 00:39:32.354  1052  1052 D CarrierSvcBindHelper: No carrier app for: 0
+10-09 00:39:32.354   835   879 D StylusManager: Stylus InputDevice changed: 11 virtio_input_multi_touch_8
+10-09 00:39:32.354   835   879 D StylusManager: Stylus InputDevice changed: 10 virtio_input_multi_touch_7
+10-09 00:39:32.366   835   879 D StylusManager: Stylus InputDevice changed: 8 virtio_input_multi_touch_5
+10-09 00:39:32.406  4547  5104 D PhFileGroupPop: Added file groups smart_actions_grammars
+10-09 00:39:32.408  4547  5104 D PhFileGroupPop: Added file groups smart_actions_grammars
+10-09 00:39:32.414   520   612 I RoleService: Granting default roles...
+10-09 00:39:32.429  1052  1352 D ImsResolver: maybeAddedImsService, packageName: com.google.android.apps.messaging
+10-09 00:39:32.479  1404  1404 W .gms.persistent: Long monitor contention with owner highpool[5] (3290) at java.io.InputStream android.content.res.AssetManager.openNonAsset(int, java.lang.String, int)(AssetManager.java:1027) waiters=0 in boolean android.content.res.AssetManager.isUpToDate() for 168ms
+10-09 00:39:32.501  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:32.503   835   879 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+10-09 00:39:32.518  1404  1474 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:32.526   835   879 D StylusManager: Stylus InputDevice changed: 6 virtio_input_multi_touch_3
+10-09 00:39:32.527  1404  1493 I NearbyFastPair: DynamicSupportModule: onSupportStateUpdate end [CONTEXT service_id=265 ]
+10-09 00:39:32.587  4547  5104 D PhFileGroupPop: Added file groups smart_actions_ml_models
+10-09 00:39:32.600   835   879 D StylusManager: Stylus InputDevice changed: 12 virtio_input_multi_touch_9
+10-09 00:39:32.600   835   879 D StylusManager: Stylus InputDevice changed: 7 virtio_input_multi_touch_4
+10-09 00:39:32.600   835   879 D StylusManager: Stylus InputDevice changed: 14 virtio_input_multi_touch_11
+10-09 00:39:32.601  4547  5104 D PhFileGroupPop: Added file groups smart_actions_ml_models
+10-09 00:39:32.601   835   879 D StylusManager: Stylus InputDevice changed: 4 virtio_input_multi_touch_1
+10-09 00:39:32.606  4547  5104 D PhFileGroupPop: Added file groups text_classifier
+10-09 00:39:32.607  4547  5104 D PhFileGroupPop: Added file groups text_classifier
+10-09 00:39:32.635  1404  1490 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:32.645   835   879 D StylusManager: Stylus InputDevice changed: 9 virtio_input_multi_touch_6
+10-09 00:39:32.667  1404  1490 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-09 00:39:32.706   836  4368 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
+10-09 00:39:32.707  5014  5049 I TestRunner: finished: drawsExtremeTemperaturesWithoutOverlap(com.prostellis.awe.WidgetRenderTest)
