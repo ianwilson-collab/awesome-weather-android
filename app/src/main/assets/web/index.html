@@ -1798,8 +1798,6 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     $("outlook").hidden = !ext.length;
     if (!ext.length) return;
     Object.assign(state.moonEvents, lunarEvents(ext.map((d) => d.ymd)));
-    const all = [...days, ...ext];
-    const wMin = Math.min(...all.map((d) => d.lo ?? Infinity)), wMax = Math.max(...all.map((d) => d.hi ?? -Infinity));
     $("outlookList").innerHTML = ext.map((d, k) => {
       const specials = specialDays(d.ymd), evt = state.moonEvents[d.ymd], amt = inches(d.precip);
       const marks = specials.map((sp) => `<span title="${esc(sp.name)}">${badgeSVG(sp.art, sp.name)}</span>`).join("") +
@@ -1807,7 +1805,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       return `<div class="orow" role="button" tabindex="0" data-x="${k}" aria-label="${esc(fmtDow(d.ymd))} ${esc(fmtMonDay(d.ymd))}: ${esc(d.label)}, high ${round(d.hi)}, low ${round(d.lo)}. Open details.">
         <div class="o-day"><b>${fmtDow(d.ymd, true)}</b><span class="o-date">${fmtMonDay(d.ymd)}</span>${marks ? `<span class="o-badges">${marks}</span>` : ""}</div>
         <div class="o-cond">${weatherIcon(d.cat)}<span>${esc(d.label)}</span></div>
-        <div class="o-temps num"><span class="o-hi">${deg(d.hi)}</span><span class="o-lo">${deg(d.lo)}</span>${rangeBar(d, wMin, wMax)}</div>
+        <div class="o-temps num"><span class="o-hi">${deg(d.hi)}</span><span class="o-lo">${deg(d.lo)}</span>${rangeBar(d)}</div>
         <div class="o-rain num">${UI.drop}${d.pop == null ? "—" : d.pop + "%"}${amt ? ` <span class="muted">${amt}</span>` : ""}</div>
         <div class="o-wind num">${UI.wind}<span>${windText(d.wind, d.gust)}</span></div>
       </div>`;
@@ -1862,22 +1860,27 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     }
     return `rgb(${TEMP_STOPS[TEMP_STOPS.length - 1][1]})`;
   }
-  // Where this day's high→low sits within the whole week's range: hot on the left, cool on the right.
-  // The ends sit a little past the week's extremes, leaning toward 100° and 32°, so only those touch the edges.
-  const BAR_HOT = 100, BAR_COLD = 32, BAR_EDGE = .15;
-  function rangeBar(d, wMin, wMax, cls = "") {
+  // Fixed scale for every horizontal bar: 80° at the left edge, 32° at the right.
+  // Highs above 80° and lows below 32° stop at the edge; that end's color deepens instead (deep red by 100°, navy by 10°).
+  const BAR_HOT = 80, BAR_COLD = 32, DEEP_RED = [150, 18, 24], DEEP_BLUE = [22, 34, 112];
+  function mixToward(color, to, u) {
+    const c = color.match(/\d+/g).map(Number);
+    return `rgb(${c.map((v, j) => Math.round(v + (to[j] - v) * Math.min(u, 1)))})`;
+  }
+  function barEndColor(t) {
+    if (t > BAR_HOT) return mixToward(tempColor(BAR_HOT), DEEP_RED, (t - BAR_HOT) / 20);
+    if (t < BAR_COLD) return mixToward(tempColor(BAR_COLD), DEEP_BLUE, (BAR_COLD - t) / 22);
+    return tempColor(t);
+  }
+  function rangeBar(d, cls = "") {
     if (d.lo == null || d.hi == null) return "";
-    const hot = wMax >= BAR_HOT ? wMax : wMax + (BAR_HOT - wMax) * BAR_EDGE;
-    const cold = wMin <= BAR_COLD ? wMin : wMin - (wMin - BAR_COLD) * BAR_EDGE;
-    if (hot <= cold) return "";
-    const left = ((hot - d.hi) / (hot - cold)) * 100, width = ((d.hi - d.lo) / (hot - cold)) * 100;
-    return `<div class="range ${cls}" role="img" aria-label="Temperature range ${round(d.hi)}° to ${round(d.lo)}° within this week's ${round(wMax)}° to ${round(wMin)}°">
-      <span style="left:${left.toFixed(1)}%;width:${width.toFixed(1)}%;background:linear-gradient(90deg, ${tempColor(d.hi)}, ${tempColor(d.lo)})"></span></div>`;
+    const pos = (t) => ((BAR_HOT - Math.min(Math.max(t, BAR_COLD), BAR_HOT)) / (BAR_HOT - BAR_COLD)) * 100;
+    const left = pos(d.hi), width = pos(d.lo) - left;
+    return `<div class="range ${cls}" role="img" aria-label="Temperature range ${round(d.hi)}° to ${round(d.lo)}°">
+      <span style="left:min(${left.toFixed(1)}%, calc(100% - 6px));width:${width.toFixed(1)}%;background:linear-gradient(90deg, ${barEndColor(d.hi)}, ${barEndColor(d.lo)})"></span></div>`;
   }
 
   function renderCards(days) {
-    const wMin = Math.min(...days.map((d) => d.lo ?? Infinity));
-    const wMax = Math.max(...days.map((d) => d.hi ?? -Infinity));
     state.moonEvents = lunarEvents(days.map((d) => d.ymd));
     $("days").innerHTML = days.map((d, n) => {
       const evt = state.moonEvents[d.ymd];
@@ -1897,7 +1900,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
             <div class="dhead"><span class="dow">${esc(dow)}</span><span class="date">${fmtMonDay(d.ymd)}</span></div>
             <div class="cond">${weatherIcon(d.cat)}<span>${esc(d.label)}</span></div>
             <div class="temps num"><span class="hi">${deg(d.hi)}</span><span class="lo">${deg(d.lo)}</span></div>
-            ${rangeBar(d, wMin, wMax)}
+            ${rangeBar(d)}
             <div class="feels num">Feels like ${deg(d.feelsHi)} / ${deg(d.feelsLo)}</div>
           </div>
           <div class="side">
@@ -2025,8 +2028,6 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       <div class="c-cloud">Clouds</div><div class="c-wind">Wind</div>
     </div>`;
     const out = [head];
-    const wMin = Math.min(...days.map((d) => d.lo ?? Infinity));
-    const wMax = Math.max(...days.map((d) => d.hi ?? -Infinity));
     for (let k = 0; k < HOURLY_DAYS; k++) {
       const ymd = addDays(today, k);
       const day = days.find((d) => d.ymd === ymd);
@@ -2034,7 +2035,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       out.push(`<div class="hday${k === 0 ? " first" : ""}">
         <span class="d-name">${esc(name)}</span>
         ${day ? `<span class="d-sum num">${weatherIcon(day.cat)}${esc(day.label)} · ${deg(day.hi)} / ${deg(day.lo)}</span>
-        ${rangeBar(day, wMin, wMax, "d-range")}
+        ${rangeBar(day, "d-range")}
         <span class="d-sun num" aria-label="Sunrise ${fmtClock(day.sunrise)}, sunset ${fmtClock(day.sunset)}">${UI.sunPath}<span class="sun-times">${UI.sunUp}${fmtClock(day.sunrise)}${UI.sunDown}${fmtClock(day.sunset)}</span></span>` : ""}
       </div>`);
       for (let i = 0; i < h.time.length; i++) {
