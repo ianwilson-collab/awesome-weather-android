@@ -22,11 +22,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.webkit.WebViewAssetLoader
 import com.prostellis.awe.data.Store
+import com.prostellis.awe.widget.IconStyle
 import com.prostellis.awe.widget.Refresh
+import com.prostellis.awe.widget.WidgetUpdater
 
 /**
  * The app: the bundled web app (assets/web/index.html, unchanged) in a full-screen web view,
- * plus a small bridge so the widgets follow the location saved in the app.
+ * plus a small bridge so the widgets follow the location and icon style saved in the app.
  */
 class MainActivity : ComponentActivity() {
 
@@ -69,6 +71,7 @@ class MainActivity : ComponentActivity() {
 
             override fun onPageFinished(view: WebView, url: String) {
                 view.evaluateJavascript(pageScript(), null)
+                syncIconStyle()
                 pageReady = true
                 if (openLocationWhenReady) openLocation()
             }
@@ -108,6 +111,17 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // The style may have been changed in a widget's settings while the app was in the background
+        if (pageReady) syncIconStyle()
+    }
+
+    /** The app shows the icon style saved for the widgets (the page saves its own copy and reports changes back). */
+    private fun syncIconStyle() {
+        webView.evaluateJavascript("window.awesomeWeather?.setIconStyle('${Store(this).iconStyle.id}')", null)
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         webView.saveState(outState)
@@ -140,7 +154,7 @@ class MainActivity : ComponentActivity() {
         })
     }
 
-    /** Runs after the page loads: reports the saved place to the widgets and adds the name under the footer. */
+    /** Runs after the page loads: reports the saved place and icon style to the widgets and adds the name under the footer. */
     private fun pageScript(): String {
         val version = packageManager.getPackageInfo(packageName, 0).versionName ?: ""
         return """
@@ -151,9 +165,13 @@ class MainActivity : ComponentActivity() {
               const setItem = Storage.prototype.setItem;
               Storage.prototype.setItem = function (k, v) {
                 setItem.call(this, k, v);
-                if (this === window.localStorage && k === "wx7.loc") report(v);
+                if (this !== window.localStorage) return;
+                if (k === "wx7.loc") report(v);
+                if (k === "wx7.iconStyle") AWEBridge.iconStyleSaved(JSON.parse(v));
               };
               report(localStorage.getItem("wx7.loc"));
+              const help = document.getElementById("styleHelp");
+              if (help) help.textContent = "Changes the weather symbols in the app and on your home-screen widgets.";
 
               const css = document.createElement("style");
               css.textContent = `
@@ -183,6 +201,16 @@ class MainActivity : ComponentActivity() {
         @JavascriptInterface
         fun placeSaved(json: String) {
             if (Store(applicationContext).savePlaceJson(json)) Refresh.now(applicationContext)
+        }
+
+        /** The icon style was changed in the app's settings: the widgets switch to it too. */
+        @JavascriptInterface
+        fun iconStyleSaved(id: String) {
+            val store = Store(applicationContext)
+            val style = IconStyle.fromId(id)
+            if (style == store.iconStyle) return
+            store.iconStyle = style
+            WidgetUpdater.updateAll(applicationContext)
         }
     }
 

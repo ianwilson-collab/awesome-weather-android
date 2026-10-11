@@ -17,6 +17,11 @@
     <string name="settings_see_through">See-through</string>
     <string name="settings_show_current">Show current weather</string>
     <string name="settings_show_current_help">Temperature and conditions at the top</string>
+    <string name="settings_icon_style">Icon style</string>
+    <string name="settings_icon_style_help">Used by all your widgets and the app</string>
+    <string name="style_current">Current</string>
+    <string name="style_glow">Glow</string>
+    <string name="style_fine">Fine Line</string>
     <string name="settings_refresh">Refresh</string>
     <string name="settings_refresh_30">Every 30 minutes</string>
     <string name="settings_refresh_30_default">· default</string>

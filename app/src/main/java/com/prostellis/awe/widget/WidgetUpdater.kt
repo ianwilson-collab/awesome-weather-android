@@ -62,22 +62,30 @@ object WidgetUpdater {
     }
 
     /** Draws one widget from the saved forecast, with settings that may not be saved yet (for the settings preview). */
-    fun renderFor(context: Context, kind: WidgetKind, widthDp: Float, heightDp: Float, transparency: Int, showCurrent: Boolean): Rendered {
+    fun renderFor(
+        context: Context, kind: WidgetKind, widthDp: Float, heightDp: Float, transparency: Int, showCurrent: Boolean, iconStyle: IconStyle,
+    ): Rendered {
         val store = Store(context)
         val saved = store.forecastForCurrentPlace()
         val now = System.currentTimeMillis()
         val model = saved?.let { WeatherLogic.model(store.place, it.forecast, it.fetchedAt, now, 7) }
         val dark = phoneIsDark(context)
         val theme = WidgetTheme.pick(dark, transparency, wallpaperWantsDarkText(context))
-        return WidgetRenderer(context).render(kind, model, widthDp, heightDp, transparency, theme, dark, showCurrent)
+        return WidgetRenderer(context).render(kind, model, widthDp, heightDp, transparency, theme, dark, showCurrent, iconStyle)
+    }
+
+    /** Redraws every widget (after a change that applies to all of them, like the icon style). */
+    fun updateAll(context: Context) {
+        for (id in allIds(context)) update(context, id)
     }
 
     /** Redraws a widget. With [spinning], the refresh button shows the spinner instead. */
     fun update(context: Context, id: Int, spinning: Boolean = false) {
         val kind = kindOf(context, id) ?: return
         val (w, h) = sizeDp(context, id, kind)
-        val settings = Store(context).widgetSettings(id)
-        val r = renderFor(context, kind, w, h, settings.transparency, settings.showCurrent)
+        val store = Store(context)
+        val settings = store.widgetSettings(id)
+        val r = renderFor(context, kind, w, h, settings.transparency, settings.showCurrent, store.iconStyle)
 
         AppWidgetManager.getInstance(context).updateAppWidget(id, buildViews(context, id, r, spinning))
     }

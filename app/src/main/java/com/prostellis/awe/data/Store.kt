@@ -3,6 +3,7 @@ package com.prostellis.awe.data
 import android.content.Context
 import com.prostellis.awe.weather.Forecast
 import com.prostellis.awe.weather.Place
+import com.prostellis.awe.widget.IconStyle
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -36,6 +37,11 @@ class Store(context: Context) {
         prefs.edit().putString(KEY_PLACE, json).apply()
         return next.key != before.key || next.shortLabel != before.shortLabel
     }
+
+    /** The weather-symbol style, shared by the app and every widget. */
+    var iconStyle: IconStyle
+        get() = IconStyle.fromId(prefs.getString(KEY_ICON_STYLE, null))
+        set(value) { prefs.edit().putString(KEY_ICON_STYLE, value.id).apply() }
 
     fun savedForecast(): SavedForecast? {
         val json = prefs.getString(KEY_FORECAST, null) ?: return null
@@ -102,5 +108,6 @@ class Store(context: Context) {
         const val KEY_FORECAST = "forecast"
         const val KEY_FETCHED_AT = "fetchedAt"
         const val KEY_FORECAST_PLACE = "forecastPlace"
+        const val KEY_ICON_STYLE = "iconStyle"
     }
 }

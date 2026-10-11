@@ -29,6 +29,7 @@ data class WidgetTheme(
             icons = IconColors(
                 stroke = 0xFF4A5A6A.toInt(), ink3 = 0xFF75828F.toInt(), sun = 0xFFF0A412.toInt(), cloudFill = 0xFFFFFFFF.toInt(),
                 rain = 0xFF3F78C4.toInt(), moonInk = 0xFFFDF2C9.toInt(), moonIcon = 0xFFDFE2E7.toInt(), crater = 0xFFC3C8D0.toInt(),
+                glowA = 0xFFFFFFFF.toInt(), glowB = 0xFFC3CFDD.toInt(), glowShadow = 0x29283C5A, lineInk = 0xFF3C4B5B.toInt(),
             ),
         )
 
@@ -41,6 +42,7 @@ data class WidgetTheme(
             icons = IconColors(
                 stroke = 0xFFA8B5C2.toInt(), ink3 = 0xFF7C8996.toInt(), sun = 0xFFFFC24A.toInt(), cloudFill = 0xFF2B3644.toInt(),
                 rain = 0xFF7FB0F0.toInt(), moonInk = 0xFFF1E9C6.toInt(), moonIcon = 0xFFB8BCC3.toInt(), crater = 0xFF969BA4.toInt(),
+                glowA = 0xFFEEF3F8.toInt(), glowB = 0xFF8797AA.toInt(), glowShadow = 0x47000000, lineInk = 0xFFC9D3DE.toInt(),
             ),
         )
 
@@ -54,6 +56,7 @@ data class WidgetTheme(
             icons = IconColors(
                 stroke = 0xFFE6EDF5.toInt(), ink3 = 0xFFCFD9E4.toInt(), sun = 0xFFFFC24A.toInt(), cloudFill = 0xFFF2F5F9.toInt(),
                 rain = 0xFF9CC4F5.toInt(), moonInk = 0xFFF1E9C6.toInt(), moonIcon = 0xFFDFE2E7.toInt(), crater = 0xFFC3C8D0.toInt(),
+                glowA = 0xFFFFFFFF.toInt(), glowB = 0xFFB6C3D3.toInt(), glowShadow = 0x47000000, lineInk = 0xFFE6EDF5.toInt(),
             ),
         )
 

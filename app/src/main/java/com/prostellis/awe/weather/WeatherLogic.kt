@@ -106,8 +106,8 @@ object WeatherLogic {
     }
 
     private const val RISE_BEFORE = 60
-    private const val RISE_AFTER = 15
-    private const val SET_BEFORE = 15
+    private const val RISE_AFTER = 60
+    private const val SET_BEFORE = 60
     private const val SET_AFTER = 60
 
     fun daylight(f: Forecast, nowMs: Long): Daylight {

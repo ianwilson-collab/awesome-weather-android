@@ -193,6 +193,42 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout style="@style/Awe.Card">
+
+                <TextView
+                    style="@style/Awe.CardTitle"
+                    android:text="@string/settings_icon_style" />
+
+                <TextView
+                    style="@style/Awe.Help"
+                    android:text="@string/settings_icon_style_help" />
+
+                <RadioGroup
+                    android:id="@+id/icon_style_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp">
+
+                    <RadioButton
+                        android:id="@+id/style_current"
+                        style="@style/Awe.Radio"
+                        android:layout_height="52dp"
+                        android:text="@string/style_current" />
+
+                    <RadioButton
+                        android:id="@+id/style_glow"
+                        style="@style/Awe.Radio"
+                        android:layout_height="52dp"
+                        android:text="@string/style_glow" />
+
+                    <RadioButton
+                        android:id="@+id/style_fine"
+                        style="@style/Awe.Radio"
+                        android:layout_height="52dp"
+                        android:text="@string/style_fine" />
+                </RadioGroup>
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/show_current_card"
                 style="@style/Awe.Card"

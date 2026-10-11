@@ -3,10 +3,14 @@ package com.prostellis.awe.widget
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.LinearGradient
 import android.graphics.Shader
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.TextView
@@ -15,6 +19,7 @@ import com.prostellis.awe.R
 import com.prostellis.awe.data.RefreshMode
 import com.prostellis.awe.data.Store
 import com.prostellis.awe.data.WidgetSettings
+import com.prostellis.awe.weather.Cat
 import kotlin.math.min
 
 /**
@@ -29,6 +34,7 @@ class WidgetSettingsActivity : Activity() {
     private var transparency = 0
     private var refresh = RefreshMode.EVERY_30
     private var showCurrent = true
+    private var iconStyle = IconStyle.CURRENT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +50,7 @@ class WidgetSettingsActivity : Activity() {
         transparency = saved.transparency
         refresh = saved.refresh
         showCurrent = saved.showCurrent
+        iconStyle = store.iconStyle
 
         setContentView(R.layout.activity_widget_settings)
         fitSystemBars()
@@ -74,6 +81,18 @@ class WidgetSettingsActivity : Activity() {
         findViewById<android.widget.Switch>(R.id.show_current).apply {
             isChecked = showCurrent
             setOnCheckedChangeListener { _, on -> showCurrent = on; drawPreview() }
+        }
+
+        // Icon style: shared by every widget and the app; each choice shows a few of its icons
+        val styleButtons = mapOf(R.id.style_current to IconStyle.CURRENT, R.id.style_glow to IconStyle.GLOW, R.id.style_fine to IconStyle.FINE)
+        for ((id, style) in styleButtons) {
+            findViewById<RadioButton>(id).setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, iconSample(style), null)
+        }
+        val styleGroup = findViewById<RadioGroup>(R.id.icon_style_group)
+        styleGroup.check(styleButtons.entries.first { it.value == iconStyle }.key)
+        styleGroup.setOnCheckedChangeListener { _, checked ->
+            iconStyle = styleButtons[checked] ?: IconStyle.CURRENT
+            drawPreview()
         }
 
         val group = findViewById<RadioGroup>(R.id.refresh_group)
@@ -123,7 +142,7 @@ class WidgetSettingsActivity : Activity() {
     private fun drawPreview() {
         val preview = findViewById<ImageView>(R.id.preview)
         val (w, h) = WidgetUpdater.sizeDp(this, widgetId, kind)
-        val r = WidgetUpdater.renderFor(this, kind, w, h, transparency, showCurrent)
+        val r = WidgetUpdater.renderFor(this, kind, w, h, transparency, showCurrent, iconStyle)
         val density = resources.displayMetrics.density
         // Real size when it fits; otherwise scaled down to the screen width.
         val container = findViewById<android.view.View>(R.id.preview_container)
@@ -152,8 +171,26 @@ class WidgetSettingsActivity : Activity() {
 
     private fun save() {
         store.saveWidgetSettings(widgetId, WidgetSettings(transparency, refresh, showCurrent))
-        WidgetUpdater.update(this, widgetId)
+        if (iconStyle != store.iconStyle) {
+            store.iconStyle = iconStyle
+            WidgetUpdater.updateAll(this)
+        } else {
+            WidgetUpdater.update(this, widgetId)
+        }
         Refresh.schedule(this)
+    }
+
+    /** Five of the style's icons in a row, in the phone's light or dark colors. */
+    private fun iconSample(style: IconStyle): BitmapDrawable {
+        val d = resources.displayMetrics.density
+        val size = 24f; val gap = 7f
+        val cats = listOf(Cat.CLEAR, Cat.PARTLY, Cat.RAIN, Cat.SNOW, Cat.STORM)
+        val bmp = Bitmap.createBitmap(((cats.size * size + (cats.size - 1) * gap) * d).toInt(), (size * d).toInt(), Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bmp)
+        canvas.scale(d, d)
+        val colors = if (WidgetUpdater.phoneIsDark(this)) WidgetTheme.DARK.icons else WidgetTheme.LIGHT.icons
+        cats.forEachIndexed { i, cat -> WeatherIcons.draw(canvas, cat, true, i * (size + gap), 0f, size, colors, style) }
+        return BitmapDrawable(resources, bmp)
     }
 
     /** "Weather" in the ProStellis green → blue fade, top-left to bottom-right. */

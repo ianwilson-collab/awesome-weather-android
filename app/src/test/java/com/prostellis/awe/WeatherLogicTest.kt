@@ -6,6 +6,7 @@ import com.prostellis.awe.weather.Forecast
 import com.prostellis.awe.weather.Place
 import com.prostellis.awe.weather.SkyPalette
 import com.prostellis.awe.weather.WeatherLogic
+import com.prostellis.awe.widget.IconStyle
 import com.prostellis.awe.widget.WidgetRenderer
 import com.prostellis.awe.widget.WidgetTheme
 import org.junit.Assert.assertEquals
@@ -63,8 +64,12 @@ class WeatherLogicTest {
         assertEquals(1.0, morning.d, 0.0); assertTrue(morning.isDay)
         val night = WeatherLogic.daylight(forecast, salem("2026-10-08T21:40"))
         assertEquals(0.0, night.d, 0.0); assertFalse(night.isDay)
+        // Fades run a full hour on each side of sunrise (7:20) and sunset (6:38)
         val dawn = WeatherLogic.daylight(forecast, salem("2026-10-08T07:00"))
-        assertEquals((420 - 380) / 75.0, dawn.d, 1e-9); assertTrue(dawn.rising); assertFalse(dawn.isDay)
+        assertEquals((420 - 380) / 120.0, dawn.d, 1e-9); assertTrue(dawn.rising); assertFalse(dawn.isDay)
+        val dusk = WeatherLogic.daylight(forecast, salem("2026-10-08T18:00"))
+        assertTrue(dusk.d < 1.0); assertFalse(dusk.rising)
+        assertEquals(1.0, WeatherLogic.daylight(forecast, salem("2026-10-08T17:30")).d, 0.0)
     }
 
     @Test fun skyColorsUseTheWebAppPalette() {
@@ -112,6 +117,13 @@ class WeatherLogicTest {
         assertEquals(WidgetTheme.DARK, WidgetTheme.pick(phoneDark = true, transparency = 0, wallpaperSupportsDarkText = true))
         assertEquals(WidgetTheme.ON_DARK_WALLPAPER, WidgetTheme.pick(phoneDark = false, transparency = 40, wallpaperSupportsDarkText = false))
         assertEquals(WidgetTheme.LIGHT, WidgetTheme.pick(phoneDark = true, transparency = 80, wallpaperSupportsDarkText = true))
+    }
+
+    @Test fun iconStylesUseTheWebAppNames() {
+        assertEquals(IconStyle.GLOW, IconStyle.fromId("glow"))
+        assertEquals(IconStyle.FINE, IconStyle.fromId("fine"))
+        assertEquals(IconStyle.CURRENT, IconStyle.fromId(null))
+        assertEquals(IconStyle.CURRENT, IconStyle.fromId("something else"))
     }
 
     @Test fun sevenDaysOnlyWhenWide() {

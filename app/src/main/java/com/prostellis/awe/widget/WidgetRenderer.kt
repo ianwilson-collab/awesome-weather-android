@@ -44,6 +44,7 @@ class WidgetRenderer(private val context: Context) {
     private val font: Typeface = context.resources.getFont(R.font.dm_sans)
     private val timeFormat = SimpleDateFormat("h:mm a", Locale.US)
     private val dayFormat = SimpleDateFormat("EEE", Locale.US)
+    private var icons = IconStyle.CURRENT
 
     fun render(
         kind: WidgetKind,
@@ -54,7 +55,9 @@ class WidgetRenderer(private val context: Context) {
         theme: WidgetTheme,
         skyDark: Boolean,
         showCurrent: Boolean = true,
+        iconStyle: IconStyle = IconStyle.CURRENT,
     ): Rendered {
+        icons = iconStyle
         val w = max(widthDp, 40f)
         val h = max(heightDp, 40f)
         val bitmap = Bitmap.createBitmap((w * density).toInt(), (h * density).toInt(), Bitmap.Config.ARGB_8888)
@@ -125,7 +128,7 @@ class WidgetRenderer(private val context: Context) {
             text(canvas, "Loading forecast…", 12f, h / 2f + 4f, 12f, 500, t.ink2, t)
             return Rendered(bitmap, refresh, gear, t.ink2)
         }
-        WeatherIcons.draw(canvas, m.nowCat, m.light.isDay, 12f, (h - icon) / 2f, icon, t.icons, t.textShadow)
+        WeatherIcons.draw(canvas, m.nowCat, m.light.isDay, 12f, (h - icon) / 2f, icon, t.icons, icons, t.textShadow)
         val x = 12f + icon + 8f
         // Shrinks a little for temperatures like 105° or -12° so it never runs into the refresh button
         val tempText = "${m.temp}°"
@@ -185,7 +188,7 @@ class WidgetRenderer(private val context: Context) {
             val updatedW = measure(updated, z.updated, 400)
             text(canvas, updated, band.right - 10f - updatedW, band.top + (bandH - 37f) / 2f + 18f + 6f + 10.5f, z.updated, 400, t.ink3, t)
 
-            WeatherIcons.draw(canvas, m.nowCat, m.light.isDay, band.left + 9f, band.centerY() - z.bandIcon / 2, z.bandIcon, t.icons, t.textShadow)
+            WeatherIcons.draw(canvas, m.nowCat, m.light.isDay, band.left + 9f, band.centerY() - z.bandIcon / 2, z.bandIcon, t.icons, icons, t.textShadow)
             val tempText = "${m.temp}°"
             val tempX = band.left + 9f + z.bandIcon + 9f
             text(canvas, tempText, tempX, band.centerY() + z.bandTemp * .36f, z.bandTemp, 600, t.ink, t, letterSpacingDp = -1f)
@@ -242,7 +245,7 @@ class WidgetRenderer(private val context: Context) {
 
             val name = if (i == 0) "Today" else dayFormat.format(java.sql.Date.valueOf(d.ymd))
             centered(canvas, name, cx, area.top + colTop + z.name * .95f, z.name, 600, if (i == 0) t.todayName else t.ink, t)
-            WeatherIcons.draw(canvas, d.cat, true, cx - z.icon / 2, area.top + colTop + nameH, z.icon, t.icons, t.textShadow)
+            WeatherIcons.draw(canvas, d.cat, true, cx - z.icon / 2, area.top + colTop + nameH, z.icon, t.icons, icons, t.textShadow)
 
             if (d.hi != null && d.lo != null) {
                 val top = y(d.hi)

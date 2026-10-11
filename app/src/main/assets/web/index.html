@@ -39,6 +39,7 @@
   --moon-ink: #fdf2c9; --moon-icon: #dfe2e7; --moon-icon-crater: #c3c8d0; --moon-dark: rgba(60, 76, 98, .38);
   --flash: #ffffff;
   --rise-ink: #e8862a; --set-ink: #7b6fd1;
+  --glow-cloud-a: #ffffff; --glow-cloud-b: #c3cfdd; --glow-shadow: rgba(40, 60, 90, .16); --line-ink: #3c4b5b;
 
   /* scene palettes (light) */
   --clear-1: #b9dcff; --clear-2: #fff3d1; --clear-sun: #ffc23d; --clear-hill: #a9cfa4;
@@ -73,6 +74,7 @@
     --moon-ink: #f1e9c6; --moon-icon: #b8bcc3; --moon-icon-crater: #969ba4; --moon-dark: rgba(255, 255, 255, .09);
     --flash: #dfe8ff;
     --rise-ink: #f5a356; --set-ink: #a99ff0;
+    --glow-cloud-a: #eef3f8; --glow-cloud-b: #8797aa; --glow-shadow: rgba(0, 0, 0, .28); --line-ink: #c9d3de;
 
     --clear-1: #1d3e66; --clear-2: #3a4a5c; --clear-sun: #e8a93a; --clear-hill: #24423a;
     --partly-1: #22384f; --partly-2: #2c3a4a; --partly-sun: #d9a23e; --partly-cloud: #4a5a6d; --partly-cloud-2: #3a4859; --partly-hill: #26403a;
@@ -443,6 +445,24 @@ summary.hourly-head::-webkit-details-marker { display: none; }
   .hday .d-sun { margin-left: 0; flex-basis: 100%; }
 }
 
+/* Settings button (top-right) and dialog */
+.set-btn { flex: none; }
+.set-h { margin: 6px 2px 2px; font-size: 15px; }
+.set-help { margin: 0 2px 12px; color: var(--ink-3); font-size: 13px; }
+.styles { display: grid; gap: 10px; }
+.style-opt {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px 14px;
+  width: 100%; padding: 12px 14px; border-radius: 14px;
+  border: 2px solid var(--line); background: var(--surface-2); text-align: left;
+}
+.style-opt[aria-checked="true"] { border-color: var(--accent); }
+.style-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.style-opt .nm { display: grid; gap: 2px; min-width: 0; }
+.style-opt .nm b { font-size: 15px; }
+.style-opt .nm span { font-size: 12.5px; color: var(--ink-3); }
+.style-opt .ics { display: flex; gap: 8px; font-size: 28px; }
+@media (max-width: 420px) { .style-opt { grid-template-columns: 1fr; } }
+
 /* ---------- Footer ---------- */
 .foot { margin-top: 22px; color: var(--ink-3); font-size: 12.5px; text-align: center; line-height: 1.6; }
 .foot a { color: inherit; }
@@ -672,6 +692,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
         </div>
       </div>
     </div>
+    <button class="icon-btn set-btn" id="settingsBtn" type="button" aria-label="Settings" title="Settings"></button>
   </header>
 
   <div id="notices"></div>
@@ -712,6 +733,18 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       <button class="btn ghost" type="button" id="useGps"></button>
       <button class="btn ghost" type="button" id="resetLoc">Reset to Salem, OR</button>
     </div>
+  </div>
+</dialog>
+
+<dialog id="setDlg" aria-labelledby="setTitle">
+  <div class="dlg-head">
+    <h2 id="setTitle">Settings</h2>
+    <button class="icon-btn x" type="button" data-close aria-label="Close"></button>
+  </div>
+  <div class="dlg-body">
+    <h3 class="set-h" id="styleTitle">Icon style</h3>
+    <p class="set-help" id="styleHelp">Changes the weather symbols throughout the app.</p>
+    <div class="styles" id="styleList" role="radiogroup" aria-labelledby="styleTitle"></div>
   </div>
 </dialog>
 
@@ -768,7 +801,8 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     previewMin: null, // minutes after midnight (15-min steps) while previewing another time; null = live
     days: [],         // the 7 day cards
     extDays: [],      // extended outlook, days 8–16
-    moonEvents: {}    // new/full moons by date → { type, time }
+    moonEvents: {},   // new/full moons by date → { type, time }
+    iconStyle: store.get("iconStyle", "current") // weather symbol style: "current", "glow" or "fine"
   };
 
   /* ================= Helpers ================= */
@@ -1030,23 +1064,151 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       `<path d="${half(!sunRight)}" style="fill:var(--moon-icon);stroke:var(--ink-3);stroke-width:1.4"/>` +
       `<g style="fill:var(--moon-icon-crater);stroke:none"><circle cx="${mx(2.6)}" cy="10" r="1.3"/><circle cx="${mx(1.7)}" cy="14.6" r=".8"/><circle cx="${mx(4.1)}" cy="13.2" r=".6"/></g>`;
   }
-  // edge = "rise" | "set" for the hour that contains sunrise or sunset (clear and partly cloudy only)
-  function weatherIcon(cat, isDay = true, edge) {
-    switch (cat) {
-      case "clear": return svg(edge ? sunMoonHalves(edge) : isDay ? sunShape(12, 12, 4.2, 2.6) : craterMoon);
-      case "partly": {
-        const sky = edge ? `<g transform="translate(1.06 .56) scale(.62)">${sunMoonHalves(edge)}</g>`
-          : isDay ? sunShape(8.5, 8, 2.8, 1.6) : crescentMoon('transform="translate(-3 -3) scale(.62)"');
-        return svg(sky + cloudShape('transform="translate(3 3) scale(.86)"'));
-      }
-      case "cloudy": return svg(cloudShape());
-      case "fog": return svg(cloudShape('transform="translate(0 -4)"') + '<line x1="5" y1="19" x2="19" y2="19"/><line x1="8" y1="22" x2="17" y2="22"/>');
-      case "drizzle": return svg(cloudShape(upCloud) + '<g style="stroke:var(--rain-ink)"><line x1="8" y1="19" x2="8" y2="19.6"/><line x1="12" y1="20" x2="12" y2="20.6"/><line x1="16" y1="19" x2="16" y2="19.6"/><line x1="10" y1="22.4" x2="10" y2="23"/><line x1="14" y1="22.4" x2="14" y2="23"/></g>');
-      case "rain": return svg(cloudShape(upCloud) + '<g style="stroke:var(--rain-ink)"><line x1="8.5" y1="18.5" x2="7.5" y2="22"/><line x1="12.5" y1="18.5" x2="11.5" y2="22"/><line x1="16.5" y1="18.5" x2="15.5" y2="22"/></g>');
-      case "snow": return svg(cloudShape(upCloud) + '<g style="stroke:var(--rain-ink)"><circle cx="8" cy="19.5" r=".5"/><circle cx="12" cy="21" r=".5"/><circle cx="16" cy="19.5" r=".5"/><circle cx="10" cy="22.8" r=".5"/><circle cx="14" cy="22.8" r=".5"/></g>');
-      case "storm": return svg(cloudShape(upCloud) + '<path d="M12.5 15.5l-2.5 4h3l-1.5 3.5" style="stroke:var(--sun-ink)"/>');
+  /* ---------- Icon styles: Current (clean outline), Glow (soft 3D light), Fine Line ---------- */
+  const ICON_STYLES = [
+    { id: "current", name: "Current", desc: "Clean outlines, clear at any size." },
+    { id: "glow", name: "Glow", desc: "Soft 3D light and gradients." },
+    { id: "fine", name: "Fine Line", desc: "Thin, precise lines with small details." }
+  ];
+  const svgW = (inner, sw) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+  let iconSeq = 0;
+  const iid = (p) => `${p}${++iconSeq}`;
+  const stopC = (o, c, a = 1) => `<stop offset="${o}" style="stop-color:${c};stop-opacity:${a}"/>`;
+  const tf = (tr) => tr ? ` transform="${tr}"` : "";
+  const at = (cx, cy, k, inner) => `<g transform="translate(${cx} ${cy}) scale(${k}) translate(-12 -12)">${inner}</g>`;
+  const dropPath = (x, y, k) => `M${f1(x)} ${(y - 2 * k).toFixed(2)}c${(1.1 * k).toFixed(2)} ${(1.5 * k).toFixed(2)} ${(1.7 * k).toFixed(2)} ${(2.4 * k).toFixed(2)} ${(1.7 * k).toFixed(2)} ${(3.1 * k).toFixed(2)}` +
+    `a${(1.7 * k).toFixed(2)} ${(1.7 * k).toFixed(2)} 0 0 1 ${(-3.4 * k).toFixed(2)} 0c0 ${(-.7 * k).toFixed(2)} ${(.6 * k).toFixed(2)} ${(-1.6 * k).toFixed(2)} ${(1.7 * k).toFixed(2)} ${(-3.1 * k).toFixed(2)}z`;
+  const rayLines = (cx, cy, r1, r2, n, style, keep = () => true) => {
+    let out = "";
+    for (let k = 0; k < n; k++) {
+      const a = k * 2 * Math.PI / n;
+      if (!keep(Math.cos(a))) continue;
+      out += `<line x1="${(cx + Math.cos(a) * r1).toFixed(2)}" y1="${(cy + Math.sin(a) * r1).toFixed(2)}" x2="${(cx + Math.cos(a) * r2).toFixed(2)}" y2="${(cy + Math.sin(a) * r2).toFixed(2)}" style="${style}"/>`;
     }
-    return svg(cloudShape());
+    return out;
+  };
+  // Snow in every style: thin white six-point snowflakes, each with a soft blue aura
+  const FLAKES = [[7.4, 19.7], [16.6, 19.7], [12, 22.1]];
+  function snowflakes() {
+    const g = iid("fa");
+    let arms = "";
+    for (const [x, y] of FLAKES) for (const d of [0, 60, 120]) {
+      const a = d * Math.PI / 180, c = Math.cos(a) * 1.55, n = Math.sin(a) * 1.55;
+      arms += `M${(x - c).toFixed(2)} ${(y - n).toFixed(2)}L${(x + c).toFixed(2)} ${(y + n).toFixed(2)}`;
+    }
+    return `<defs><radialGradient id="${g}">${stopC(.35, "#7fb0ea", .55) + stopC(1, "#7fb0ea", 0)}</radialGradient></defs>` +
+      `<g style="fill:url(#${g});stroke:none">${FLAKES.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.5"/>`).join("")}</g>` +
+      `<path d="${arms}" style="stroke:#ffffff;stroke-width:.75"/>`;
+  }
+  // Crescent: the part of a circle outside a second, offset circle
+  function crescentPath(cx = 12, cy = 12, r1 = 7.6, ox = 16, oy = 8.4, r2 = 6.3) {
+    const dx = ox - cx, dy = oy - cy, d = Math.hypot(dx, dy), a = (r1 * r1 - r2 * r2 + d * d) / (2 * d), h = Math.sqrt(r1 * r1 - a * a);
+    const px = cx + a * dx / d, py = cy + a * dy / d, ux = -dy / d * h, uy = dx / d * h, p = (n) => n.toFixed(2);
+    return `M${p(px + ux)} ${p(py + uy)}A${r1} ${r1} 0 1 1 ${p(px - ux)} ${p(py - uy)}A${r2} ${r2} 0 0 0 ${p(px + ux)} ${p(py + uy)}z`;
+  }
+  // Clip to one half of the 24×24 icon (for the sunrise/sunset hour halves)
+  const halfClip = (right) => { const id = iid("hc"); return [`<clipPath id="${id}"><rect x="${right ? 12 : 0}" y="0" width="12" height="24"/></clipPath>`, `clip-path="url(#${id})"`]; };
+
+  const CURRENT_ICONS = {
+    sw: 1.7,
+    clearSky: (isDay, edge) => edge ? sunMoonHalves(edge) : isDay ? sunShape(12, 12, 4.2, 2.6) : craterMoon,
+    partlySky: (isDay, edge) => edge ? `<g transform="translate(1.06 .56) scale(.62)">${sunMoonHalves(edge)}</g>`
+      : isDay ? sunShape(8.5, 8, 2.8, 1.6) : crescentMoon('transform="translate(-3 -3) scale(.62)"'),
+    cloud: (tr) => cloudShape(tr ? `transform="${tr}"` : ""),
+    fog: () => '<line x1="5" y1="19" x2="19" y2="19"/><line x1="8" y1="22" x2="17" y2="22"/>',
+    drizzle: () => '<g style="stroke:var(--rain-ink)"><line x1="8" y1="19" x2="8" y2="19.6"/><line x1="12" y1="20" x2="12" y2="20.6"/><line x1="16" y1="19" x2="16" y2="19.6"/><line x1="10" y1="22.4" x2="10" y2="23"/><line x1="14" y1="22.4" x2="14" y2="23"/></g>',
+    rain: () => '<g style="stroke:var(--rain-ink)"><line x1="8.5" y1="18.5" x2="7.5" y2="22"/><line x1="12.5" y1="18.5" x2="11.5" y2="22"/><line x1="16.5" y1="18.5" x2="15.5" y2="22"/></g>',
+    snow: snowflakes,
+    storm: () => '<path d="M12.5 15.5l-2.5 4h3l-1.5 3.5" style="stroke:var(--sun-ink)"/>'
+  };
+
+  // Glow: sunlit clouds (one light from the upper left, a shade and bright rim on each puff), glowing sun and moon
+  const PUFFS = [[13.6, 11.6, 5.3], [8.6, 14, 4.2], [18, 15.1, 3.6]];
+  const arcD = (cx, cy, r, a0, a1) => { const pt = (a) => `${(cx + Math.cos(a * Math.PI / 180) * r).toFixed(2)} ${(cy + Math.sin(a * Math.PI / 180) * r).toFixed(2)}`; return `M${pt(a0)}A${r} ${r} 0 0 1 ${pt(a1)}`; };
+  const puffBlob = (fill, tr) => `<g${tf(tr)} style="fill:${fill};stroke:none">${PUFFS.map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}<rect x="5" y="14" width="15" height="4.9" rx="2.45"/></g>`;
+  const glowSun = () => { const h = iid("gh"), c = iid("gc");
+    return `<defs><radialGradient id="${h}">${stopC(.35, "#ffc640", .55) + stopC(1, "#ffc640", 0)}</radialGradient>` +
+      `<radialGradient id="${c}" cx=".38" cy=".35" r=".7">${stopC(0, "#fff4b8") + stopC(.55, "#ffbe2e") + stopC(1, "#ff8f1f")}</radialGradient></defs>` +
+      `<circle cx="12" cy="12" r="11" style="fill:url(#${h});stroke:none"/><circle cx="12" cy="12" r="5.4" style="fill:url(#${c});stroke:none"/>`; };
+  const glowMoonFill = () => { const c = iid("gm"); return [`<linearGradient id="${c}" x1="0" y1="0" x2="1" y2="1">${stopC(0, "#fff8dc") + stopC(1, "#e3c873")}</linearGradient>`, `url(#${c})`]; };
+  const GLOW_ICONS = {
+    sw: 1.7,
+    sun: glowSun,
+    moon: () => { const h = iid("mh"), [defs, fill] = glowMoonFill();
+      return `<defs><radialGradient id="${h}">${stopC(.4, "#fff2c2", .45) + stopC(1, "#fff2c2", 0)}</radialGradient>${defs}</defs>` +
+        `<circle cx="12" cy="12" r="11" style="fill:url(#${h});stroke:none"/><path d="${crescentPath()}" style="fill:${fill};stroke:none"/>`; },
+    smallMoon: () => { const [defs, fill] = glowMoonFill(); return `<defs>${defs}</defs><path d="M19.5 14.5A8 8 0 1 1 9.5 4.5a6.5 6.5 0 0 0 10 10z" style="fill:${fill};stroke:none"/>`; },
+    halves: (edge) => {
+      const sunRight = edge === "rise", [sunClip, sunRef] = halfClip(sunRight), [moonClip, moonRef] = halfClip(!sunRight), m = iid("ms"), mx = sunRight ? -1 : 1;
+      return `<defs>${sunClip}${moonClip}<linearGradient id="${m}" x1="0" y1="0" x2="1" y2="1">${stopC(0, "#f7f8fa") + stopC(1, "#b9c0ca")}</linearGradient></defs><g ${sunRef}>${glowSun()}</g>` +
+        `<g ${moonRef}><circle cx="12" cy="12" r="6" style="fill:url(#${m});stroke:none"/><g style="fill:#9aa3ae;stroke:none;opacity:.7"><circle cx="${12 + mx * 2.6}" cy="10" r="1.2"/><circle cx="${12 + mx * 1.6}" cy="14.6" r=".8"/></g></g>`;
+    },
+    cloud: (tr) => {
+      const g = iid("sl"), e = iid("se");
+      const body = `<defs><radialGradient id="${g}" gradientUnits="userSpaceOnUse" cx="10.5" cy="8.5" r="13">${stopC(0, "#ffffff") + stopC(.45, "var(--glow-cloud-a)") + stopC(1, "var(--glow-cloud-b)")}</radialGradient>` +
+        `<radialGradient id="${e}" cx=".42" cy=".38" r=".62">${stopC(.5, "var(--glow-cloud-b)", 0) + stopC(1, "var(--glow-cloud-b)", .55)}</radialGradient></defs>`;
+      const puffs = PUFFS.map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" style="fill:url(#${g})"/><circle cx="${x}" cy="${y}" r="${r}" style="fill:url(#${e})"/>`).join("");
+      const rims = PUFFS.map(([x, y, r]) => `<path d="${arcD(x, y, r - .75, 205, 285)}"/>`).join("");
+      return body + puffBlob("var(--glow-shadow)", `${tr} translate(.4 1)`.trim()) +
+        `<g${tf(tr)}><g style="stroke:none">${puffs}<rect x="5" y="14" width="15" height="4.9" rx="2.45" style="fill:url(#${g})"/></g>` +
+        `<g style="fill:none;stroke:#ffffff;stroke-width:.75;opacity:.95">${rims}</g></g>`;
+    },
+    fog: () => { const g = iid("fg");
+      return `<defs><linearGradient id="${g}">${stopC(0, "#a9b7c8", 0) + stopC(.5, "#a9b7c8") + stopC(1, "#a9b7c8", 0)}</linearGradient></defs>` +
+        `<rect x="2.5" y="18.3" width="19" height="2.2" rx="1.1" style="fill:url(#${g});stroke:none"/><rect x="5" y="21.4" width="14" height="2.2" rx="1.1" style="fill:url(#${g});stroke:none"/>`; },
+    drizzle: () => { const g = iid("dg");
+      return `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1">${stopC(0, "#a8d3ff") + stopC(1, "#2f74d6")}</linearGradient></defs>` +
+        `<g style="fill:url(#${g});stroke:none">${[[8, 19.6], [12, 20.6], [16, 19.6], [10, 23], [14, 23]].map(([x, y]) => `<path d="${dropPath(x, y, .5)}"/>`).join("")}</g>`; },
+    rain: () => { const g = iid("rg");
+      return `<defs><linearGradient id="${g}" gradientUnits="userSpaceOnUse" x1="0" y1="18" x2="0" y2="22.6">${stopC(0, "#a8d3ff") + stopC(1, "#2f74d6")}</linearGradient></defs>` +
+        `<g style="stroke:url(#${g});stroke-width:1.9">${[8.6, 12.6, 16.6].map((x) => `<line x1="${x}" y1="18.4" x2="${(x - 1.1).toFixed(1)}" y2="22.2"/>`).join("")}</g>`; },
+    snow: snowflakes,
+    storm: () => { const g = iid("bg"), h = iid("bh");
+      return `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1">${stopC(0, "#fff1a6") + stopC(1, "#ffa514")}</linearGradient>` +
+        `<radialGradient id="${h}">${stopC(.2, "#ffd54a", .5) + stopC(1, "#ffd54a", 0)}</radialGradient></defs>` +
+        `<circle cx="12.8" cy="17.6" r="5" style="fill:url(#${h});stroke:none"/><path d="M13 13.2l-3 4.6h3.2l-1.7 4.4 4.8-6.2h-3.3l1.6-2.8z" style="fill:url(#${g});stroke:none"/>`; }
+  };
+
+  // Fine Line: thin strokes, a short-rays sun, a moon with a star, detailed rain and fog
+  const FINE_INK = "stroke:var(--line-ink)", FINE_SUN = "stroke:var(--sun-ink)";
+  const fineSun = () => `<circle cx="12" cy="12" r="5" style="${FINE_SUN}"/>` + rayLines(12, 12, 7, 8.9, 12, FINE_SUN);
+  const FINE_ICONS = {
+    sw: 1.1,
+    sun: fineSun,
+    moon: () => `<path d="M16.8 15.6A6.8 6.8 0 1 1 9.2 6.2a5.4 5.4 0 0 0 7.6 9.4z" style="${FINE_INK}"/><path d="M17.5 4.5v3M16 6h3" style="${FINE_SUN}"/><path d="M20 10.2v1.6M19.2 11h1.6" style="${FINE_SUN}"/>`,
+    smallMoon: () => `<path d="M19.5 14.5A8 8 0 1 1 9.5 4.5a6.5 6.5 0 0 0 10 10z" style="${FINE_INK};fill:var(--cloud-fill)"/>`,
+    halves: (edge) => {
+      const sunRight = edge === "rise", side = sunRight ? 1 : -1, half = (right) => `M12 7A5 5 0 0 ${right ? 1 : 0} 12 17`;
+      return `<path d="${half(sunRight)}" style="${FINE_SUN}"/>` + rayLines(12, 12, 7, 8.9, 12, FINE_SUN, (c) => c * side > .1) +
+        `<path d="${half(!sunRight)}" style="${FINE_INK}"/><path d="M${12 - side * 5.6} 3.6v2.4M${12 - side * 5.6 - 1.2} 4.8h2.4" style="${FINE_SUN}"/>`;
+    },
+    cloud: (tr) => `<g${tf(tr)}><path d="${CLOUD}" style="${FINE_INK};fill:var(--cloud-fill)"/><path d="M9.3 12.4a3.6 3.6 0 0 1 3.2-1.4" style="${FINE_INK};opacity:.55"/></g>`,
+    fog: () => `<g style="${FINE_INK}"><path d="M4.5 18.6c1.5-1 3-1 4.5 0s3 1 4.5 0 3-1 4.5 0 1.5.6 1.5.6"/><path d="M7 21.6c1.3-.9 2.7-.9 4 0s2.7.9 4 0 2-.6 2-.6"/></g>`,
+    drizzle: () => '<g style="stroke:var(--rain-ink)"><path d="M8 18.8v1.2M12 20v1.2M16 18.8v1.2M10 22.2v1M14 22.2v1" stroke-dasharray=".1 1.1"/>' +
+      [[8, 19.4], [12, 20.6], [16, 19.4], [10, 22.7], [14, 22.7]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r=".35"/>`).join("") + "</g>",
+    rain: () => `<g style="stroke:var(--rain-ink)">${[8.4, 12.4, 16.4].map((x) => `<line x1="${x}" y1="18.3" x2="${(x - 1).toFixed(1)}" y2="21.3"/><path d="${dropPath(x - 1.4, 22.7, .42)}" style="fill:var(--rain-ink);stroke:none"/>`).join("")}</g>`,
+    snow: snowflakes,
+    storm: () => '<path d="M13.2 14.2l-3 4.4h3l-2 4.4" style="stroke:var(--sun-ink);stroke-width:1.3"/>'
+  };
+  for (const S of [GLOW_ICONS, FINE_ICONS]) {
+    S.clearSky = (isDay, edge) => edge ? S.halves(edge) : isDay ? S.sun() : S.moon();
+    S.partlySky = (isDay, edge) => edge ? `<g transform="translate(1.06 .56) scale(.62)">${S.halves(edge)}</g>`
+      : isDay ? at(8.4, 8, .62, S.sun()) : at(8.6, 8.2, .62, S.smallMoon());
+  }
+  const ICON_SETS = { current: CURRENT_ICONS, glow: GLOW_ICONS, fine: FINE_ICONS };
+
+  // edge = "rise" | "set" for the hour that contains sunrise or sunset (clear and partly cloudy only)
+  function weatherIcon(cat, isDay = true, edge, style = state.iconStyle) {
+    const S = ICON_SETS[style] || CURRENT_ICONS;
+    let inner;
+    switch (cat) {
+      case "clear": inner = S.clearSky(isDay, edge); break;
+      case "partly": inner = S.partlySky(isDay, edge) + S.cloud("translate(3 3) scale(.86)"); break;
+      case "fog": inner = S.cloud("translate(0 -4)") + S.fog(); break;
+      case "drizzle": case "rain": case "snow": case "storm": inner = S.cloud("translate(0 -3)") + S[cat](); break;
+      default: inner = S.cloud("");
+    }
+    return svgW(inner, S.sw);
   }
   const UI = {
     drop: svg('<path d="M12 3.5c3 4 5.5 7 5.5 10a5.5 5.5 0 0 1-11 0c0-3 2.5-6 5.5-10z"/>'),
@@ -1058,6 +1220,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     pin: svg('<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>'),
     alert: svg('<path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/>'),
     close: svg('<path d="M6 6l12 12M18 6L6 18"/>'),
+    sliders: svg('<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>'),
     chev: svg('<path d="M6 9l6 6 6-6"/>'),
     clock: svg('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'),
     locate: svg('<circle cx="12" cy="12" r="3.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/><circle cx="12" cy="12" r="7"/>')
@@ -1505,7 +1668,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
 
   /* ================= Page background (current conditions + time of day) ================= */
   // Sun/moon hand-off windows (minutes relative to sunrise / sunset)
-  const RISE_BEFORE = 60, RISE_AFTER = 15, SET_BEFORE = 15, SET_AFTER = 60;
+  const RISE_BEFORE = 60, RISE_AFTER = 60, SET_BEFORE = 60, SET_AFTER = 60;
   const lerp = (a, b, u) => a + (b - a) * u;
   const ease = (u) => u * u * (3 - 2 * u);
   const localMinutesNow = (om) => {
@@ -2154,6 +2317,28 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     if (sceneKey(wmoCat(om.current.weather_code), daylight(om)) !== $("pageScene").dataset.key) renderPageScene(om);
   }
 
+  /* ================= Settings (icon style) ================= */
+  function renderStyleList() {
+    $("styleList").innerHTML = ICON_STYLES.map((st) => `<button type="button" class="style-opt" role="radio" aria-checked="${st.id === state.iconStyle}" data-style="${st.id}">
+        <span class="nm"><b>${st.name}</b><span>${st.desc}</span></span>
+        <span class="ics">${["clear", "partly", "rain", "snow", "storm"].map((c) => weatherIcon(c, true, undefined, st.id)).join("")}</span>
+      </button>`).join("");
+  }
+  // Also called by the Android app to keep the page in step with the widgets' style
+  function setIconStyle(id) {
+    if (!ICON_SETS[id] || id === state.iconStyle) return;
+    state.iconStyle = id;
+    store.set("iconStyle", id);
+    if ($("setDlg").open) renderStyleList();
+    if (state.data && state.days.length) {
+      renderNow(state.data);
+      renderCards(state.days);
+      renderHourly(state.data, state.days);
+      renderOutlook(state.data, state.days);
+    }
+  }
+  window.awesomeWeather = { setIconStyle };
+
   /* ================= Wiring ================= */
   function init() {
     $("hourlyChev").innerHTML = UI.chev;
@@ -2165,6 +2350,13 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     document.querySelectorAll("dialog").forEach((dlg) =>
       dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); }));
     $("useGps").innerHTML = `${UI.locate} Use my location`;
+    if (!ICON_SETS[state.iconStyle]) state.iconStyle = "current";
+    $("settingsBtn").innerHTML = UI.sliders;
+    $("settingsBtn").addEventListener("click", () => { renderStyleList(); $("setDlg").showModal(); });
+    $("styleList").addEventListener("click", (e) => {
+      const b = e.target.closest(".style-opt");
+      if (b) { setIconStyle(b.dataset.style); $("styleList").querySelector(`[data-style="${state.iconStyle}"]`)?.focus(); }
+    });
 
     $("now").addEventListener("click", (e) => { if (e.target.closest('[data-action="preview"]')) showPreview($("previewPanel").hidden); });
     $("pvRange").addEventListener("input", (e) => {
