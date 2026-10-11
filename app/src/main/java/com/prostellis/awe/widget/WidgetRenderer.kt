@@ -231,7 +231,7 @@ class WidgetRenderer(private val context: Context) {
         val wMax = temps.maxOrNull() ?: 0.0
         val wMin = temps.minOrNull() ?: 0.0
         val colTop = 4f; val amtBottom = 3f
-        val nameH = z.name * 1.15f; val iconH = z.icon + 1f; val amtH = z.amt * 1.1f
+        val nameH = z.name * 1.35f; val iconH = z.icon + 1f; val amtH = z.amt * 1.1f // nameH leaves room for the event dot
         val tempsTop = area.top + colTop + nameH + iconH
         val tempsH = area.bottom - amtBottom - amtH - 4f - tempsTop
         val labHi = z.hi * 1.08f; val labLo = z.lo * 1.08f
