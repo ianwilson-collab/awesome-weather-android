@@ -58,33 +58,19 @@ adb shell input keyevent KEYCODE_BACK
 sleep 1
 adb exec-out screencap -p > screens/after-back.png
 
-# Settings button (top-right): switch the app to the Glow icon style (best effort; skipped if the button can't be found)
-find_node() {
-  adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 || return 0
-  adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || return 0
-  python3 - "$1" <<'PY'
-import re, sys
-for m in re.finditer(r'<node [^>]*>', open("ui.xml").read()):
-    n = m.group(0)
-    if re.search(sys.argv[1], n):
-        x1, y1, x2, y2 = map(int, re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', n).groups())
-        print((x1 + x2) // 2, (y1 + y2) // 2)
-        break
-PY
-}
-XY=$(find_node '(content-desc|text)="Settings"')
-if [ -n "$XY" ]; then
-  adb shell input tap $XY
-  sleep 1.5
-  adb exec-out screencap -p > screens/settings-popup.png
-  XY=$(find_node '(content-desc|text)="Glow')
-  if [ -n "$XY" ]; then adb shell input tap $XY; sleep 1; adb exec-out screencap -p > screens/settings-glow.png; fi
-  adb shell input keyevent KEYCODE_BACK
-  sleep 1
-  adb exec-out screencap -p > screens/app-glow.png
-else
-  echo "::warning title=Device check::Settings button not found for the screenshot"
-fi
+# Settings button (top-right): switch the app to the Glow icon style. The page is always animating, so the
+# accessibility tree never settles; tap the button's spot and pick the option with the keyboard instead.
+adb shell input tap $((W * 89 / 100)) $((H * 10 / 100))
+sleep 1.5
+adb exec-out screencap -p > screens/settings-popup.png
+adb shell input keyevent KEYCODE_TAB
+adb shell input keyevent KEYCODE_TAB
+adb shell input keyevent KEYCODE_ENTER
+sleep 1
+adb exec-out screencap -p > screens/settings-glow.png
+adb shell input keyevent KEYCODE_BACK
+sleep 1
+adb exec-out screencap -p > screens/app-glow.png
 
 # Android's log for the app (crashes, web view errors), kept with the screenshots
 adb logcat -d -v time | grep -E "AndroidRuntime|FATAL|prostellis|chromium|ActivityTaskManager|ActivityManager: (Force|Process|Killing)|WebView|ANR" > screens/logcat.txt || true
