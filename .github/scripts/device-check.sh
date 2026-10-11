@@ -72,6 +72,11 @@ adb shell input keyevent KEYCODE_BACK
 sleep 1
 adb exec-out screencap -p > screens/app-glow.png
 
+# NOAA's aurora forecast must allow the app's page to read it (CORS); recorded, not required
+curl -s -D - -o /dev/null -H "Origin: https://appassets.androidplatform.net" \
+  https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json | grep -i "^access-control" > screens/noaa-cors.txt \
+  || echo "No CORS header from NOAA: the aurora line won't show" > screens/noaa-cors.txt
+
 # Android's log for the app (crashes, web view errors), kept with the screenshots
 adb logcat -d -v time | grep -E "AndroidRuntime|FATAL|prostellis|chromium|ActivityTaskManager|ActivityManager: (Force|Process|Killing)|WebView|ANR" > screens/logcat.txt || true
 

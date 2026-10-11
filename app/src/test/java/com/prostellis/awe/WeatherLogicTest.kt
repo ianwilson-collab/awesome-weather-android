@@ -2,6 +2,7 @@ package com.prostellis.awe
 
 import com.prostellis.awe.weather.Cat
 import com.prostellis.awe.weather.Daylight
+import com.prostellis.awe.weather.EventDays
 import com.prostellis.awe.weather.Forecast
 import com.prostellis.awe.weather.Place
 import com.prostellis.awe.weather.SkyPalette
@@ -122,8 +123,14 @@ class WeatherLogicTest {
     @Test fun iconStylesUseTheWebAppNames() {
         assertEquals(IconStyle.GLOW, IconStyle.fromId("glow"))
         assertEquals(IconStyle.FINE, IconStyle.fromId("fine"))
-        assertEquals(IconStyle.CURRENT, IconStyle.fromId(null))
-        assertEquals(IconStyle.CURRENT, IconStyle.fromId("something else"))
+        assertEquals(IconStyle.DEFAULT, IconStyle.fromId(null))
+        assertEquals(IconStyle.DEFAULT, IconStyle.fromId("something else"))
+    }
+
+    @Test fun eventDaysReadTheWebAppColors() {
+        val days = EventDays.parse("""{"2026-10-21":"#8a6cff","2026-10-31":"#f07d1a","bad":"blue"}""")
+        assertEquals(mapOf("2026-10-21" to 0xFF8A6CFF.toInt(), "2026-10-31" to 0xFFF07D1A.toInt()), days)
+        assertEquals(emptyMap<String, Int>(), EventDays.parse("not json"))
     }
 
     @Test fun sevenDaysOnlyWhenWide() {

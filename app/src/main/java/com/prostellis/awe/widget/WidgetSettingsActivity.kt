@@ -34,7 +34,7 @@ class WidgetSettingsActivity : Activity() {
     private var transparency = 0
     private var refresh = RefreshMode.EVERY_30
     private var showCurrent = true
-    private var iconStyle = IconStyle.CURRENT
+    private var iconStyle = IconStyle.DEFAULT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,14 +84,14 @@ class WidgetSettingsActivity : Activity() {
         }
 
         // Icon style: shared by every widget and the app; each choice shows a few of its icons
-        val styleButtons = mapOf(R.id.style_current to IconStyle.CURRENT, R.id.style_glow to IconStyle.GLOW, R.id.style_fine to IconStyle.FINE)
+        val styleButtons = mapOf(R.id.style_default to IconStyle.DEFAULT, R.id.style_glow to IconStyle.GLOW, R.id.style_fine to IconStyle.FINE)
         for ((id, style) in styleButtons) {
             findViewById<RadioButton>(id).setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, iconSample(style), null)
         }
         val styleGroup = findViewById<RadioGroup>(R.id.icon_style_group)
         styleGroup.check(styleButtons.entries.first { it.value == iconStyle }.key)
         styleGroup.setOnCheckedChangeListener { _, checked ->
-            iconStyle = styleButtons[checked] ?: IconStyle.CURRENT
+            iconStyle = styleButtons[checked] ?: IconStyle.DEFAULT
             drawPreview()
         }
 

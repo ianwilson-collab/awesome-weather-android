@@ -89,6 +89,17 @@ class WidgetRenderTest {
         save("style-glow-transparent", renderer.render(WidgetKind.FORECAST, model(morning), 388f, 204f, 80, see, false, true, IconStyle.GLOW), wallpaper = true)
     }
 
+    /** Version 1.5: event days get a small dot in the sticker color under the day name. */
+    @Test fun marksEventDays() {
+        val events = mapOf("2026-10-10" to 0xFF9AA6B4.toInt(), "2026-10-12" to 0xFFE8384F.toInt(), "2026-10-14" to 0xFF20B97F.toInt())
+        for (dark in listOf(false, true)) {
+            val theme = if (dark) WidgetTheme.DARK else WidgetTheme.LIGHT
+            val tag = if (dark) "dark" else "light"
+            save("events-$tag-7day", renderer.render(WidgetKind.FORECAST, model(morning), 388f, 204f, 0, theme, dark, true, IconStyle.DEFAULT, events), null)
+            save("events-$tag-5day", renderer.render(WidgetKind.FORECAST, model(morning), 310f, 184f, 0, theme, dark, true, IconStyle.GLOW, events), null)
+        }
+    }
+
     /** Every symbol in every style, large, on light and dark rows (for checking against the approved mock-ups). */
     @Test fun drawsIconSheet() {
         val d = context.resources.displayMetrics.density

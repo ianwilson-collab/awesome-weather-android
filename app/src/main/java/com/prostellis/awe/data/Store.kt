@@ -1,6 +1,7 @@
 package com.prostellis.awe.data
 
 import android.content.Context
+import com.prostellis.awe.weather.EventDays
 import com.prostellis.awe.weather.Forecast
 import com.prostellis.awe.weather.Place
 import com.prostellis.awe.widget.IconStyle
@@ -42,6 +43,17 @@ class Store(context: Context) {
     var iconStyle: IconStyle
         get() = IconStyle.fromId(prefs.getString(KEY_ICON_STYLE, null))
         set(value) { prefs.edit().putString(KEY_ICON_STYLE, value.id).apply() }
+
+    /** Event days from the app, about 13 months ahead: date → sticker color. */
+    val eventColors: Map<String, Int>
+        get() = prefs.getString(KEY_EVENTS, null)?.let(EventDays::parse) ?: emptyMap()
+
+    /** Saves the event days the app worked out (JSON from the page). Returns true when they changed. */
+    fun saveEventsJson(json: String): Boolean {
+        if (EventDays.parse(json).isEmpty() || json == prefs.getString(KEY_EVENTS, null)) return false
+        prefs.edit().putString(KEY_EVENTS, json).apply()
+        return true
+    }
 
     fun savedForecast(): SavedForecast? {
         val json = prefs.getString(KEY_FORECAST, null) ?: return null
@@ -109,5 +121,6 @@ class Store(context: Context) {
         const val KEY_FETCHED_AT = "fetchedAt"
         const val KEY_FORECAST_PLACE = "forecastPlace"
         const val KEY_ICON_STYLE = "iconStyle"
+        const val KEY_EVENTS = "events"
     }
 }

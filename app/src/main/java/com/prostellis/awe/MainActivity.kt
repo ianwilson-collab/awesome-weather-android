@@ -28,7 +28,7 @@ import com.prostellis.awe.widget.WidgetUpdater
 
 /**
  * The app: the bundled web app (assets/web/index.html, unchanged) in a full-screen web view,
- * plus a small bridge so the widgets follow the location and icon style saved in the app.
+ * plus a small bridge so the widgets follow the location, icon style and event days from the app.
  */
 class MainActivity : ComponentActivity() {
 
@@ -154,7 +154,7 @@ class MainActivity : ComponentActivity() {
         })
     }
 
-    /** Runs after the page loads: reports the saved place and icon style to the widgets and adds the name under the footer. */
+    /** Runs after the page loads: reports the saved place, icon style and event days to the widgets and adds the name under the footer. */
     private fun pageScript(): String {
         val version = packageManager.getPackageInfo(packageName, 0).versionName ?: ""
         return """
@@ -162,14 +162,21 @@ class MainActivity : ComponentActivity() {
               if (window.__awe) return;
               window.__awe = true;
               const report = (v) => { if (v) AWEBridge.placeSaved(v); };
+              // Event days are worked out after each forecast is saved, off the page's drawing path
+              const sendEvents = () => setTimeout(() => {
+                const days = window.awesomeWeather?.upcomingEvents?.();
+                if (days && Object.keys(days).length) AWEBridge.eventsSaved(JSON.stringify(days));
+              }, 0);
               const setItem = Storage.prototype.setItem;
               Storage.prototype.setItem = function (k, v) {
                 setItem.call(this, k, v);
                 if (this !== window.localStorage) return;
                 if (k === "wx7.loc") report(v);
                 if (k === "wx7.iconStyle") AWEBridge.iconStyleSaved(JSON.parse(v));
+                if (k === "wx7.cache") sendEvents();
               };
               report(localStorage.getItem("wx7.loc"));
+              sendEvents();
               const help = document.getElementById("styleHelp");
               if (help) help.textContent = "Changes the weather symbols in the app and on your home-screen widgets.";
 
@@ -211,6 +218,12 @@ class MainActivity : ComponentActivity() {
             if (style == store.iconStyle) return
             store.iconStyle = style
             WidgetUpdater.updateAll(applicationContext)
+        }
+
+        /** The app worked out the coming event days: the forecast widget marks them with a dot. */
+        @JavascriptInterface
+        fun eventsSaved(json: String) {
+            if (Store(applicationContext).saveEventsJson(json)) WidgetUpdater.updateAll(applicationContext)
         }
     }
 

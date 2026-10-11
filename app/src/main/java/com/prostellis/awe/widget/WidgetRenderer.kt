@@ -44,7 +44,8 @@ class WidgetRenderer(private val context: Context) {
     private val font: Typeface = context.resources.getFont(R.font.dm_sans)
     private val timeFormat = SimpleDateFormat("h:mm a", Locale.US)
     private val dayFormat = SimpleDateFormat("EEE", Locale.US)
-    private var icons = IconStyle.CURRENT
+    private var icons = IconStyle.DEFAULT
+    private var eventColors: Map<String, Int> = emptyMap()
 
     fun render(
         kind: WidgetKind,
@@ -55,9 +56,11 @@ class WidgetRenderer(private val context: Context) {
         theme: WidgetTheme,
         skyDark: Boolean,
         showCurrent: Boolean = true,
-        iconStyle: IconStyle = IconStyle.CURRENT,
+        iconStyle: IconStyle = IconStyle.DEFAULT,
+        events: Map<String, Int> = emptyMap(),
     ): Rendered {
         icons = iconStyle
+        eventColors = events
         val w = max(widthDp, 40f)
         val h = max(heightDp, 40f)
         val bitmap = Bitmap.createBitmap((w * density).toInt(), (h * density).toInt(), Bitmap.Config.ARGB_8888)
@@ -245,6 +248,10 @@ class WidgetRenderer(private val context: Context) {
 
             val name = if (i == 0) "Today" else dayFormat.format(java.sql.Date.valueOf(d.ymd))
             centered(canvas, name, cx, area.top + colTop + z.name * .95f, z.name, 600, if (i == 0) t.todayName else t.ink, t)
+            // Event day (holiday, season, sky event): a small dot in the sticker's color under the name
+            eventColors[d.ymd]?.let { color ->
+                canvas.drawCircle(cx, area.top + colTop + z.name * 1.2f, 2.2f * z.name / 15f, Paint(Paint.ANTI_ALIAS_FLAG).apply { this.color = color })
+            }
             WeatherIcons.draw(canvas, d.cat, true, cx - z.icon / 2, area.top + colTop + nameH, z.icon, t.icons, icons, t.textShadow)
 
             if (d.hi != null && d.lo != null) {

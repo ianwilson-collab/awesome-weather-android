@@ -31,6 +31,7 @@
   --rain-ink: #3f78c4;
   --shadow: 0 1px 2px rgba(20,32,43,.06), 0 6px 20px rgba(20,32,43,.06);
   --scene-opacity: .78;
+  --sticker-bg: #ffffff;
   --page-scene-opacity: .55;
   --radius: 18px;
   --night-1: #aebbd4; --night-2: #e3e8f0; --night-moon: #fbf6e4; --night-star: #ffffff; --star-stroke: rgba(84, 98, 120, .6);
@@ -67,6 +68,7 @@
     --rain-ink: #7fb0f0;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
     --scene-opacity: .62;
+    --sticker-bg: #233041;
     --page-scene-opacity: .5;
     --night-1: #0f1d33; --night-2: #18263a; --night-moon: #f6efd2; --night-star: #f4f8ff; --star-stroke: transparent;
     --dawn-1: #2f2c4d; --dawn-2: #6a4950; --dawn-sun: #e8925a;
@@ -306,8 +308,8 @@ button { cursor: pointer; }
 .arw.down { fill: var(--set-ink); }
 .sun-times { white-space: nowrap; }
 .sun-times .arw.down { margin-left: 6px; }
-.facts .moon-evt { color: var(--ink); font-weight: 600; }
-.facts .moon-evt .ic { font-size: 15px; }
+.facts .evt { color: var(--ink); font-weight: 600; align-items: center; }
+.facts .evt svg { width: 17px; height: 17px; flex: none; }
 .ic.moon-new { opacity: .55; }
 .facts b { color: var(--ink); font-weight: 600; }
 
@@ -523,11 +525,20 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
 .loc-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
 .loc-msg { margin-top: 10px; font-size: 13.5px; color: var(--ink-2); }
 
-/* ---------- Special-day badges ---------- */
-.badges { position: absolute; top: -30px; right: -12px; z-index: 3; display: flex; flex-direction: row-reverse; pointer-events: none; }
-.badge { width: 48px; height: 48px; transform: rotate(12deg); filter: drop-shadow(0 3px 5px rgba(0, 0, 0, .25)); pointer-events: auto; }
-.badge + .badge { margin-right: -12px; transform: rotate(-10deg) translateY(5px); }
-.badge svg { display: block; width: 100%; height: 100%; }
+/* ---------- Event stickers (holidays, seasons, sky events) ---------- */
+/* An event day gets a round sticker in its ring color with a soft glow, a thin card outline and a tint in the top corner */
+.card.has-evt { box-shadow: 0 0 0 2.5px var(--ring), 0 6px 22px color-mix(in srgb, var(--ring) 35%, transparent); }
+.card.has-evt .scene::after { content: ""; position: absolute; inset: 0; background: linear-gradient(200deg, color-mix(in srgb, var(--ring) 22%, transparent), transparent 40%); }
+.card.has-evt .date { margin-right: 34px; }
+.card.has-evt[data-badges="2"] .date { margin-right: 70px; }
+.badges { position: absolute; top: -22px; right: -12px; z-index: 3; display: flex; flex-direction: row-reverse; pointer-events: none; }
+.badge { position: relative; width: 50px; height: 50px; border-radius: 50%; background: var(--sticker-bg); border: 3px solid var(--ring); box-shadow: 0 4px 12px rgba(10, 20, 30, .28); transform: rotate(8deg); display: grid; place-items: center; pointer-events: auto; }
+.badge + .badge { margin-right: -10px; transform: rotate(-8deg) translateY(6px); }
+.badge svg { display: block; width: 36px; height: 36px; }
+.badge::before { content: ""; position: absolute; inset: -12px; border-radius: 50%; z-index: -1;
+  background: radial-gradient(circle, color-mix(in srgb, var(--ring) 70%, transparent) 30%, transparent 70%); animation: halo 3.2s ease-in-out infinite; }
+@keyframes halo { 0%, 100% { opacity: .55; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.08); } }
+@media (prefers-reduced-motion: reduce) { .badge::before { animation: none; } }
 .dd-special { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
 .dd-special .sp { display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; border-radius: 14px; background: var(--surface-2); }
 .dd-special svg { width: 38px; height: 38px; flex: none; }
@@ -711,7 +722,8 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
 
   <footer class="foot">
     Forecast data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0)
-    and the <a href="https://www.weather.gov/" target="_blank" rel="noopener">National Weather Service</a>.
+    and the <a href="https://www.weather.gov/" target="_blank" rel="noopener">National Weather Service</a>,
+    aurora outlook from <a href="https://www.swpc.noaa.gov/" target="_blank" rel="noopener">NOAA's Space Weather Prediction Center</a>.
     Lows are overnight lows. Tap any day for details.
   </footer>
 </div>
@@ -801,8 +813,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     previewMin: null, // minutes after midnight (15-min steps) while previewing another time; null = live
     days: [],         // the 7 day cards
     extDays: [],      // extended outlook, days 8–16
-    moonEvents: {},   // new/full moons by date → { type, time }
-    iconStyle: store.get("iconStyle", "current") // weather symbol style: "current", "glow" or "fine"
+    iconStyle: store.get("iconStyle", "default") // weather symbol style: "default", "glow" or "fine"
   };
 
   /* ================= Helpers ================= */
@@ -998,17 +1009,19 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       + 0.00038 * E * sin(M - 2 * F) - 0.00024 * E * sin(2 * Mp - M) - 0.00017 * sin(Om);
     return (jde - 2440587.5) * 86400000;
   }
-  // New/full moons that fall on the given location-local dates → { "YYYY-MM-DD": { type, time } }
-  function lunarEvents(ymds) {
-    const off = (state.data?.om?.utc_offset_seconds || 0) * 1000;
-    const k0 = Math.floor((localToMs(`${ymds[0]}T00:00`) - NEW_MOON_REF) / (SYNODIC_DAYS * 86400000)) - 1;
-    const out = {};
-    for (let k = k0; k <= k0 + 3; k += .5) {
+  // New/full moons for one year, keyed by location-local date → { type, time }
+  const moonCache = {};
+  function moonEventsOfYear(y) {
+    const off = (state.data?.om?.utc_offset_seconds || 0) * 1000, key = `${y}|${off}`;
+    if (moonCache[key]) return moonCache[key];
+    const map = {}, start = Date.UTC(y, 0, 1) - off;
+    for (let k = Math.floor((start - NEW_MOON_REF) / (SYNODIC_DAYS * 86400000)) - 1; lunarEventMs(k) < start + 367 * 86400000; k += .5) {
       const local = new Date(lunarEventMs(k) + off).toISOString();
-      if (ymds.includes(local.slice(0, 10))) out[local.slice(0, 10)] = { type: k % 1 ? "full" : "new", time: local.slice(0, 16) };
+      if (+local.slice(0, 4) === y) map[local.slice(0, 10)] = { type: k % 1 ? "full" : "new", time: local.slice(0, 16) };
     }
-    return out;
+    return (moonCache[key] = map);
   }
+  const moonOn = (ymd) => moonEventsOfYear(+ymd.slice(0, 4))[ymd];
   const moonEventLabel = (evt) => `${evt.type === "full" ? "Full moon" : "New moon"} · ${fmtClock(evt.time, true)}`;
 
   // Lit fraction rounded to 5% steps (0 … 1)
@@ -1064,9 +1077,9 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       `<path d="${half(!sunRight)}" style="fill:var(--moon-icon);stroke:var(--ink-3);stroke-width:1.4"/>` +
       `<g style="fill:var(--moon-icon-crater);stroke:none"><circle cx="${mx(2.6)}" cy="10" r="1.3"/><circle cx="${mx(1.7)}" cy="14.6" r=".8"/><circle cx="${mx(4.1)}" cy="13.2" r=".6"/></g>`;
   }
-  /* ---------- Icon styles: Current (clean outline), Glow (soft 3D light), Fine Line ---------- */
+  /* ---------- Icon styles: Default (clean outline), Glow (soft 3D light), Fine Line ---------- */
   const ICON_STYLES = [
-    { id: "current", name: "Current", desc: "Clean outlines, clear at any size." },
+    { id: "default", name: "Default", desc: "Clean outlines, clear at any size." },
     { id: "glow", name: "Glow", desc: "Soft 3D light and gradients." },
     { id: "fine", name: "Fine Line", desc: "Thin, precise lines with small details." }
   ];
@@ -1109,7 +1122,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
   // Clip to one half of the 24×24 icon (for the sunrise/sunset hour halves)
   const halfClip = (right) => { const id = iid("hc"); return [`<clipPath id="${id}"><rect x="${right ? 12 : 0}" y="0" width="12" height="24"/></clipPath>`, `clip-path="url(#${id})"`]; };
 
-  const CURRENT_ICONS = {
+  const DEFAULT_ICONS = {
     sw: 1.7,
     clearSky: (isDay, edge) => edge ? sunMoonHalves(edge) : isDay ? sunShape(12, 12, 4.2, 2.6) : craterMoon,
     partlySky: (isDay, edge) => edge ? `<g transform="translate(1.06 .56) scale(.62)">${sunMoonHalves(edge)}</g>`
@@ -1195,11 +1208,11 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     S.partlySky = (isDay, edge) => edge ? `<g transform="translate(1.06 .56) scale(.62)">${S.halves(edge)}</g>`
       : isDay ? at(8.4, 8, .62, S.sun()) : at(8.6, 8.2, .62, S.smallMoon());
   }
-  const ICON_SETS = { current: CURRENT_ICONS, glow: GLOW_ICONS, fine: FINE_ICONS };
+  const ICON_SETS = { default: DEFAULT_ICONS, glow: GLOW_ICONS, fine: FINE_ICONS };
 
   // edge = "rise" | "set" for the hour that contains sunrise or sunset (clear and partly cloudy only)
   function weatherIcon(cat, isDay = true, edge, style = state.iconStyle) {
-    const S = ICON_SETS[style] || CURRENT_ICONS;
+    const S = ICON_SETS[style] || DEFAULT_ICONS;
     let inner;
     switch (cat) {
       case "clear": inner = S.clearSky(isDay, edge); break;
@@ -1341,71 +1354,60 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
   }
 
   /* ================= Special days (holidays, meteor showers, seasons) ================= */
-  // Badge artwork — simple original drawings on a 48×48 canvas
-  const BADGE_ART = {
-    party: `<path d="M24 6L36 40H12z" fill="#7b5cff"/><path d="M19.8 18h8.4l1.4 4H18.4zM15.9 29h16.2l1.4 4H14.5z" fill="#ffd23f"/>
-      <ellipse cx="24" cy="40" rx="13" ry="3.2" fill="#ffd23f"/><circle cx="24" cy="6" r="4" fill="#ff5fa2"/>
-      <circle cx="8" cy="14" r="1.6" fill="#3bb2d0"/><circle cx="40" cy="12" r="1.6" fill="#ff5fa2"/><circle cx="41" cy="26" r="1.4" fill="#7ee081"/>`,
-    sparkler: `<path d="M13 42L26 22" stroke="#8a7f72" stroke-width="2.6" stroke-linecap="round"/>
-      <g stroke-linecap="round" stroke-width="2.2"><path d="M28 19l0-10M28 19l9-4M28 19l10 4M28 19l5 9M28 19l-8-6M28 19l-9 1M28 19l2 10M28 19l7-8" stroke="#ffcf3f"/>
-      <path d="M28 19l-4-9M28 19l11-1M28 19l-6 7" stroke="#ff8a3d"/></g><circle cx="28" cy="19" r="3.4" fill="#fff4b0"/>`,
-    heart: `<path d="M24 41s-15-9.3-15-20a8 8 0 0 1 15-4 8 8 0 0 1 15 4c0 10.7-15 20-15 20z" fill="#e8384f"/>
-      <ellipse cx="16.5" cy="19" rx="3.2" ry="2.2" transform="rotate(-35 16.5 19)" fill="#fff" fill-opacity=".45"/>`,
-    shamrock: `<path d="M24 25q2 10 7 17" stroke="#2f9e44" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <g fill="#37b24d" stroke="#2b8a3e" stroke-width="1">
-      <path d="M24 25c-6-4-9-8-9-11a4.5 4.5 0 0 1 9-2 4.5 4.5 0 0 1 9 2c0 3-3 7-9 11z"/>
-      <path d="M24 25c-6-4-9-8-9-11a4.5 4.5 0 0 1 9-2 4.5 4.5 0 0 1 9 2c0 3-3 7-9 11z" transform="rotate(120 24 25)"/>
-      <path d="M24 25c-6-4-9-8-9-11a4.5 4.5 0 0 1 9-2 4.5 4.5 0 0 1 9 2c0 3-3 7-9 11z" transform="rotate(240 24 25)"/></g>`,
-    egg: `<ellipse cx="24" cy="25" rx="12.5" ry="16" fill="#ffd6e7" stroke="#e7a9c4" stroke-width="1.2"/>
-      <path d="M12 21l4-3 4 3 4-3 4 3 4-3 4 3 1.5-1" stroke="#7b5cff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
-      <g fill="#3bb2d0"><circle cx="17" cy="30" r="1.8"/><circle cx="24" cy="31" r="1.8"/><circle cx="31" cy="30" r="1.8"/></g>
-      <path d="M14 36q10 4 20 0" stroke="#ffb000" stroke-width="2" fill="none"/>`,
-    flower: `<path d="M24 26v18" stroke="#3f9b43" stroke-width="3" stroke-linecap="round"/><ellipse cx="29" cy="37" rx="5" ry="2.6" transform="rotate(-30 29 37)" fill="#4caf50"/>
-      <g fill="#ff7eb6">${[0, 60, 120, 180, 240, 300].map((a) => `<ellipse cx="24" cy="11" rx="4.6" ry="7.2" transform="rotate(${a} 24 18)"/>`).join("")}</g>
-      <circle cx="24" cy="18" r="4.6" fill="#ffd23f"/>`,
-    flag: `<path d="M12 6v38" stroke="#8a7f72" stroke-width="3" stroke-linecap="round"/>
-      <rect x="13.5" y="8" width="26" height="18" fill="#fff"/>
-      <g fill="#d64541"><rect x="13.5" y="8" width="26" height="2.6"/><rect x="13.5" y="13.1" width="26" height="2.6"/><rect x="13.5" y="18.2" width="26" height="2.6"/><rect x="13.5" y="23.4" width="26" height="2.6"/></g>
-      <rect x="13.5" y="8" width="11" height="9.6" fill="#3c5aa6"/><g fill="#fff"><circle cx="16.5" cy="11" r=".9"/><circle cx="21.5" cy="11" r=".9"/><circle cx="19" cy="14.5" r=".9"/></g>`,
-    tie: `<path d="M19.5 7h9l-1.5 7h-6z" fill="#2f5fbf"/><path d="M21 14h6l4.5 20L24 42l-7.5-8z" fill="#3d74d9"/>
-      <path d="M20 20l9 4M19 27l11 4M18.5 34l6 2.5" stroke="#fff" stroke-opacity=".55" stroke-width="1.6"/>`,
-    firework: `<g stroke-linecap="round" stroke-width="2.4">${Array.from({ length: 12 }, (_, k) => {
-        const a = k * Math.PI / 6, c = ["#ff5f5f", "#ffd23f", "#5fb3ff", "#7ee081"][k % 4];
-        return `<path d="M${f1(24 + Math.cos(a) * 5)} ${f1(24 + Math.sin(a) * 5)}L${f1(24 + Math.cos(a) * 15)} ${f1(24 + Math.sin(a) * 15)}" stroke="${c}"/><circle cx="${f1(24 + Math.cos(a) * 18.5)}" cy="${f1(24 + Math.sin(a) * 18.5)}" r="1.7" fill="${c}" stroke="none"/>`;
-      }).join("")}</g><circle cx="24" cy="24" r="3" fill="#fff4b0"/>`,
-    hardhat: `<path d="M8 33a16 15 0 0 1 32 0z" fill="#ffc22e"/><rect x="21.5" y="15" width="5" height="18" rx="2.5" fill="#f0a400"/>
-      <rect x="4.5" y="31.5" width="39" height="5.5" rx="2.75" fill="#f0a400"/>`,
-    pumpkin: `<path d="M24 9c1-3 3-5 6-5" stroke="#4f7a2e" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <ellipse cx="15" cy="27" rx="10" ry="14" fill="#e8741e"/><ellipse cx="33" cy="27" rx="10" ry="14" fill="#e8741e"/><ellipse cx="24" cy="27" rx="10" ry="15" fill="#f58a2a"/>
-      <path d="M14 15c-2 6-2 18 0 24M34 15c2 6 2 18 0 24" stroke="#c95e12" stroke-width="1.4" fill="none"/>
-      <path d="M15 23l5 4h-6zM33 23l1 4h-6z" fill="#3a2410"/><path d="M14 32c3 4 7 5 10 5s7-1 10-5l-3 1-2-2-2 2-3-2-3 2-2-2-2 2z" fill="#3a2410"/>`,
-    ribbon: `<path d="M18 24l-4 20 4.5-3.5L22 44l2-18z" fill="#d64541"/><path d="M30 24l4 20-4.5-3.5L26 44l-2-18z" fill="#3c5aa6"/>
-      <circle cx="24" cy="18" r="11" fill="#ffd23f" stroke="#e0a800" stroke-width="1.4"/>
-      <path d="M24 11.5l1.9 4.1 4.4.5-3.3 3 .9 4.4-3.9-2.2-3.9 2.2.9-4.4-3.3-3 4.4-.5z" fill="#3c5aa6"/>`,
-    turkey: `${[-64, -32, 0, 32, 64].map((a, k) => {
-        const rad = a * Math.PI / 180;
-        return `<ellipse cx="${f1(24 + Math.sin(rad) * 10)}" cy="${f1(27 - Math.cos(rad) * 10)}" rx="5.2" ry="11" transform="rotate(${a} ${f1(24 + Math.sin(rad) * 10)} ${f1(27 - Math.cos(rad) * 10)})" fill="${["#c0392b", "#e67e22", "#f1c40f", "#e67e22", "#c0392b"][k]}"/>`;
-      }).join("")}
-      <circle cx="24" cy="31" r="10" fill="#8b5a2b"/><circle cx="24" cy="20" r="5.6" fill="#a0693a"/>
-      <circle cx="22" cy="19" r="1" fill="#2b1a0e"/><circle cx="26" cy="19" r="1" fill="#2b1a0e"/>
-      <path d="M22.5 21.5h3L24 24z" fill="#f5a623"/><path d="M25.2 22.5q2 3 0 5q-1.5-2.5 0-5z" fill="#d64541"/>
-      <path d="M20 41v4M28 41v4" stroke="#f5a623" stroke-width="2" stroke-linecap="round"/>`,
-    santahat: `<path d="M9 34C11 21 21 9 33 10c6.5.6 9 7 7.5 15C37 18 31 16.5 27 22c-3.5 5-5.5 9-6 12z" fill="#d62f2f"/>
-      <rect x="6" y="31" width="31" height="9" rx="4.5" fill="#fff" stroke="#e1e1e1"/><circle cx="40.5" cy="27" r="4.8" fill="#fff" stroke="#e1e1e1"/>`,
-    meteor: `<path d="M20 28L44 6" stroke="#ffd23f" stroke-opacity=".35" stroke-width="7" stroke-linecap="round"/>
-      <path d="M20 28L40 10" stroke="#ffe48a" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
-      <path d="M17 19.5l2.8 5.8 6.4.9-4.6 4.5 1.1 6.3-5.7-3-5.7 3 1.1-6.3-4.6-4.5 6.4-.9z" fill="#ffd23f" stroke="#e0a800" stroke-width="1.2" stroke-linejoin="round"/>`,
-    spring: `<path d="M24 30v14" stroke="#3f9b43" stroke-width="2.6" stroke-linecap="round"/><ellipse cx="19" cy="38" rx="4.5" ry="2.2" transform="rotate(30 19 38)" fill="#4caf50"/>
-      <g fill="#ffb3cf" stroke="#f48fb1" stroke-width="1">${[0, 72, 144, 216, 288].map((a) => `<circle cx="24" cy="12.5" r="6" transform="rotate(${a} 24 20)"/>`).join("")}</g>
-      <circle cx="24" cy="20" r="3.6" fill="#ffd23f"/>`,
-    summer: `<g fill="#ffb000">${Array.from({ length: 8 }, (_, k) => `<path d="M24 3l3 7h-6z" transform="rotate(${k * 45} 24 24)"/>`).join("")}</g>
-      <circle cx="24" cy="24" r="10" fill="#ffcc33" stroke="#f0a400" stroke-width="1.2"/>`,
-    fall: `<path d="M24 6l3 8 7-3-2 8 8 1-6 6 3 6-9-2-2 8h-4l-2-8-9 2 3-6-6-6 8-1-2-8 7 3z" fill="#e8741e" stroke="#c4561a" stroke-width="1.2" stroke-linejoin="round"/>
-      <path d="M24 16v28" stroke="#8a5a2b" stroke-width="2" stroke-linecap="round"/>`,
-    winter: `<g stroke="#5aa9e0" stroke-width="2.6" stroke-linecap="round" fill="none">${[0, 60, 120].map((a) =>
-        `<g transform="rotate(${a} 24 24)"><path d="M24 6v36M24 12l-4-4M24 12l4-4M24 36l-4 4M24 36l4 4"/></g>`).join("")}</g>`
+  // Badge artwork: original drawings on a 48×48 canvas. Each is a function so gradient ids stay unique on the page.
+  const heartPath = (cx, cy, k) => `M${cx} ${cy + 20 * k}s${-15 * k}-${9.3 * k}-${15 * k}-${20 * k}a${8 * k} ${8 * k} 0 0 1 ${15 * k}-${4 * k} ${8 * k} ${8 * k} 0 0 1 ${15 * k} ${4 * k}c0 ${10.7 * k}-${15 * k} ${20 * k}-${15 * k} ${20 * k}z`;
+  const leaf = (rot, fill, stroke) => `<path d="M24 25c-6-4-9-8-9-11a4.5 4.5 0 0 1 9-2 4.5 4.5 0 0 1 9 2c0 3-3 7-9 11z" transform="rotate(${rot} 24 25)" fill="${fill}" stroke="${stroke}" stroke-width="1"/>`;
+  const lg = (id, stops, x2 = 0, y2 = 0, x1 = 0, y1 = 1) => `<linearGradient id="${id}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}">${stops.map(([o, c, a = 1]) => `<stop offset="${o}" stop-color="${c}" stop-opacity="${a}"/>`).join("")}</linearGradient>`;
+  const skyDisc = (inner) => {
+    const c = iid("ac"), sky = iid("as");
+    return `<defs><clipPath id="${c}"><circle cx="24" cy="24" r="21"/></clipPath>${lg(sky, [[0, "#1b3550"], [1, "#0b1424"]], 0, 1, 0, 0)}</defs>
+      <g clip-path="url(#${c})"><rect width="48" height="48" fill="url(#${sky})"/>${inner}</g>`;
   };
-  const badgeSVG = (art, label) => `<svg viewBox="0 0 48 48" role="img" aria-label="${esc(label)}">${BADGE_ART[art]}</svg>`;
+  const curtains = (g, xs, base, top) => xs.map((x, k) => `<path d="M${x} ${base + Math.sin(k) * 2}L${x + 2} ${top + (k % 3) * 3}" stroke="url(#${g})" stroke-width="3.2" stroke-linecap="round"/>`).join("");
+  const BADGE_ART = {
+    party: () => `<path d="M24 6L36 40H12z" fill="#7b5cff"/><path d="M19.8 18h8.4l1.4 4H18.4zM15.9 29h16.2l1.4 4H14.5z" fill="#ffd23f"/><ellipse cx="24" cy="40" rx="13" ry="3.2" fill="#ffd23f"/><circle cx="24" cy="6" r="4" fill="#ff5fa2"/><circle cx="8" cy="14" r="1.6" fill="#3bb2d0"/><circle cx="40" cy="12" r="1.6" fill="#ff5fa2"/><circle cx="41" cy="26" r="1.4" fill="#7ee081"/>`,
+    hearts: () => `<path d="${heartPath(31, 13, .62)}" fill="#ff8ab3" transform="rotate(14 31 20)"/><path d="${heartPath(21, 23, .8)}" fill="#e8384f"/><ellipse cx="15" cy="22" rx="2.6" ry="1.8" transform="rotate(-35 15 22)" fill="#fff" fill-opacity=".45"/>`,
+    shamrock: () => `<path d="M24 25q2 10 7 17" stroke="#2f9e44" stroke-width="3" fill="none" stroke-linecap="round"/>${leaf(0, "#37b24d", "#2b8a3e")}${leaf(120, "#37b24d", "#2b8a3e")}${leaf(240, "#37b24d", "#2b8a3e")}`,
+    eggs: () => `<ellipse cx="18" cy="27" rx="9" ry="11.5" fill="#cfe8ff" stroke="#9cc4ea" stroke-width="1"/><path d="M10 24q8 4 16 0" stroke="#ff8ab3" stroke-width="2" fill="none"/><g fill="#ffb000"><circle cx="15" cy="31" r="1.3"/><circle cx="21" cy="31" r="1.3"/></g><ellipse cx="31" cy="30" rx="8.5" ry="11" fill="#fff1b8" stroke="#e8cf6a" stroke-width="1"/><path d="M23.5 29l3.6-2.4 3.6 2.4 3.6-2.4 3.6 2.4" stroke="#7b5cff" stroke-width="1.8" fill="none"/><path d="M4 44c2-6 3-6 4-2 1-6 2-6 4-1 1-6 3-6 4-1 1-5 3-5 4 0 1-6 3-6 4-1 2-5 3-5 4 0 1-6 3-6 4-1 1-5 3-5 4 0 2-5 3-5 4 1v3H4z" fill="#5cbf6a"/>`,
+    flower: () => `<path d="M24 26v18" stroke="#3f9b43" stroke-width="3" stroke-linecap="round"/><ellipse cx="29" cy="37" rx="5" ry="2.6" transform="rotate(-30 29 37)" fill="#4caf50"/><g fill="#ff7eb6">${[0, 60, 120, 180, 240, 300].map((a) => `<ellipse cx="24" cy="11" rx="4.6" ry="7.2" transform="rotate(${a} 24 18)"/>`).join("")}</g><circle cx="24" cy="18" r="4.6" fill="#ffd23f"/>`,
+    flag: () => `<path d="M12 6v38" stroke="#8a7f72" stroke-width="3" stroke-linecap="round"/><rect x="13.5" y="8" width="26" height="18" fill="#fff"/><g fill="#d64541"><rect x="13.5" y="8" width="26" height="2.6"/><rect x="13.5" y="13.1" width="26" height="2.6"/><rect x="13.5" y="18.2" width="26" height="2.6"/><rect x="13.5" y="23.4" width="26" height="2.6"/></g><rect x="13.5" y="8" width="11" height="9.6" fill="#3c5aa6"/><g fill="#fff"><circle cx="16.5" cy="11" r=".9"/><circle cx="21.5" cy="11" r=".9"/><circle cx="19" cy="14.5" r=".9"/></g>`,
+    mug: () => `<path d="M11 18h22v16a7 7 0 0 1-7 7h-8a7 7 0 0 1-7-7z" fill="#3d74d9"/><path d="M33 22h3a5 5 0 0 1 0 10h-3" stroke="#3d74d9" stroke-width="3.4" fill="none"/><path d="M22 34s-5-3-5-6.5a2.6 2.6 0 0 1 5-1.3 2.6 2.6 0 0 1 5 1.3c0 3.5-5 6.5-5 6.5z" fill="#ffffff"/><path d="M17 14c-2-3 2-4 0-8M23 14c-2-3 2-4 0-8M29 14c-2-3 2-4 0-8" stroke="#9aa6b4" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+    firework: () => `<g stroke-linecap="round" stroke-width="2.4">${Array.from({ length: 12 }, (_, k) => { const a = k * Math.PI / 6, c = ["#ff5f5f", "#ffd23f", "#5fb3ff", "#7ee081"][k % 4];
+            return `<path d="M${f1(24 + Math.cos(a) * 5)} ${f1(24 + Math.sin(a) * 5)}L${f1(24 + Math.cos(a) * 15)} ${f1(24 + Math.sin(a) * 15)}" stroke="${c}"/><circle cx="${f1(24 + Math.cos(a) * 18.5)}" cy="${f1(24 + Math.sin(a) * 18.5)}" r="1.7" fill="${c}" stroke="none"/>`; }).join("")}</g><circle cx="24" cy="24" r="3" fill="#fff4b0"/>`,
+    grill: () => `<path d="M9 20h30a15 13 0 0 1-30 0z" fill="#2b2f36"/><rect x="7" y="18" width="34" height="3.4" rx="1.7" fill="#3c424b"/><path d="M16 32l-5 12M32 32l5 12M24 33v11" stroke="#3c424b" stroke-width="2.6" stroke-linecap="round"/><path d="M15 15c-2-3 2-4 0-8M24 15c-2-3 2-4 0-8M33 15c-2-3 2-4 0-8" stroke="#9aa6b4" stroke-width="2" fill="none" stroke-linecap="round"/><g fill="#e8741e"><circle cx="18" cy="17" r="2.2"/><circle cx="30" cy="17" r="2.2"/></g><rect x="21" y="15.5" width="7" height="3" rx="1.5" fill="#b5651d"/>`,
+    pumpkin: () => `<path d="M24 9c1-3 3-5 6-5" stroke="#4f7a2e" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="15" cy="27" rx="10" ry="14" fill="#e8741e"/><ellipse cx="33" cy="27" rx="10" ry="14" fill="#e8741e"/><ellipse cx="24" cy="27" rx="10" ry="15" fill="#f58a2a"/><path d="M14 15c-2 6-2 18 0 24M34 15c2 6 2 18 0 24" stroke="#c95e12" stroke-width="1.4" fill="none"/><path d="M15 23l5 4h-6zM33 23l1 4h-6z" fill="#3a2410"/><path d="M14 32c3 4 7 5 10 5s7-1 10-5l-3 1-2-2-2 2-3-2-3 2-2-2-2 2z" fill="#3a2410"/>`,
+    star: () => `<circle cx="24" cy="24" r="17" fill="#2f4fb5"/><circle cx="24" cy="24" r="17" fill="none" stroke="#ffffff" stroke-width="2"/><circle cx="24" cy="24" r="20" fill="none" stroke="#d64541" stroke-width="2.4"/><path d="M24 11l3.2 8.6 9.1.4-7.1 5.7 2.4 8.8-7.6-5-7.6 5 2.4-8.8-7.1-5.7 9.1-.4z" fill="#ffffff"/>`,
+    tree: () => `<path d="M24 8l9 12h-4l7 9h-5l8 10H9l8-10h-5l7-9h-4z" fill="#1f8a4c"/><rect x="21.5" y="39" width="5" height="5" fill="#8b5a2b"/><path d="M24 3.5l1.6 3.4 3.7.4-2.8 2.5.8 3.6-3.3-1.9-3.3 1.9.8-3.6-2.8-2.5 3.7-.4z" fill="#ffd23f"/><g><circle cx="21" cy="19" r="1.6" fill="#ff5f5f"/><circle cx="27" cy="25" r="1.6" fill="#5fb3ff"/><circle cx="19" cy="30" r="1.6" fill="#ffd23f"/><circle cx="29" cy="34" r="1.6" fill="#ff5f5f"/><circle cx="23" cy="36" r="1.6" fill="#ffffff"/></g>`,
+    ballDrop: () => { let tiles = ""; for (let r = -2; r <= 2; r++) for (let c = -2; c <= 2; c++) { if (r * r + c * c > 6) continue; tiles += `<rect x="${f1(24 + c * 5 - 2.2)}" y="${f1(24 + r * 5 - 2.2)}" width="4.4" height="4.4" rx="1" fill="${["#ffe48a", "#8fd3ff", "#ff9ec7", "#ffffff"][(r + c + 8) % 4]}"/>`; }
+          return `<path d="M24 2v8" stroke="#8a7f72" stroke-width="2.4" stroke-linecap="round"/><circle cx="24" cy="24" r="14" fill="#3a4a8c"/>${tiles}<circle cx="24" cy="24" r="14" fill="none" stroke="#c99a1e" stroke-width="1.6"/><path d="M40 8v5M37.5 10.5h5M7 36v4M5 38h4" stroke="#ffd23f" stroke-width="1.8" stroke-linecap="round"/>`; },
+    sprout: () => `<path d="M8 42c4-3 28-3 32 0z" fill="#8b5a2b"/><path d="M24 41V24" stroke="#3f9b43" stroke-width="2.6" stroke-linecap="round"/><path d="M24 28c-10 1-14-6-13-12 7-1 13 3 13 12z" fill="#5cbf6a"/><path d="M24 24c9-1 13-8 12-14-7 0-12 5-12 14z" fill="#7ed38a"/><path d="M36 26c2 3 3.5 4.5 3.5 6a3.5 3.5 0 0 1-7 0c0-1.5 1.5-3 3.5-6z" fill="#5aa9e0"/>`,
+    sun: () => `<g fill="#ffb000">${Array.from({ length: 8 }, (_, k) => `<path d="M24 3l3 7h-6z" transform="rotate(${k * 45} 24 24)"/>`).join("")}</g><circle cx="24" cy="24" r="10" fill="#ffcc33" stroke="#f0a400" stroke-width="1.2"/>`,
+    leaves: () => { const lf = (x, y, r, c) => `<g transform="rotate(${r} ${x} ${y})"><path d="M${x} ${y - 9}c6 4 7 11 0 17-7-6-6-13 0-17z" fill="${c}"/><path d="M${x} ${y - 7}v15" stroke="rgba(80,40,10,.45)" stroke-width="1"/></g>`;
+          return lf(16, 16, -30, "#e8741e") + lf(32, 20, 25, "#d64541") + lf(22, 34, -10, "#f1b22b"); },
+    snowman: () => `<circle cx="24" cy="33" r="10" fill="#ffffff" stroke="#c9d3de" stroke-width="1.2"/><circle cx="24" cy="17" r="7.5" fill="#ffffff" stroke="#c9d3de" stroke-width="1.2"/><path d="M17 23.5q7 3 14 0v3q-7 3-14 0z" fill="#d62f2f"/><path d="M28 25l3 7" stroke="#d62f2f" stroke-width="3" stroke-linecap="round"/><g fill="#2b2f36"><circle cx="21.5" cy="15.5" r="1"/><circle cx="26.5" cy="15.5" r="1"/><circle cx="24" cy="31" r="1"/><circle cx="24" cy="35.5" r="1"/></g><path d="M24 18l5 1.5-5 1z" fill="#f58a2a"/><path d="M16 10h16M19 10V5h10v5" fill="#2b2f36" stroke="#2b2f36" stroke-width="2"/>`,
+    meteor: () => `<path d="M20 28L44 6" stroke="#ffd23f" stroke-opacity=".35" stroke-width="7" stroke-linecap="round"/><path d="M20 28L40 10" stroke="#ffe48a" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/><path d="M17 19.5l2.8 5.8 6.4.9-4.6 4.5 1.1 6.3-5.7-3-5.7 3 1.1-6.3-4.6-4.5 6.4-.9z" fill="#ffd23f" stroke="#e0a800" stroke-width="1.2" stroke-linejoin="round"/>`,
+    solar: () => { const g = iid("co"); return `<defs><radialGradient id="${g}"><stop offset=".42" stop-color="#ffd23f"/><stop offset=".62" stop-color="#ffb627" stop-opacity=".75"/><stop offset="1" stop-color="#ffb627" stop-opacity="0"/></radialGradient></defs>
+      <circle cx="24" cy="24" r="20" fill="url(#${g})"/><circle cx="24" cy="24" r="11" fill="#ffcf40"/><circle cx="28" cy="21" r="10.4" fill="#10151c" stroke="#5b6878" stroke-width="1"/>`; },
+    lunar: () => { const g = iid("es"); return `<defs><radialGradient id="${g}" cx=".62" cy=".4" r=".62"><stop offset=".72" stop-color="#2b3644"/><stop offset="1" stop-color="#9fb3cc"/></radialGradient></defs><circle cx="24" cy="24" r="15" fill="url(#${g})"/><path d="M14 13a15 15 0 0 0 0 22" stroke="#dfe6ef" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".8"/>`; },
+    aurora: () => { const g = iid("cu");
+      return `<defs>${lg(g, [[0, "#3dffa8"], [.55, "#2fd0b0", .8], [1, "#9b6bff", 0]])}</defs>` + skyDisc(
+        curtains(g, [7, 11, 15, 19, 23, 27, 31, 35, 39], 34, 10) +
+        `<g fill="#ffffff"><circle cx="12" cy="9" r=".9"/><circle cx="36" cy="12" r="1.1"/><circle cx="29" cy="6" r=".7"/></g><path d="M0 36c8-3 16-3 24 0s16 3 24 0v12H0z" fill="#0d1f1c"/>`); },
+    turkey: () => `${[-64, -32, 0, 32, 64].map((a, k) => { const r = a * Math.PI / 180, x = f1(24 + Math.sin(r) * 10), y = f1(27 - Math.cos(r) * 10);
+        return `<ellipse cx="${x}" cy="${y}" rx="5.2" ry="11" transform="rotate(${a} ${x} ${y})" fill="${["#c0392b", "#e67e22", "#f1c40f", "#e67e22", "#c0392b"][k]}"/>`; }).join("")}
+      <circle cx="24" cy="31" r="10" fill="#8b5a2b"/><circle cx="24" cy="20" r="5.6" fill="#a0693a"/><circle cx="22" cy="19" r="1" fill="#2b1a0e"/><circle cx="26" cy="19" r="1" fill="#2b1a0e"/>
+      <path d="M22.5 21.5h3L24 24z" fill="#f5a623"/><path d="M25.2 22.5q2 3 0 5q-1.5-2.5 0-5z" fill="#d64541"/><path d="M20 41v4M28 41v4" stroke="#f5a623" stroke-width="2" stroke-linecap="round"/>`,
+    newMoon: () => `<g opacity=".55"><circle cx="24" cy="24" r="16" fill="#dfe2e7" stroke="#75828f" stroke-width="2.6"/><g fill="#c3c8d0"><circle cx="18.5" cy="19.5" r="3.6"/><circle cx="29.5" cy="27" r="2.8"/><circle cx="22" cy="31.5" r="1.9"/></g></g>`,
+    fullMoon: () => { const g = iid("sf"); return `<defs><radialGradient id="${g}" cx=".38" cy=".35" r=".75"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#dfe3e8"/><stop offset="1" stop-color="#a9b1bc"/></radialGradient></defs><circle cx="24" cy="24" r="16" fill="url(#${g})" stroke="#8a94a2" stroke-width="1"/><g fill="#b9c0c9" opacity=".7"><circle cx="18.5" cy="19.5" r="3.4"/><circle cx="29.5" cy="27" r="2.6"/><circle cx="22" cy="31.5" r="1.8"/></g><g fill="#dfe6ef"><circle cx="41" cy="8" r="1.2"/><circle cx="7" cy="40" r="1"/></g>`; },
+    auroraLine: () => { const g = iid("rb");
+      return `<defs>${lg(g, [[0, "#2fe08f"], [.5, "#25c6c9"], [1, "#8a6cff"]], 1, 0, 0, 0)}</defs>
+        <path d="M5 30C12 14 20 34 26 20S38 10 43 18" stroke="#2fe08f" stroke-opacity=".25" stroke-width="12" fill="none" stroke-linecap="round"/>
+        <path d="M5 30C12 14 20 34 26 20S38 10 43 18" stroke="url(#${g})" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M6 28C12 15 20 32 26 18S37 9 42 16" stroke="#d9fff0" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".9"/>`; }
+  };
+  // Sticker ring color per badge (also the card outline, corner tint and glow)
+  const RING = { party: "#7b5cff", hearts: "#e8384f", shamrock: "#2f9e44", eggs: "#f08bb6", flower: "#f06aa0", flag: "#5b6878", mug: "#2f5fbf", firework: "#e5383b", grill: "#e0a400", pumpkin: "#f07d1a", star: "#c99a1e", tree: "#d62f2f", ballDrop: "#d9a500", sprout: "#5aa9e0", sun: "#f0a400", leaves: "#e8741e", snowman: "#5aa9e0", meteor: "#8a6cff", solar: "#ff9f1a", lunar: "#8f9bab", aurora: "#20b97f", turkey: "#e67e22", newMoon: "#9aa6b4", fullMoon: "#9aa6b4" };
+  const badgeSVG = (art, label) => `<svg viewBox="0 0 48 48" role="img" aria-label="${esc(label)}">${BADGE_ART[art]()}</svg>`;
 
   // Calendar helpers (month is 1–12, weekday 0 = Sunday)
   const ymdOf = (y, m, d) => `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
@@ -1437,34 +1439,34 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     return (jde0 + 0.00001 * S / dl - 2440587.5) * 86400000;
   }
 
-  // Everything special for one year, keyed by local date → [{ art, name, note }]
+  // Everything special for one year, keyed by local date → [{ art, name, label, note }] (label is the short card line)
   const specialCache = {};
   function specialDaysOfYear(y) {
     const key = `${y}|${state.data?.om?.utc_offset_seconds || 0}`;
     if (specialCache[key]) return specialCache[key];
     const map = {};
-    const add = (m, d, art, name, note = "") => (map[ymdOf(y, m, d)] ||= []).push({ art, name, note });
+    const add = (m, d, art, name, note = "", label = name) => (map[ymdOf(y, m, d)] ||= []).push({ art, name, label, note });
     add(1, 1, "party", "New Year's Day");
-    add(2, 14, "heart", "Valentine's Day");
+    add(2, 14, "hearts", "Valentine's Day");
     add(3, 17, "shamrock", "St. Patrick's Day");
-    const [em, ed] = easterDate(y); add(em, ed, "egg", "Easter");
+    const [em, ed] = easterDate(y); add(em, ed, "eggs", "Easter");
     add(5, nthWeekday(y, 5, 0, 2), "flower", "Mother's Day");
     add(5, lastWeekday(y, 5, 1), "flag", "Memorial Day");
-    add(6, nthWeekday(y, 6, 0, 3), "tie", "Father's Day");
+    add(6, nthWeekday(y, 6, 0, 3), "mug", "Father's Day");
     add(7, 4, "firework", "Independence Day");
-    add(9, nthWeekday(y, 9, 1, 1), "hardhat", "Labor Day");
+    add(9, nthWeekday(y, 9, 1, 1), "grill", "Labor Day");
     add(10, 31, "pumpkin", "Halloween");
-    add(11, 11, "ribbon", "Veterans Day");
+    add(11, 11, "star", "Veterans Day");
     add(11, nthWeekday(y, 11, 4, 4), "turkey", "Thanksgiving");
-    add(12, 24, "santahat", "Christmas Eve");
-    add(12, 25, "santahat", "Christmas");
-    add(12, 31, "sparkler", "New Year's Eve");
-    for (const [m, d, name] of METEOR_PEAKS) add(m, d, "meteor", `${name} meteor shower`, "Peak night · best after midnight, away from city lights");
+    add(12, 24, "tree", "Christmas Eve");
+    add(12, 25, "tree", "Christmas");
+    add(12, 31, "ballDrop", "New Year's Eve");
+    for (const [m, d, name] of METEOR_PEAKS) add(m, d, "meteor", `${name} meteor shower`, "Peak night · best after midnight, away from city lights", "Meteor shower");
     const off = (state.data?.om?.utc_offset_seconds || 0) * 1000;
-    [["spring", "First day of spring", "Spring equinox"], ["summer", "First day of summer", "Summer solstice"],
-     ["fall", "First day of fall", "Fall equinox"], ["winter", "First day of winter", "Winter solstice"]].forEach(([art, name, what], which) => {
+    [["sprout", "First day of spring", "Spring equinox"], ["sun", "First day of summer", "Summer solstice"],
+     ["leaves", "First day of fall", "Fall equinox"], ["snowman", "First day of winter", "Winter solstice"]].forEach(([art, name, what], which) => {
       const local = new Date(seasonStartMs(y, which) + off).toISOString();
-      (map[local.slice(0, 10)] ||= []).push({ art, name, note: `${what} · ${fmtClock(local.slice(0, 16))}` });
+      (map[local.slice(0, 10)] ||= []).push({ art, name, label: name, note: `${what} · ${fmtClock(local.slice(0, 16))}` });
     });
     return (specialCache[key] = map);
   }
@@ -1473,6 +1475,185 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
   function meteorNight(ymd, minutes) {
     const night = minutes < 360 ? addDays(ymd, -1) : ymd;
     return specialDays(night).some((s) => s.art === "meteor");
+  }
+
+  /* ================= Eclipses (computed for the saved place) ================= */
+  // Sun and Moon positions (Meeus, "Astronomical Algorithms" ch. 25 and 47, main terms; good to about 0.01°),
+  // then a 2-minute search around each new and full moon for what can be seen from here.
+  const eclipsesBetween = (() => {
+    const DEG = Math.PI / 180;
+    const MOON_L = [[0,0,1,0,6288774],[2,0,-1,0,1274027],[2,0,0,0,658314],[0,0,2,0,213618],[0,1,0,0,-185116],[0,0,0,2,-114332],
+      [2,0,-2,0,58793],[2,-1,-1,0,57066],[2,0,1,0,53322],[2,-1,0,0,45758],[0,1,-1,0,-40923],[1,0,0,0,-34720],[0,1,1,0,-30383],
+      [2,0,0,-2,15327],[0,0,1,2,-12528],[0,0,1,-2,10980],[4,0,-1,0,10675],[0,0,3,0,10034],[4,0,-2,0,8548],[2,1,-1,0,-7888],
+      [2,1,0,0,-6766],[1,0,-1,0,-5163],[1,1,0,0,4987],[2,-1,1,0,4036],[2,0,2,0,3994],[4,0,0,0,3861],[2,0,-3,0,3665],
+      [0,1,-2,0,-2689],[2,0,-1,2,-2602],[2,-1,-2,0,2390],[1,0,1,0,-2348],[2,-2,0,0,2236],[0,1,2,0,-2120],[0,2,0,0,-2069]];
+    const MOON_R = [[0,0,1,0,-20905355],[2,0,-1,0,-3699111],[2,0,0,0,-2955968],[0,0,2,0,-569925],[0,1,0,0,48888],[0,0,0,2,-3149],
+      [2,0,-2,0,246158],[2,-1,-1,0,-152138],[2,0,1,0,-170733],[2,-1,0,0,-204586],[0,1,-1,0,-129620],[1,0,0,0,108743],
+      [0,1,1,0,104755],[2,0,0,-2,10321],[0,0,1,-2,79661],[4,0,-1,0,-34782],[0,0,3,0,-23210],[4,0,-2,0,-21636],[2,1,-1,0,24208],
+      [2,1,0,0,30824],[1,0,-1,0,-8379],[1,1,0,0,-16675],[2,-1,1,0,-12831],[2,0,2,0,-10445],[4,0,0,0,-11650],[2,0,-3,0,14403],
+      [0,1,-2,0,-7003],[2,-1,-2,0,10056],[1,0,1,0,6322],[2,-2,0,0,-9884],[0,1,2,0,5751]];
+    const MOON_B = [[0,0,0,1,5128122],[0,0,1,1,280602],[0,0,1,-1,277693],[2,0,0,-1,173237],[2,0,-1,1,55413],[2,0,-1,-1,46271],
+      [2,0,0,1,32573],[0,0,2,1,17198],[2,0,1,-1,9266],[0,0,2,-1,8822],[2,-1,0,-1,8216],[2,0,-2,-1,4324],[2,0,1,1,4200],
+      [2,1,0,-1,-3359],[2,-1,-1,1,2463],[2,-1,0,1,2211],[2,-1,-1,-1,2065],[0,1,-1,-1,-1870],[4,0,-1,-1,1828],[0,1,0,1,-1794],
+      [0,0,0,3,-1749],[0,1,-1,1,-1565],[1,0,0,1,-1491],[0,1,1,1,-1475],[0,1,1,-1,-1410],[0,1,0,-1,-1344],[1,0,0,-1,-1335],[0,0,3,1,1107]];
+    const jdOf = (ms) => ms / 86400000 + 2440587.5;
+    // Geocentric ecliptic positions: { lon, lat (degrees), dist (km) }
+    function moonEcliptic(ms) {
+      const T = (jdOf(ms) - 2451545) / 36525, E = 1 - 0.002516 * T;
+      const Lp = 218.3164477 + 481267.88123421 * T, D = 297.8501921 + 445267.1114034 * T, M = 357.5291092 + 35999.0502909 * T;
+      const Mp = 134.9633964 + 477198.8675055 * T, F = 93.272095 + 483202.0175233 * T;
+      const arg = ([d, m, mp, f]) => (d * D + m * M + mp * Mp + f * F) * DEG;
+      const ecc = (m) => (m === 0 ? 1 : Math.abs(m) === 1 ? E : E * E);
+      let sl = 0, sr = 0, sb = 0;
+      for (const t of MOON_L) sl += t[4] * ecc(t[1]) * Math.sin(arg(t));
+      for (const t of MOON_R) sr += t[4] * ecc(t[1]) * Math.cos(arg(t));
+      for (const t of MOON_B) sb += t[4] * ecc(t[1]) * Math.sin(arg(t));
+      const A1 = (119.75 + 131.849 * T) * DEG, A2 = (53.09 + 479264.29 * T) * DEG, A3 = (313.45 + 481266.484 * T) * DEG;
+      sl += 3958 * Math.sin(A1) + 1962 * Math.sin((Lp - F) * DEG) + 318 * Math.sin(A2);
+      sb += -2235 * Math.sin(Lp * DEG) + 382 * Math.sin(A3) + 175 * Math.sin(A1 - F * DEG) + 175 * Math.sin(A1 + F * DEG)
+        + 127 * Math.sin((Lp - Mp) * DEG) - 115 * Math.sin((Lp + Mp) * DEG);
+      return { lon: Lp + sl / 1e6, lat: sb / 1e6, dist: 385000.56 + sr / 1000 };
+    }
+    function sunEcliptic(ms) {
+      const T = (jdOf(ms) - 2451545) / 36525, M = (357.52911 + 35999.05029 * T) * DEG, e = 0.016708634;
+      const C = (1.914602 - 0.004817 * T) * Math.sin(M) + (0.019993 - 0.000101 * T) * Math.sin(2 * M) + 0.000289 * Math.sin(3 * M);
+      const nu = M + C * DEG;
+      return { lon: 280.46646 + 36000.76983 * T + C - 0.00569, lat: 0, dist: 149597870.7 * 1.000001018 * (1 - e * e) / (1 + e * Math.cos(nu)) };
+    }
+    // Ecliptic → Earth-centered equatorial vector (km); then optionally seen from the place (topocentric)
+    function eqVector({ lon, lat, dist }, ms) {
+      const eps = (23.4392911 - 0.0130042 * (jdOf(ms) - 2451545) / 36525) * DEG, l = lon * DEG, b = lat * DEG;
+      const x = Math.cos(b) * Math.cos(l), y = Math.cos(b) * Math.sin(l), z = Math.sin(b);
+      return [dist * x, dist * (y * Math.cos(eps) - z * Math.sin(eps)), dist * (y * Math.sin(eps) + z * Math.cos(eps))];
+    }
+    function observer(ms, lat, lon) {
+      const theta = (280.46061837 + 360.98564736629 * (jdOf(ms) - 2451545) + lon) * DEG, phi = lat * DEG, R = 6378.14;
+      const up = [Math.cos(phi) * Math.cos(theta), Math.cos(phi) * Math.sin(theta), Math.sin(phi)];
+      return { pos: up.map((u) => u * R), up };
+    }
+    const sub = (a, b) => a.map((v, i) => v - b[i]);
+    const len = (a) => Math.hypot(...a);
+    const angle = (a, b) => Math.acos(Math.min(1, Math.max(-1, (a[0] * b[0] + a[1] * b[1] + a[2] * b[2]) / (len(a) * len(b)))));
+    const altitude = (v, up) => 90 - angle(v, up) / DEG;
+    // Area of the sun's disc hidden by the moon (0–1), from the two radii and the distance between centers (all angles)
+    function obscuration(rs, rm, d) {
+      if (d >= rs + rm) return 0;
+      if (d <= Math.abs(rm - rs)) return Math.min(1, (rm * rm) / (rs * rs));
+      const a = Math.acos((d * d + rs * rs - rm * rm) / (2 * d * rs)), b = Math.acos((d * d + rm * rm - rs * rs) / (2 * d * rm));
+      return (rs * rs * (a - Math.sin(2 * a) / 2) + rm * rm * (b - Math.sin(2 * b) / 2)) / (Math.PI * rs * rs);
+    }
+    // Solar eclipse around a new moon, as seen from (lat, lon) with the sun above the horizon
+    function solarEclipseNear(t0, lat, lon) {
+      let best = null;
+      for (let t = t0 - 5 * 3600000; t <= t0 + 5 * 3600000; t += 120000) {
+        const o = observer(t, lat, lon);
+        const sun = sub(eqVector(sunEcliptic(t), t), o.pos), moon = sub(eqVector(moonEcliptic(t), t), o.pos);
+        if (altitude(sun, o.up) < -0.5) continue;
+        const rs = Math.asin(696000 / len(sun)), rm = Math.asin(1737.4 / len(moon)), d = angle(sun, moon);
+        if (d >= rs + rm) continue;
+        const covered = obscuration(rs, rm, d);
+        if (!best || covered > best.covered) best = { t, covered, type: d <= Math.abs(rm - rs) ? (rm > rs ? "total" : "annular") : "partial" };
+      }
+      return best;
+    }
+    // Lunar eclipse around a full moon: the moon in the Earth's umbra while above the horizon here
+    function lunarEclipseNear(t0, lat, lon) {
+      let best = null;
+      for (let t = t0 - 4 * 3600000; t <= t0 + 4 * 3600000; t += 120000) {
+        const m = moonEcliptic(t), s = sunEcliptic(t);
+        const moonVec = eqVector(m, t), shadow = eqVector({ lon: s.lon + 180, lat: 0, dist: 1 }, t);
+        const piM = Math.asin(6378.14 / m.dist), piS = Math.asin(6378.14 / s.dist), sS = Math.asin(696000 / s.dist), sM = Math.asin(1737.4 / m.dist);
+        const umbra = 1.02 * (0.99834 * piM - sS + piS), d = angle(moonVec, shadow);
+        if (d >= umbra + sM) continue;
+        const o = observer(t, lat, lon);
+        if (altitude(sub(moonVec, o.pos), o.up) < 0) continue;
+        const depth = (umbra + sM - d) / (2 * sM);
+        if (!best || depth > best.depth) best = { t, depth, type: d <= umbra - sM ? "total" : "partial" };
+      }
+      return best;
+    }
+    // Every eclipse visible from (lat, lon) between two moments, keyed by local date (utcOffset in seconds)
+    function eclipsesBetween(startMs, endMs, lat, lon, utcOffset) {
+      const out = {}, k0 = Math.floor((startMs - NEW_MOON_REF) / (SYNODIC_DAYS * 86400000)) - 1;
+      for (let k = k0; lunarEventMs(k) < endMs + 86400000; k += .5) {
+        const t0 = lunarEventMs(k);
+        if (t0 < startMs - 86400000) continue;
+        const solar = k % 1 === 0, hit = solar ? solarEclipseNear(t0, lat, lon) : lunarEclipseNear(t0, lat, lon);
+        if (!hit) continue;
+        const local = new Date(hit.t + utcOffset * 1000).toISOString().slice(0, 16);
+        out[local.slice(0, 10)] = { kind: solar ? "solar" : "lunar", type: hit.type, time: local, covered: hit.covered };
+      }
+      return out;
+    }
+    return eclipsesBetween;
+  })();
+  const eclipseCache = {};
+  function eclipsesOfYear(y) {
+    const off = state.data?.om?.utc_offset_seconds || 0, lat = +state.loc.lat, lon = +state.loc.lon, key = `${y}|${lat}|${lon}|${off}`;
+    if (!eclipseCache[key]) {
+      const all = eclipsesBetween(Date.UTC(y, 0, 1) - off * 1000, Date.UTC(y + 1, 0, 1) - off * 1000, lat, lon, off);
+      eclipseCache[key] = Object.fromEntries(Object.entries(all).filter(([ymd]) => +ymd.slice(0, 4) === y));
+    }
+    return eclipseCache[key];
+  }
+  const cap = (s) => s[0].toUpperCase() + s.slice(1);
+  function eclipseOn(ymd) {
+    const e = eclipsesOfYear(+ymd.slice(0, 4))[ymd];
+    if (!e) return null;
+    const peak = `Peak ${fmtClock(e.time)}`;
+    if (e.kind === "solar") {
+      const label = `${cap(e.type)} solar eclipse`;
+      const seen = e.type === "total" ? "The sun is fully covered" : e.type === "annular" ? "A ring of sun around the moon" : `About ${Math.max(1, Math.round(e.covered * 100))}% of the sun covered`;
+      return { art: "solar", label, name: label, note: `${peak} · ${seen} · Only look through eclipse glasses`, ring: RING.solar, sticker: true };
+    }
+    const seen = e.type === "total" ? "The moon turns a coppery red" : "Part of the moon in Earth's shadow";
+    return { art: "lunar", label: "Lunar eclipse", name: `${cap(e.type)} lunar eclipse`, note: `${peak} · ${seen} · Safe to watch`, ring: RING.lunar, sticker: true };
+  }
+
+  /* ================= Aurora (NOAA's 3-day Kp forecast) ================= */
+  async function loadKp() {
+    const rows = await fetchJSON("https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json", { retries: 1 });
+    return rows.map((r) => [Date.parse(`${r.time_tag}Z`), +r.kp]).filter(([t, kp]) => Number.isFinite(t) && Number.isFinite(kp));
+  }
+  // Possible when the night's strongest Kp (9 PM – 3 AM) reaches the level that pushes the aurora down to this
+  // geomagnetic latitude (pole at 80.8°N, 72.7°W), and the sky is properly dark at midnight
+  function auroraOn(ymd) {
+    const kp = state.data?.kp;
+    if (!kp?.length) return null;
+    const rad = Math.PI / 180, lat = +state.loc.lat, lon = +state.loc.lon;
+    const mag = Math.abs(Math.asin(Math.sin(lat * rad) * Math.sin(80.8 * rad) + Math.cos(lat * rad) * Math.cos(80.8 * rad) * Math.cos((lon + 72.7) * rad)) / rad);
+    const from = localToMs(`${ymd}T21:00`), to = from + 6 * 3600000;
+    const max = Math.max(...kp.filter(([t]) => t < to && t + 3 * 3600000 > from).map(([, v]) => v));
+    if (!(max >= (66.5 - mag) / 2.5) || sunAltitude(from + 3 * 3600000, lat, lon) > -12) return null;
+    return { art: "aurora", line: "auroraLine", label: "Aurora possible", name: "Aurora possible",
+      note: `Kp ${Math.round(max)} forecast tonight · Look ${lat < 0 ? "south" : "north"} after dark, away from city lights`, ring: RING.aurora, sticker: true };
+  }
+
+  /* ================= Events on a day (stickers, card lines, details) ================= */
+  // In order: holidays and seasons, eclipse, aurora, new/full moon. An eclipse takes the moon's sticker; both lines still show.
+  function dayEvents(ymd) {
+    const out = specialDays(ymd).map((sp) => ({ ...sp, ring: RING[sp.art], sticker: true }));
+    const eclipse = eclipseOn(ymd), aurora = auroraOn(ymd), moon = moonOn(ymd);
+    if (eclipse) out.push(eclipse);
+    if (aurora) out.push(aurora);
+    if (moon) {
+      const full = moon.type === "full", art = full ? "fullMoon" : "newMoon", label = full ? "Full moon" : "New moon";
+      out.push({ art, label, name: label, note: full ? "Fully lit all night" : "Dark skies all night, great for stargazing", ring: RING[art], sticker: !eclipse });
+    }
+    return out;
+  }
+  const stickersOf = (events) => events.filter((ev) => ev.sticker).slice(0, 2);
+  const eventIcon = (ev) => badgeSVG(ev.line || ev.art, ev.label);
+  // For the Android widgets: the sticker color of each event day for about 13 months → { "YYYY-MM-DD": "#rrggbb" }
+  function upcomingEvents() {
+    const today = state.data?.om?.current?.time?.slice(0, 10);
+    const out = {};
+    if (!today) return out;
+    for (let i = 0; i < 400; i++) {
+      const ymd = addDays(today, i), first = dayEvents(ymd).find((ev) => ev.sticker);
+      if (first) out[ymd] = first.ring;
+    }
+    return out;
   }
 
   /* ================= Golden hour ================= */
@@ -1512,8 +1693,8 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
   }
 
   /* ================= Festive touches (only on the special day itself) ================= */
-  const FESTIVE_FOR = { party: "confetti", sparkler: "fireworks", heart: "hearts", shamrock: "shamrocks", egg: "petals", flower: "petals",
-    firework: "fireworks", pumpkin: "bats", turkey: "leaves", fall: "leaves", santahat: "snow", winter: "snow", spring: "blossoms" };
+  const FESTIVE_FOR = { party: "confetti", ballDrop: "fireworks", hearts: "hearts", shamrock: "shamrocks", eggs: "petals", flower: "petals",
+    firework: "fireworks", pumpkin: "bats", turkey: "leaves", leaves: "leaves", tree: "snow", snowman: "snow", sprout: "blossoms" };
   const festiveFor = (ymd) => specialDays(ymd).map((s) => FESTIVE_FOR[s.art]).find(Boolean);
   const pick = (r, list) => list[Math.floor(r() * list.length)];
   const PARTICLE = {
@@ -1522,7 +1703,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     petals: (r) => `<ellipse rx="${f1(3 + r() * 2)}" ry="${f1(5.5 + r() * 2.5)}" fill="${pick(r, ["#ff9ec7", "#ffc2dc", "#ff7eb6"])}" fill-opacity=".9"/>`,
     blossoms: (r) => `<g fill="${pick(r, ["#ffd1e3", "#ffffff", "#ffb3cf"])}" stroke="rgba(230,140,180,.55)" stroke-width=".6">${[0, 72, 144, 216, 288].map((a) => `<circle r="2.6" cy="-3.2" transform="rotate(${a})"/>`).join("")}</g><circle r="1.6" fill="#ffd23f"/>`,
     hearts: (r) => `<path d="M0 7s-8-5-8-10.5a4.3 4.3 0 0 1 8-2.2 4.3 4.3 0 0 1 8 2.2C8 2 0 7 0 7z" fill="${pick(r, ["#e8384f", "#ff6b8a", "#ff9ec7"])}"/>`,
-    shamrocks: () => `<g transform="scale(.42) translate(-24 -27)">${BADGE_ART.shamrock}</g>`,
+    shamrocks: () => `<g transform="scale(.42) translate(-24 -27)">${BADGE_ART.shamrock()}</g>`,
     confetti: (r) => `<rect x="-3" y="-1.6" width="${f1(5 + r() * 3)}" height="3.2" rx=".8" fill="${pick(r, ["#ff5f5f", "#ffd23f", "#5fb3ff", "#7ee081", "#b388ff", "#ff8a3d"])}"/>`
   };
   const PARTICLE_SETUP = { // count, seconds to cross the sky
@@ -1849,15 +2030,17 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     const key = locKey(loc);
     if (!state.data || state.data.locKey !== key) renderSkeleton();
 
-    const [omR, nwsR] = await Promise.allSettled([
+    const [omR, nwsR, kpR] = await Promise.allSettled([
       loadOpenMeteo(loc),
-      isUS(loc) ? loadNWS(loc) : Promise.reject(Object.assign(new Error("outside US"), { outside: true }))
+      isUS(loc) ? loadNWS(loc) : Promise.reject(Object.assign(new Error("outside US"), { outside: true })),
+      loadKp()
     ]);
 
     const notices = [];
     if (omR.status === "fulfilled") {
       const nws = nwsR.status === "fulfilled" ? nwsR.value : { error: nwsR.reason?.outside ? "outside" : "failed" };
-      state.data = { om: omR.value, nws, fetchedAt: Date.now(), locKey: key };
+      const kp = kpR.status === "fulfilled" ? kpR.value : state.data?.kp || [];
+      state.data = { om: omR.value, nws, kp, fetchedAt: Date.now(), locKey: key };
       if (loc.fromGps && nws.place) {
         state.loc = { ...loc, name: nws.place.city, region: US_STATES[nws.place.state] || nws.place.state, fromGps: false };
         store.set("loc", state.loc);
@@ -1960,11 +2143,9 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     state.extDays = ext;
     $("outlook").hidden = !ext.length;
     if (!ext.length) return;
-    Object.assign(state.moonEvents, lunarEvents(ext.map((d) => d.ymd)));
     $("outlookList").innerHTML = ext.map((d, k) => {
-      const specials = specialDays(d.ymd), evt = state.moonEvents[d.ymd], amt = inches(d.precip);
-      const marks = specials.map((sp) => `<span title="${esc(sp.name)}">${badgeSVG(sp.art, sp.name)}</span>`).join("") +
-        (evt ? `<span title="${esc(moonEventLabel(evt))}">${moonEventIcon(evt)}</span>` : "");
+      const amt = inches(d.precip);
+      const marks = dayEvents(d.ymd).map((ev) => `<span title="${esc(ev.name)}">${eventIcon(ev)}</span>`).join("");
       return `<div class="orow" role="button" tabindex="0" data-x="${k}" aria-label="${esc(fmtDow(d.ymd))} ${esc(fmtMonDay(d.ymd))}: ${esc(d.label)}, high ${round(d.hi)}, low ${round(d.lo)}. Open details.">
         <div class="o-day"><b>${fmtDow(d.ymd, true)}</b><span class="o-date">${fmtMonDay(d.ymd)}</span>${marks ? `<span class="o-badges">${marks}</span>` : ""}</div>
         <div class="o-cond">${weatherIcon(d.cat)}<span>${esc(d.label)}</span></div>
@@ -2044,18 +2225,16 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
   }
 
   function renderCards(days) {
-    state.moonEvents = lunarEvents(days.map((d) => d.ymd));
     $("days").innerHTML = days.map((d, n) => {
-      const evt = state.moonEvents[d.ymd];
       const dow = n === 0 ? "Today" : fmtDow(d.ymd, false);
       const amt = inches(d.precip);
       const snow = inches(d.snow);
       const split = n === 0 ? " split" : "";
-      const specials = specialDays(d.ymd).slice(0, 2);
-      const badges = specials.length
-        ? `<div class="badges">${specials.map((sp) => `<span class="badge" title="${esc(sp.name)}">${badgeSVG(sp.art, sp.name)}</span>`).join("")}</div>` : "";
-      const special = specials.length ? ` ${specials.map((sp) => sp.name).join(", ")}.` : "";
-      return `<article class="card" role="button" tabindex="0" data-i="${n}" data-badges="${specials.length}" style="--s1:var(--${d.cat}-1);--s2:var(--${d.cat}-2)" aria-label="${esc(dow)}: ${esc(d.label)}, high ${round(d.hi)}, low ${round(d.lo)}.${esc(special)} Open details.">
+      const events = dayEvents(d.ymd), stickers = stickersOf(events);
+      const badges = stickers.length
+        ? `<div class="badges">${stickers.map((ev) => `<span class="badge" title="${esc(ev.name)}" style="--ring:${ev.ring}">${badgeSVG(ev.art, ev.name)}</span>`).join("")}</div>` : "";
+      const special = events.length ? ` ${events.map((ev) => ev.label).join(", ")}.` : "";
+      return `<article class="card${stickers.length ? " has-evt" : ""}" role="button" tabindex="0" data-i="${n}" data-badges="${stickers.length}" style="--s1:var(--${d.cat}-1);--s2:var(--${d.cat}-2)${stickers.length ? `;--ring:${stickers[0].ring}` : ""}" aria-label="${esc(dow)}: ${esc(d.label)}, high ${round(d.hi)}, low ${round(d.lo)}.${esc(special)} Open details.">
         <div class="scene">${sceneSVG(d.cat, n + 1, n === 0)}</div>
         ${badges}
         <div class="card-body${split}">
@@ -2072,7 +2251,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
               ${snow ? `<li>${UI.snow}<span>Snow <b>${snow}</b></span></li>` : ""}
               <li>${UI.wind}<span>${windText(d.wind, d.gust)}</span></li>
               <li class="sun" aria-label="Sunrise ${fmtClock(d.sunrise, true)}, sunset ${fmtClock(d.sunset, true)}">${UI.sunPath}<span class="sun-times">${UI.sunUp}${fmtClock(d.sunrise, true)}${UI.sunDown}${fmtClock(d.sunset, true)}</span></li>
-              ${evt ? `<li class="moon-evt">${moonEventIcon(evt)}<span>${moonEventLabel(evt)}</span></li>` : ""}
+              ${events.map((ev) => `<li class="evt">${eventIcon(ev)}<span>${esc(ev.label)}</span></li>`).join("")}
             </ul>
           </div>
         </div>
@@ -2087,7 +2266,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     $("daySub").textContent = placeLabel(state.loc);
     const amt = inches(d.precip) || "0″";
     const ph = moonPhase(localToMs(`${d.ymd}T21:00`));
-    const evt = state.moonEvents?.[d.ymd];
+    const evt = moonOn(d.ymd);
     const snow = inches(d.snow);
     const om = `<section class="dd-panel">
       <h3>Source: Open-Meteo</h3>
@@ -2129,9 +2308,9 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
         </div>
       </section>`;
     }
-    const specials = specialDays(d.ymd);
-    const specialHtml = specials.length ? `<div class="dd-special">${specials.map((sp) =>
-      `<div class="sp">${badgeSVG(sp.art, sp.name)}<div><b>${esc(sp.name)}</b>${sp.note ? `<span>${esc(sp.note)}</span>` : ""}</div></div>`).join("")}</div>` : "";
+    const events = dayEvents(d.ymd);
+    const specialHtml = events.length ? `<div class="dd-special">${events.map((ev) =>
+      `<div class="sp">${badgeSVG(ev.art, ev.name)}<div><b>${esc(ev.name)}</b>${ev.note ? `<span>${esc(ev.note)}</span>` : ""}</div></div>`).join("")}</div>` : "";
     $("dayBody").innerHTML = `${specialHtml}<div class="dd-grid">${om}${nws}</div>${n >= 0 && n < HOURLY_DAYS ? dayHourly(d.ymd, n === 0) : ""}`;
     $("dayDlg").showModal();
   }
@@ -2337,7 +2516,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       renderOutlook(state.data, state.days);
     }
   }
-  window.awesomeWeather = { setIconStyle };
+  window.awesomeWeather = { setIconStyle, upcomingEvents };
 
   /* ================= Wiring ================= */
   function init() {
@@ -2350,7 +2529,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     document.querySelectorAll("dialog").forEach((dlg) =>
       dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); }));
     $("useGps").innerHTML = `${UI.locate} Use my location`;
-    if (!ICON_SETS[state.iconStyle]) state.iconStyle = "current";
+    if (!ICON_SETS[state.iconStyle]) state.iconStyle = "default";
     $("settingsBtn").innerHTML = UI.sliders;
     $("settingsBtn").addEventListener("click", () => { renderStyleList(); $("setDlg").showModal(); });
     $("styleList").addEventListener("click", (e) => {

@@ -210,10 +210,10 @@
                     android:layout_marginTop="4dp">
 
                     <RadioButton
-                        android:id="@+id/style_current"
+                        android:id="@+id/style_default"
                         style="@style/Awe.Radio"
                         android:layout_height="52dp"
-                        android:text="@string/style_current" />
+                        android:text="@string/style_default" />
 
                     <RadioButton
                         android:id="@+id/style_glow"

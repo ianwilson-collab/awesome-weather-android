@@ -18,10 +18,10 @@ import kotlin.math.sqrt
 
 /** The weather-symbol style chosen in the app or a widget's settings. [id] is the web app's name for it. */
 enum class IconStyle(val id: String) {
-    CURRENT("current"), GLOW("glow"), FINE("fine");
+    DEFAULT("default"), GLOW("glow"), FINE("fine");
 
     companion object {
-        fun fromId(id: String?): IconStyle = entries.firstOrNull { it.id == id } ?: CURRENT
+        fun fromId(id: String?): IconStyle = entries.firstOrNull { it.id == id } ?: DEFAULT
     }
 }
 
@@ -78,7 +78,7 @@ object WeatherIcons {
             Cat.CLEAR -> if (isDay) sun(canvas, style, c) else moon(canvas, style, c)
             Cat.PARTLY -> {
                 when (style) {
-                    IconStyle.CURRENT -> if (isDay) currentSun(canvas, 8.5f, 8f, 2.8f, 1.6f, c) else at(canvas, -3f, -3f, .62f) { crescent(canvas, c) }
+                    IconStyle.DEFAULT -> if (isDay) defaultSun(canvas, 8.5f, 8f, 2.8f, 1.6f, c) else at(canvas, -3f, -3f, .62f) { crescent(canvas, c) }
                     else -> if (isDay) around(canvas, 8.4f, 8f, .62f) { sun(canvas, style, c) } else around(canvas, 8.6f, 8.2f, .62f) { smallMoon(canvas, style, c) }
                 }
                 cloud(canvas, style, c, 3f, 3f, .86f)
@@ -162,7 +162,7 @@ object WeatherIcons {
     /* ---------------- per style ---------------- */
 
     private fun sun(canvas: Canvas, style: IconStyle, c: IconColors) = when (style) {
-        IconStyle.CURRENT -> currentSun(canvas, 12f, 12f, 4.2f, 2.6f, c)
+        IconStyle.DEFAULT -> defaultSun(canvas, 12f, 12f, 4.2f, 2.6f, c)
         IconStyle.GLOW -> {
             canvas.drawCircle(12f, 12f, 11f, shade(radial(12f, 12f, 11f, intArrayOf(alpha(0xFFC640, .55f), alpha(0xFFC640, .55f), alpha(0xFFC640, 0f)), floatArrayOf(0f, .35f, 1f))))
             // SVG: radial gradient centered at 38% / 35% of the 10.8-wide circle, radius 70% of it
@@ -176,7 +176,7 @@ object WeatherIcons {
         }
     }
 
-    private fun currentSun(canvas: Canvas, cx: Float, cy: Float, r: Float, ray: Float, c: IconColors) {
+    private fun defaultSun(canvas: Canvas, cx: Float, cy: Float, r: Float, ray: Float, c: IconColors) {
         fill.color = c.sun; fill.alpha = (255 * .25f).toInt()
         canvas.drawCircle(cx, cy, r, fill)
         stroke.color = c.sun
@@ -186,7 +186,7 @@ object WeatherIcons {
 
     private fun moon(canvas: Canvas, style: IconStyle, c: IconColors) {
         when (style) {
-            IconStyle.CURRENT -> {
+            IconStyle.DEFAULT -> {
                 fill.color = c.moonIcon
                 canvas.drawCircle(12f, 12f, 7.5f, fill)
                 stroke.color = c.ink3; stroke.strokeWidth = 1.4f
@@ -216,7 +216,7 @@ object WeatherIcons {
 
     private fun smallMoon(canvas: Canvas, style: IconStyle, c: IconColors) {
         when (style) {
-            IconStyle.CURRENT -> crescent(canvas, c)
+            IconStyle.DEFAULT -> crescent(canvas, c)
             IconStyle.GLOW -> glowMoonFill(canvas, CRESCENT)
             IconStyle.FINE -> {
                 fill.color = c.cloudFill; canvas.drawPath(CRESCENT, fill)
@@ -234,7 +234,7 @@ object WeatherIcons {
 
     private fun cloud(canvas: Canvas, style: IconStyle, c: IconColors, dx: Float = 0f, dy: Float = 0f, scale: Float = 1f) {
         when (style) {
-            IconStyle.CURRENT -> at(canvas, dx, dy, scale) {
+            IconStyle.DEFAULT -> at(canvas, dx, dy, scale) {
                 fill.color = c.cloudFill; canvas.drawPath(CLOUD, fill)
                 stroke.color = c.stroke; canvas.drawPath(CLOUD, stroke)
             }
@@ -276,7 +276,7 @@ object WeatherIcons {
 
     private fun fog(canvas: Canvas, style: IconStyle, c: IconColors) {
         when (style) {
-            IconStyle.CURRENT -> {
+            IconStyle.DEFAULT -> {
                 stroke.color = c.stroke
                 canvas.drawLine(5f, 19f, 19f, 19f, stroke); canvas.drawLine(8f, 22f, 17f, 22f, stroke)
             }
@@ -293,7 +293,7 @@ object WeatherIcons {
 
     private fun drizzle(canvas: Canvas, style: IconStyle, c: IconColors) {
         when (style) {
-            IconStyle.CURRENT -> {
+            IconStyle.DEFAULT -> {
                 stroke.color = c.rain
                 canvas.drawLine(8f, 19f, 8f, 19.6f, stroke); canvas.drawLine(12f, 20f, 12f, 20.6f, stroke)
                 canvas.drawLine(16f, 19f, 16f, 19.6f, stroke); canvas.drawLine(10f, 22.4f, 10f, 23f, stroke)
@@ -318,7 +318,7 @@ object WeatherIcons {
 
     private fun rain(canvas: Canvas, style: IconStyle, c: IconColors) {
         when (style) {
-            IconStyle.CURRENT -> {
+            IconStyle.DEFAULT -> {
                 stroke.color = c.rain
                 canvas.drawLine(8.5f, 18.5f, 7.5f, 22f, stroke); canvas.drawLine(12.5f, 18.5f, 11.5f, 22f, stroke)
                 canvas.drawLine(16.5f, 18.5f, 15.5f, 22f, stroke)
@@ -341,7 +341,7 @@ object WeatherIcons {
 
     private fun storm(canvas: Canvas, style: IconStyle, c: IconColors) {
         when (style) {
-            IconStyle.CURRENT -> { stroke.color = c.sun; canvas.drawPath(BOLT, stroke) }
+            IconStyle.DEFAULT -> { stroke.color = c.sun; canvas.drawPath(BOLT, stroke) }
             IconStyle.GLOW -> {
                 canvas.drawCircle(12.8f, 17.6f, 5f, shade(radial(12.8f, 17.6f, 5f, intArrayOf(alpha(0xFFD54A, .5f), alpha(0xFFD54A, .5f), alpha(0xFFD54A, 0f)), floatArrayOf(0f, .2f, 1f))))
                 val b = RectF(); GLOW_BOLT.computeBounds(b, true)

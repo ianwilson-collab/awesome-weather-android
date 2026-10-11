@@ -6,10 +6,11 @@
 - **Current weather widget (2×1):** temperature, conditions, place and update time.
 - **Forecast widget (4×2):** current conditions plus 5 days; 7 days when it's wide enough. Each day shows its icon, high and low with a temperature bar, and the rain amount. Text and icons grow to fill a larger widget.
 - **Widget settings** (gear button on each widget): background transparency with a live preview, icon style, show or hide the current weather (forecast widget), and refresh every 30 minutes, every 60 minutes, or only when you tap refresh.
-- **Icon style:** Current, Glow or Fine Line weather symbols. One choice, made in any widget's settings or the app's settings button (top-right), applies to the app and every widget.
+- **Icon style:** Default, Glow or Fine Line weather symbols. One choice, made in any widget's settings or the app's settings button (top-right), applies to the app and every widget.
+- **Event days:** holidays, the first day of each season, meteor showers, eclipses you can see from your place, nights when the aurora may reach you, and new and full moons. The app shows them as colored stickers and short lines on the day cards; the forecast widget marks them with a small dot in the same color under the day name.
 - **Location:** the widgets follow the place saved in the app.
 
-Forecasts come from [Open-Meteo](https://open-meteo.com) (free, no key). The app also uses the U.S. National Weather Service, as the web app does.
+Forecasts come from [Open-Meteo](https://open-meteo.com) (free, no key). The app also uses the U.S. National Weather Service and NOAA's space weather (Kp) forecast for auroras, as the web app does.
 
 Requires Android 12 or newer.
 

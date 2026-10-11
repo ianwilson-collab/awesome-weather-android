@@ -71,7 +71,7 @@ object WidgetUpdater {
         val model = saved?.let { WeatherLogic.model(store.place, it.forecast, it.fetchedAt, now, 7) }
         val dark = phoneIsDark(context)
         val theme = WidgetTheme.pick(dark, transparency, wallpaperWantsDarkText(context))
-        return WidgetRenderer(context).render(kind, model, widthDp, heightDp, transparency, theme, dark, showCurrent, iconStyle)
+        return WidgetRenderer(context).render(kind, model, widthDp, heightDp, transparency, theme, dark, showCurrent, iconStyle, store.eventColors)
     }
 
     /** Redraws every widget (after a change that applies to all of them, like the icon style). */
