@@ -1,13 +1,15 @@
 # AWE Weather
 
-**Awesome Weather for Android**: the [Awesome Weather web app](https://github.com/ianwilson-collab/awesome-weather) as an installable Android app, with two home-screen widgets built in.
+**Awesome Weather for Android**: the [Awesome Weather web app](https://github.com/ianwilson-collab/awesome-weather) as an installable Android app, with four home-screen widgets built in.
 
 - **The app** is the web app's `index.html`, bundled unchanged inside the APK, so it opens instantly and works offline with the last saved forecast.
-- **Current weather widget (2×1):** temperature, conditions, place and update time.
+- **AWE 1×1:** the temperature, centered on a square tinted by the weather, with the weather icon as a faint watermark.
+- **AWE Daily (2×1 to 5×1):** the current weather; stretched wider, it adds today and tomorrow (3×1), five days (4×1) or six days (5×1), each on its own tile with its high and low.
+- **AWE Hourly (2×1 to 5×1):** the current weather plus the next 1, 3, 5 or 7 hours, starting at the next whole hour.
 - **Forecast widget (4×2):** current conditions plus 5 days; 7 days when it's wide enough. Each day shows its icon, high and low with a temperature bar, and the rain amount. Text and icons grow to fill a larger widget.
-- **Widget settings** (gear button on each widget): background transparency with a live preview, icon style, show or hide the current weather (forecast widget), and refresh every 30 minutes, every 60 minutes, or only when you tap refresh.
-- **Icon style:** Default, Glow or Fine Line weather symbols. One choice, made in any widget's settings or the app's settings button (top-right), applies to the app and every widget.
-- **Background and animation style:** Default, Painterly or Realistic, chosen in the app's settings button (top-right). It changes the sky behind the app, the art inside each day card, and how they move. The widgets keep their own sky for now.
+- **Widget settings:** one settings sheet for every widget. It opens when a widget is placed, by long-pressing a widget, and from the forecast widget's gear button: location, icon style, temperature color (Auto or one of ten colors), transparency with a live preview, show or hide the current weather (forecast widget), and refresh every 30 or 60 minutes (or, on the forecast widget, only when you tap refresh). No app labels under the widgets.
+- **Icon style:** Basic, Glow (the default) or Fine Outline weather symbols. One choice, made in any widget's settings or the app's settings button (top-right), applies to the app and every widget.
+- **Background and animation style:** Basic, Painterly, Dynamic (the default), Illustration or Mt Hood, chosen in the app's settings button (top-right). It changes the sky behind the app, the art inside each day card, and how they move. The widgets' sky follows it as a still picture (the 1×1 keeps its weather tint).
 - **Event days:** holidays, first and last frost, the first day of each season, meteor showers, eclipses you can see from your place, nights when the aurora may reach you, and new and full moons. The app shows them as colored stickers and short lines on the day cards; the forecast widget marks them with a small dot in the same color under the day name.
 - **Location:** the widgets follow the place saved in the app.
 
@@ -34,8 +36,9 @@ Every push to `main` runs [`.github/workflows/build.yml`](.github/workflows/buil
 ## Updating the web app inside the APK
 
 1. Copy the new `index.html` from the web app over `app/src/main/assets/web/index.html`.
-2. Raise `versionCode` (by 1) and `versionName` in `app/build.gradle.kts`.
-3. Push. Once the checks pass, the new version appears on the Releases page.
+2. If a background style changed, redraw the widget sky pictures: `pip install playwright pillow && python3 tools/widget_skies.py`.
+3. Raise `versionCode` (by 1) and `versionName` in `app/build.gradle.kts`.
+4. Push. Once the checks pass, the new version appears on the Releases page.
 
 ## Signing key
 
@@ -49,6 +52,7 @@ The APK is signed with a permanent key so updates install over each other. The k
 | `app/src/main/java/com/prostellis/awe/MainActivity.kt` | The app screen: web view, location link to the widgets, back button, location permission |
 | `app/src/main/java/com/prostellis/awe/weather/` | Forecast download format and the web app's logic (day icons, overnight lows, sky and temperature colors) |
 | `app/src/main/java/com/prostellis/awe/widget/` | Widget drawing, settings screen and background refresh |
+| `app/src/main/assets/widget-sky/` | The widget sky pictures for each background style, drawn from the web app by `tools/widget_skies.py` |
 | `app/src/test/` | Unit tests |
 | `app/src/androidTest/` | On-device tests that draw the widgets |
 

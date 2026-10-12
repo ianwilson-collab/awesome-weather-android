@@ -12,6 +12,9 @@ enum class Cat { CLEAR, PARTLY, CLOUDY, FOG, DRIZZLE, RAIN, SNOW, STORM;
 /** One day column on the forecast widget. */
 data class Day(val ymd: String, val cat: Cat, val hi: Double?, val lo: Double?, val precip: Double?)
 
+/** One hour on the hourly widget: "3p", its weather, whether the sun is up, and the temperature. */
+data class Hour(val label: String, val cat: Cat, val isDay: Boolean, val temp: Int)
+
 /** How "day" the sky is right now: 0 = night … 1 = full day, and which twilight we're in. */
 data class Daylight(val d: Double, val rising: Boolean, val isDay: Boolean)
 
@@ -23,6 +26,7 @@ data class WidgetModel(
     val temp: Int,
     val light: Daylight,
     val days: List<Day>,
+    val hours: List<Hour>,
     val fetchedAt: Long,
 )
 
@@ -105,6 +109,28 @@ object WeatherLogic {
         }
     }
 
+    /** The next [count] hours, starting at the next whole hour (the current hour is already "now"). */
+    fun buildHours(f: Forecast, nowMs: Long, count: Int): List<Hour> {
+        val ymd = localYmd(nowMs, f.utcOffsetSeconds)
+        val hour = localMinutes(nowMs, f.utcOffsetSeconds) / 60
+        val start = f.hourly.time.indexOf("${ymd}T%02d:00".format(Locale.US, hour))
+        if (start < 0) return emptyList()
+        return (start + 1 until minOf(start + 1 + count, f.hourly.time.size)).mapNotNull { i ->
+            val t = f.hourly.time[i]
+            val temp = f.hourly.temp[i] ?: return@mapNotNull null
+            val h = t.substring(11, 13).toInt()
+            Hour("${if (h % 12 == 0) 12 else h % 12}${if (h < 12) "a" else "p"}", wmoCat(f.hourly.code[i]), sunUp(f, t), jsRound(temp))
+        }
+    }
+
+    /** True when the sun is up at a local "YYYY-MM-DDTHH:MM" time (by that day's sunrise and sunset). */
+    private fun sunUp(f: Forecast, time: String): Boolean {
+        val i = f.daily.time.indexOf(time.take(10))
+        if (i < 0) return true
+        val hm = time.substring(11, 16)
+        return hm >= f.daily.sunrise[i].substring(11, 16) && hm < f.daily.sunset[i].substring(11, 16)
+    }
+
     private const val RISE_BEFORE = 60
     private const val RISE_AFTER = 60
     private const val SET_BEFORE = 60
@@ -135,8 +161,12 @@ object WeatherLogic {
         temp = jsRound(f.current.temp),
         light = daylight(f, nowMs),
         days = buildDays(f, nowMs, dayCount),
+        hours = buildHours(f, nowMs, HOUR_COUNT),
         fetchedAt = fetchedAt,
     )
+
+    /** The most hours any widget shows (the hourly widget at 5×1). */
+    const val HOUR_COUNT = 7
 
     /** "0.08 in" when there's measurable precipitation, otherwise nothing (the web app's threshold). */
     fun precipText(v: Double?): String? =

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Settings open when the widget is placed, by long-pressing it (reconfigure), and from its gear button. -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="com.prostellis.awe.widget.WidgetSettingsActivity"
     android:description="@string/widget_forecast_description"
@@ -13,4 +14,4 @@
     android:targetCellHeight="2"
     android:updatePeriodMillis="0"
     android:widgetCategory="home_screen"
-    android:widgetFeatures="reconfigurable|configuration_optional" />
+    android:widgetFeatures="reconfigurable" />

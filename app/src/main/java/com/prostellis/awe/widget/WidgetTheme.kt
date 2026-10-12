@@ -15,6 +15,8 @@ data class WidgetTheme(
     val awe: Triple<Int, Int, Int>,
     val textShadow: Boolean,
     val icons: IconColors,
+    /** Laid over a sky picture so text stays readable on busy scenes. */
+    val veil: Int,
 ) {
     companion object {
         private val AWE_BRIGHT = Triple(0xFFFFC24A.toInt(), 0xFF95DABD.toInt(), 0xFF6CB4D5.toInt())
@@ -25,7 +27,7 @@ data class WidgetTheme(
             ink = 0xFF15202B.toInt(), ink2 = 0xFF4A5A6A.toInt(), ink3 = 0xFF75828F.toInt(),
             accent = 0xFF2F6FDB.toInt(), todayName = 0xFF2F6FDB.toInt(),
             panel = 0x9EFFFFFF.toInt(), today = 0x1A2F6FDB, rainBlock = 0xFF3F78C4.toInt(), amount = 0xFF3F78C4.toInt(),
-            awe = AWE_DEEP, textShadow = false,
+            awe = AWE_DEEP, textShadow = false, veil = 0x38FFFFFF,
             icons = IconColors(
                 stroke = 0xFF4A5A6A.toInt(), ink3 = 0xFF75828F.toInt(), sun = 0xFFF0A412.toInt(), cloudFill = 0xFFFFFFFF.toInt(),
                 rain = 0xFF3F78C4.toInt(), moonInk = 0xFFFDF2C9.toInt(), moonIcon = 0xFFDFE2E7.toInt(), crater = 0xFFC3C8D0.toInt(),
@@ -38,7 +40,7 @@ data class WidgetTheme(
             ink = 0xFFE8EEF4.toInt(), ink2 = 0xFFA8B5C2.toInt(), ink3 = 0xFF7C8996.toInt(),
             accent = 0xFF6EA1FF.toInt(), todayName = 0xFF6EA1FF.toInt(),
             panel = 0x17FFFFFF, today = 0x246EA1FF, rainBlock = 0xFF7FB0F0.toInt(), amount = 0xFF7FB0F0.toInt(),
-            awe = AWE_BRIGHT, textShadow = false,
+            awe = AWE_BRIGHT, textShadow = false, veil = 0x2E000000,
             icons = IconColors(
                 stroke = 0xFFA8B5C2.toInt(), ink3 = 0xFF7C8996.toInt(), sun = 0xFFFFC24A.toInt(), cloudFill = 0xFF2B3644.toInt(),
                 rain = 0xFF7FB0F0.toInt(), moonInk = 0xFFF1E9C6.toInt(), moonIcon = 0xFFB8BCC3.toInt(), crater = 0xFF969BA4.toInt(),
@@ -46,13 +48,13 @@ data class WidgetTheme(
             ),
         )
 
-        /** White text with a soft shadow, for a see-through widget over a dark wallpaper. */
-        val ON_DARK_WALLPAPER = WidgetTheme(
+        /** White text with a soft shadow, over a dark wallpaper (see-through widget) or a dark sky picture. */
+        val ON_DARK = WidgetTheme(
             dark = true,
             ink = 0xFFFFFFFF.toInt(), ink2 = 0xFFE6EDF5.toInt(), ink3 = 0xFFCFD9E4.toInt(),
             accent = 0xFF6EA1FF.toInt(), todayName = 0xFFFFFFFF.toInt(),
             panel = 0x4D0C1622, today = 0x24FFFFFF, rainBlock = 0xFF7FB0F0.toInt(), amount = 0xFFD6E7FF.toInt(),
-            awe = AWE_BRIGHT, textShadow = true,
+            awe = AWE_BRIGHT, textShadow = true, veil = 0x29000000,
             icons = IconColors(
                 stroke = 0xFFE6EDF5.toInt(), ink3 = 0xFFCFD9E4.toInt(), sun = 0xFFFFC24A.toInt(), cloudFill = 0xFFF2F5F9.toInt(),
                 rain = 0xFF9CC4F5.toInt(), moonInk = 0xFFF1E9C6.toInt(), moonIcon = 0xFFDFE2E7.toInt(), crater = 0xFFC3C8D0.toInt(),
@@ -63,10 +65,46 @@ data class WidgetTheme(
         /** Once the background is this see-through, text follows the wallpaper instead of the sky. */
         const val WALLPAPER_TEXT_FROM = 40
 
-        fun pick(phoneDark: Boolean, transparency: Int, wallpaperSupportsDarkText: Boolean): WidgetTheme = when {
-            transparency < WALLPAPER_TEXT_FROM -> if (phoneDark) DARK else LIGHT
-            wallpaperSupportsDarkText -> LIGHT
-            else -> ON_DARK_WALLPAPER
+        /**
+         * Text colors that read on what's behind them: the wallpaper once the widget is see-through enough,
+         * otherwise the sky picture when the style has one ([pictureIsDark]), otherwise the phone's light or dark theme.
+         */
+        fun pick(phoneDark: Boolean, transparency: Int, wallpaperSupportsDarkText: Boolean, pictureIsDark: Boolean? = null): WidgetTheme = when {
+            transparency >= WALLPAPER_TEXT_FROM -> if (wallpaperSupportsDarkText) LIGHT else ON_DARK
+            pictureIsDark == null -> if (phoneDark) DARK else LIGHT
+            pictureIsDark -> ON_DARK
+            else -> LIGHT
         }
+    }
+}
+
+/** The temperature colors offered in widget settings. Auto uses the widget's own text color, or on the 1×1 white or near-black, whichever reads better. */
+object TempColors {
+    val CHOICES: List<Pair<String, Int?>> = listOf(
+        "Auto" to null, "White" to 0xFFFFFFFF.toInt(), "Soft gray" to 0xFFD5DBE2.toInt(), "Charcoal" to 0xFF3A4552.toInt(),
+        "Black" to 0xFF0F141A.toInt(), "Sunshine" to 0xFFFFD23F.toInt(), "Orange" to 0xFFFF9A3C.toInt(), "Coral" to 0xFFFF6B6B.toInt(),
+        "Mint" to 0xFF5FE0B4.toInt(), "Sky blue" to 0xFF5AB8FF.toInt(), "Lavender" to 0xFFB9A3FF.toInt(),
+    )
+
+    /** The chosen color, or [auto] for Auto (and for anything unknown). */
+    fun color(choice: Int, auto: Int): Int = CHOICES.getOrNull(choice)?.second ?: auto
+
+    /** White or near-black, whichever stands out more against [behind] (WCAG contrast). */
+    fun readableOn(behind: Int): Int =
+        if (contrast(0xFFFFFFFF.toInt(), behind) >= contrast(NEAR_BLACK, behind)) 0xFFFFFFFF.toInt() else NEAR_BLACK
+
+    /** True for light colors, which get a soft shadow so they hold up on light backgrounds. */
+    fun isLight(c: Int) = luminance(c) > .5
+
+    private const val NEAR_BLACK = 0xFF141A22.toInt()
+
+    fun luminance(c: Int): Double {
+        fun ch(v: Int): Double { val s = v / 255.0; return if (s <= .03928) s / 12.92 else Math.pow((s + .055) / 1.055, 2.4) }
+        return .2126 * ch((c shr 16) and 0xFF) + .7152 * ch((c shr 8) and 0xFF) + .0722 * ch(c and 0xFF)
+    }
+
+    private fun contrast(a: Int, b: Int): Double {
+        val x = luminance(a); val y = luminance(b)
+        return (maxOf(x, y) + .05) / (minOf(x, y) + .05)
     }
 }

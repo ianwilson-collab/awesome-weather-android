@@ -7,7 +7,9 @@ import com.prostellis.awe.weather.Forecast
 import com.prostellis.awe.weather.Place
 import com.prostellis.awe.weather.SkyPalette
 import com.prostellis.awe.weather.WeatherLogic
+import com.prostellis.awe.widget.BgStyle
 import com.prostellis.awe.widget.IconStyle
+import com.prostellis.awe.widget.TempColors
 import com.prostellis.awe.widget.WidgetRenderer
 import com.prostellis.awe.widget.WidgetTheme
 import org.junit.Assert.assertEquals
@@ -116,15 +118,56 @@ class WeatherLogicTest {
     @Test fun textFollowsWallpaperOnlyWhenSeeThrough() {
         assertEquals(WidgetTheme.LIGHT, WidgetTheme.pick(phoneDark = false, transparency = 35, wallpaperSupportsDarkText = false))
         assertEquals(WidgetTheme.DARK, WidgetTheme.pick(phoneDark = true, transparency = 0, wallpaperSupportsDarkText = true))
-        assertEquals(WidgetTheme.ON_DARK_WALLPAPER, WidgetTheme.pick(phoneDark = false, transparency = 40, wallpaperSupportsDarkText = false))
+        assertEquals(WidgetTheme.ON_DARK, WidgetTheme.pick(phoneDark = false, transparency = 40, wallpaperSupportsDarkText = false))
         assertEquals(WidgetTheme.LIGHT, WidgetTheme.pick(phoneDark = true, transparency = 80, wallpaperSupportsDarkText = true))
     }
 
+    @Test fun textFollowsTheSkyPicture() {
+        assertEquals(WidgetTheme.ON_DARK, WidgetTheme.pick(phoneDark = false, transparency = 0, wallpaperSupportsDarkText = true, pictureIsDark = true))
+        assertEquals(WidgetTheme.LIGHT, WidgetTheme.pick(phoneDark = true, transparency = 20, wallpaperSupportsDarkText = false, pictureIsDark = false))
+        // Once see-through, the wallpaper wins over the picture
+        assertEquals(WidgetTheme.LIGHT, WidgetTheme.pick(phoneDark = false, transparency = 60, wallpaperSupportsDarkText = true, pictureIsDark = true))
+    }
+
     @Test fun iconStylesUseTheWebAppNames() {
-        assertEquals(IconStyle.GLOW, IconStyle.fromId("glow"))
+        assertEquals(IconStyle.BASIC, IconStyle.fromId("default"))
         assertEquals(IconStyle.FINE, IconStyle.fromId("fine"))
-        assertEquals(IconStyle.DEFAULT, IconStyle.fromId(null))
-        assertEquals(IconStyle.DEFAULT, IconStyle.fromId("something else"))
+        // Never picked (or unknown): Glow, the app's default
+        assertEquals(IconStyle.GLOW, IconStyle.fromId(null))
+        assertEquals(IconStyle.GLOW, IconStyle.fromId("something else"))
+    }
+
+    @Test fun backgroundStylesUseTheWebAppNames() {
+        assertEquals(BgStyle.BASIC, BgStyle.fromId("default"))
+        assertEquals(BgStyle.DYNAMIC, BgStyle.fromId("realistic"))
+        assertEquals(BgStyle.MT_HOOD, BgStyle.fromId("mthood"))
+        assertEquals(BgStyle.DYNAMIC, BgStyle.fromId(null))
+    }
+
+    @Test fun skyPictureNames() {
+        assertEquals("clear-day", BgStyle.PAINTERLY.pictureKey(Cat.CLEAR, Daylight(1.0, false, true), "2026-10-08"))
+        assertEquals("rain-dawn", BgStyle.DYNAMIC.pictureKey(Cat.RAIN, Daylight(.5, true, true), "2026-10-08"))
+        assertEquals("snow-night", BgStyle.ILLUSTRATION.pictureKey(Cat.SNOW, Daylight(.1, false, false), "2026-10-08"))
+        // Mt Hood has one twilight look and a snow line for the season
+        assertEquals("clear-dusk-twothirds", BgStyle.MT_HOOD.pictureKey(Cat.CLEAR, Daylight(.5, true, true), "2026-12-10"))
+        assertEquals("partly-day-half", BgStyle.MT_HOOD.pictureKey(Cat.PARTLY, Daylight(1.0, false, true), "2026-04-02"))
+        assertEquals("fog-day-third", BgStyle.MT_HOOD.pictureKey(Cat.FOG, Daylight(1.0, false, true), "2026-07-04"))
+    }
+
+    @Test fun nextHoursStartAtTheNextWholeHour() {
+        val hours = WeatherLogic.buildHours(forecast, salem("2026-10-08T09:35"), 7)
+        assertEquals(listOf("10a", "11a", "12p", "1p", "2p", "3p", "4p"), hours.map { it.label })
+        val evening = WeatherLogic.buildHours(forecast, salem("2026-10-08T17:10"), 3)
+        assertEquals(listOf("6p", "7p", "8p"), evening.map { it.label })
+        // Sunset at 6:40 pm: 6 pm is still day, 7 pm is night
+        assertEquals(listOf(true, false, false), evening.map { it.isDay })
+    }
+
+    @Test fun temperatureColorAutoPicksWhateverReadsBetter() {
+        assertEquals(0xFF141A22.toInt(), TempColors.readableOn(0xFFFFD98A.toInt()))
+        assertEquals(0xFFFFFFFF.toInt(), TempColors.readableOn(0xFF26386A.toInt()))
+        assertEquals(0xFF5AB8FF.toInt(), TempColors.color(9, auto = 0))
+        assertEquals(123, TempColors.color(0, auto = 123))
     }
 
     @Test fun eventDaysReadTheWebAppColors() {

@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_label">AWE Weather</string>
-    <string name="widget_small_label">Current weather</string>
-    <string name="widget_small_description">Current temperature and conditions</string>
+    <string name="widget_tiny_label">AWE 1×1</string>
+    <string name="widget_tiny_description">The temperature on a square tinted by the weather</string>
+    <string name="widget_daily_label">AWE Daily</string>
+    <string name="widget_daily_description">The current weather. Stretch it wider for the coming days.</string>
+    <string name="widget_hourly_label">AWE Hourly</string>
+    <string name="widget_hourly_description">The current weather and the next hours. Stretch it wider for more hours.</string>
     <string name="widget_forecast_label">Forecast</string>
     <string name="widget_forecast_description">Now plus 5 days. Stretch it wider for 7 days.</string>
 
     <string name="wordmark_awesome">AWESOME</string>
     <string name="wordmark_weather">Weather</string>
-    <string name="settings_title_small">Current weather widget settings</string>
+    <string name="settings_title_tiny">AWE 1×1 settings</string>
+    <string name="settings_title_daily">AWE Daily settings</string>
+    <string name="settings_title_hourly">AWE Hourly settings</string>
     <string name="settings_title_forecast">Forecast widget settings</string>
     <string name="settings_preview">LIVE PREVIEW</string>
     <string name="settings_transparency">Background transparency</string>
     <string name="settings_transparency_help">Slide to see the change in the preview above.</string>
     <string name="settings_solid">Solid</string>
-    <string name="settings_see_through">See-through</string>
+    <string name="settings_transparent">Transparent</string>
+    <string name="settings_temp_color">Temperature color</string>
+    <string name="settings_temp_color_help">Colors every temperature on this widget. Lows and labels stay as they are.</string>
+    <string name="settings_temp_color_help_tiny">Auto picks white or near-black, whichever reads better.</string>
     <string name="settings_show_current">Show current weather</string>
     <string name="settings_show_current_help">Temperature and conditions at the top</string>
+    <string name="settings_show_current_always">Always on for this widget</string>
     <string name="settings_icon_style">Icon style</string>
     <string name="settings_icon_style_help">Used by all your widgets and the app</string>
-    <string name="style_default">Default</string>
+    <string name="style_basic">Basic</string>
     <string name="style_glow">Glow</string>
-    <string name="style_fine">Fine Line</string>
+    <string name="style_fine">Fine Outline</string>
     <string name="settings_refresh">Refresh</string>
     <string name="settings_refresh_30">Every 30 minutes</string>
-    <string name="settings_refresh_30_default">· default</string>
     <string name="settings_refresh_60">Every 60 minutes</string>
     <string name="settings_refresh_manual">Only when I tap refresh</string>
     <string name="settings_location">Location</string>

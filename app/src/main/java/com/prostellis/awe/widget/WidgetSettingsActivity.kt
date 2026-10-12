@@ -8,8 +8,11 @@ import android.graphics.Canvas
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.SeekBar
@@ -23,8 +26,9 @@ import com.prostellis.awe.weather.Cat
 import kotlin.math.min
 
 /**
- * Settings for one widget, opened from its gear button. The real wallpaper shows behind the
- * preview, so the transparency slider shows exactly what the home screen will look like.
+ * The one settings sheet every AWE widget shares. It opens when a widget is placed, by long-pressing it,
+ * and from the forecast widget's gear button. The real wallpaper shows behind the preview, so the
+ * sliders show exactly what the home screen will look like.
  */
 class WidgetSettingsActivity : Activity() {
 
@@ -34,7 +38,8 @@ class WidgetSettingsActivity : Activity() {
     private var transparency = 0
     private var refresh = RefreshMode.EVERY_30
     private var showCurrent = true
-    private var iconStyle = IconStyle.DEFAULT
+    private var tempColor = 0
+    private var iconStyle = IconStyle.GLOW
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,15 +55,21 @@ class WidgetSettingsActivity : Activity() {
         transparency = saved.transparency
         refresh = saved.refresh
         showCurrent = saved.showCurrent
+        tempColor = saved.tempColor
         iconStyle = store.iconStyle
 
         setContentView(R.layout.activity_widget_settings)
         fitSystemBars()
         findViewById<TextView>(R.id.title).setText(
-            if (kind == WidgetKind.SMALL) R.string.settings_title_small else R.string.settings_title_forecast,
+            when (kind) {
+                WidgetKind.TINY -> R.string.settings_title_tiny
+                WidgetKind.DAILY -> R.string.settings_title_daily
+                WidgetKind.HOURLY -> R.string.settings_title_hourly
+                WidgetKind.FORECAST -> R.string.settings_title_forecast
+            },
         )
         paintWordmark(findViewById(R.id.wordmark_weather))
-        findViewById<android.view.View>(R.id.back).setOnClickListener { finish() }
+        findViewById<View>(R.id.back).setOnClickListener { finish() }
 
         val value = findViewById<TextView>(R.id.transparency_value)
         val seek = findViewById<SeekBar>(R.id.transparency)
@@ -75,23 +86,29 @@ class WidgetSettingsActivity : Activity() {
             override fun onStopTrackingTouch(bar: SeekBar) = Unit
         })
 
-        // The current-weather switch only applies to the forecast widget
-        findViewById<android.view.View>(R.id.show_current_card).visibility =
-            if (kind == WidgetKind.FORECAST) android.view.View.VISIBLE else android.view.View.GONE
+        setUpTempColor()
+
+        // The current weather can be turned off only on the forecast widget; on the others it's what the widget shows
+        val forecast = kind == WidgetKind.FORECAST
         findViewById<android.widget.Switch>(R.id.show_current).apply {
-            isChecked = showCurrent
+            isChecked = showCurrent || !forecast
+            isEnabled = forecast
             setOnCheckedChangeListener { _, on -> showCurrent = on; drawPreview() }
         }
+        findViewById<TextView>(R.id.show_current_help).setText(if (forecast) R.string.settings_show_current_help else R.string.settings_show_current_always)
+        // "Only when I tap refresh" needs the refresh button, which only the forecast widget has
+        findViewById<View>(R.id.refresh_manual).visibility = if (forecast) View.VISIBLE else View.GONE
+        if (!forecast && refresh == RefreshMode.MANUAL) refresh = RefreshMode.EVERY_30
 
         // Icon style: shared by every widget and the app; each choice shows a few of its icons
-        val styleButtons = mapOf(R.id.style_default to IconStyle.DEFAULT, R.id.style_glow to IconStyle.GLOW, R.id.style_fine to IconStyle.FINE)
+        val styleButtons = mapOf(R.id.style_basic to IconStyle.BASIC, R.id.style_glow to IconStyle.GLOW, R.id.style_fine to IconStyle.FINE)
         for ((id, style) in styleButtons) {
             findViewById<RadioButton>(id).setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, iconSample(style), null)
         }
         val styleGroup = findViewById<RadioGroup>(R.id.icon_style_group)
         styleGroup.check(styleButtons.entries.first { it.value == iconStyle }.key)
         styleGroup.setOnCheckedChangeListener { _, checked ->
-            iconStyle = styleButtons[checked] ?: IconStyle.DEFAULT
+            iconStyle = styleButtons[checked] ?: IconStyle.GLOW
             drawPreview()
         }
 
@@ -112,7 +129,7 @@ class WidgetSettingsActivity : Activity() {
         }
 
         findViewById<TextView>(R.id.location_value).text = store.place.shortLabel
-        findViewById<android.view.View>(R.id.location_row).setOnClickListener {
+        findViewById<View>(R.id.location_row).setOnClickListener {
             save()
             startActivity(
                 Intent(this, MainActivity::class.java)
@@ -121,17 +138,17 @@ class WidgetSettingsActivity : Activity() {
             )
             finish()
         }
-        findViewById<android.view.View>(R.id.done).setOnClickListener { save(); finish() }
+        findViewById<View>(R.id.done).setOnClickListener { save(); finish() }
 
         findViewById<ImageView>(R.id.preview).post { drawPreview() }
     }
 
     /** Header below the status bar, buttons above the navigation bar. */
     private fun fitSystemBars() {
-        val header = findViewById<android.view.View>(R.id.header)
-        val body = findViewById<android.view.View>(R.id.body)
+        val header = findViewById<View>(R.id.header)
+        val body = findViewById<View>(R.id.body)
         val headerTop = header.paddingTop
-        findViewById<android.view.View>(R.id.root).setOnApplyWindowInsetsListener { _, insets ->
+        findViewById<View>(R.id.root).setOnApplyWindowInsetsListener { _, insets ->
             val bars = insets.getInsets(android.view.WindowInsets.Type.systemBars())
             header.setPadding(header.paddingLeft, headerTop + bars.top, header.paddingRight, header.paddingBottom)
             body.setPadding(0, 0, 0, bars.bottom)
@@ -139,28 +156,73 @@ class WidgetSettingsActivity : Activity() {
         }
     }
 
+    /** Temperature color: a slider through Auto and ten colors, with the same choices as swatches underneath. */
+    private fun setUpTempColor() {
+        val seek = findViewById<SeekBar>(R.id.temp_color)
+        val value = findViewById<TextView>(R.id.temp_color_value)
+        val row = findViewById<LinearLayout>(R.id.temp_swatches)
+        if (kind == WidgetKind.TINY) findViewById<TextView>(R.id.temp_color_help).setText(R.string.settings_temp_color_help_tiny)
+        val d = resources.displayMetrics.density
+        val swatches = TempColors.CHOICES.mapIndexed { i, (name, color) ->
+            View(this).apply {
+                contentDescription = name
+                background = GradientDrawable().apply {
+                    shape = GradientDrawable.OVAL
+                    // Auto shows both of its picks: white and near-black
+                    if (color == null) { colors = intArrayOf(0xFFFFFFFF.toInt(), 0xFF141A22.toInt()); orientation = GradientDrawable.Orientation.TL_BR }
+                    else setColor(color)
+                }
+                setOnClickListener { seek.progress = i }
+                row.addView(this, LinearLayout.LayoutParams(0, (22 * d).toInt(), 1f).apply { marginStart = (3 * d).toInt(); marginEnd = (3 * d).toInt() })
+            }
+        }
+        fun show() {
+            value.text = TempColors.CHOICES[tempColor].first
+            swatches.forEachIndexed { i, v ->
+                (v.background as GradientDrawable).setStroke((if (i == tempColor) 3 * d else 1 * d).toInt(), getColor(if (i == tempColor) R.color.accent else R.color.line))
+            }
+        }
+        seek.max = TempColors.CHOICES.size - 1
+        tempColor = tempColor.coerceIn(0, seek.max)
+        seek.progress = tempColor
+        show()
+        seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(bar: SeekBar, progress: Int, fromUser: Boolean) {
+                tempColor = progress
+                show()
+                drawPreview()
+            }
+            override fun onStartTrackingTouch(bar: SeekBar) = Unit
+            override fun onStopTrackingTouch(bar: SeekBar) = Unit
+        })
+    }
+
+    private fun settings() = WidgetSettings(transparency, refresh, showCurrent, tempColor)
+
     private fun drawPreview() {
         val preview = findViewById<ImageView>(R.id.preview)
         val (w, h) = WidgetUpdater.sizeDp(this, widgetId, kind)
-        val r = WidgetUpdater.renderFor(this, kind, w, h, transparency, showCurrent, iconStyle)
+        val r = WidgetUpdater.renderFor(this, kind, w, h, settings(), iconStyle)
         val density = resources.displayMetrics.density
         // Real size when it fits; otherwise scaled down to the screen width.
-        val container = findViewById<android.view.View>(R.id.preview_container)
+        val container = findViewById<View>(R.id.preview_container)
         val maxW = container.width - container.paddingLeft - container.paddingRight
         val scale = if (maxW > 0) min(1f, maxW / (w * density)) else 1f
         preview.layoutParams = preview.layoutParams.apply {
             width = (w * density * scale).toInt(); height = (h * density * scale).toInt()
         }
         preview.setImageBitmap(r.bitmap)
-        findViewById<ImageView>(R.id.preview_refresh).setColorFilter(r.buttonColor)
-        findViewById<ImageView>(R.id.preview_gear).setColorFilter(r.buttonColor)
-        placeButton(R.id.preview_refresh, r.refresh, scale)
-        placeButton(R.id.preview_gear, r.gear, scale)
+        placeButton(R.id.preview_refresh, r.refresh, r.buttonColor, scale)
+        placeButton(R.id.preview_gear, r.gear, r.buttonColor, scale)
     }
 
-    private fun placeButton(id: Int, spot: ButtonSpot, scale: Float) {
+    /** The forecast widget's buttons on the preview; the other widgets have none. */
+    private fun placeButton(id: Int, spot: ButtonSpot?, color: Int, scale: Float) {
         val d = resources.displayMetrics.density * scale
         val v = findViewById<ImageView>(id)
+        v.visibility = if (spot == null) View.GONE else View.VISIBLE
+        if (spot == null) return
+        v.setColorFilter(color)
         val size = (spot.iconSize * d).toInt()
         v.layoutParams = (v.layoutParams as android.widget.FrameLayout.LayoutParams).apply {
             width = size; height = size
@@ -170,7 +232,7 @@ class WidgetSettingsActivity : Activity() {
     }
 
     private fun save() {
-        store.saveWidgetSettings(widgetId, WidgetSettings(transparency, refresh, showCurrent))
+        store.saveWidgetSettings(widgetId, settings())
         if (iconStyle != store.iconStyle) {
             store.iconStyle = iconStyle
             WidgetUpdater.updateAll(this)

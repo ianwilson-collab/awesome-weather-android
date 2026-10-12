@@ -15,25 +15,28 @@ import android.widget.RemoteViews
 import com.prostellis.awe.MainActivity
 import com.prostellis.awe.R
 import com.prostellis.awe.data.Store
+import com.prostellis.awe.data.WidgetSettings
 import com.prostellis.awe.weather.WeatherLogic
 
 /** Draws widgets and hands them to the home screen. */
 object WidgetUpdater {
 
+    private val PROVIDERS = mapOf(
+        TinyWidget::class.java to WidgetKind.TINY,
+        SmallWidget::class.java to WidgetKind.DAILY,
+        HourlyWidget::class.java to WidgetKind.HOURLY,
+        ForecastWidget::class.java to WidgetKind.FORECAST,
+    )
+
     /** Every widget of ours currently on the home screen. */
     fun allIds(context: Context): IntArray {
         val m = AppWidgetManager.getInstance(context)
-        return m.getAppWidgetIds(ComponentName(context, SmallWidget::class.java)) +
-            m.getAppWidgetIds(ComponentName(context, ForecastWidget::class.java))
+        return PROVIDERS.keys.map { m.getAppWidgetIds(ComponentName(context, it)) }.reduce { a, b -> a + b }
     }
 
     fun kindOf(context: Context, id: Int): WidgetKind? {
         val provider = AppWidgetManager.getInstance(context).getAppWidgetInfo(id)?.provider?.className ?: return null
-        return when (provider) {
-            SmallWidget::class.java.name -> WidgetKind.SMALL
-            ForecastWidget::class.java.name -> WidgetKind.FORECAST
-            else -> null
-        }
+        return PROVIDERS.entries.firstOrNull { it.key.name == provider }?.value
     }
 
     /** The widget's size on the home screen in dp (portrait: narrowest width, tallest height). */
@@ -46,7 +49,8 @@ object WidgetUpdater {
     }
 
     fun defaultSize(kind: WidgetKind) = when (kind) {
-        WidgetKind.SMALL -> 150f to 76f
+        WidgetKind.TINY -> 74f to 74f
+        WidgetKind.DAILY, WidgetKind.HOURLY -> 152f to 74f
         WidgetKind.FORECAST -> 310f to 184f
     }
 
@@ -62,16 +66,27 @@ object WidgetUpdater {
     }
 
     /** Draws one widget from the saved forecast, with settings that may not be saved yet (for the settings preview). */
-    fun renderFor(
-        context: Context, kind: WidgetKind, widthDp: Float, heightDp: Float, transparency: Int, showCurrent: Boolean, iconStyle: IconStyle,
-    ): Rendered {
+    fun renderFor(context: Context, kind: WidgetKind, widthDp: Float, heightDp: Float, settings: WidgetSettings, iconStyle: IconStyle): Rendered {
         val store = Store(context)
         val saved = store.forecastForCurrentPlace()
         val now = System.currentTimeMillis()
         val model = saved?.let { WeatherLogic.model(store.place, it.forecast, it.fetchedAt, now, 7) }
         val dark = phoneIsDark(context)
-        val theme = WidgetTheme.pick(dark, transparency, wallpaperWantsDarkText(context))
-        return WidgetRenderer(context).render(kind, model, widthDp, heightDp, transparency, theme, dark, showCurrent, iconStyle, store.eventColors)
+        val wallpaperLight = wallpaperWantsDarkText(context)
+        // The sky follows the app's background style; the 1×1 keeps its weather tint
+        val sky = if (saved == null || model == null || kind == WidgetKind.TINY) null
+            else WidgetSky.picture(context, store.bgStyle, model.nowCat, model.light, dark, WeatherLogic.localYmd(now, saved.forecast.utcOffsetSeconds))
+        val look = Look(
+            transparency = settings.transparency,
+            theme = WidgetTheme.pick(dark, settings.transparency, wallpaperLight, sky?.isDark),
+            phoneDark = dark,
+            iconStyle = iconStyle,
+            tempColor = settings.tempColor,
+            sky = sky,
+            showCurrent = settings.showCurrent || kind != WidgetKind.FORECAST,
+            wallpaperLight = wallpaperLight,
+        )
+        return WidgetRenderer(context).render(kind, model, widthDp, heightDp, look, store.eventColors)
     }
 
     /** Redraws every widget (after a change that applies to all of them, like the icon style). */
@@ -84,32 +99,37 @@ object WidgetUpdater {
         val kind = kindOf(context, id) ?: return
         val (w, h) = sizeDp(context, id, kind)
         val store = Store(context)
-        val settings = store.widgetSettings(id)
-        val r = renderFor(context, kind, w, h, settings.transparency, settings.showCurrent, store.iconStyle)
+        val r = renderFor(context, kind, w, h, store.widgetSettings(id), store.iconStyle)
 
         AppWidgetManager.getInstance(context).updateAppWidget(id, buildViews(context, id, r, spinning))
     }
 
-    /** The home-screen views for a drawn widget: picture, buttons, and what each tap does. */
+    /**
+     * The home-screen views for a drawn widget: picture, buttons, and what each tap does. A tap opens the app;
+     * only the forecast widget has refresh and settings buttons (the others' settings open by long-press).
+     */
     fun buildViews(context: Context, id: Int, r: Rendered, spinning: Boolean): RemoteViews {
         val views = RemoteViews(context.packageName, R.layout.widget_root)
         views.setImageViewBitmap(R.id.widget_image, r.bitmap)
+        views.setOnClickPendingIntent(android.R.id.background, openAppIntent(context))
+        if (r.refresh == null || r.gear == null) {
+            for (v in listOf(R.id.btn_refresh, R.id.spinner, R.id.btn_gear)) views.setViewVisibility(v, View.GONE)
+            return views
+        }
         place(views, R.id.btn_refresh, r.refresh, context)
         place(views, R.id.spinner, r.refresh, context)
         place(views, R.id.btn_gear, r.gear, context)
         views.setInt(R.id.btn_refresh, "setColorFilter", r.buttonColor)
         views.setInt(R.id.btn_gear, "setColorFilter", r.buttonColor)
+        views.setViewVisibility(R.id.btn_gear, View.VISIBLE)
         views.setViewVisibility(R.id.btn_refresh, if (spinning) View.INVISIBLE else View.VISIBLE)
         views.setViewVisibility(R.id.spinner, if (spinning) View.VISIBLE else View.GONE)
-
-        views.setOnClickPendingIntent(android.R.id.background, openAppIntent(context))
         views.setOnClickPendingIntent(R.id.btn_refresh, RefreshReceiver.pendingIntent(context, id))
         views.setOnClickPendingIntent(R.id.btn_gear, settingsIntent(context, id))
-
         return views
     }
 
-    /** Shows or hides only the spinner, without redrawing. */
+    /** Shows only the spinner, without redrawing. */
     fun showSpinner(context: Context, id: Int) {
         val views = RemoteViews(context.packageName, R.layout.widget_root)
         views.setViewVisibility(R.id.btn_refresh, View.INVISIBLE)

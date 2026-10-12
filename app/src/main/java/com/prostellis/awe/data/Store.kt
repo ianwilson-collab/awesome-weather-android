@@ -4,6 +4,7 @@ import android.content.Context
 import com.prostellis.awe.weather.EventDays
 import com.prostellis.awe.weather.Forecast
 import com.prostellis.awe.weather.Place
+import com.prostellis.awe.widget.BgStyle
 import com.prostellis.awe.widget.IconStyle
 import java.net.HttpURLConnection
 import java.net.URL
@@ -13,10 +14,10 @@ enum class RefreshMode(val minutes: Int?) {
     EVERY_30(30), EVERY_60(60), MANUAL(null);
 }
 
-/** Settings for one widget on the home screen. */
-data class WidgetSettings(val transparency: Int, val refresh: RefreshMode, val showCurrent: Boolean) {
+/** Settings for one widget on the home screen. [tempColor] is a [com.prostellis.awe.widget.TempColors] choice (0 = Auto). */
+data class WidgetSettings(val transparency: Int, val refresh: RefreshMode, val showCurrent: Boolean, val tempColor: Int) {
     companion object {
-        val DEFAULT = WidgetSettings(transparency = 0, refresh = RefreshMode.EVERY_30, showCurrent = true)
+        val DEFAULT = WidgetSettings(transparency = 0, refresh = RefreshMode.EVERY_30, showCurrent = true, tempColor = 0)
     }
 }
 
@@ -39,10 +40,21 @@ class Store(context: Context) {
         return next.key != before.key || next.shortLabel != before.shortLabel
     }
 
-    /** The weather-symbol style, shared by the app and every widget. */
+    /** The weather-symbol style, shared by the app and every widget (Glow until one is picked). */
     var iconStyle: IconStyle
         get() = IconStyle.fromId(prefs.getString(KEY_ICON_STYLE, null))
         set(value) { prefs.edit().putString(KEY_ICON_STYLE, value.id).apply() }
+
+    /** The app's background style, which the widget sky follows (Dynamic until one is picked). */
+    val bgStyle: BgStyle
+        get() = BgStyle.fromId(prefs.getString(KEY_BG_STYLE, null))
+
+    /** Saves the background style picked in the app. Returns true when it changed. */
+    fun saveBgStyle(style: BgStyle): Boolean {
+        if (style == bgStyle) return false
+        prefs.edit().putString(KEY_BG_STYLE, style.id).apply()
+        return true
+    }
 
     /** Event days from the app, about 13 months ahead: date → sticker color. */
     val eventColors: Map<String, Int>
@@ -82,6 +94,7 @@ class Store(context: Context) {
         refresh = prefs.getString("w$id.refresh", null)
             ?.let { runCatching { RefreshMode.valueOf(it) }.getOrNull() } ?: WidgetSettings.DEFAULT.refresh,
         showCurrent = prefs.getBoolean("w$id.showCurrent", WidgetSettings.DEFAULT.showCurrent),
+        tempColor = prefs.getInt("w$id.tempColor", WidgetSettings.DEFAULT.tempColor),
     )
 
     fun saveWidgetSettings(id: Int, s: WidgetSettings) {
@@ -89,6 +102,7 @@ class Store(context: Context) {
             .putInt("w$id.transparency", s.transparency)
             .putString("w$id.refresh", s.refresh.name)
             .putBoolean("w$id.showCurrent", s.showCurrent)
+            .putInt("w$id.tempColor", s.tempColor)
             .apply()
     }
 
@@ -100,7 +114,7 @@ class Store(context: Context) {
     }
 
     fun forgetWidget(id: Int) {
-        prefs.edit().remove("w$id.transparency").remove("w$id.refresh").remove("w$id.showCurrent").remove("w$id.updated").apply()
+        prefs.edit().remove("w$id.transparency").remove("w$id.refresh").remove("w$id.showCurrent").remove("w$id.tempColor").remove("w$id.updated").apply()
     }
 
     private fun download(url: String): String {
@@ -121,6 +135,7 @@ class Store(context: Context) {
         const val KEY_FETCHED_AT = "fetchedAt"
         const val KEY_FORECAST_PLACE = "forecastPlace"
         const val KEY_ICON_STYLE = "iconStyle"
+        const val KEY_BG_STYLE = "bgStyle"
         const val KEY_EVENTS = "events"
     }
 }
