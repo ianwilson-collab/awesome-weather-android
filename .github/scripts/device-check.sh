@@ -72,6 +72,17 @@ adb shell input keyevent KEYCODE_BACK
 sleep 1
 adb exec-out screencap -p > screens/app-glow.png
 
+# Background style: reopen settings, move past the icon styles (Glow → Fine Line → Default → Painterly → Realistic) and pick Realistic.
+adb shell input tap $((W * 89 / 100)) $((H * 10 / 100))
+sleep 2
+for _ in 1 2 3 4 5 6; do adb shell input keyevent KEYCODE_TAB; done
+adb shell input keyevent KEYCODE_ENTER
+sleep 2
+adb exec-out screencap -p > screens/settings-realistic.png
+adb shell input keyevent KEYCODE_BACK
+sleep 10
+adb exec-out screencap -p > screens/app-realistic.png
+
 # NOAA's aurora forecast must allow the app's page to read it (CORS); recorded, not required
 curl -s -D - -o /dev/null -H "Origin: https://appassets.androidplatform.net" \
   https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json | grep -i "^access-control" > screens/noaa-cors.txt \

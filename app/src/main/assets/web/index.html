@@ -111,8 +111,8 @@ button { cursor: pointer; }
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: calc(var(--page-scene-opacity) + (.75 - var(--page-scene-opacity)) * var(--night-boost, 0));
-  background: linear-gradient(180deg, var(--s1, transparent), var(--s2, transparent));
+  opacity: var(--scene-op, calc(var(--page-scene-opacity) + (.75 - var(--page-scene-opacity)) * var(--night-boost, 0)));
+  background: var(--sky, transparent);
   -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 30%, transparent 78%);
   mask-image: linear-gradient(180deg, #000 0%, #000 30%, transparent 78%);
   transition: opacity .6s ease;
@@ -463,6 +463,10 @@ summary.hourly-head::-webkit-details-marker { display: none; }
 .style-opt .nm b { font-size: 15px; }
 .style-opt .nm span { font-size: 12.5px; color: var(--ink-3); }
 .style-opt .ics { display: flex; gap: 8px; font-size: 28px; }
+.set-h.next { margin-top: 20px; }
+.bgpv { display: flex; gap: 6px; }
+.bgt { position: relative; width: 70px; height: 52px; border-radius: 9px; overflow: hidden; background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); }
+.bgt > span, .bgt img { position: absolute; inset: 0; width: 100%; height: 100%; }
 @media (max-width: 420px) { .style-opt { grid-template-columns: 1fr; } }
 
 /* ---------- Footer ---------- */
@@ -482,6 +486,8 @@ dialog {
 }
 dialog.wide { width: min(820px, calc(100vw - 24px)); }
 dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px); }
+/* While a popup is open, everything behind it is dimmed and blurred, so its motion pauses (saves the phone redrawing it) */
+body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open]) .badge::before { animation-play-state: paused; }
 .dlg-head { display: flex; align-items: center; gap: 12px; padding: 18px 20px 8px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
 .dlg-head h2 { margin: 0; font-size: 20px; letter-spacing: -.01em; }
 .dlg-head .sub { color: var(--ink-3); font-size: 13px; font-weight: 500; }
@@ -595,6 +601,12 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
 .fx-halo { transform-box: fill-box; transform-origin: center; animation: halo-pulse 5s ease-in-out infinite; }
 @keyframes rays-pulse { 0%, 100% { transform: scale(.93); opacity: .65; } 50% { transform: scale(1.07); opacity: 1; } }
 @keyframes halo-pulse { 0%, 100% { transform: scale(.95); opacity: .75; } 50% { transform: scale(1.08); opacity: 1; } }
+.fx-breathe { transform-box: fill-box; transform-origin: center; animation: breathe 9s ease-in-out infinite; }
+@keyframes breathe { 0%, 100% { transform: scale(.94); opacity: .8; } 50% { transform: scale(1.06); opacity: 1; } }
+.fx-spin { transform-box: view-box; animation: spin 120s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.fx-glint { animation: glint 7s ease-in-out infinite; }
+@keyframes glint { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
 .fx-drift { animation: drift var(--dur, 24s) ease-in-out infinite alternate; }
 @keyframes drift { from { transform: translateX(calc(var(--dx, 12px) * -1)); } to { transform: translateX(var(--dx, 12px)); } }
 .fx-fall { animation: fall var(--dur, 2s) linear infinite; }
@@ -757,6 +769,9 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     <h3 class="set-h" id="styleTitle">Icon style</h3>
     <p class="set-help" id="styleHelp">Changes the weather symbols throughout the app.</p>
     <div class="styles" id="styleList" role="radiogroup" aria-labelledby="styleTitle"></div>
+    <h3 class="set-h next" id="bgTitle">Background and animation style</h3>
+    <p class="set-help">Changes the sky behind the app, the art inside each day card, and how they move. Holiday effects still show on top.</p>
+    <div class="styles" id="bgList" role="radiogroup" aria-labelledby="bgTitle"></div>
   </div>
 </dialog>
 
@@ -775,13 +790,14 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
 /*
   Awesome Weather App — one self-contained page, no paid services.
   Works opened directly as a file, or hosted next to manifest.webmanifest, sw.js and the icon-*.png files as an installable web app.
-  Data: Open-Meteo (16-day forecast + place search) and the U.S. National Weather Service (7-day forecast, alerts).
+  Data: Open-Meteo (16-day forecast, past lows for frost, place search), the U.S. National Weather Service (7-day forecast,
+  alerts) and NOAA's Space Weather Prediction Center (aurora Kp forecast).
 
   Script map (in order):
     Config · Storage · Helpers · Weather categories · Moon phase (+ exact new/full moons)
     Icons · Scene kit (sun, moon, stars, clouds, rain, snow, meteors)
     Special days (holidays, meteor showers, seasons) · Golden hour · Festive touches · Hidden surprises
-    Card background scenes · Page background (time of day, sun/moon hand-off)
+    Card background scenes · Page background (time of day, sun/moon hand-off) · Background styles (Default, Painterly, Realistic)
     Data loading · Derived daily model · Rendering (header, alerts, cards, outlook, details, hourly)
     Location dialog · Time-of-day preview · Wiring
 */
@@ -813,7 +829,8 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     previewMin: null, // minutes after midnight (15-min steps) while previewing another time; null = live
     days: [],         // the 7 day cards
     extDays: [],      // extended outlook, days 8–16
-    iconStyle: store.get("iconStyle", "default") // weather symbol style: "default", "glow" or "fine"
+    iconStyle: store.get("iconStyle", "default"), // weather symbol style: "default", "glow" or "fine"
+    bgStyle: store.get("bgStyle", "default")      // background and animation style: "default", "painterly" or "realistic"
   };
 
   /* ================= Helpers ================= */
@@ -1405,8 +1422,15 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
         <path d="M5 30C12 14 20 34 26 20S38 10 43 18" stroke="url(#${g})" stroke-width="6" fill="none" stroke-linecap="round"/>
         <path d="M6 28C12 15 20 32 26 18S37 9 42 16" stroke="#d9fff0" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".9"/>`; }
   };
+  // First and last frost: a silver snowflake
+  BADGE_ART.frost = () => {
+    const g = iid("ff"), arms = [0, 60, 120, 180, 240, 300].map((a) => `<path d="M24 24V6.5M24 12l-4.2-4.2M24 12l4.2-4.2M24 18.5l-3.2-3.2M24 18.5l3.2-3.2" transform="rotate(${a} 24 24)"/>`).join("");
+    return `<defs><linearGradient id="${g}" gradientUnits="userSpaceOnUse" x1="8" y1="6" x2="40" y2="42"><stop offset="0" stop-color="#cfe2f2"/><stop offset="1" stop-color="#6f9cc6"/></linearGradient></defs>
+      <g stroke="#3f6f9e" stroke-width="4.6" stroke-linecap="round" fill="none" opacity=".3">${arms}</g><g stroke="url(#${g})" stroke-width="2.6" stroke-linecap="round" fill="none">${arms}</g>
+      <circle cx="24" cy="24" r="3.2" fill="#eef6fc" stroke="#8fb6da" stroke-width="1"/>`;
+  };
   // Sticker ring color per badge (also the card outline, corner tint and glow)
-  const RING = { party: "#7b5cff", hearts: "#e8384f", shamrock: "#2f9e44", eggs: "#f08bb6", flower: "#f06aa0", flag: "#5b6878", mug: "#2f5fbf", firework: "#e5383b", grill: "#e0a400", pumpkin: "#f07d1a", star: "#c99a1e", tree: "#d62f2f", ballDrop: "#d9a500", sprout: "#5aa9e0", sun: "#f0a400", leaves: "#e8741e", snowman: "#5aa9e0", meteor: "#8a6cff", solar: "#ff9f1a", lunar: "#8f9bab", aurora: "#20b97f", turkey: "#e67e22", newMoon: "#9aa6b4", fullMoon: "#9aa6b4" };
+  const RING = { frost: "#6cb8e6", party: "#7b5cff", hearts: "#e8384f", shamrock: "#2f9e44", eggs: "#f08bb6", flower: "#f06aa0", flag: "#5b6878", mug: "#2f5fbf", firework: "#e5383b", grill: "#e0a400", pumpkin: "#f07d1a", star: "#c99a1e", tree: "#d62f2f", ballDrop: "#d9a500", sprout: "#5aa9e0", sun: "#f0a400", leaves: "#e8741e", snowman: "#5aa9e0", meteor: "#8a6cff", solar: "#ff9f1a", lunar: "#8f9bab", aurora: "#20b97f", turkey: "#e67e22", newMoon: "#9aa6b4", fullMoon: "#9aa6b4" };
   const badgeSVG = (art, label) => `<svg viewBox="0 0 48 48" role="img" aria-label="${esc(label)}">${BADGE_ART[art]()}</svg>`;
 
   // Calendar helpers (month is 1–12, weekday 0 = Sunday)
@@ -1629,11 +1653,49 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       note: `Kp ${Math.round(max)} forecast tonight · Look ${lat < 0 ? "south" : "north"} after dark, away from city lights`, ring: RING.aurora, sticker: true };
   }
 
+  /* ================= First and last frost (overnight lows of 32°F or colder) ================= */
+  // Fall: the first freezing night in the forecast, if none has happened yet this season (from the past 92 days of lows).
+  // Spring: the last freezing night in the forecast, once at least 5 frost-free nights follow it. Only as far as the forecast reaches.
+  async function loadFrostHistory(loc) {
+    const p = new URLSearchParams({ latitude: loc.lat, longitude: loc.lon, daily: "temperature_2m_min", temperature_unit: "fahrenheit", timezone: "auto", past_days: "92", forecast_days: "1" });
+    const j = await fetchJSON(`https://api.open-meteo.com/v1/forecast?${p}`, { retries: 1 });
+    return j.daily.time.filter((t, i) => j.daily.temperature_2m_min[i] != null && j.daily.temperature_2m_min[i] <= 32);
+  }
+  let frostMemo = null;
+  function frostEvents() {
+    const data = state.data;
+    if (!data?.om?.daily) return {};
+    if (frostMemo?.at === data.fetchedAt && frostMemo.key === data.locKey) return frostMemo.map;
+    const om = data.om, today = om.current?.time?.slice(0, 10) || om.daily.time[0], map = {};
+    const nights = om.daily.time.filter((ymd) => ymd >= today).map((ymd) => ({ ymd, lo: overnight(om, ymd).lo })).filter((nt) => nt.lo != null);
+    const freezing = nights.filter((nt) => nt.lo <= 32);
+    const y = +today.slice(0, 4), m = +today.slice(5, 7), south = +state.loc.lat < 0;
+    const fall = south ? m >= 2 && m <= 6 : m >= 8, spring = south ? m >= 9 : m >= 3 && m <= 6;
+    if (fall && freezing.length && data.frostPast) {
+      const seasonStart = `${y}-${south ? "02" : "08"}-01`;
+      if (!data.frostPast.some((ymd) => ymd >= seasonStart)) map[freezing[0].ymd] = { kind: "first", lo: freezing[0].lo };
+    }
+    if (spring && freezing.length) {
+      const last = freezing[freezing.length - 1];
+      if (nights.filter((nt) => nt.ymd > last.ymd).length >= 5) map[last.ymd] = { kind: "last", lo: last.lo };
+    }
+    frostMemo = { at: data.fetchedAt, key: data.locKey, map };
+    return map;
+  }
+  function frostOn(ymd) {
+    const f = frostEvents()[ymd];
+    if (!f) return null;
+    const first = f.kind === "first", label = first ? "First frost" : "Last frost";
+    return { art: "frost", label, name: label, ring: RING.frost, sticker: true,
+      note: `Low near ${round(f.lo)}° tonight · ${first ? "Cover tender plants and bring hoses in" : "Last freezing night in the forecast, a planting cue"}` };
+  }
+
   /* ================= Events on a day (stickers, card lines, details) ================= */
-  // In order: holidays and seasons, eclipse, aurora, new/full moon. An eclipse takes the moon's sticker; both lines still show.
+  // In order: holidays and seasons, frost, eclipse, aurora, new/full moon. An eclipse takes the moon's sticker; both lines still show.
   function dayEvents(ymd) {
     const out = specialDays(ymd).map((sp) => ({ ...sp, ring: RING[sp.art], sticker: true }));
-    const eclipse = eclipseOn(ymd), aurora = auroraOn(ymd), moon = moonOn(ymd);
+    const frost = frostOn(ymd), eclipse = eclipseOn(ymd), aurora = auroraOn(ymd), moon = moonOn(ymd);
+    if (frost) out.push(frost);
     if (eclipse) out.push(eclipse);
     if (aurora) out.push(aurora);
     if (moon) {
@@ -1681,9 +1743,9 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
   }
 
   // Shooting stars: several on meteor-shower peak nights, a rare one now and then on any clear night
-  function meteors(r, peak) {
+  function meteors(r, peak, color = "var(--night-star)") {
     const id = `met${++gradSeq}`;
-    let s = `<defs><linearGradient id="${id}" x1="0" y1="1" x2="1" y2="0"><stop offset="0" style="stop-color:var(--night-star);stop-opacity:1"/><stop offset="1" style="stop-color:var(--night-star);stop-opacity:0"/></linearGradient></defs>`;
+    let s = `<defs><linearGradient id="${id}" x1="0" y1="1" x2="1" y2="0"><stop offset="0" style="stop-color:${color};stop-opacity:1"/><stop offset="1" style="stop-color:${color};stop-opacity:0"/></linearGradient></defs>`;
     for (let k = 0; k < (peak ? 4 : 1); k++) {
       const x = f1(1150 + r() * 450), y = f1(8 + r() * 48); // start high so the streak stays above the cards
       const cycle = peak ? 6 + r() * 6 : 150 + r() * 90;
@@ -1904,7 +1966,7 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     return s;
   }
 
-  function pageSceneSVG(cat, light, ph, meteorPeak) {
+  function pageSceneBody(cat, light, ph, meteorPeak) {
     const r = rng(7);
     const v = (n) => `var(--${cat}-${n})`;
     const W = 1600, H = 700;
@@ -1933,8 +1995,294 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
           flickerBolt(r, "M1460 150 L1420 250 H1452 L1430 350 L1508 222 H1474 L1502 150z", v("bolt"), W, H);
         break;
     }
-    return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMaxYMin slice">${body}</svg>`;
+    return body;
   }
+
+  /* ================= Background and animation styles ================= */
+  // Default is the original look, drawn with the CSS color tokens. Painterly and Realistic carry their own light and
+  // dark palettes and follow the same time-of-day blend and sun/moon hand-off as Default.
+  const rgbOf = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
+  const mixHex = (a, b, t) => "#" + rgbOf(a).map((v, i) => Math.round(v + (rgbOf(b)[i] - v) * t).toString(16).padStart(2, "0")).join("");
+  const darkScheme = () => matchMedia("(prefers-color-scheme: dark)").matches;
+  const gid = (p) => `${p}${++gradSeq}`;
+  const blurFilter = (id, sd) => `<filter id="${id}" x="-50%" y="-80%" width="200%" height="260%"><feGaussianBlur stdDeviation="${sd}"/></filter>`;
+  const openSky = (cat) => cat === "clear" || cat === "partly";
+  const isOvercast = (cat) => !openSky(cat) && cat !== "fog";
+  // A palette set darkened for dark mode: day, dawn and dusk by k, night by kNight
+  const darkPalette = (P, to, k, kNight) => ({
+    day: Object.fromEntries(Object.entries(P.day).map(([cat, cs]) => [cat, cs.map((c) => mixHex(c, to, k))])),
+    dawn: P.dawn.map((c) => mixHex(c, to, k)), dusk: P.dusk.map((c) => mixHex(c, to, k)), night: P.night.map((c) => mixHex(c, to, kNight))
+  });
+  // Sky colors for a daylight level: night → dawn/dusk → day; overcast skies keep more of their own gray
+  function blendSky(cat, { d, rising }, P) {
+    const tw = rising ? P.dawn : P.dusk, day = P.day[cat];
+    const time = (i) => d <= .5 ? mixHex(P.night[i], tw[i], d / .5) : mixHex(tw[i], day[i], (d - .5) / .5);
+    return day.map((c, i) => openSky(cat) ? time(i) : mixHex(time(i), c, .45 + .55 * d));
+  }
+  // Where the sun and moon sit for a daylight level (the Default style's path) and how strongly each shows
+  function skyBodies({ d }) {
+    const u = ease(d);
+    return {
+      moon: d < 1 ? { x: +f1(lerp(1450, 1310, u)), y: +f1(lerp(84, 64, u)), k: Math.pow(1 - d, .8), grow: .45 + .55 * (1 - d) } : null,
+      sun: d > 0 ? { x: +f1(lerp(1575, 1450, u)), y: +f1(lerp(-5, 80, u)), k: .3 + .7 * d, grow: .35 + .65 * d } : null
+    };
+  }
+  const sunCore = (x, y, R, fill) => `<circle class="sun-core" data-x="${x}" data-y="${y}" data-r="${f1(R)}" cx="${x}" cy="${y}" r="${f1(R)}" fill="${fill}"/>`;
+  const moonHit = (x, y, R) => `<circle class="moon-hit" data-x="${x}" data-y="${y}" data-r="${f1(R)}" cx="${x}" cy="${y}" r="${f1(R)}" fill="none"/>`;
+  // Draws the lit part of any moon over its unlit disk, clipped to the phase
+  function phasedMoon(x, y, R, ph, lit, unlit) {
+    const k = litStep(ph);
+    if (k <= 0) return unlit;
+    if (k >= 1) return unlit + lit;
+    const c = gid("mc");
+    return `${unlit}<clipPath id="${c}">${moonLitShape(x, y, R, ph, "")}</clipPath><g clip-path="url(#${c})">${lit}</g>`;
+  }
+  function flakes(r, color, n, min, max, [bx, by, bw, bh], dur, extra = "") {
+    const drift = .12 * bh;
+    let set = "";
+    for (let k = 0; k < n; k++) set += `<circle cx="${f1(r() * (bw + drift))}" cy="${f1(r() * bh)}" r="${f1(min + r() * (max - min))}" fill-opacity="${(.6 + r() * .4).toFixed(2)}"/>`;
+    return `<svg x="${bx}" y="${by}" width="${bw}" height="${bh}" overflow="hidden">
+      <g class="fx-fall" style="--fx:${f1(-drift)}px;--fy:${bh}px;--dur:${dur}s;animation-delay:-${f1(r() * dur)}s" fill="${color}" ${extra}>
+        <g>${set}</g><g transform="translate(${f1(drift)} ${-bh})">${set}</g></g></svg>`;
+  }
+  // Soft-edged fill for clouds, fog and haze: solid in the middle, fading out at the rim. Gradients instead of blur
+  // filters, which need large amounts of graphics memory on phone screens.
+  function softGradient(color, opacity = 1, solid = .5) {
+    const id = gid("sg");
+    return [id, `<radialGradient id="${id}"><stop offset="0" stop-color="${color}" stop-opacity="${opacity}"/><stop offset="${solid}" stop-color="${color}" stop-opacity="${opacity}"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></radialGradient>`];
+  }
+  const drifting = (r, inner, amp, base) =>
+    `<g class="fx-drift" style="--dx:${f1(amp * (.6 + r() * .6))}px;--dur:${f1(base * (.8 + r() * .7))}s;animation-delay:-${f1(r() * base)}s">${inner}</g>`;
+  const cardSVG = (body, wide) => `<svg viewBox="0 0 320 420" preserveAspectRatio="${wide ? "xMidYMin" : "xMidYMid"} slice" aria-hidden="true"><g class="scene-body">${body}</g></svg>`;
+  const STORM_BOLT_CARD = "M270 104 L248 156 H265 L252 206 L294 142 H274 L290 104z";
+  const STORM_BOLT_PAGE = "M1460 150 L1420 250 H1452 L1430 350 L1508 222 H1474 L1502 150z";
+
+  /* ---------- Painterly: soft blended color, a glowing sun, blurred clouds, layered hills ---------- */
+  const PAINT_LIGHT = {
+    day: { clear: ["#9cc9ee", "#fbe3c4"], partly: ["#a7c6e3", "#f3e9de"], cloudy: ["#b9c3ce", "#e8e5e0"], fog: ["#cdd2d7", "#ecebe7"],
+      drizzle: ["#9eaec0", "#dde2e6"], rain: ["#90a3b8", "#d5dbe1"], snow: ["#cbd9e7", "#f6f3ef"], storm: ["#7f8ea0", "#c4cbd3"] },
+    dawn: ["#a99cc8", "#f8c2a0"], dusk: ["#8f88c2", "#f6b38a"], night: ["#5d6c9b", "#aab3cc"]
+  };
+  const PAINT_DARK = darkPalette(PAINT_LIGHT, "#0e1522", .66, .78);
+  const PAINT_HILLS = { clear: ["#bcd6d9", "#9fc6ad", "#86b48c", "#6c9c74"], partly: ["#bcd3d8", "#a2c4ae", "#89b090", "#71997a"], cloudy: ["#c3ccce", "#a8bcb0", "#93ab98", "#7d957f"],
+    fog: ["#d3d8da", "#c5ccc9", "#b6beb9", "#a5afa8"], drizzle: ["#b5c2c6", "#9cb1a6", "#879f90", "#738c7b"], rain: ["#aebcc2", "#94aba1", "#7f998b", "#6c8676"],
+    snow: ["#e6edf3", "#d7e1e9", "#c6d3de", "#f2f6fa"], storm: ["#9aa8ae", "#839a90", "#6f887a", "#5d7566"] };
+  const paintClouds = (cat, dark) => ({
+    drizzle: dark ? ["#56616f", "#3e4855"] : ["#d3d9e1", "#b3bcc8"], rain: dark ? ["#4a5565", "#36404e"] : ["#c3cad4", "#a5afbd"],
+    storm: dark ? ["#3a4452", "#2a323d"] : ["#a7b0bd", "#8590a0"]
+  })[cat] || (dark ? ["#8592a3", "#5b6676"] : ["#ffffff", "#d6dce5"]);
+  function paintSun(x, y, R, core, edge) {
+    const h = gid("psh"), g = gid("psc");
+    return `<defs><radialGradient id="${h}"><stop offset="0" stop-color="${core}" stop-opacity=".75"/><stop offset=".35" stop-color="${edge}" stop-opacity=".28"/><stop offset="1" stop-color="${edge}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="${g}" cx=".42" cy=".4" r=".65"><stop offset="0" stop-color="#fffbea"/><stop offset=".6" stop-color="${core}"/><stop offset="1" stop-color="${edge}"/></radialGradient></defs>
+      <circle class="fx-breathe" cx="${x}" cy="${y}" r="${f1(R * 4.2)}" fill="url(#${h})"/>${sunCore(x, y, R, `url(#${g})`)}`;
+  }
+  function paintMoon(x, y, R, ph) {
+    const gl = gid("pmg"), mf = gid("pmf"), bl = gid("pmb");
+    const lit = `<circle cx="${x}" cy="${y}" r="${f1(R)}" fill="url(#${mf})"/><g fill="#cdc6ae" fill-opacity=".55" filter="url(#${bl})">
+      <ellipse cx="${f1(x - R * .25)}" cy="${f1(y - R * .12)}" rx="${f1(R * .36)}" ry="${f1(R * .26)}"/><ellipse cx="${f1(x + R * .22)}" cy="${f1(y - R * .2)}" rx="${f1(R * .26)}" ry="${f1(R * .18)}"/>
+      <ellipse cx="${f1(x + R * .06)}" cy="${f1(y + R * .34)}" rx="${f1(R * .24)}" ry="${f1(R * .16)}"/></g>`;
+    const unlit = `<circle cx="${x}" cy="${y}" r="${f1(R)}" fill="#d9deea" fill-opacity=".16"/><circle cx="${x}" cy="${y}" r="${f1(R)}" fill="none" stroke="#fff6dc" stroke-opacity=".35" stroke-width="1.5"/>`;
+    return `<defs><radialGradient id="${gl}"><stop offset=".3" stop-color="#fff6dc" stop-opacity=".45"/><stop offset="1" stop-color="#fff6dc" stop-opacity="0"/></radialGradient>
+      <radialGradient id="${mf}" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#fffdf4"/><stop offset="1" stop-color="#e6dfca"/></radialGradient>${blurFilter(bl, f1(R * .08))}</defs>
+      <circle class="fx-breathe" cx="${x}" cy="${y}" r="${f1(R * 3.2)}" fill="url(#${gl})" opacity="${litStep(ph) > 0 ? 1 : .3}"/>${moonHit(x, y, R)}${phasedMoon(x, y, R, ph, lit, unlit)}`;
+  }
+  // A soft cloud: overlapping soft-edged ovals over a darker belly
+  function paintCloud(r, x, y, s, [fill, belly], op, amp, dur) {
+    const P = [[0, 0, 68, 32], [-48, 8, 50, 26], [50, 6, 54, 28], [-10, -20, 48, 30], [26, -16, 42, 26]];
+    const [fi, fd] = softGradient(fill), [bi, bd] = softGradient(belly);
+    const ovals = (id, dy) => `<g fill="url(#${id})" transform="translate(0 ${dy})">${P.map(([a, b, rx, ry]) => `<ellipse cx="${a}" cy="${b}" rx="${rx}" ry="${ry}"/>`).join("")}</g>`;
+    return `<defs>${fd}${bd}</defs>` + drifting(r, `<g transform="translate(${x} ${y}) scale(${s})" opacity="${op}">${ovals(bi, 9)}${ovals(fi, 0)}</g>`, amp, dur);
+  }
+  function paintStars(r, n, dark) {
+    let s = "";
+    for (let k = 0; k < n; k++) { const tw = 6 + r() * 6; s += `<circle class="fx-twinkle" style="--tw:${f1(tw)}s;animation-delay:-${f1(r() * tw)}s" cx="${f1(r() * 1600)}" cy="${f1(r() * 420)}" r="${f1(.9 + r() * 1.6)}" fill="${dark ? "#fdf8e6" : "#ffffff"}"/>`; }
+    return s;
+  }
+  const paintRain = (dark) => dark ? "#8fb2de" : "#5f80aa";
+  const PAINTERLY = {
+    page(cat, light, ph, meteorPeak) {
+      const dark = darkScheme(), P = dark ? PAINT_DARK : PAINT_LIGHT, r = rng(11), W = 1600, sky = blendSky(cat, light, P);
+      const C = paintClouds(cat, dark), { sun, moon } = skyBodies(light);
+      let s = "";
+      if (openSky(cat) && moon) {
+        s += `<g opacity="${moon.k.toFixed(3)}">${paintStars(r, cat === "clear" ? 60 : 36, dark)}${meteors(r, meteorPeak, "#fff6dc")}</g>` +
+          `<g class="pg-moon" opacity="${moon.k.toFixed(3)}">${paintMoon(moon.x, moon.y, (cat === "clear" ? 64 : 56) * moon.grow, ph)}</g>`;
+      }
+      if (openSky(cat) && sun) {
+        s += `<g class="pg-sun" opacity="${sun.k.toFixed(3)}">${paintSun(sun.x, sun.y, (cat === "clear" ? 52 : 46) * sun.grow, mixHex("#ffc48a", "#ffe39a", light.d), mixHex("#ff9a5a", "#ffc766", light.d))}</g>`;
+      }
+      if (cat === "partly") s += paintCloud(r, 1180, 150, 2.2, C, .9, 30, 60) + paintCloud(r, 700, 70, 2.8, C, .7, 40, 70) + paintCloud(r, 200, 90, 2.6, C, .7, 40, 70);
+      if (isOvercast(cat)) s += paintCloud(r, 1350, 40, 3.6, C, .95, 30, 80) + paintCloud(r, 900, 20, 4, C, .9, 36, 80) + paintCloud(r, 420, 30, 3.8, C, .85, 36, 80) + paintCloud(r, 1150, 170, 2.4, C, .8, 30, 70) + paintCloud(r, 0, 60, 3.4, C, .85, 30, 80);
+      if (cat === "drizzle") s += fallingStreaks(r, paintRain(dark), 70, 12, 2.4, .3, [0, 150, W, 550], 5);
+      if (cat === "rain" || cat === "storm") s += fallingStreaks(r, paintRain(dark), 90, 30, 3, .28, [0, 150, W, 550], 3.6);
+      if (cat === "storm") s += flickerBolt(r, STORM_BOLT_PAGE, "#ffd36b", W, 700);
+      if (cat === "snow") s += `<g opacity=".9">${flakes(r, "#ffffff", 100, 2.5, 6, [0, 140, W, 560], 22)}</g>`;
+      if (cat === "fog") {
+        const [fid, fdef] = softGradient(dark ? "#6b7682" : "#ffffff", .8, .3);
+        s += `<defs>${fdef}</defs>`;
+        for (let k = 0; k < 7; k++) s += drifting(r, `<ellipse cx="${f1(200 + r() * 1300)}" cy="${60 + k * 70}" rx="${f1(560 + r() * 300)}" ry="56" fill="url(#${fid})" opacity="${(.6 + r() * .4).toFixed(2)}"/>`, 60, 40);
+      }
+      return { sky: `linear-gradient(180deg, ${sky[0]}, ${sky[1]})`, op: (dark ? .62 : .72) + .1 * (1 - light.d), svg: s };
+    },
+    card(cat, seed, wide) {
+      const dark = darkScheme(), P = dark ? PAINT_DARK : PAINT_LIGHT, r = rng(seed * 31 + 5), [c1, c2] = P.day[cat];
+      const H = PAINT_HILLS[cat].map((c) => dark ? mixHex(c, "#0f1620", .62) : c), C = paintClouds(cat, dark);
+      const tb = gid("pc");
+      const wave = (y, a, ph = 0) => `M-20 ${y} C ${60 + ph} ${y - a} ${120 + ph} ${y + a * .6} ${180 + ph} ${y - a * .3} S ${290 + ph} ${y - a} 340 ${y} V 440 H -20 Z`;
+      let s = `<defs>${blurFilter(tb, .8)}</defs>`;
+      if (cat === "clear") s += paintSun(250, 100, 28, "#ffe39a", "#ffc766");
+      if (cat === "partly") s += paintSun(255, 96, 24, "#ffe39a", "#ffc766") + paintCloud(r, 170, 130, 1, C, .9, 10, 40);
+      if (isOvercast(cat)) s += paintCloud(r, 230, 40, 1.6, C, .95, 10, 50) + paintCloud(r, 70, 70, 1.5, C, .9, 12, 50) + paintCloud(r, 200, 140, 1, C, .8, 10, 40);
+      let trees = "";
+      for (let k = 0; k < 14; k++) { const x = 10 + k * 23 + r() * 8, h = 14 + r() * 10, base = 360 + Math.sin(k * .7) * 4; trees += `<path d="M${f1(x)} ${f1(base - h)} L${f1(x + 6)} ${f1(base)} L${f1(x - 6)} ${f1(base)}Z"/>`; }
+      s += `<path d="${wave(338, 18)}" fill="${H[0]}"/><path d="${wave(358, 14, 30)}" fill="${H[1]}"/><g fill="${mixHex(H[1], "#2d4a3a", dark ? .3 : .35)}" fill-opacity=".7" filter="url(#${tb})">${trees}</g>` +
+        `<path d="${wave(378, 12, -20)}" fill="${H[2]}"/><path d="${wave(400, 10, 10)}" fill="${H[3]}"/>`;
+      if (cat === "drizzle") s += fallingStreaks(r, paintRain(dark), 26, 9, 2.2, .3, [0, 120, 320, 300], 4);
+      if (cat === "rain" || cat === "storm") s += fallingStreaks(r, paintRain(dark), 34, 24, 2.6, .3, [0, 120, 320, 300], 2.8);
+      if (cat === "storm") s += flickerBolt(r, STORM_BOLT_CARD, "#ffd36b", 320, 420);
+      if (cat === "snow") s += `<g opacity=".9">${flakes(r, "#ffffff", 40, 2, 5, [0, 120, 320, 300], 16)}</g>`;
+      if (cat === "fog") {
+        const [fid, fdef] = softGradient(dark ? "#6b7682" : "#ffffff", .85, .3);
+        s += `<defs>${fdef}</defs>`;
+        for (let k = 0; k < 5; k++) s += drifting(r, `<ellipse cx="${f1(80 + r() * 160)}" cy="${150 + k * 50}" rx="${f1(180 + r() * 80)}" ry="30" fill="url(#${fid})" opacity="${(.65 + r() * .35).toFixed(2)}"/>`, 16, 30);
+      }
+      return { bg: `linear-gradient(175deg, ${c1}, ${c2} 70%)`, op: dark ? .7 : .82, svg: cardSVG(s, wide) };
+    }
+  };
+
+  /* ---------- Realistic: a deep photographic sky, light rays, lit cumulus, the Milky Way, misty ridges ---------- */
+  const REAL_LIGHT = {
+    day: { clear: ["#2f6fc4", "#5d9be0", "#a9d0f0", "#e6eff3"], partly: ["#4f81bd", "#7fa9d8", "#bcd6ec", "#eef2f4"], cloudy: ["#7d8a99", "#9aa6b3", "#c0c8d0", "#dde1e5"],
+      fog: ["#b3b9bf", "#c6cbcf", "#d9dcdf", "#e8eaeb"], drizzle: ["#6b7684", "#868f9b", "#a9b1ba", "#c9ced3"], rain: ["#56616e", "#6f7a87", "#949ea8", "#b9c0c6"],
+      snow: ["#8e9cad", "#adb9c6", "#d0d8e0", "#eef1f4"], storm: ["#3d4652", "#525c69", "#737c87", "#99a0a8"] },
+    dawn: ["#2c3a6e", "#8a6a9e", "#f0a08a", "#ffd9a8"], dusk: ["#1f2d5c", "#5b4f8a", "#d9786a", "#ffc27e"], night: ["#060c1f", "#0f1a3a", "#1d2c55", "#334670"]
+  };
+  const REAL_DARK = darkPalette(REAL_LIGHT, "#05080d", .42, .42);
+  const realGradient = (s) => `linear-gradient(180deg, ${s[0]} 0%, ${s[1]} 35%, ${s[2]} 70%, ${s[3]} 100%)`;
+  const realClouds = (cat, dark) => ({
+    drizzle: dark ? ["#66717f", "#38414c"] : ["#bcc4ce", "#848f9b"], rain: dark ? ["#5a6574", "#2b333e"] : ["#a9b3bf", "#6b7683"],
+    storm: dark ? ["#4a5462", "#20262f"] : ["#8a94a1", "#4d5662"]
+  })[cat] || (dark ? ["#9aa6b6", "#4a5565"] : ["#ffffff", "#b6c0cc"]);
+  const realRain = (dark) => dark ? "#9cc0ec" : "#5d7ea8";
+  function realSun(x, y, R, warm) {
+    const b = gid("rsb"), g = gid("rsg"), ray = gid("rsr");
+    let rays = "";
+    for (let k = 0; k < 16; k++) { const a = k * Math.PI / 8, w = .035; rays += `<path d="M${x} ${y}L${f1(x + Math.cos(a - w) * R * 9)} ${f1(y + Math.sin(a - w) * R * 9)}L${f1(x + Math.cos(a + w) * R * 9)} ${f1(y + Math.sin(a + w) * R * 9)}Z"/>`; }
+    const flare = [[.35, .5, .1], [.6, .22, .07], [.85, .7, .05]].map(([t, rr, o]) => `<circle cx="${f1(x - 900 * t)}" cy="${f1(y + 380 * t)}" r="${f1(R * rr * 2)}" fill="${warm}" fill-opacity="${o}"/>`).join("");
+    return `<defs><radialGradient id="${b}"><stop offset="0" stop-color="#fffbe8" stop-opacity=".9"/><stop offset=".25" stop-color="${warm}" stop-opacity=".35"/><stop offset="1" stop-color="${warm}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="${g}"><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#fff6d8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="${ray}" gradientUnits="userSpaceOnUse" cx="${x}" cy="${y}" r="${f1(R * 9)}"><stop offset="0" stop-color="#ffffff" stop-opacity=".22"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient></defs>
+      <g class="fx-spin" style="transform-origin:${x}px ${y}px" fill="url(#${ray})">${rays}</g>
+      <circle cx="${x}" cy="${y}" r="${f1(R * 7)}" fill="url(#${b})"/><circle cx="${x}" cy="${y}" r="${f1(R * 1.6)}" fill="url(#${g})"/>${sunCore(x, y, R, "#fffef6")}
+      <g class="fx-glint">${flare}</g>`;
+  }
+  // Textured moon; the unlit part glows faintly with earthshine and a thin cool rim of light
+  function realMoon(x, y, R, ph) {
+    const h = gid("rmh"), rim = gid("rmr");
+    const unlit = `<g opacity=".3">${moonDisk(x, y, R)}</g><circle cx="${x}" cy="${y}" r="${f1(R)}" fill="#1c2a48" fill-opacity=".4"/><circle cx="${x}" cy="${y}" r="${f1(R)}" fill="url(#${rim})"/>`;
+    return `<defs><radialGradient id="${h}"><stop offset=".25" stop-color="#dfe8ff" stop-opacity=".35"/><stop offset="1" stop-color="#dfe8ff" stop-opacity="0"/></radialGradient>
+      <radialGradient id="${rim}" cx=".46" cy=".46" r=".54"><stop offset=".8" stop-color="#cfdcf2" stop-opacity="0"/><stop offset=".96" stop-color="#dfe8fb" stop-opacity=".6"/><stop offset="1" stop-color="#dfe8fb" stop-opacity="0"/></radialGradient></defs>
+      <circle class="fx-breathe" cx="${x}" cy="${y}" r="${f1(R * 4)}" fill="url(#${h})" opacity="${f1(.35 + .65 * litStep(ph))}"/>${moonHit(x, y, R)}${phasedMoon(x, y, R, ph, moonDisk(x, y, R), unlit)}`;
+  }
+  function realStars(r, n) {
+    let s = "";
+    for (let k = 0; k < n; k++) {
+      const x = f1(r() * 1600), y = f1(r() * 460);
+      if (r() < .06) { const tw = 3 + r() * 4; s += `<g transform="translate(${x} ${y})"><path class="fx-twinkle" style="--tw:${f1(tw)}s;animation-delay:-${f1(r() * tw)}s" d="${sparklePath(4 + r() * 3)}" fill="#ffffff"/></g>`; }
+      else s += `<circle cx="${x}" cy="${y}" r="${f1(.4 + r() * 1.2)}" fill="#ffffff" fill-opacity="${(.35 + r() * .6).toFixed(2)}"${r() < .25 ? ` class="fx-twinkle" style="--tw:${f1(3 + r() * 5)}s;animation-delay:-${f1(r() * 5)}s"` : ""}/>`;
+    }
+    return s;
+  }
+  function milkyWay(r) {
+    const g = gid("rmw");
+    let dust = "";
+    for (let k = 0; k < 160; k++) dust += `<circle cx="${f1(500 + r() * 1100)}" cy="${f1(140 + (r() - .5) * 90)}" r="${f1(.4 + r() * .7)}" fill="#ffffff" fill-opacity="${(.3 + r() * .5).toFixed(2)}"/>`;
+    return `<defs><radialGradient id="${g}"><stop offset="0" stop-color="#e9e4ff" stop-opacity=".22"/><stop offset=".6" stop-color="#cdd8ff" stop-opacity=".08"/><stop offset="1" stop-color="#cdd8ff" stop-opacity="0"/></radialGradient></defs>
+      <g transform="rotate(-18 1050 140)"><ellipse cx="1050" cy="140" rx="700" ry="80" fill="url(#${g})"/>${dust}</g>`;
+  }
+  // Cumulus: many round puffs, each lit from the top left, on a flat gray base
+  function cumulus(x, y, s, light, shade) {
+    const g = gid("rcu");
+    const P = [[0, 0, 38], [34, -14, 32], [64, 4, 30], [-34, 6, 28], [16, -34, 26], [48, -30, 22], [-10, -20, 24], [88, 12, 20], [-60, 14, 20], [20, 10, 30], [-20, 12, 26], [50, 12, 26], [76, -10, 22], [-46, -6, 20], [30, -42, 18]];
+    return `<defs><radialGradient id="${g}" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="${light}"/><stop offset=".7" stop-color="${mixHex(light, shade, .15)}"/><stop offset="1" stop-color="${mixHex(light, shade, .5)}"/></radialGradient></defs>
+      <g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="14" cy="24" rx="86" ry="15" fill="${shade}"/>${P.map(([a, b, rr]) => `<circle cx="${a}" cy="${b}" r="${rr}" fill="url(#${g})"/>`).join("")}</g>`;
+  }
+  function ridges(r, cat, dark, skyBottom) {
+    const base = { clear: "#2c4a3e", partly: "#2f4b40", cloudy: "#3b4a45", fog: "#7c8784", drizzle: "#36443f", rain: "#33413d", snow: "#5d6b78", storm: "#2a3532" }[cat];
+    const near = dark ? mixHex(base, "#05080d", .55) : base;
+    let s = "";
+    [[332, 18, .78], [350, 16, .58], [368, 14, .36]].forEach(([y, a, haze], i) => {
+      let d = `M-10 ${y}`;
+      for (let x = 0; x <= 340; x += 20) d += ` L${x} ${f1(y - a * (.4 + .6 * Math.abs(Math.sin(x / 47 + i * 1.7))) - r() * 8)}`;
+      s += `<path d="${d} V440 H-10Z" fill="${mixHex(near, skyBottom, haze)}"/>`;
+    });
+    let t = "M-10 440 V390";
+    for (let x = -10; x <= 340; x += 9) { const h = 8 + r() * 14; t += ` L${f1(x + 4.5)} ${f1(390 - h)} L${f1(x + 9)} ${f1(390 - h * .2 + r() * 3)}`; }
+    s += `<path d="${t} V440Z" fill="${near}"/>`;
+    if (cat === "snow") s += `<path d="M-10 404 Q 160 396 340 402 V440 H-10Z" fill="${dark ? "#8796a8" : "#f4f7fa"}"/>`;
+    return s;
+  }
+  const REALISTIC = {
+    page(cat, light, ph, meteorPeak) {
+      const dark = darkScheme(), P = dark ? REAL_DARK : REAL_LIGHT, r = rng(23), W = 1600, sky = blendSky(cat, light, P);
+      const [lc, sc] = realClouds(cat, dark), { sun, moon } = skyBodies(light);
+      let s = "";
+      if (openSky(cat) && moon) {
+        s += `<g opacity="${moon.k.toFixed(3)}">${milkyWay(r)}${realStars(r, cat === "clear" ? 260 : 160)}${meteors(r, meteorPeak, "#ffffff")}</g>` +
+          `<g class="pg-moon" opacity="${moon.k.toFixed(3)}">${realMoon(moon.x, moon.y, (cat === "clear" ? 60 : 52) * moon.grow, ph)}</g>`;
+      }
+      if (openSky(cat) && sun) s += `<g class="pg-sun" opacity="${sun.k.toFixed(3)}">${realSun(sun.x, sun.y, (cat === "clear" ? 36 : 32) * sun.grow, mixHex("#ffb36b", "#fff1c4", light.d))}</g>`;
+      if (cat === "partly") s += drifting(r, cumulus(800, 90, 1.2, mixHex(lc, sc, .2), sc), 20, 70) + drifting(r, cumulus(1220, 200, 1.6, lc, sc), 40, 40) + drifting(r, cumulus(260, 130, 1.5, lc, sc), 40, 40);
+      if (isOvercast(cat)) {
+        s += `<rect width="${W}" height="200" fill="${sc}" opacity=".35"/>` +
+          drifting(r, cumulus(300, 30, 2.6, mixHex(lc, sc, .25), sc) + cumulus(1000, 20, 2.8, mixHex(lc, sc, .25), sc), 20, 90) +
+          drifting(r, cumulus(650, 120, 2.2, lc, sc) + cumulus(1350, 110, 2.4, lc, sc) + cumulus(40, 140, 2, lc, sc), 50, 45);
+      }
+      if (cat === "rain" || cat === "storm") {
+        const cg = gid("rcg");
+        s += `<defs><linearGradient id="${cg}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sc}" stop-opacity=".45"/><stop offset="1" stop-color="${sc}" stop-opacity="0"/></linearGradient></defs>`;
+        for (let k = 0; k < 5; k++) s += drifting(r, `<rect x="${f1(100 + k * 300 + r() * 80)}" y="160" width="${f1(120 + r() * 100)}" height="520" fill="url(#${cg})" transform="skewX(-12)"/>`, 40, 30);
+        s += fallingStreaks(r, realRain(dark), 120, 22, 1.4, .3, [0, 150, W, 550], 1.6) + fallingStreaks(r, dark ? "#b8d3f2" : "#4a6b96", 40, 48, 2.6, .35, [0, 150, W, 550], 1.1);
+      }
+      if (cat === "drizzle") s += fallingStreaks(r, realRain(dark), 110, 10, 1.2, .3, [0, 150, W, 550], 4);
+      if (cat === "storm") s += flickerBolt(r, STORM_BOLT_PAGE, "#fff2c4", W, 700);
+      if (cat === "snow") s += flakes(r, "#ffffff", 120, 1, 2.2, [0, 140, W, 560], 26) + flakes(r, "#ffffff", 70, 2.4, 4, [0, 140, W, 560], 17) + `<g opacity=".5">${flakes(r, "#ffffff", 22, 5, 8, [0, 140, W, 560], 10)}</g>`;
+      if (cat === "fog") {
+        const [fid, fdef] = softGradient(dark ? "#8692a0" : "#ffffff", .9, .2);
+        s += `<defs>${fdef}</defs>`;
+        for (let k = 0; k < 8; k++) s += drifting(r, `<ellipse cx="${f1(200 + r() * 1300)}" cy="${50 + k * 60}" rx="${f1(620 + r() * 400)}" ry="64" fill="url(#${fid})"/>`, 80, 50);
+      }
+      return { sky: realGradient(sky), op: dark ? .78 : .76, svg: s };
+    },
+    card(cat, seed, wide) {
+      const dark = darkScheme(), P = dark ? REAL_DARK : REAL_LIGHT, r = rng(seed * 53 + 9), st = P.day[cat], [lc, sc] = realClouds(cat, dark);
+      let s = "";
+      if (cat === "clear") s += realSun(250, 92, 16, "#fff1c4");
+      if (cat === "partly") s += realSun(255, 86, 14, "#fff1c4") + drifting(r, cumulus(170, 140, .55, lc, sc), 10, 40);
+      if (isOvercast(cat)) s += drifting(r, cumulus(90, 40, .9, mixHex(lc, sc, .2), sc) + cumulus(240, 30, 1, lc, sc), 10, 50) + drifting(r, cumulus(180, 140, .6, lc, sc), 14, 35);
+      s += ridges(r, cat, dark, st[3]);
+      if (cat === "drizzle") s += fallingStreaks(r, realRain(dark), 44, 8, 1.2, .35, [0, 110, 320, 310], 3.2);
+      if (cat === "rain" || cat === "storm") s += fallingStreaks(r, realRain(dark), 50, 18, 1.3, .35, [0, 110, 320, 310], 1.4);
+      if (cat === "storm") s += flickerBolt(r, STORM_BOLT_CARD, "#fff2c4", 320, 420);
+      if (cat === "snow") s += flakes(r, "#ffffff", 40, 1, 2.4, [0, 110, 320, 310], 18) + flakes(r, "#ffffff", 16, 2.6, 4.5, [0, 110, 320, 310], 11);
+      if (cat === "fog") {
+        const [fid, fdef] = softGradient(dark ? "#8692a0" : "#ffffff", .8, .25);
+        s += `<defs>${fdef}</defs>`;
+        for (let k = 0; k < 5; k++) s += drifting(r, `<ellipse cx="${f1(80 + r() * 160)}" cy="${200 + k * 40}" rx="${f1(200 + r() * 80)}" ry="32" fill="url(#${fid})" opacity="${(.6 + r() * .4).toFixed(2)}"/>`, 16, 30);
+      }
+      return { bg: realGradient(st), op: dark ? .78 : .88, svg: cardSVG(s, wide) };
+    }
+  };
+
+  const BG_STYLES = [
+    { id: "default", name: "Default", desc: "The original look: a soft sky, a beaming sun and gentle motion.",
+      page: (cat, light, ph, meteorPeak) => { const [s1, s2] = skyColors(cat, light); return { sky: `linear-gradient(180deg, ${s1}, ${s2})`, op: null, svg: pageSceneBody(cat, light, ph, meteorPeak) }; },
+      card: (cat, seed, wide) => ({ bg: null, svg: sceneSVG(cat, seed, wide) }) },
+    { id: "painterly", name: "Painterly", desc: "Soft blended color, a glowing sun and slow, calm motion.", ...PAINTERLY },
+    { id: "realistic", name: "Realistic", desc: "A deep, photographic sky with light rays, lit clouds and the Milky Way at night.", ...REALISTIC }
+  ];
+  const bgStyle = () => BG_STYLES.find((s) => s.id === state.bgStyle) || BG_STYLES[0];
 
   // The moment the page is showing: live, or the time picked on the preview slider (minutes after midnight)
   function viewMoment(om) {
@@ -1951,19 +2299,19 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
   }
 
   // Signature of what the background currently shows, so a timer can redraw only when it would look different
-  const sceneKey = (cat, light) => `${cat}|${light.rising}|${Math.round(light.d * 30)}`;
+  const sceneKey = (cat, light) => `${state.bgStyle}|${cat}|${light.rising}|${Math.round(light.d * 30)}`;
 
   function renderPageScene(om) {
     const el = $("pageScene");
     if (!om?.current) { el.innerHTML = ""; el.removeAttribute("style"); $("festive").innerHTML = ""; return; }
     const m = viewMoment(om);
     const cat = wmoCat(m.code);
-    const [s1, s2] = skyColors(cat, m.light);
-    el.style.setProperty("--s1", s1);
-    el.style.setProperty("--s2", s2);
+    const scene = bgStyle().page(cat, m.light, moonPhase(m.ms), meteorNight(om.current.time.slice(0, 10), m.minutes));
+    el.style.setProperty("--sky", scene.sky);
+    if (scene.op == null) el.style.removeProperty("--scene-op"); else el.style.setProperty("--scene-op", scene.op.toFixed(3));
     el.style.setProperty("--night-boost", (1 - m.light.d).toFixed(3));
     el.dataset.key = sceneKey(cat, m.light);
-    el.innerHTML = pageSceneSVG(cat, m.light, moonPhase(m.ms), meteorNight(om.current.time.slice(0, 10), m.minutes));
+    el.innerHTML = `<svg viewBox="0 0 1600 700" preserveAspectRatio="xMaxYMin slice">${scene.svg}</svg>`;
     const festive = festiveFor(om.current.time.slice(0, 10));
     $("festive").innerHTML = festive ? `<svg viewBox="0 0 1600 900" preserveAspectRatio="xMaxYMin slice">${festiveSVG(festive, 1600, 900)}</svg>` : "";
   }
@@ -2030,17 +2378,19 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
     const key = locKey(loc);
     if (!state.data || state.data.locKey !== key) renderSkeleton();
 
-    const [omR, nwsR, kpR] = await Promise.allSettled([
+    const [omR, nwsR, kpR, frR] = await Promise.allSettled([
       loadOpenMeteo(loc),
       isUS(loc) ? loadNWS(loc) : Promise.reject(Object.assign(new Error("outside US"), { outside: true })),
-      loadKp()
+      loadKp(),
+      loadFrostHistory(loc)
     ]);
 
     const notices = [];
     if (omR.status === "fulfilled") {
       const nws = nwsR.status === "fulfilled" ? nwsR.value : { error: nwsR.reason?.outside ? "outside" : "failed" };
       const kp = kpR.status === "fulfilled" ? kpR.value : state.data?.kp || [];
-      state.data = { om: omR.value, nws, kp, fetchedAt: Date.now(), locKey: key };
+      const frostPast = frR.status === "fulfilled" ? frR.value : state.data?.locKey === key ? state.data.frostPast : null;
+      state.data = { om: omR.value, nws, kp, frostPast, fetchedAt: Date.now(), locKey: key };
       if (loc.fromGps && nws.place) {
         state.loc = { ...loc, name: nws.place.city, region: US_STATES[nws.place.state] || nws.place.state, fromGps: false };
         store.set("loc", state.loc);
@@ -2230,12 +2580,12 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       const amt = inches(d.precip);
       const snow = inches(d.snow);
       const split = n === 0 ? " split" : "";
-      const events = dayEvents(d.ymd), stickers = stickersOf(events);
+      const events = dayEvents(d.ymd), stickers = stickersOf(events), scene = bgStyle().card(d.cat, n + 1, n === 0);
       const badges = stickers.length
         ? `<div class="badges">${stickers.map((ev) => `<span class="badge" title="${esc(ev.name)}" style="--ring:${ev.ring}">${badgeSVG(ev.art, ev.name)}</span>`).join("")}</div>` : "";
       const special = events.length ? ` ${events.map((ev) => ev.label).join(", ")}.` : "";
       return `<article class="card${stickers.length ? " has-evt" : ""}" role="button" tabindex="0" data-i="${n}" data-badges="${stickers.length}" style="--s1:var(--${d.cat}-1);--s2:var(--${d.cat}-2)${stickers.length ? `;--ring:${stickers[0].ring}` : ""}" aria-label="${esc(dow)}: ${esc(d.label)}, high ${round(d.hi)}, low ${round(d.lo)}.${esc(special)} Open details.">
-        <div class="scene">${sceneSVG(d.cat, n + 1, n === 0)}</div>
+        <div class="scene"${scene.bg ? ` style="background:${scene.bg};opacity:${scene.op}"` : ""}>${scene.svg}</div>
         ${badges}
         <div class="card-body${split}">
           <div class="main">
@@ -2516,6 +2866,34 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       renderOutlook(state.data, state.days);
     }
   }
+  // Background and animation style: each option previews a clear day, a full-moon night and a rainy card in that style.
+  // Previews are small still images (the page's colors filled in), so the open dialog stays light on the phone.
+  const PREVIEW_FULL_MOON = moonPhase(NEW_MOON_REF + SYNODIC_DAYS * 43200000);
+  function stillImage(svgMarkup) {
+    const cs = getComputedStyle(document.documentElement);
+    const resolved = svgMarkup.replace(/var\((--[\w-]+)\)/g, (_, name) => cs.getPropertyValue(name).trim()).replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" ');
+    return `<img alt="" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(resolved)}">`;
+  }
+  function bgPreview(st) {
+    const pageTile = (light) => { const p = st.page("clear", light, PREVIEW_FULL_MOON, false);
+      return `<span class="bgt"><span style="background:${p.sky};opacity:${p.op ?? .8}">${stillImage(`<svg viewBox="1190 -10 400 300" preserveAspectRatio="xMidYMid slice">${p.svg}</svg>`)}</span></span>`; };
+    const c = st.card("rain", 3, false);
+    return pageTile({ d: 1, rising: false }) + pageTile({ d: 0, rising: false }) +
+      `<span class="bgt"><span style="background:${c.bg || "linear-gradient(170deg, var(--rain-1), var(--rain-2) 75%)"};opacity:${c.op ?? "var(--scene-opacity)"}">${stillImage(c.svg)}</span></span>`;
+  }
+  function renderBgList() {
+    $("bgList").innerHTML = BG_STYLES.map((st) => `<button type="button" class="style-opt" role="radio" aria-checked="${st.id === state.bgStyle}" data-bg="${st.id}">
+        <span class="nm"><b>${st.name}</b><span>${st.desc}</span></span>
+        <span class="bgpv" aria-hidden="true">${bgPreview(st)}</span>
+      </button>`).join("");
+  }
+  function setBgStyle(id) {
+    if (!BG_STYLES.some((s) => s.id === id) || id === state.bgStyle) return;
+    state.bgStyle = id;
+    store.set("bgStyle", id);
+    if ($("setDlg").open) renderBgList();
+    if (state.data) { renderPageScene(state.data.om); renderCards(state.days); }
+  }
   window.awesomeWeather = { setIconStyle, upcomingEvents };
 
   /* ================= Wiring ================= */
@@ -2530,8 +2908,19 @@ dialog::backdrop { background: rgba(10, 16, 24, .45); backdrop-filter: blur(3px)
       dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); }));
     $("useGps").innerHTML = `${UI.locate} Use my location`;
     if (!ICON_SETS[state.iconStyle]) state.iconStyle = "default";
+    if (!BG_STYLES.some((s) => s.id === state.bgStyle)) state.bgStyle = "default";
     $("settingsBtn").innerHTML = UI.sliders;
-    $("settingsBtn").addEventListener("click", () => { renderStyleList(); $("setDlg").showModal(); });
+    $("settingsBtn").addEventListener("click", () => { renderStyleList(); renderBgList(); $("setDlg").showModal(); });
+    $("bgList").addEventListener("click", (e) => {
+      const b = e.target.closest(".style-opt");
+      if (b) { setBgStyle(b.dataset.bg); $("bgList").querySelector(`[data-bg="${state.bgStyle}"]`)?.focus(); }
+    });
+    // Painterly and Realistic carry their own dark palettes, so redraw them when the phone switches light/dark
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      if (state.bgStyle === "default" || !state.data) return;
+      renderPageScene(state.data.om);
+      renderCards(state.days);
+    });
     $("styleList").addEventListener("click", (e) => {
       const b = e.target.closest(".style-opt");
       if (b) { setIconStyle(b.dataset.style); $("styleList").querySelector(`[data-style="${state.iconStyle}"]`)?.focus(); }
