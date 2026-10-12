@@ -45,21 +45,20 @@ sleep 14
 adb exec-out screencap -p > screens/app-light.png
 
 read -r W H < <(adb shell wm size | grep -oE '[0-9]+x[0-9]+' | tail -1 | tr x ' ')
-settings() { send tap $((W * 89 / 100)) $((H * 10 / 100)); sleep 2; }
-tabs() { for _ in $(seq "$1"); do send keyevent KEYCODE_TAB; done; }
-
 # Settings button (top-right): a new install starts on Glow icons and the Dynamic background.
 # The page is always animating, so the accessibility tree never settles; tap the button's spot and pick with the keyboard.
 # Tab order: the icon styles (Basic, Glow, Fine Outline), then the backgrounds (Basic, Painterly, Dynamic, Illustration, Mt Hood).
-# Switch to Fine Outline icons and the Basic background: the emulator draws in software (no GPU), and scrolling the
-# animated Dynamic page takes it down, so the checks that scroll run on Basic.
-settings
+# Switch to Fine Outline icons and the Basic background. The emulator draws in software (no GPU) and tends to go down
+# under heavy drawing (scrolling the animated Dynamic page, or reopening the popup with its style previews), so the
+# popup opens once and the remaining checks run on Basic. The other backgrounds are checked in a desktop browser.
+send tap $((W * 89 / 100)) $((H * 10 / 100))
+sleep 2
 adb exec-out screencap -p > screens/settings-popup.png
-tabs 3
+for _ in 1 2 3; do send keyevent KEYCODE_TAB; done
 send keyevent KEYCODE_ENTER
 sleep 1
 adb exec-out screencap -p > screens/settings-fine-outline.png
-tabs 1
+send keyevent KEYCODE_TAB
 send keyevent KEYCODE_ENTER
 sleep 1
 send keyevent KEYCODE_BACK
@@ -86,16 +85,6 @@ adb exec-out screencap -p > screens/location-popup.png
 send keyevent KEYCODE_BACK
 sleep 1
 adb exec-out screencap -p > screens/after-back.png
-
-# Mt Hood background (the eighth stop), last, with no scrolling
-settings
-tabs 8
-send keyevent KEYCODE_ENTER
-sleep 2
-adb exec-out screencap -p > screens/settings-mthood.png
-send keyevent KEYCODE_BACK
-sleep 10
-adb exec-out screencap -p > screens/app-mthood.png
 
 # NOAA's aurora forecast must allow the app's page to read it (CORS); recorded, not required
 curl -s -D - -o /dev/null -H "Origin: https://appassets.androidplatform.net" \
