@@ -98,6 +98,8 @@ jobs:
           api-level: 34
           target: google_apis
           arch: x86_64
+          # The animated backgrounds are drawn in software on the emulator (no GPU), which needs more memory than the default
+          ram-size: 4096M
           disable-animations: true
           script: bash .github/scripts/device-check.sh
 
