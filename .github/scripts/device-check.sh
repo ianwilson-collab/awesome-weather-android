@@ -17,6 +17,8 @@ adb uninstall "$PKG.test" || true
 adb uninstall "$PKG" || true
 adb install AWE-v*.apk
 adb logcat -c
+# Keep Android's full log as it happens, so it survives if the emulator goes down (trimmed copy below)
+adb logcat -v time > screens/logcat-live.txt 2>&1 &
 adb shell cmd alarm set-timezone America/Los_Angeles || true
 
 # Taps, swipes and keys. The animated page keeps the emulator's software graphics busy, so an input command
