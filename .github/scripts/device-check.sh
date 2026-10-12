@@ -19,6 +19,12 @@ adb install AWE-v*.apk
 adb logcat -c
 adb shell cmd alarm set-timezone America/Los_Angeles || true
 
+# Taps, swipes and keys. The animated page keeps the emulator's software graphics busy, so an input command
+# can time out; try again once, then note it and carry on (the screenshots show what happened).
+send() {
+  adb shell input "$@" || { sleep 3; adb shell input "$@"; } || echo "::warning title=Device check::input $* did not go through"
+}
+
 launch() {
   adb shell am force-stop "$PKG"
   adb shell am start -n "$PKG/.MainActivity" > /dev/null
@@ -38,7 +44,7 @@ adb exec-out screencap -p > screens/app-light.png
 
 # Scroll to the bottom to show the footer line
 read -r W H < <(adb shell wm size | grep -oE '[0-9]+x[0-9]+' | tail -1 | tr x ' ')
-for _ in 1 2 3 4 5 6; do adb shell input swipe $((W / 2)) $((H * 85 / 100)) $((W / 2)) $((H * 15 / 100)) 250; done
+for _ in 1 2 3 4 5 6; do send swipe $((W / 2)) $((H * 85 / 100)) $((W / 2)) $((H * 15 / 100)) 250; done
 sleep 1
 adb exec-out screencap -p > screens/app-light-footer.png
 
@@ -54,32 +60,32 @@ sleep 10
 adb shell "am start -n $PKG/.MainActivity --ez $PKG.OPEN_LOCATION true" > /dev/null
 sleep 2
 adb exec-out screencap -p > screens/location-popup.png
-adb shell input keyevent KEYCODE_BACK
+send keyevent KEYCODE_BACK
 sleep 1
 adb exec-out screencap -p > screens/after-back.png
 
 # Settings button (top-right): a new install starts on Glow icons and the Dynamic background. Switch to Fine Outline icons.
 # The page is always animating, so the accessibility tree never settles; tap the button's spot and pick with the keyboard.
 # Tab order: the icon styles (Basic, Glow, Fine Outline), then the backgrounds (Basic, Painterly, Dynamic, Illustration, Mt Hood).
-adb shell input tap $((W * 89 / 100)) $((H * 10 / 100))
+send tap $((W * 89 / 100)) $((H * 10 / 100))
 sleep 1.5
 adb exec-out screencap -p > screens/settings-popup.png
-for _ in 1 2 3; do adb shell input keyevent KEYCODE_TAB; done
-adb shell input keyevent KEYCODE_ENTER
+for _ in 1 2 3; do send keyevent KEYCODE_TAB; done
+send keyevent KEYCODE_ENTER
 sleep 1
 adb exec-out screencap -p > screens/settings-fine-outline.png
-adb shell input keyevent KEYCODE_BACK
+send keyevent KEYCODE_BACK
 sleep 1
 adb exec-out screencap -p > screens/app-fine-outline.png
 
 # Background style: reopen settings and pick Mt Hood (the eighth stop)
-adb shell input tap $((W * 89 / 100)) $((H * 10 / 100))
+send tap $((W * 89 / 100)) $((H * 10 / 100))
 sleep 2
-for _ in 1 2 3 4 5 6 7 8; do adb shell input keyevent KEYCODE_TAB; done
-adb shell input keyevent KEYCODE_ENTER
+for _ in 1 2 3 4 5 6 7 8; do send keyevent KEYCODE_TAB; done
+send keyevent KEYCODE_ENTER
 sleep 2
 adb exec-out screencap -p > screens/settings-mthood.png
-adb shell input keyevent KEYCODE_BACK
+send keyevent KEYCODE_BACK
 sleep 10
 adb exec-out screencap -p > screens/app-mthood.png
 
