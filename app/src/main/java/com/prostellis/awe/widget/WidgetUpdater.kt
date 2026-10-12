@@ -105,27 +105,27 @@ object WidgetUpdater {
     }
 
     /**
-     * The home-screen views for a drawn widget: picture, buttons, and what each tap does. A tap opens the app;
-     * only the forecast widget has refresh and settings buttons (the others' settings open by long-press).
+     * The home-screen views for a drawn widget: picture, buttons, and what each tap does. A tap opens the app.
+     * Every widget has a refresh button; only the forecast widget has the settings button (the others' settings open by long-press).
      */
     fun buildViews(context: Context, id: Int, r: Rendered, spinning: Boolean): RemoteViews {
         val views = RemoteViews(context.packageName, R.layout.widget_root)
         views.setImageViewBitmap(R.id.widget_image, r.bitmap)
         views.setOnClickPendingIntent(android.R.id.background, openAppIntent(context))
-        if (r.refresh == null || r.gear == null) {
-            for (v in listOf(R.id.btn_refresh, R.id.spinner, R.id.btn_gear)) views.setViewVisibility(v, View.GONE)
-            return views
-        }
         place(views, R.id.btn_refresh, r.refresh, context)
         place(views, R.id.spinner, r.refresh, context)
-        place(views, R.id.btn_gear, r.gear, context)
         views.setInt(R.id.btn_refresh, "setColorFilter", r.buttonColor)
-        views.setInt(R.id.btn_gear, "setColorFilter", r.buttonColor)
-        views.setViewVisibility(R.id.btn_gear, View.VISIBLE)
         views.setViewVisibility(R.id.btn_refresh, if (spinning) View.INVISIBLE else View.VISIBLE)
         views.setViewVisibility(R.id.spinner, if (spinning) View.VISIBLE else View.GONE)
         views.setOnClickPendingIntent(R.id.btn_refresh, RefreshReceiver.pendingIntent(context, id))
-        views.setOnClickPendingIntent(R.id.btn_gear, settingsIntent(context, id))
+        if (r.gear == null) {
+            views.setViewVisibility(R.id.btn_gear, View.GONE)
+        } else {
+            place(views, R.id.btn_gear, r.gear, context)
+            views.setInt(R.id.btn_gear, "setColorFilter", r.buttonColor)
+            views.setViewVisibility(R.id.btn_gear, View.VISIBLE)
+            views.setOnClickPendingIntent(R.id.btn_gear, settingsIntent(context, id))
+        }
         return views
     }
 

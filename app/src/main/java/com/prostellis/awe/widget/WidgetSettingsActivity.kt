@@ -96,9 +96,6 @@ class WidgetSettingsActivity : Activity() {
             setOnCheckedChangeListener { _, on -> showCurrent = on; drawPreview() }
         }
         findViewById<TextView>(R.id.show_current_help).setText(if (forecast) R.string.settings_show_current_help else R.string.settings_show_current_always)
-        // "Only when I tap refresh" needs the refresh button, which only the forecast widget has
-        findViewById<View>(R.id.refresh_manual).visibility = if (forecast) View.VISIBLE else View.GONE
-        if (!forecast && refresh == RefreshMode.MANUAL) refresh = RefreshMode.EVERY_30
 
         // Icon style: shared by every widget and the app; each choice shows a few of its icons
         val styleButtons = mapOf(R.id.style_basic to IconStyle.BASIC, R.id.style_glow to IconStyle.GLOW, R.id.style_fine to IconStyle.FINE)
@@ -216,7 +213,7 @@ class WidgetSettingsActivity : Activity() {
         placeButton(R.id.preview_gear, r.gear, r.buttonColor, scale)
     }
 
-    /** The forecast widget's buttons on the preview; the other widgets have none. */
+    /** The buttons on the preview: refresh on every widget, settings on the forecast widget only. */
     private fun placeButton(id: Int, spot: ButtonSpot?, color: Int, scale: Float) {
         val d = resources.displayMetrics.density * scale
         val v = findViewById<ImageView>(id)

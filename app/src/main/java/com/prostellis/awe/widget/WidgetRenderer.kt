@@ -30,8 +30,8 @@ import kotlin.math.sin
 /** Where a tap target sits on the widget, in dp from the top-left corner. */
 data class ButtonSpot(val centerX: Float, val centerY: Float, val iconSize: Float)
 
-/** A drawn widget plus where the refresh and settings buttons go on top of it (only the forecast widget has them). */
-class Rendered(val bitmap: Bitmap, val refresh: ButtonSpot?, val gear: ButtonSpot?, val buttonColor: Int)
+/** A drawn widget plus where the refresh button (every widget) and the settings button (forecast widget only) go on top of it. */
+class Rendered(val bitmap: Bitmap, val refresh: ButtonSpot, val gear: ButtonSpot?, val buttonColor: Int)
 
 /** AWE 1×1 (weather tint), AWE Daily and AWE Hourly (2×1 up to 5×1), and the 4×2 Forecast. */
 enum class WidgetKind { TINY, DAILY, HOURLY, FORECAST }
@@ -54,7 +54,7 @@ data class Look(
 
 /**
  * Draws the widgets exactly as approved in the mock-ups. Everything is laid out in dp and drawn
- * into a bitmap at the phone's density; the forecast widget's two buttons are separate views placed on top.
+ * into a bitmap at the phone's density; the buttons are separate views placed on top.
  */
 class WidgetRenderer(private val context: Context) {
 
@@ -167,9 +167,10 @@ class WidgetRenderer(private val context: Context) {
 
     private fun drawTiny(canvas: Canvas, bitmap: Bitmap, w: Float, h: Float, m: WidgetModel?, look: Look): Rendered {
         val z = min(w, h)
+        val refresh = cornerRefresh(w)
         if (m == null) {
             centered(canvas, "…", w / 2, h / 2 + 6f, 18f, 600, look.theme.ink2, look.theme)
-            return Rendered(bitmap, null, null, look.theme.ink2)
+            return Rendered(bitmap, refresh, null, look.theme.ink2)
         }
         val (c1, c2) = tint(m.nowCat, m.light.isDay)
         val tile = WeatherLogic.mix(c1, .5, c2)
@@ -192,8 +193,12 @@ class WidgetRenderer(private val context: Context) {
         val p = paint(big, 700, color, null, -.02f * big).apply { shadowFor(this, color, z / 60f) }
         canvas.drawText(num, x, baseline, p)
         canvas.drawText("°", x + numW, baseline - small * .46f, paint(small, 700, color, null).apply { shadowFor(this, color, z / 60f) })
-        return Rendered(bitmap, null, null, look.theme.ink2)
+        // The refresh button in white or near-black against the tint, like Auto
+        return Rendered(bitmap, refresh, null, TempColors.readableOn(behind))
     }
+
+    /** The small refresh button in the top-right corner of the 1×1, Daily and Hourly widgets. */
+    private fun cornerRefresh(w: Float) = ButtonSpot(w - 6f - CORNER_ICON / 2, 6f + CORNER_ICON / 2, CORNER_ICON)
 
     /** A soft shadow under a temperature: dark under light colors, light under dark ones. */
     private fun shadowFor(p: TextPaint, color: Int, r: Float) {
@@ -206,9 +211,12 @@ class WidgetRenderer(private val context: Context) {
         val t = look.theme
         // Designed 74 dp tall (one row); grows a little with taller rows
         val s = (h / 74f).coerceIn(.85f, 1.3f)
+        val refresh = cornerRefresh(w)
+        // A narrow column on the right keeps the refresh button clear of the text and tiles
+        val right = refresh.centerX - refresh.iconSize / 2 - 2f
         if (m == null) {
             text(canvas, "Loading forecast…", 12f, h / 2f + 4f, 12f, 500, t.ink2, t)
-            return Rendered(bitmap, null, null, t.ink2)
+            return Rendered(bitmap, refresh, null, t.ink2)
         }
         val cols = columns(w)
         val count = if (hourly) min(HOUR_CELLS[cols], m.hours.size) else min(DAY_CELLS[cols], m.days.size)
@@ -220,14 +228,14 @@ class WidgetRenderer(private val context: Context) {
             val icon = 34f * s
             WeatherIcons.draw(canvas, m.nowCat, m.light.isDay, 10f * s, (h - icon) / 2, icon, t.icons, icons, t.textShadow)
             val x = 10f * s + icon + 6f * s
-            val room = w - x - 8f
+            val room = right - x - 4f
             val placeSize = 10f * s; val tempSize = 26f * s; val condSize = 10f * s
             val top = (h - (placeSize * 1.25f + tempSize + condSize * 1.25f + 4f * s)) / 2
             text(canvas, fit(fullPlace(m), placeSize, 600, room), x, top + placeSize, placeSize, 600, t.ink2, t)
             val tempBase = top + placeSize * 1.25f + 2f * s + tempSize * .9f
             text(canvas, fit("${m.temp}°", tempSize, 700, room), x, tempBase, tempSize, 700, tempColor, t, shadow = tempShadow)
             text(canvas, fit(m.nowText, condSize, 600, room), x, tempBase + 2f * s + condSize * 1.15f, condSize, 600, t.ink2, t)
-            return Rendered(bitmap, null, null, t.ink2)
+            return Rendered(bitmap, refresh, null, t.ink2)
         }
 
         // Slim current block: place, icon and temperature, condition
@@ -243,7 +251,7 @@ class WidgetRenderer(private val context: Context) {
         centered(canvas, fit(m.nowText, label, 600, curW - 8f), curW / 2, rowTop + temp + 2f * s + label, label, 600, t.ink2, t)
 
         // Tiles: each day (name, icon, high over low) or hour (time, icon, temperature)
-        val area = RectF(curW, 0f, w - 4f * s, h)
+        val area = RectF(curW, 0f, right, h)
         val cellW = area.width() / count
         val tilePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = if (look.sky != null) t.panel else if (t.dark) 0x0FFFFFFF else 0x0D14202B
@@ -276,7 +284,7 @@ class WidgetRenderer(private val context: Context) {
             y += main * 1.15f
             small?.let { centered(canvas, it, cx, y + label, label, 600, t.ink2, t) }
         }
-        return Rendered(bitmap, null, null, t.ink2)
+        return Rendered(bitmap, refresh, null, t.ink2)
     }
 
     /** "Salem, Oregon": the place with its full state or region, where there's room for it. */
@@ -446,6 +454,9 @@ class WidgetRenderer(private val context: Context) {
         TextUtils.ellipsize(s, paint(size, weight, 0, null), max(0f, maxW), TextUtils.TruncateAt.END).toString()
 
     companion object {
+        /** The corner refresh button's icon size, in dp. */
+        private const val CORNER_ICON = 14f
+
         /** Wide enough for 7 days: a 5-column-wide widget, or a full-width one. */
         const val SEVEN_DAY_MIN_WIDTH_DP = 340f
 

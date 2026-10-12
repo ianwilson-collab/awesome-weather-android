@@ -222,22 +222,25 @@ class WidgetRenderTest {
         }
     }
 
-    @Test fun onlyTheForecastWidgetHasButtons() {
+    /** Every widget has a refresh button in the top-right; only the forecast widget has the settings button. */
+    @Test fun everyWidgetHasRefreshOnlyTheForecastHasSettings() {
         val d = context.resources.displayMetrics.density
         val r = draw(WidgetKind.FORECAST, model(morning), forecast4, look(WidgetKind.FORECAST, model(morning), false))
         assertEquals((310 * d).toInt(), r.bitmap.width)
         assertEquals((184 * d).toInt(), r.bitmap.height)
-        assertTrue(r.gear!!.centerX > r.refresh!!.centerX)
+        assertTrue(r.gear!!.centerX > r.refresh.centerX)
         for (kind in listOf(WidgetKind.TINY, WidgetKind.DAILY, WidgetKind.HOURLY)) {
-            val other = draw(kind, model(morning), 233f to 74f, look(kind, model(morning), false))
-            assertNull(other.gear)
-            assertNull(other.refresh)
+            for (size in listOf(tiny, 152f to 74f, 388f to 74f)) {
+                val other = draw(kind, model(morning), size, look(kind, model(morning), false))
+                assertNull(other.gear)
+                assertTrue("$kind refresh in the top-right", other.refresh.centerX > size.first * .75f && other.refresh.centerY < size.second / 3)
+            }
         }
     }
 
     /** The exact views the home screen gets must load (catches anything a widget isn't allowed to use). */
     @Test fun homeScreenViewsLoad() {
-        for (kind in listOf(WidgetKind.FORECAST, WidgetKind.DAILY)) {
+        for (kind in WidgetKind.entries) {
             val r = draw(kind, model(morning), forecast4, look(kind, model(morning), false, BgStyle.MT_HOOD))
             for (spinning in listOf(false, true)) {
                 val views = WidgetUpdater.buildViews(context, 1, r, spinning)
@@ -251,7 +254,7 @@ class WidgetRenderTest {
         LayoutInflater.from(themed).inflate(R.layout.activity_widget_settings, FrameLayout(themed), false)
     }
 
-    /** Saves the widget as the home screen would show it: picture, plus the forecast widget's two buttons on top. */
+    /** Saves the widget as the home screen would show it: picture, plus its buttons on top. */
     private fun save(name: String, r: Rendered, wallpaper: Boolean?) {
         val bmp = Bitmap.createBitmap(r.bitmap.width, r.bitmap.height, Bitmap.Config.ARGB_8888)
         val c = Canvas(bmp)
@@ -261,7 +264,7 @@ class WidgetRenderTest {
             })
         }
         c.drawBitmap(r.bitmap, 0f, 0f, null)
-        r.refresh?.let { drawButton(c, R.drawable.ic_refresh, it, r.buttonColor) }
+        drawButton(c, R.drawable.ic_refresh, r.refresh, r.buttonColor)
         r.gear?.let { drawButton(c, R.drawable.ic_gear, it, r.buttonColor) }
         File(out, "$name.png").outputStream().use { bmp.compress(Bitmap.CompressFormat.PNG, 100, it) }
     }
