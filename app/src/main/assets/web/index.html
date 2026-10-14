@@ -1958,18 +1958,15 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   // Sun and moon hand off: the sun slides in from the top-right corner as it grows, the moon drifts left and fades.
   // Both paths stay in the top band so neither ends up hidden behind the cards.
   function sunAndMoon(r, cat, { d, rising }, ph, meteorPeak) {
-    const u = ease(d);
+    const { sun, moon } = skyBodies({ d });
     let s = "";
-    if (d < 1) {
-      const fade = Math.pow(1 - d, .8);
-      const R = (cat === "clear" ? 80 : 68) * (.45 + .55 * (1 - d));
-      s += `<g opacity="${fade.toFixed(3)}">${stars(r, cat === "clear" ? 45 : 28, 1600, 440)}${meteors(r, meteorPeak)}</g>` +
-        `<g class="pg-moon" opacity="${fade.toFixed(3)}">${moonImage(+f1(lerp(1450, 1310, u)), +f1(lerp(84, 64, u)), +f1(R), ph)}</g>`;
+    if (moon) {
+      s += `<g opacity="${moon.k.toFixed(3)}">${stars(r, cat === "clear" ? 45 : 28, 1600, 440)}${meteors(r, meteorPeak)}</g>` +
+        `<g class="pg-moon" opacity="${moon.k.toFixed(3)}">${moonImage(moon.x, moon.y, +f1((cat === "clear" ? 80 : 68) * moon.grow), ph)}</g>`;
     }
-    if (d > 0) {
-      const R = (cat === "clear" ? 50 : 44) * (.35 + .65 * d);
+    if (sun) {
       const warm = `color-mix(in srgb, var(--${cat}-sun) ${(d * 100).toFixed(1)}%, var(--${rising ? "dawn" : "dusk"}-sun))`;
-      s += `<g class="pg-sun" opacity="${(.3 + .7 * d).toFixed(3)}">${sunWithBeams(+f1(lerp(1575, 1450, u)), +f1(lerp(-5, 80, u)), +f1(R), warm)}</g>`;
+      s += `<g class="pg-sun" opacity="${sun.k.toFixed(3)}">${sunWithBeams(sun.x, sun.y, +f1((cat === "clear" ? 50 : 44) * sun.grow), warm)}</g>`;
     }
     return s;
   }
@@ -2027,7 +2024,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     const time = (i) => d <= .5 ? mixHex(P.night[i], tw[i], d / .5) : mixHex(tw[i], day[i], (d - .5) / .5);
     return day.map((c, i) => openSky(cat) ? time(i) : mixHex(time(i), c, .45 + .55 * d));
   }
-  // Where the sun and moon sit for a daylight level (the Default style's path) and how strongly each shows
+  // Where the sun and moon sit for a daylight level, how strongly each shows and how big they are (every style uses this)
   function skyBodies({ d }) {
     const u = ease(d);
     return {
@@ -2283,31 +2280,19 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     }
   };
 
-  // Shared by Illustration and Mt Hood: the time of day blended like the other styles (night → dawn or dusk → day,
-  // over an hour each side of sunrise and sunset), the board's six weather looks, and the Today card drawn twice
-  // (a wide scene when the card is wide, a regular one when it isn't)
+  // Shared by Illustration and Mt Hood: the time of day uses the same blendSky and skyBodies as Painterly and Dynamic;
+  // the board's six weather looks; and the Today card drawn twice (a wide scene when the card is wide, a regular one when it isn't)
   const FULL_DAY = { d: 1, rising: false };
-  const twilight = ({ d }, day, tw, night) => d >= .5 ? mixHex(tw, day, (d - .5) / .5) : mixHex(night, tw, d / .5);
-  const dayness = ({ d }) => Math.max(0, (d - .5) / .5);    // 0 at twilight and night, 1 in full day
-  const nightness = ({ d }) => Math.max(0, (.5 - d) / .5);  // 0 at twilight and day, 1 in full night
-  const duskness = ({ d }) => 1 - Math.abs(d - .5) / .5;    // 1 at the middle of dawn or dusk
-  const op2 = (v) => Math.min(1, Math.max(0, v)).toFixed(2);
   const sixCat = (cat) => cat === "drizzle" || cat === "storm" ? "rain" : cat;
   const wideCardSVG = (narrow, wide) => `${cardSVG(narrow, false).replace("<svg ", '<svg class="sc-narrow" ')}<svg class="sc-wide" viewBox="0 0 640 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">${wide}</svg>`;
 
   /* ---------- Illustration: flat, poster-style shapes, a ringed sun, pill clouds, a Cascade scene on every card ---------- */
   const ILLUSTRATION = (() => {
     const DAY = { clear: ["#7cc4f2", "#b8e2fb"], partly: ["#93c2e8", "#c6def2"], cloudy: ["#aebccb", "#cdd6df"], rain: ["#8399b0", "#a9b8c8"], snow: ["#bfd3e6", "#dfe9f2"], fog: ["#c0c8d0", "#d8dde2"] };
-    // Sky top and horizon band: day, dawn (softer, pinker), dusk and night, blended for the daylight level
-    function sky(cat, light, dark) {
-      const day = DAY[cat], open = openSky(cat);
-      const dawn = open ? ["#8d86c6", "#f7b994"] : [mixHex(day[0], "#8d86c6", .5), mixHex(day[1], "#f3bf9f", .5)];
-      const dusk = open ? ["#7f6fb8", "#f39c6b"] : [mixHex(day[0], "#7f6fb8", .5), mixHex(day[1], "#f0a982", .5)];
-      const night = open ? ["#4a5a92", "#6a78ab"] : [mixHex(day[0], "#4a5a92", .6), mixHex(day[1], "#6a78ab", .6)];
-      const tw = light.rising ? dawn : dusk;
-      const s = [0, 1].map((i) => twilight(light, day[i], tw[i], night[i]));
-      return dark ? s.map((c) => mixHex(c, "#0d1424", .61)) : s;
-    }
+    // Sky top and horizon band in the same palette shape as Painterly and Dynamic, blended by blendSky
+    const PALETTE = { day: DAY, dawn: ["#8d86c6", "#f7b994"], dusk: ["#7f6fb8", "#f39c6b"], night: ["#4a5a92", "#6a78ab"] };
+    const PALETTE_DARK = darkPalette(PALETTE, "#0d1424", .62, .6);
+    const sky = (cat, light, dark) => blendSky(cat, light, dark ? PALETTE_DARK : PALETTE);
     function sun(x, y, R, c) {
       let rays = "";
       for (let k = 0; k < 10; k++) rays += `<rect x="${f1(x - R * .1)}" y="${f1(y - R * 2.35)}" width="${f1(R * .2)}" height="${f1(R * .5)}" rx="${f1(R * .1)}" transform="rotate(${k * 36} ${x} ${y})"/>`;
@@ -2391,17 +2376,15 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       page(cat0, light, ph, meteorPeak) {
         const cat = sixCat(cat0), dark = darkScheme(), r = rng(19), W = 1600, [top, band] = sky(cat, light, dark);
         const [c1, c2] = cloudInk(cat, dark), cw = dark ? "#6f7d8f" : "#ffffff", cs = dark ? "#4f5b6b" : "#d8e1ec";
-        const up = dayness(light), low = Math.min(1, light.d / .5), dim = light.d <= .5 ? light.d / .5 : 1;
+        const bodies = skyBodies(light);
         let s = "";
-        if (openSky(cat) && light.d < 1) {
-          // Stars fade in as the light goes (their own random numbers, so the clouds don't move when they appear)
-          const rs = rng(29);
-          s += `<g opacity="${op2(Math.pow(1 - light.d, .8))}">${stars(rs, 45, W, 420, dark ? "#f6f1da" : "#ffffff")}</g>` + (nightness(light) > .7 ? meteors(rs, meteorPeak, "#ffffff") : "");
+        // Sun, moon and stars: the same path, fade and size as Painterly and Dynamic
+        if (openSky(cat) && bodies.moon) {
+          s += `<g opacity="${bodies.moon.k.toFixed(3)}">${stars(r, 45, W, 420, dark ? "#f6f1da" : "#ffffff")}${meteors(r, meteorPeak, "#ffffff")}</g>` +
+            `<g class="pg-moon" opacity="${bodies.moon.k.toFixed(3)}">${moon(bodies.moon.x, bodies.moon.y, +f1(52 * bodies.moon.grow), ph, dark)}</g>`;
         }
-        if (openSky(cat)) {
-          // The sun turns orange, grows and sinks toward the horizon, fading out; the moon rises in as it goes
-          if (light.d > 0) s += `<g opacity="${op2(low)}">${sun(+f1(lerp(1420, 1430, up)), +f1(light.d >= .5 ? lerp(300, 120, up) : lerp(400, 300, low)), +f1(lerp(56, 46, up)), mixHex("#ff9a4d", dark ? "#f2b630" : "#ffc233", up))}</g>`;
-          if (light.d < 1) s += `<g opacity="${op2(light.d <= .5 ? lerp(1, .6, dim) : .6 * (1 - up))}">${moon(+f1(lerp(1410, 1260, dim)), +f1(lerp(120, 90, dim)), +f1(lerp(46, 26, dim)), ph, dark)}</g>`;
+        if (openSky(cat) && bodies.sun) {
+          s += `<g class="pg-sun" opacity="${bodies.sun.k.toFixed(3)}">${sun(bodies.sun.x, bodies.sun.y, +f1(46 * bodies.sun.grow), mixHex("#ff9a4d", dark ? "#f2b630" : "#ffc233", light.d))}</g>`;
         }
         if (cat === "partly") s += cloud(r, 1200, 170, 1.6, cw, cs, 30) + cloud(r, 720, 80, 2, cw, cs, 36) + cloud(r, 220, 100, 1.8, cw, cs, 36);
         if (cat === "cloudy" || cat === "rain" || cat === "snow") {
@@ -2413,7 +2396,9 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         if (cat === "snow") s += flakes(r, "#ffffff", 90, 3, 6, [0, 150, W, 550], 14, `stroke="${dark ? "transparent" : "#9db6d3"}" stroke-width="1"`);
         if (cat === "fog") {
           const fc = dark ? "#5c6773" : "#ffffff", fc2 = dark ? "#4a5460" : "#e9edf1";
-          s += `<g opacity="${op2(.55 * nightness(light))}">${moon(1410, 120, 40, ph, dark)}</g><g opacity="${op2(low)}">${fogSun(1420, +f1(lerp(230, 120, up)), 44, dark)}</g>`;
+          // The sun or moon dimly through the fog, on the same path as the clear-sky ones
+          if (bodies.moon) s += `<g class="pg-moon" opacity="${(.55 * bodies.moon.k).toFixed(3)}">${moon(bodies.moon.x, bodies.moon.y, +f1(46 * bodies.moon.grow), ph, dark)}</g>`;
+          if (bodies.sun) s += `<g class="pg-sun" opacity="${bodies.sun.k.toFixed(3)}">${fogSun(bodies.sun.x, bodies.sun.y, +f1(44 * bodies.sun.grow), dark)}</g>`;
           s += drifting(r, fogBank(-200, 150, 2000, 120, 140, fc2, .55), 60, 70) + drifting(r, fogBank(-200, 270, 2000, 140, 180, fc, .6), 80, 55)
             + drifting(r, fogBank(-200, 400, 2000, 200, 120, fc2, .8), 50, 45);
           for (let k = 0; k < 6; k++) s += drifting(r, wisp(200 + r() * 1100, 90 + k * 55, 160 + r() * 220, 10, fc, .5), 120, 30);
@@ -2447,38 +2432,33 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     const SKY = { day: ["#3f7fc4", "#7fb4e3", "#d7ebf7"], dusk: ["#3b4a86", "#c47a8c", "#f7b77a"], night: ["#07102a", "#142350", "#2c3f6e"] };
     const GRAY = { clear: 0, partly: .12, cloudy: .55, rain: .7, snow: .6, fog: .62 };
     const GRAYS = { day: ["#8796a6", "#aeb9c4", "#d3d9df"], dusk: ["#5d5a72", "#8d7d8a", "#b9a39a"], night: ["#141a28", "#1f2737", "#2e3646"] };
-    // One look's sky; skyOf blends day, twilight and night for the daylight level (Mt Hood has one twilight look for dawn and dusk)
-    function skyLook(cat, tod, dark) {
-      const s = SKY[tod].map((c, i) => mixHex(c, GRAYS[tod][i], GRAY[cat]));
-      return dark ? s.map((c) => mixHex(c, "#060b18", tod === "night" ? .35 : .55)) : s;
-    }
-    function skyOf(cat, light, dark) {
-      const [day, dusk, night] = ["day", "dusk", "night"].map((tod) => skyLook(cat, tod, dark));
-      return day.map((c, i) => twilight(light, c, dusk[i], night[i]));
-    }
+    // Top, middle and horizon in the same palette shape as Painterly and Dynamic, blended by blendSky
+    // (Mt Hood has one twilight look for dawn and dusk)
+    const PALETTE = {
+      day: Object.fromEntries(Object.entries(GRAY).map(([cat, g]) => [cat, SKY.day.map((c, i) => mixHex(c, GRAYS.day[i], g))])),
+      dawn: SKY.dusk, dusk: SKY.dusk, night: SKY.night
+    };
+    const PALETTE_DARK = darkPalette(PALETTE, "#060b18", .55, .35);
+    const skyOf = (cat, light, dark) => blendSky(cat, light, dark ? PALETTE_DARK : PALETTE);
     // The mountain's light by time of day
     const LIGHT = {
       day: { lit: "#ffffff", shade: "#a9bbd2", rock: "#55606e", rockLit: "#7d8794", base: "#2f4d40", haze: .26 },
       dusk: { lit: "#ffd0b0", shade: "#8a7fa6", rock: "#5b4b5e", rockLit: "#8a6a6c", base: "#3a3a52", haze: .42 },
       night: { lit: "#aebbd6", shade: "#56627f", rock: "#232a3c", rockLit: "#343c52", base: "#121a2a", haze: .3 }
     };
-    function lightLook(cat, tod, dark, horizon) {
-      const L = { ...LIGHT[tod] }, g = GRAY[cat] * .6;
-      for (const k of ["lit", "shade", "rock", "rockLit", "base"]) {
-        L[k] = mixHex(L[k], horizon, g);
-        if (dark) L[k] = mixHex(L[k], "#060b18", tod === "night" ? .25 : .45);
-      }
-      L.haze = Math.min(.75, L.haze + GRAY[cat] * .35);
-      return L;
-    }
-    // The mountain's light blended for the daylight level, so the alpenglow comes and goes gradually
+    // The mountain's light, as a palette blended by blendSky like the sky: lit snow, shaded snow, rock, lit rock,
+    // forest, and the haze strength as a gray (so it blends the same way)
+    const KEYS = ["lit", "shade", "rock", "rockLit", "base"];
+    const asRow = (L) => [...KEYS.map((k) => L[k]), mixHex("#000000", "#ffffff", L.haze)];
+    const LIGHT_PALETTE = { day: Object.fromEntries(Object.keys(GRAY).map((cat) => [cat, asRow(LIGHT.day)])), dawn: asRow(LIGHT.dusk), dusk: asRow(LIGHT.dusk), night: asRow(LIGHT.night) };
+    const LIGHT_DARK = darkPalette(LIGHT_PALETTE, "#060b18", .45, .25);
     function lightOf(cat, light, dark, horizon) {
-      const [day, dusk, night] = ["day", "dusk", "night"].map((tod) => lightLook(cat, tod, dark, horizon));
-      const L = {};
-      for (const k of ["lit", "shade", "rock", "rockLit", "base"]) L[k] = twilight(light, day[k], dusk[k], night[k]);
-      L.haze = light.d >= .5 ? lerp(dusk.haze, day.haze, dayness(light)) : lerp(night.haze, dusk.haze, light.d / .5);
-      L.glow = duskness(light);
-      L.dayness = dayness(light);
+      const row = blendSky(cat, light, dark ? LIGHT_DARK : LIGHT_PALETTE), g = GRAY[cat] * .6, L = {};
+      KEYS.forEach((k, i) => { L[k] = mixHex(row[i], horizon, g); });
+      L.haze = Math.min(.75, parseInt(blendSky(cat, light, LIGHT_PALETTE)[5].slice(1, 3), 16) / 255 + GRAY[cat] * .35);
+      // Alpenglow peaks in the middle of dawn and dusk and is gone by full day and full night
+      L.glow = 1 - Math.abs(light.d - .5) / .5;
+      L.day = light.d;
       return L;
     }
     // Smooth curve through points (Catmull-Rom as cubic Béziers), for natural ridgelines
@@ -2551,7 +2531,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       s += `<path d="${SNOW}" fill="url(#${snowG})"/>`;
       for (const [x, w2, h2] of [[476, 16, 70], [556, 15, 74], [604, 12, 52], [446, 11, 46]]) {
         const y = sy - h2 + 6;
-        s += `<path d="M${x} ${y}Q${x + w2 * .4} ${y + h2 * .55} ${x + w2 * .2} ${y + h2}Q${x + w2 * .6} ${y + h2 * .6} ${x + w2} ${y}Z" fill="${mixHex(L.lit, "#cfe3f5", lerp(.15, .4, L.dayness))}" opacity=".55"/>`;
+        s += `<path d="M${x} ${y}Q${x + w2 * .4} ${y + h2 * .55} ${x + w2 * .2} ${y + h2}Q${x + w2 * .6} ${y + h2 * .6} ${x + w2} ${y}Z" fill="${mixHex(L.lit, "#cfe3f5", lerp(.15, .4, Math.max(0, L.day - .5) / .5))}" opacity=".55"/>`;
       }
       // Leftover snow patches just below the snowline
       let sp = "";
@@ -2578,7 +2558,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       s += `<g clip-path="url(#${snowClip})"><path d="${eastFace}" fill="url(#${shadeG})"/></g><path d="${eastFace}" fill="#000" opacity=".16"/>`;
       // Steel Cliff and the crater rim just below the summit
       s += `<path d="M541 40C552 52 562 66 570 82C562 80 553 70 545 58Z" fill="${L.rock}" opacity=".6"/><path d="M509 60C514 56 518 58 518 66C515 74 510 80 505 84C504 76 505 68 509 60Z" fill="${L.rock}" opacity=".45"/>`;
-      if (dusk) s += `<rect x="0" y="0" width="1000" height="300" fill="url(#${glowG})" opacity="${op2(L.glow)}"/>`;
+      if (dusk) s += `<rect x="0" y="0" width="1000" height="300" fill="url(#${glowG})" opacity="${L.glow.toFixed(3)}"/>`;
       return s + `</g>`;
     }
     // A haze band over the mountain's base, so it sits in the distance
@@ -2678,19 +2658,23 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       return s;
     }
     // The whole scene in a w x h box: sky, sun or moon, the mountain, clouds, foothills and hills
-    function scene({ cat, light, ph, month, dark, meteors: shower = "" }, { w, h, mx, my, ms, seed, sunAt, moonAt, bodyR, stars: nStars, fg = true }) {
+    function scene({ cat, light, ph, month, dark, meteors: shower = "" }, { w, h, mx, my, ms, seed, sunAt, moonAt, bodyR, stars: nStars, fg = true, page = false }) {
       const snow = SNOW_AT[snowForMonth(month)], r = rng(seed), [top, mid, hor] = skyOf(cat, light, dark), L = lightOf(cat, light, dark, hor);
-      const open = openSky(cat), skyG = gid("sky"), up = dayness(light), nt = nightness(light), dim = light.d <= .5 ? light.d / .5 : 1;
+      const open = openSky(cat), skyG = gid("sky"), bodies = skyBodies(light), nt = bodies.moon ? bodies.moon.k : 0;
+      // Sun and moon follow the same path as on Painterly and Dynamic, moved to this scene's spot for them and scaled to its size
+      const place = (b, [ax, ay], [px, py]) => page ? [b.x, b.y] : [+f1(px + (b.x - ax) * bodyR / 34), +f1(py + (b.y - ay) * bodyR / 34)];
       let s = `<defs><linearGradient id="${skyG}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset=".55" stop-color="${mid}"/><stop offset="1" stop-color="${hor}"/></linearGradient></defs>
         <rect x="0" y="0" width="${w}" height="${h}" fill="url(#${skyG})"/>`;
-      // Stars fade in as the light goes (their own random numbers, so nothing else in the scene moves when they appear)
-      if (light.d < 1 && open) s += `<g opacity="${op2(Math.pow(1 - light.d, .8))}">${starField(rng(seed + 97), nStars, w, my + ms * 200, mixHex("#ffffff", "#f6f1da", nt))}</g>`;
-      if (nt > .7 && open) s += shower;
-      if (open) {
-        // The sun sinks and fades through dawn and dusk (it's low behind the viewer or the mountain, so the alpenglow shows);
-        // the moon fades in as it goes
-        if (light.d > .5) s += `<g opacity="${op2(up)}">${sunDisc(sunAt[0], +f1(sunAt[1] + (1 - up) * bodyR * 2), bodyR)}</g>`;
-        if (light.d < 1) s += `<g opacity="${op2(light.d <= .5 ? lerp(1, .55, dim) : .55 * (1 - up))}">${moonDisc(moonAt[0], moonAt[1], +f1(bodyR * lerp(.85, .6, dim)), ph, dark)}</g>`;
+      // Sun, moon and stars: the same fade and size as Painterly and Dynamic (the stars have their own random numbers,
+      // so the trees and hills don't rearrange when they appear)
+      if (open && bodies.moon) {
+        const [x, y] = place(bodies.moon, [1450, 84], moonAt);
+        s += `<g opacity="${nt.toFixed(3)}">${starField(rng(seed + 97), nStars, w, my + ms * 200, "#f6f1da")}${shower}</g>` +
+          `<g${page ? ' class="pg-moon"' : ""} opacity="${nt.toFixed(3)}">${moonDisc(x, y, +f1(bodyR * .85 * bodies.moon.grow), ph, dark)}</g>`;
+      }
+      if (open && bodies.sun) {
+        const [x, y] = place(bodies.sun, [1450, 80], sunAt);
+        s += `<g${page ? ' class="pg-sun"' : ""} opacity="${bodies.sun.k.toFixed(3)}">${sunDisc(x, y, +f1(bodyR * bodies.sun.grow))}</g>`;
       }
       // High cloud deck behind the mountain on gray days
       if (cat === "cloudy" || cat === "rain" || cat === "snow" || cat === "fog") s += drifting(r, softCloud(r, w * .5, my + ms * 30, w * 1.2, ms * 160, mixHex(hor, "#ffffff", dark ? .05 : .35), .8, 8), 18, 60);
@@ -2766,7 +2750,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         // The page behind the cards carries the sky; the mountain itself lives in the day cards
         const cat = sixCat(cat0), dark = darkScheme(), [top, mid, hor] = skyOf(cat, light, dark);
         let svg = scene({ cat, light, ph, month: monthOf(ymd), dark, meteors: meteors(rng(29), meteorPeak, "#ffffff") },
-          { w: 1600, h: 700, mx: 470, my: 560, ms: 1.1, seed: 23, sunAt: [1440, 120], moonAt: [1420, 120], bodyR: 34, stars: 110, fg: false });
+          { w: 1600, h: 700, mx: 470, my: 560, ms: 1.1, seed: 23, sunAt: [1450, 80], moonAt: [1450, 84], bodyR: 34, stars: 110, fg: false, page: true });
         if (cat0 === "storm") svg += flickerBolt(rng(31), STORM_BOLT_PAGE, "#fff2c4", 1600, 700);
         return { sky: `linear-gradient(180deg, ${top}, ${mid} 55%, ${hor})`, op: dark ? .7 : .78, svg };
       },
@@ -2778,7 +2762,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         const narrow = scene(s, { w: 320, h: 420, mx: -63, my: 190, ms: .42, seed: seed * 31 + 7, sunAt: [262, 70], moonAt: [262, 70], bodyR: 13, stars: 40 }) + bolt(320, 420);
         const op = dark ? .78 : .9;
         if (!wide) return { bg: "transparent", op, svg: cardSVG(narrow, false) };
-        const nightInk = light.d < .25 && !dark, broad = scene(s, { w: 640, h: 300, mx: 75, my: 30, ms: .62, seed: seed * 31 + 7, sunAt: [560, 52], moonAt: [570, 50], bodyR: 15, stars: 60 }) + bolt(640, 300);
+        const nightInk = light.d < .4 && !dark, broad = scene(s, { w: 640, h: 300, mx: 75, my: 30, ms: .62, seed: seed * 31 + 7, sunAt: [560, 52], moonAt: [570, 50], bodyR: 15, stars: 60 }) + bolt(640, 300);
         return { bg: "transparent", op, nightInk, svg: wideCardSVG(narrow, broad) };
       }
     };
