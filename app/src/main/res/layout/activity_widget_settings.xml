@@ -273,6 +273,39 @@
                         style="@style/Awe.CardTitle"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:text="@string/settings_glow" />
+
+                    <TextView
+                        android:id="@+id/glow_value"
+                        style="@style/Awe.CardTitle"
+                        android:textColor="@color/accent" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Awe.Help"
+                    android:text="@string/settings_glow_help" />
+
+                <SeekBar
+                    android:id="@+id/glow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@string/settings_glow"
+                    android:progressTint="@color/accent"
+                    android:thumbTint="@color/accent" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/Awe.Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Awe.CardTitle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:text="@string/settings_transparency" />
 
                     <TextView

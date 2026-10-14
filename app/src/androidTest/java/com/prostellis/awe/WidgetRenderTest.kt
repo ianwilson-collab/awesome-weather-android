@@ -19,6 +19,7 @@ import com.prostellis.awe.weather.WeatherLogic
 import com.prostellis.awe.weather.WidgetModel
 import com.prostellis.awe.widget.BgStyle
 import com.prostellis.awe.widget.ButtonSpot
+import com.prostellis.awe.widget.Glow
 import com.prostellis.awe.widget.IconStyle
 import com.prostellis.awe.widget.Look
 import com.prostellis.awe.widget.Rendered
@@ -70,10 +71,10 @@ class WidgetRenderTest {
     private fun look(
         kind: WidgetKind, m: WidgetModel?, dark: Boolean, style: BgStyle = BgStyle.BASIC, transparency: Int = 0,
         icons: IconStyle = IconStyle.GLOW, tempColor: Int = 0, wallpaperLight: Boolean = false, showCurrent: Boolean = true,
-        ymd: String = "2026-10-08",
+        ymd: String = "2026-10-08", glow: Int = Glow.DEFAULT,
     ): Look {
         val sky = if (kind == WidgetKind.TINY || m == null) null else WidgetSky.picture(context, style, m.nowCat, m.light, dark, ymd)
-        return Look(transparency, WidgetTheme.pick(dark, transparency, wallpaperLight, sky?.isDark), dark, icons, tempColor, sky, showCurrent, wallpaperLight)
+        return Look(transparency, WidgetTheme.pick(dark, transparency, wallpaperLight, sky?.isDark), dark, icons, tempColor, sky, showCurrent, wallpaperLight, glow)
     }
 
     private fun draw(kind: WidgetKind, m: WidgetModel?, size: Pair<Float, Float>, look: Look, events: Map<String, Int> = emptyMap()) =
@@ -151,6 +152,17 @@ class WidgetRenderTest {
             save("tempcolor-$tag-hourly", draw(WidgetKind.HOURLY, m, 310f to 74f, look(WidgetKind.HOURLY, m, dark, BgStyle.DYNAMIC, tempColor = color)), null)
             save("tempcolor-$tag-forecast", draw(WidgetKind.FORECAST, m, forecast5, look(WidgetKind.FORECAST, m, dark, BgStyle.DYNAMIC, tempColor = color)), null)
         }
+    }
+
+    /** Glow strength, Off to Max, behind light and dark temperatures on a busy sky and on the 1×1. */
+    @Test fun drawsEveryGlowStrength() {
+        val m = model(morning)
+        for (glow in Glow.NAMES.indices) for ((color, dark) in listOf(0 to false, 1 to false, 4 to true)) {
+            val tag = "$glow-$color-${if (dark) "dark" else "light"}"
+            save("glow-$tag-daily", draw(WidgetKind.DAILY, m, 388f to 74f, look(WidgetKind.DAILY, m, dark, BgStyle.MT_HOOD, tempColor = color, glow = glow)), null)
+            save("glow-$tag-forecast", draw(WidgetKind.FORECAST, m, forecast5, look(WidgetKind.FORECAST, m, dark, BgStyle.ILLUSTRATION, tempColor = color, glow = glow)), null)
+        }
+        for (glow in Glow.NAMES.indices) save("1x1-glow-$glow", draw(WidgetKind.TINY, m, tiny, look(WidgetKind.TINY, m, false, glow = glow)), null)
     }
 
     /** Every icon style on the forecast and daily widgets, light and dark. */

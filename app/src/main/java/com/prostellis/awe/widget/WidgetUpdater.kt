@@ -82,6 +82,7 @@ object WidgetUpdater {
             phoneDark = dark,
             iconStyle = iconStyle,
             tempColor = settings.tempColor,
+            glow = settings.glow,
             sky = sky,
             showCurrent = settings.showCurrent || kind != WidgetKind.FORECAST,
             wallpaperLight = wallpaperLight,

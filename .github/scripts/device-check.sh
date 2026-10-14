@@ -47,7 +47,8 @@ adb exec-out screencap -p > screens/app-light.png
 read -r W H < <(adb shell wm size | grep -oE '[0-9]+x[0-9]+' | tail -1 | tr x ' ')
 # Settings button (top-right): a new install starts on Glow icons and the Dynamic background.
 # The page is always animating, so the accessibility tree never settles; tap the button's spot and pick with the keyboard.
-# Tab order: the icon styles (Basic, Glow, Fine Outline), then the backgrounds (Basic, Painterly, Dynamic, Illustration, Mt Hood).
+# Tab order: the icon styles (Basic, Glow, Fine Outline), the Temperature color and Glow strength sliders,
+# then the backgrounds (Basic, Painterly, Dynamic, Illustration, Mt Hood).
 # Switch to Fine Outline icons and the Basic background. The emulator draws in software (no GPU) and tends to go down
 # under heavy drawing (scrolling the animated Dynamic page, or reopening the popup with its style previews), so the
 # popup opens once and the remaining checks run on Basic. The other backgrounds are checked in a desktop browser.
@@ -58,7 +59,7 @@ for _ in 1 2 3; do send keyevent KEYCODE_TAB; done
 send keyevent KEYCODE_ENTER
 sleep 1
 adb exec-out screencap -p > screens/settings-fine-outline.png
-send keyevent KEYCODE_TAB
+for _ in 1 2 3; do send keyevent KEYCODE_TAB; done
 send keyevent KEYCODE_ENTER
 sleep 1
 send keyevent KEYCODE_BACK

@@ -144,8 +144,8 @@ button { cursor: pointer; }
   margin: 4px 0 18px;
 }
 .place { flex: 1; min-width: 0; }
-/* Soft halo in the page color keeps header text readable over the sun, moon and stars */
-.place-btn, .now { text-shadow: 0 0 2px var(--bg), 0 0 10px var(--bg), 0 0 18px var(--bg); }
+/* Halo in the page color keeps header text readable over the sun, moon and stars. Its strength is a setting (--glow, set from GLOWS). */
+.place-btn, .now { text-shadow: var(--glow); }
 .place-btn {
   display: inline-flex;
   align-items: center;
@@ -163,18 +163,22 @@ button { cursor: pointer; }
 .place-btn .edit { font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 0; margin-left: 2px; }
 .place-btn:hover .edit { text-decoration: underline; }
 .now {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 14px;
+  row-gap: 2px;
   align-items: center;
-  gap: 4px 12px;
+  justify-content: start;
   margin-top: 6px;
   color: var(--ink-2);
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
 }
-.now .now-temp { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); font-weight: 600; font-size: 15px; }
-.now .now-temp .ic { font-size: 20px; }
-.now .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--ink-3); }
-@media (max-width: 520px) { .now .upd-dot { display: none; } .now .upd { flex-basis: 100%; } }
+.now .pv-badge { grid-column: 1 / 3; justify-self: start; margin-bottom: 4px; text-shadow: none; }
+/* The big temperature: its own color and halo come from the Temperature color setting */
+.now .big { grid-row: span 3; font-size: 64px; font-weight: 600; line-height: .95; letter-spacing: -.04em; color: var(--now-temp, var(--ink)); text-shadow: var(--now-glow, var(--glow)); }
+.now .l1 { display: flex; align-items: center; gap: 6px; color: var(--ink); font-weight: 600; font-size: 15px; }
+.now .l1 .ic { font-size: 22px; }
 .now .upd { display: inline-flex; align-items: center; gap: 8px; }
 .clock-btn {
   display: inline-grid; place-items: center;
@@ -275,7 +279,7 @@ button { cursor: pointer; }
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .card:hover { transform: translateY(-2px); }
-.card.night-ink { --ink: #eef3f8; --ink-2: #c3cedb; --ink-3: #a2afbd; --line: rgba(255,255,255,.16); color: var(--ink); } /* a Today card showing the night sky in light mode */
+.card.night-ink { --ink: #eef3f8; --ink-2: #c3cedb; --ink-3: #a2afbd; --line: rgba(255,255,255,.16); color: var(--ink); text-shadow: 0 0 1px rgba(8,14,30,.5), 0 1px 3px rgba(8,14,30,.55); } /* a Today card showing the night sky in light mode */
 .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .scene {
   position: absolute;
@@ -468,6 +472,12 @@ summary.hourly-head::-webkit-details-marker { display: none; }
 .style-opt .nm span { font-size: 12.5px; color: var(--ink-3); }
 .style-opt .ics { display: flex; gap: 8px; font-size: 28px; }
 .set-h.next { margin-top: 20px; }
+.set-val { margin-left: 6px; color: var(--accent); font-size: 13px; font-weight: 600; }
+.set-range { width: 100%; margin: 0 0 6px; accent-color: var(--accent); cursor: pointer; }
+.swatches { display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px; }
+.swatches button { aspect-ratio: 1; max-width: 30px; justify-self: center; width: 100%; padding: 0; border-radius: 50%; border: 1px solid var(--line); background: var(--sw); }
+.swatches button[aria-pressed="true"] { border: 3px solid var(--accent); }
+.swatches button.auto { --sw: linear-gradient(135deg, #fff 50%, #141a22 50%); }
 .bgpv { display: flex; gap: 6px; }
 .bgt { position: relative; width: 70px; height: 52px; border-radius: 9px; overflow: hidden; background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); }
 .bgt > span, .bgt img { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -777,6 +787,13 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     <h3 class="set-h" id="styleTitle">Icon style</h3>
     <p class="set-help" id="styleHelp">Changes the weather symbols throughout the app.</p>
     <div class="styles" id="styleList" role="radiogroup" aria-labelledby="styleTitle"></div>
+    <h3 class="set-h next"><label for="tempColor">Temperature color</label> <span class="set-val" id="tempColorVal"></span></h3>
+    <p class="set-help">The color of the big temperature at the top. Auto matches the page's text.</p>
+    <input class="set-range" type="range" id="tempColor" min="0" max="10" step="1">
+    <div class="swatches" id="tempSwatches"></div>
+    <h3 class="set-h next"><label for="glowRange">Glow strength</label> <span class="set-val" id="glowVal"></span></h3>
+    <p class="set-help">The soft halo behind the text at the top, so it stays readable over the sky, sun and moon.</p>
+    <input class="set-range" type="range" id="glowRange" min="0" max="4" step="1">
     <h3 class="set-h next" id="bgTitle">Background and animation style</h3>
     <p class="set-help">Changes the sky behind the app, the art inside each day card, and how they move. Holiday effects still show on top.</p>
     <div class="styles" id="bgList" role="radiogroup" aria-labelledby="bgTitle"></div>
@@ -838,6 +855,8 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     days: [],         // the 7 day cards
     extDays: [],      // extended outlook, days 8–16
     iconStyle: store.get("iconStyle", "glow"),    // weather symbol style: "default" (Basic), "glow" or "fine" (Fine Outline)
+    tempColor: store.get("tempColor", 0),        // big temperature color: index into TEMP_COLORS (0 = Auto)
+    glow: store.get("glow", 2),                  // halo behind the header text: index into GLOWS (2 = Medium)
     bgStyle: store.get("bgStyle", "realistic")    // background and animation style: "default" (Basic), "painterly", "realistic" (Dynamic), "illustration" or "mthood"
   };
 
@@ -1874,44 +1893,52 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   }
 
   /* ================= Card background scenes ================= */
-  function sceneSVG(cat, seed, wide) {
+  function sceneSVG(cat, seed, wide, { light = FULL_DAY, ph } = {}) {
     const r = rng(seed * 97 + 13);
     const v = (n) => `var(--${cat}-${n})`;
+    // Sun or moon in the card's sun spot, following the clock on the Today card
+    const sky = (x, y, R) => {
+      const b = cardBodies(light, [x, y], R * 34 / 50), warm = `color-mix(in srgb, ${v("sun")} ${(light.d * 100).toFixed(1)}%, var(--${light.rising ? "dawn" : "dusk"}-sun))`;
+      return cardStars(light, seed, 320, 200) +
+        (b.moon ? `<g opacity="${b.moon.k.toFixed(3)}">${moonImage(b.moon.x, b.moon.y, +f1(R * .8 * b.moon.grow), ph)}</g>` : "") +
+        (b.sun ? `<g opacity="${b.sun.k.toFixed(3)}">${sunWithBeams(b.sun.x, b.sun.y, +f1(R * b.sun.grow), warm)}</g>` : "");
+    };
+    const hillsAt = (fill) => hills(fill) + groundShade(light, 310);
     const hills = (fill) =>
       `<path d="M0 352 C70 318 120 330 170 340 S270 318 320 330 V420 H0z" fill="${fill}" fill-opacity=".55"/>` +
       `<path d="M0 380 C60 360 130 372 190 366 S280 356 320 362 V420 H0z" fill="${fill}" fill-opacity=".85"/>`;
     let body = "";
     switch (cat) {
       case "clear":
-        body = sunWithBeams(262, 122, 34, v("sun")) + hills(v("hill"));
+        body = sky(262, 122, 34) + hillsAt(v("hill"));
         break;
       case "partly":
-        body = sunWithBeams(258, 112, 30, v("sun")) +
-          driftCloud(r, 150, 92, 7.2, v("cloud"), .95, 12) + driftCloud(r, -40, 150, 6, v("cloud-2"), .7, 10) + hills(v("hill"));
+        body = sky(258, 112, 30) +
+          driftCloud(r, 150, 92, 7.2, v("cloud"), .95, 12) + driftCloud(r, -40, 150, 6, v("cloud-2"), .7, 10) + hillsAt(v("hill"));
         break;
       case "cloudy":
         body = driftCloud(r, 110, 10, 9, v("cloud-2"), .8, 12) + driftCloud(r, -50, 70, 8, v("cloud"), .95, 10) +
-          driftCloud(r, 150, 120, 6.5, v("cloud"), .85, 14) + hills(v("hill"));
+          driftCloud(r, 150, 120, 6.5, v("cloud"), .85, 14) + hillsAt(v("hill"));
         break;
       case "fog":
-        body = hills(v("hill")) + fogBands(r, v("band"), 7, -40, 70, 44, 260, 120, 16, 14);
+        body = hillsAt(v("hill")) + fogBands(r, v("band"), 7, -40, 70, 44, 260, 120, 16, 14);
         break;
       case "drizzle":
         body = fallingStreaks(r, v("precip"), 34, 8, 2, .5, [0, 150, 320, 270], 3.2) +
-          driftCloud(r, 80, -10, 9, v("cloud-2"), .8, 10) + driftCloud(r, -60, 40, 8, v("cloud"), .9, 10) + hills(v("hill"));
+          driftCloud(r, 80, -10, 9, v("cloud-2"), .8, 10) + driftCloud(r, -60, 40, 8, v("cloud"), .9, 10) + hillsAt(v("hill"));
         break;
       case "rain":
         body = fallingStreaks(r, v("precip"), 40, 26, 2, .4, [0, 130, 320, 290], 1.9) +
-          driftCloud(r, 90, -20, 9.5, v("cloud-2"), .9, 10) + driftCloud(r, -60, 30, 8.5, v("cloud"), .95, 10) + hills(v("hill"));
+          driftCloud(r, 90, -20, 9.5, v("cloud-2"), .9, 10) + driftCloud(r, -60, 30, 8.5, v("cloud"), .95, 10) + hillsAt(v("hill"));
         break;
       case "snow":
         body = driftCloud(r, 90, -20, 9, v("cloud-2"), .85, 10) + driftCloud(r, -60, 30, 8.5, v("cloud"), .95, 10) +
-          hills(v("hill")) + fallingFlakes(r, v("precip"), 42, 5, [0, 140, 320, 280], 11);
+          hillsAt(v("hill")) + fallingFlakes(r, v("precip"), 42, 5, [0, 140, 320, 280], 11);
         break;
       case "storm":
         body = fallingStreaks(r, v("precip"), 28, 24, 2, .38, [0, 150, 320, 270], 1.8) +
           driftCloud(r, 80, -30, 10, v("cloud-2"), .95, 8) + driftCloud(r, -70, 20, 9, v("cloud"), .95, 8) +
-          flickerBolt(r, "M270 104 L248 156 H265 L252 206 L294 142 H274 L290 104z", v("bolt"), 320, 420) + hills(v("hill"));
+          flickerBolt(r, "M270 104 L248 156 H265 L252 206 L294 142 H274 L290 104z", v("bolt"), 320, 420) + hillsAt(v("hill"));
         break;
     }
     return `<svg viewBox="0 0 320 420" preserveAspectRatio="${wide ? "xMidYMin" : "xMidYMid"} slice" aria-hidden="true"><g class="scene-body">${body}</g></svg>`;
@@ -2032,6 +2059,33 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       sun: d > 0 ? { x: +f1(lerp(1575, 1450, u)), y: +f1(lerp(-5, 80, u)), k: .3 + .7 * d, grow: .35 + .65 * d } : null
     };
   }
+  /* ---------- The Today card follows the clock (every style uses these) ---------- */
+  // cardScene hands the Today card the live daylight; every other day gets FULL_DAY. Each style's card draws its sky with
+  // blendSky (or Basic's skyColors) and its sun, moon, stars and darker ground with the three helpers below.
+  const FULL_DAY = { d: 1, rising: false };
+  // The skyBodies sun and moon, moved to the card's own sun spot and scaled to its sun size (34 is the page's)
+  function cardBodies(light, [sx, sy], size) {
+    const { sun, moon } = skyBodies(light), f = size / 34;
+    const at = (b, ax, ay) => ({ x: +f1(sx + (b.x - ax) * f), y: +f1(sy + (b.y - ay) * f), k: b.k, grow: b.grow });
+    return { sun: sun && at(sun, 1450, 80), moon: moon && at(moon, 1450, 84) };
+  }
+  // Stars in the card's sky, fading in with the moon (their own random numbers, so nothing else on the card moves)
+  function cardStars(light, seed, w, h, color = "#ffffff") {
+    const { moon } = skyBodies(light);
+    if (!moon) return "";
+    const r = rng(seed * 7 + 41);
+    let s = "";
+    for (let k = 0; k < 18; k++) s += `<circle cx="${f1(r() * w)}" cy="${f1(r() * h)}" r="${f1(.6 + r() * 1.1)}" fill="${color}" fill-opacity="${(.5 + r() * .5).toFixed(2)}"/>`;
+    return `<g opacity="${moon.k.toFixed(3)}">${s}</g>`;
+  }
+  // The card's hills and trees darken toward night, by the same amount the moon fades in
+  function groundShade(light, top, w = 340, h = 440) {
+    const { moon } = skyBodies(light);
+    if (!moon) return "";
+    const g = gid("gs");
+    return `<defs><linearGradient id="${g}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1530" stop-opacity="0"/><stop offset=".25" stop-color="#0b1530" stop-opacity="1"/></linearGradient></defs>` +
+      `<rect x="-20" y="${top}" width="${w}" height="${h - top}" fill="url(#${g})" opacity="${(.55 * moon.k).toFixed(3)}"/>`;
+  }
   const sunCore = (x, y, R, fill) => `<circle class="sun-core" data-x="${x}" data-y="${y}" data-r="${f1(R)}" cx="${x}" cy="${y}" r="${f1(R)}" fill="${fill}"/>`;
   const moonHit = (x, y, R) => `<circle class="moon-hit" data-x="${x}" data-y="${y}" data-r="${f1(R)}" cx="${x}" cy="${y}" r="${f1(R)}" fill="none"/>`;
   // Draws the lit part of any moon over its unlit disk, clipped to the phase
@@ -2106,6 +2160,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   }
   const paintRain = (dark) => dark ? "#8fb2de" : "#5f80aa";
   const PAINTERLY = {
+    palette: PAINT_LIGHT, // light-mode sky colors, which decide when the Today card needs light text
     page(cat, light, ph, meteorPeak) {
       const dark = darkScheme(), P = dark ? PAINT_DARK : PAINT_LIGHT, r = rng(11), W = 1600, sky = blendSky(cat, light, P);
       const C = paintClouds(cat, dark), { sun, moon } = skyBodies(light);
@@ -2130,19 +2185,24 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       }
       return { sky: `linear-gradient(180deg, ${sky[0]}, ${sky[1]})`, op: (dark ? .62 : .72) + .1 * (1 - light.d), svg: s };
     },
-    card(cat, seed, wide) {
-      const dark = darkScheme(), P = dark ? PAINT_DARK : PAINT_LIGHT, r = rng(seed * 31 + 5), [c1, c2] = P.day[cat];
+    card(cat, seed, wide, { light = FULL_DAY, ph } = {}) {
+      const dark = darkScheme(), P = dark ? PAINT_DARK : PAINT_LIGHT, r = rng(seed * 31 + 5), [c1, c2] = blendSky(cat, light, P);
       const H = PAINT_HILLS[cat].map((c) => dark ? mixHex(c, "#0f1620", .62) : c), C = paintClouds(cat, dark);
       const tb = gid("pc");
       const wave = (y, a, ph = 0) => `M-20 ${y} C ${60 + ph} ${y - a} ${120 + ph} ${y + a * .6} ${180 + ph} ${y - a * .3} S ${290 + ph} ${y - a} 340 ${y} V 440 H -20 Z`;
       let s = `<defs>${blurFilter(tb, .8)}</defs>`;
-      if (cat === "clear") s += paintSun(250, 100, 28, "#ffe39a", "#ffc766");
-      if (cat === "partly") s += paintSun(255, 96, 24, "#ffe39a", "#ffc766") + paintCloud(r, 170, 130, 1, C, .9, 10, 40);
+      if (openSky(cat)) {
+        const R = cat === "clear" ? 28 : 24, b = cardBodies(light, cat === "clear" ? [250, 100] : [255, 96], R * 34 / 52);
+        s += cardStars(light, seed, 320, 220, dark ? "#fdf8e6" : "#ffffff");
+        if (b.moon) s += `<g opacity="${b.moon.k.toFixed(3)}">${paintMoon(b.moon.x, b.moon.y, +f1(R * 1.2 * b.moon.grow), ph)}</g>`;
+        if (b.sun) s += `<g opacity="${b.sun.k.toFixed(3)}">${paintSun(b.sun.x, b.sun.y, +f1(R * b.sun.grow), mixHex("#ffc48a", "#ffe39a", light.d), mixHex("#ff9a5a", "#ffc766", light.d))}</g>`;
+      }
+      if (cat === "partly") s += paintCloud(r, 170, 130, 1, C, .9, 10, 40);
       if (isOvercast(cat)) s += paintCloud(r, 230, 40, 1.6, C, .95, 10, 50) + paintCloud(r, 70, 70, 1.5, C, .9, 12, 50) + paintCloud(r, 200, 140, 1, C, .8, 10, 40);
       let trees = "";
       for (let k = 0; k < 14; k++) { const x = 10 + k * 23 + r() * 8, h = 14 + r() * 10, base = 360 + Math.sin(k * .7) * 4; trees += `<path d="M${f1(x)} ${f1(base - h)} L${f1(x + 6)} ${f1(base)} L${f1(x - 6)} ${f1(base)}Z"/>`; }
       s += `<path d="${wave(338, 18)}" fill="${H[0]}"/><path d="${wave(358, 14, 30)}" fill="${H[1]}"/><g fill="${mixHex(H[1], "#2d4a3a", dark ? .3 : .35)}" fill-opacity=".7" filter="url(#${tb})">${trees}</g>` +
-        `<path d="${wave(378, 12, -20)}" fill="${H[2]}"/><path d="${wave(400, 10, 10)}" fill="${H[3]}"/>`;
+        `<path d="${wave(378, 12, -20)}" fill="${H[2]}"/><path d="${wave(400, 10, 10)}" fill="${H[3]}"/>` + groundShade(light, 310);
       if (cat === "drizzle") s += fallingStreaks(r, paintRain(dark), 26, 9, 2.2, .3, [0, 120, 320, 300], 4);
       if (cat === "rain" || cat === "storm") s += fallingStreaks(r, paintRain(dark), 34, 24, 2.6, .3, [0, 120, 320, 300], 2.8);
       if (cat === "storm") s += flickerBolt(r, STORM_BOLT_CARD, "#ffd36b", 320, 420);
@@ -2229,6 +2289,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     return s;
   }
   const REALISTIC = {
+    palette: REAL_LIGHT,
     page(cat, light, ph, meteorPeak) {
       const dark = darkScheme(), P = dark ? REAL_DARK : REAL_LIGHT, r = rng(23), W = 1600, sky = blendSky(cat, light, P);
       const [lc, sc] = realClouds(cat, dark), { sun, moon } = skyBodies(light);
@@ -2260,13 +2321,18 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       }
       return { sky: realGradient(sky), op: dark ? .78 : .76, svg: s };
     },
-    card(cat, seed, wide) {
-      const dark = darkScheme(), P = dark ? REAL_DARK : REAL_LIGHT, r = rng(seed * 53 + 9), st = P.day[cat], [lc, sc] = realClouds(cat, dark);
+    card(cat, seed, wide, { light = FULL_DAY, ph } = {}) {
+      const dark = darkScheme(), P = dark ? REAL_DARK : REAL_LIGHT, r = rng(seed * 53 + 9), st = blendSky(cat, light, P), [lc, sc] = realClouds(cat, dark);
       let s = "";
-      if (cat === "clear") s += realSun(250, 92, 16, "#fff1c4");
-      if (cat === "partly") s += realSun(255, 86, 14, "#fff1c4") + drifting(r, cumulus(170, 140, .55, lc, sc), 10, 40);
+      if (openSky(cat)) {
+        const R = cat === "clear" ? 16 : 14, b = cardBodies(light, cat === "clear" ? [250, 92] : [255, 86], R * 34 / 36);
+        s += cardStars(light, seed, 320, 220);
+        if (b.moon) s += `<g opacity="${b.moon.k.toFixed(3)}">${realMoon(b.moon.x, b.moon.y, +f1(R * 1.6 * b.moon.grow), ph)}</g>`;
+        if (b.sun) s += `<g opacity="${b.sun.k.toFixed(3)}">${realSun(b.sun.x, b.sun.y, +f1(R * b.sun.grow), mixHex("#ffb36b", "#fff1c4", light.d))}</g>`;
+      }
+      if (cat === "partly") s += drifting(r, cumulus(170, 140, .55, lc, sc), 10, 40);
       if (isOvercast(cat)) s += drifting(r, cumulus(90, 40, .9, mixHex(lc, sc, .2), sc) + cumulus(240, 30, 1, lc, sc), 10, 50) + drifting(r, cumulus(180, 140, .6, lc, sc), 14, 35);
-      s += ridges(r, cat, dark, st[3]);
+      s += ridges(r, cat, dark, st[3]) + groundShade(light, 300);
       if (cat === "drizzle") s += fallingStreaks(r, realRain(dark), 44, 8, 1.2, .35, [0, 110, 320, 310], 3.2);
       if (cat === "rain" || cat === "storm") s += fallingStreaks(r, realRain(dark), 50, 18, 1.3, .35, [0, 110, 320, 310], 1.4);
       if (cat === "storm") s += flickerBolt(r, STORM_BOLT_CARD, "#fff2c4", 320, 420);
@@ -2280,9 +2346,8 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     }
   };
 
-  // Shared by Illustration and Mt Hood: the time of day uses the same blendSky and skyBodies as Painterly and Dynamic;
-  // the board's six weather looks; and the Today card drawn twice (a wide scene when the card is wide, a regular one when it isn't)
-  const FULL_DAY = { d: 1, rising: false };
+  // Shared by Illustration and Mt Hood: the board's six weather looks, and the Today card drawn twice
+  // (a wide scene when the card is wide, a regular one when it isn't)
   const sixCat = (cat) => cat === "drizzle" || cat === "storm" ? "rain" : cat;
   const wideCardSVG = (narrow, wide) => `${cardSVG(narrow, false).replace("<svg ", '<svg class="sc-narrow" ')}<svg class="sc-wide" viewBox="0 0 640 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true">${wide}</svg>`;
 
@@ -2335,11 +2400,19 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       return cat === "rain" ? [dark ? "#4d5a6b" : "#c7d0db", dark ? "#394452" : "#9fadbd"] : [cw, cs];
     };
     // One 320-wide card scene (or W wide for fog): sky art, then the land, returned separately so the wide card can repeat it
-    function scene(cat, dark, seed, W = 320) {
-      const r = rng(seed * 41 + 3), [top, band] = sky(cat, FULL_DAY, dark), L = land(cat, dark), [c1, c2] = cloudInk(cat, dark);
+    // A card's sun or moon in its sun spot, following the clock on the Today card (fog shows a pale disc instead)
+    function orb(light, at, R, ph, dark, fog = false) {
+      const b = cardBodies(light, at, R * 34 / 46);
       let s = "";
-      if (cat === "clear") s += sun(250, 92, 22, dark ? "#f2b630" : "#ffc233");
-      if (cat === "partly") s += sun(255, 88, 19, dark ? "#f2b630" : "#ffc233") + cloud(r, 180, 130, .75, c1, c2, 10);
+      if (b.moon) s += `<g opacity="${((fog ? .55 : 1) * b.moon.k).toFixed(3)}">${moon(b.moon.x, b.moon.y, +f1(R * 1.1 * b.moon.grow), ph, dark)}</g>`;
+      if (b.sun) s += `<g opacity="${b.sun.k.toFixed(3)}">${fog ? fogSun(b.sun.x, b.sun.y, +f1(R * b.sun.grow), dark) : sun(b.sun.x, b.sun.y, +f1(R * b.sun.grow), mixHex("#ff9a4d", dark ? "#f2b630" : "#ffc233", light.d))}</g>`;
+      return s;
+    }
+    function scene(cat, dark, seed, W = 320, light = FULL_DAY, ph = null) {
+      const r = rng(seed * 41 + 3), [top, band] = sky(cat, light, dark), L = land(cat, dark), [c1, c2] = cloudInk(cat, dark);
+      let s = openSky(cat) ? cardStars(light, seed, W, 220, dark ? "#f6f1da" : "#ffffff") : "";
+      if (cat === "clear") s += orb(light, [250, 92], 22, ph, dark);
+      if (cat === "partly") s += orb(light, [255, 88], 19, ph, dark) + cloud(r, 180, 130, .75, c1, c2, 10);
       if (cat === "cloudy" || cat === "rain" || cat === "snow") s += cloud(r, 230, 50, 1.2, c1, c2, 10) + cloud(r, 80, 70, 1.1, c1, c2, 12) + cloud(r, 210, 140, .8, c1, c2, 10);
       const bg = `linear-gradient(180deg, ${top} 0 80%, ${band} 80% 100%)`, op = dark ? .72 : .85;
       if (cat === "fog") {
@@ -2347,7 +2420,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         // every layer. W is the scene's width (640 on the wide Today card): the land repeats every 320, the banks span it all.
         const fc = dark ? "#5c6773" : "#ffffff", fc2 = dark ? "#4a5460" : "#e9edf1", fade = (c, k) => mixHex(c, top, k);
         const each = (f) => Array.from({ length: W / 320 }, (_, i) => f(i * 320)).join("");
-        s += fogSun(232, 104, 20, dark);
+        s += orb(light, [232, 104], 20, ph, dark, true);
         let l = "", ridge = "M-10 214";
         for (let x = -10; x <= W + 20; x += 10) ridge += `L${x} ${f1(196 + Math.sin(x / 34) * 7 + Math.sin(x / 11) * 2)}`;
         l += `<path d="${ridge}L${W + 20} 260L-10 260Z" fill="${fade(L[1], .78)}"/>`;
@@ -2362,7 +2435,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         l += drifting(r, fogBank(-60, 334, W + 120, 50, 36, fc, .75), 22, 26);
         l += `<path d="M-10 380${each((ox) => ` Q ${ox + 100} 366 ${ox + 200} 378 T ${ox + 340} 376`)} V440 H-10Z" fill="${L[3]}"/>` + each((ox) => tree(ox + 30, 388, 34, L[4]) + tree(ox + 290, 390, 40, L[4]) + tree(ox + 262, 386, 26, L[4]));
         l += drifting(r, fogBank(-60, 396, W + 120, 40, 30, fc, .85), 14, 22);
-        return { bg, op, art: s, land: l };
+        return { bg, op, art: s, land: l, shade: groundShade(light, 300, W + 40) };
       }
       let l = `<g transform="translate(0 16)" opacity=".8"><path d="M60 356 L150 286 L240 356Z" fill="${L[0]}"/><path d="M150 286 L136 303 L144 300 L151 309 L158 300 L166 305Z" fill="#ffffff"/>
         <path d="M175 356 L248 300 L335 356Z" fill="${L[1]}"/><path d="M248 300 L236 314 L243 311 L249 319 L255 311 L262 315Z" fill="#ffffff"/></g>
@@ -2370,9 +2443,10 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       l += tree(36, 384, 34, L[4]) + tree(62, 380, 24, L[4]) + tree(262, 382, 28, L[4]) + tree(290, 386, 38, L[4]);
       if (cat === "rain") l += fallingStreaks(r, dark ? "#7fb0f0" : "#3f6fb0", 30, 12, 3.4, .6, [0, 120, 320, 300], 2);
       if (cat === "snow") l += flakes(r, "#ffffff", 34, 2.5, 5, [0, 110, 320, 310], 12, `stroke="${dark ? "transparent" : "#9db6d3"}" stroke-width="1"`);
-      return { bg, op, art: s, land: l };
+      return { bg, op, art: s, land: l, shade: groundShade(light, 290, W + 40) };
     }
     return {
+      palette: PALETTE,
       page(cat0, light, ph, meteorPeak) {
         const cat = sixCat(cat0), dark = darkScheme(), r = rng(19), W = 1600, [top, band] = sky(cat, light, dark);
         const [c1, c2] = cloudInk(cat, dark), cw = dark ? "#6f7d8f" : "#ffffff", cs = dark ? "#4f5b6b" : "#d8e1ec";
@@ -2407,20 +2481,22 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       },
       // The wide Today card gets its own 640 x 300 scene: the land drawn twice side by side as one longer range,
       // raised so the peaks, hills and trees fill the card, with the sun or clouds placed in the wide sky
-      card(cat0, seed, wide) {
-        const cat = sixCat(cat0), dark = darkScheme(), one = scene(cat, dark, seed);
+      card(cat0, seed, wide, { light = FULL_DAY, ph } = {}) {
+        const cat = sixCat(cat0), dark = darkScheme(), one = scene(cat, dark, seed, 320, light, ph);
         const bolt = cat0 === "storm" ? flickerBolt(rng(seed), STORM_BOLT_CARD, "#ffd36b", 320, 420) : "";
-        const narrow = one.art + one.land + bolt;
+        const narrow = one.art + one.land + one.shade + bolt;
         if (!wide) return { bg: one.bg, op: one.op, svg: cardSVG(narrow, false) };
-        const r = rng(seed * 17 + 5), [c1, c2] = cloudInk(cat, dark), sunC = dark ? "#f2b630" : "#ffc233";
-        let sk = "";
-        if (cat === "clear") sk += sun(500, 62, 22, sunC);
-        if (cat === "partly") sk += sun(505, 58, 19, sunC) + cloud(r, 430, 96, .75, c1, c2, 10);
+        const r = rng(seed * 17 + 5), [c1, c2] = cloudInk(cat, dark);
+        let sk = openSky(cat) ? cardStars(light, seed + 1, 640, 160, dark ? "#f6f1da" : "#ffffff") : "";
+        if (cat === "clear") sk += orb(light, [500, 62], 22, ph, dark);
+        if (cat === "partly") sk += orb(light, [505, 58], 19, ph, dark) + cloud(r, 430, 96, .75, c1, c2, 10);
         if (cat === "cloudy" || cat === "rain" || cat === "snow") sk += cloud(r, 470, 40, 1.2, c1, c2, 10) + cloud(r, 160, 52, 1.1, c1, c2, 12) + cloud(r, 330, 78, .8, c1, c2, 10);
-        if (cat === "fog") sk += fogSun(500, 62, 20, dark);
-        // Fog's see-through banks need one continuous scene, so fog is drawn 640 wide; the rest repeat a 320-wide scene twice
-        const land = cat === "fog" ? scene(cat, dark, seed, 640).land : `${one.land}<g transform="translate(320 0)">${scene(cat, dark, seed + 1).land}</g>`;
-        return { bg: one.bg, op: one.op, svg: wideCardSVG(narrow, `${sk}<g transform="translate(0 -128)">${land}</g>`) };
+        if (cat === "fog") sk += orb(light, [500, 62], 20, ph, dark, true);
+        // Fog's see-through banks need one continuous scene, so fog is drawn 640 wide; the rest repeat a 320-wide scene twice.
+        // Each piece is drawn fresh (not reused from the narrow scene) so its gradients don't point into the hidden narrow picture.
+        const land = cat === "fog" ? scene(cat, dark, seed, 640, light, ph).land
+          : `${scene(cat, dark, seed, 320, light, ph).land}<g transform="translate(320 0)">${scene(cat, dark, seed + 1, 320, light, ph).land}</g>`;
+        return { bg: one.bg, op: one.op, svg: wideCardSVG(narrow, `${sk}<g transform="translate(0 -128)">${land}${groundShade(light, 290, 680)}</g>`) };
       }
     };
   })();
@@ -2661,19 +2737,19 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     function scene({ cat, light, ph, month, dark, meteors: shower = "" }, { w, h, mx, my, ms, seed, sunAt, moonAt, bodyR, stars: nStars, fg = true, page = false }) {
       const snow = SNOW_AT[snowForMonth(month)], r = rng(seed), [top, mid, hor] = skyOf(cat, light, dark), L = lightOf(cat, light, dark, hor);
       const open = openSky(cat), skyG = gid("sky"), bodies = skyBodies(light), nt = bodies.moon ? bodies.moon.k : 0;
-      // Sun and moon follow the same path as on Painterly and Dynamic, moved to this scene's spot for them and scaled to its size
-      const place = (b, [ax, ay], [px, py]) => page ? [b.x, b.y] : [+f1(px + (b.x - ax) * bodyR / 34), +f1(py + (b.y - ay) * bodyR / 34)];
+      // Sun and moon follow the same path as every style: skyBodies on the page, cardBodies on a card
+      const spots = page ? bodies : cardBodies(light, sunAt, bodyR), moonShift = page ? 0 : moonAt[0] - sunAt[0];
       let s = `<defs><linearGradient id="${skyG}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset=".55" stop-color="${mid}"/><stop offset="1" stop-color="${hor}"/></linearGradient></defs>
         <rect x="0" y="0" width="${w}" height="${h}" fill="url(#${skyG})"/>`;
       // Sun, moon and stars: the same fade and size as Painterly and Dynamic (the stars have their own random numbers,
       // so the trees and hills don't rearrange when they appear)
       if (open && bodies.moon) {
-        const [x, y] = place(bodies.moon, [1450, 84], moonAt);
+        const x = +f1(spots.moon.x + moonShift), y = +f1(spots.moon.y + (page ? 0 : moonAt[1] - sunAt[1]));
         s += `<g opacity="${nt.toFixed(3)}">${starField(rng(seed + 97), nStars, w, my + ms * 200, "#f6f1da")}${shower}</g>` +
           `<g${page ? ' class="pg-moon"' : ""} opacity="${nt.toFixed(3)}">${moonDisc(x, y, +f1(bodyR * .85 * bodies.moon.grow), ph, dark)}</g>`;
       }
       if (open && bodies.sun) {
-        const [x, y] = place(bodies.sun, [1450, 80], sunAt);
+        const { x, y } = spots.sun;
         s += `<g${page ? ' class="pg-sun"' : ""} opacity="${bodies.sun.k.toFixed(3)}">${sunDisc(x, y, +f1(bodyR * bodies.sun.grow))}</g>`;
       }
       // High cloud deck behind the mountain on gray days
@@ -2745,7 +2821,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     }
     const monthOf = (ymd) => ymd ? +ymd.slice(5, 7) - 1 : new Date().getMonth();
     return {
-      clock: true, // the Today card follows the time of day
+      palette: PALETTE,
       page(cat0, light, ph, meteorPeak, ymd) {
         // The page behind the cards carries the sky; the mountain itself lives in the day cards
         const cat = sixCat(cat0), dark = darkScheme(), [top, mid, hor] = skyOf(cat, light, dark);
@@ -2754,7 +2830,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         if (cat0 === "storm") svg += flickerBolt(rng(31), STORM_BOLT_PAGE, "#fff2c4", 1600, 700);
         return { sky: `linear-gradient(180deg, ${top}, ${mid} 55%, ${hor})`, op: dark ? .7 : .78, svg };
       },
-      // Each card uses its own date for the snow, the boat and December; only the Today card follows the clock
+      // Each card uses its own date for the snow, the boat and December
       card(cat0, seed, wide, ctx = {}) {
         const cat = sixCat(cat0), dark = darkScheme(), light = ctx.light || FULL_DAY;
         const s = { cat, light, ph: ctx.ph, month: monthOf(ctx.ymd), dark };
@@ -2762,8 +2838,8 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         const narrow = scene(s, { w: 320, h: 420, mx: -63, my: 190, ms: .42, seed: seed * 31 + 7, sunAt: [262, 70], moonAt: [262, 70], bodyR: 13, stars: 40 }) + bolt(320, 420);
         const op = dark ? .78 : .9;
         if (!wide) return { bg: "transparent", op, svg: cardSVG(narrow, false) };
-        const nightInk = light.d < .4 && !dark, broad = scene(s, { w: 640, h: 300, mx: 75, my: 30, ms: .62, seed: seed * 31 + 7, sunAt: [560, 52], moonAt: [570, 50], bodyR: 15, stars: 60 }) + bolt(640, 300);
-        return { bg: "transparent", op, nightInk, svg: wideCardSVG(narrow, broad) };
+        const broad = scene(s, { w: 640, h: 300, mx: 75, my: 30, ms: .62, seed: seed * 31 + 7, sunAt: [560, 52], moonAt: [570, 50], bodyR: 15, stars: 60 }) + bolt(640, 300);
+        return { bg: "transparent", op, svg: wideCardSVG(narrow, broad) };
       }
     };
   })();
@@ -2771,7 +2847,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   const BG_STYLES = [
     { id: "default", name: "Basic", desc: "The original look: a soft sky, a beaming sun and gentle motion.",
       page: (cat, light, ph, meteorPeak) => { const [s1, s2] = skyColors(cat, light); return { sky: `linear-gradient(180deg, ${s1}, ${s2})`, op: null, svg: pageSceneBody(cat, light, ph, meteorPeak) }; },
-      card: (cat, seed, wide) => ({ bg: null, svg: sceneSVG(cat, seed, wide) }) },
+      card: (cat, seed, wide, ctx = {}) => { const [s1, s2] = skyColors(cat, ctx.light || FULL_DAY); return { bg: `linear-gradient(170deg, ${s1}, ${s2} 75%)`, op: null, svg: sceneSVG(cat, seed, wide, ctx) }; } },
     { id: "painterly", name: "Painterly", desc: "Soft blended color, a glowing sun and slow, calm motion.", ...PAINTERLY },
     { id: "realistic", name: "Dynamic", desc: "A deep, photographic sky with light rays, lit clouds and the Milky Way at night.", ...REALISTIC },
     { id: "illustration", name: "Illustration", desc: "Bold, flat shapes like a travel poster: a ringed sun, pill clouds, peaks and pines.", ...ILLUSTRATION },
@@ -2807,10 +2883,10 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     el.style.setProperty("--night-boost", (1 - m.light.d).toFixed(3));
     el.dataset.key = sceneKey(cat, m.light);
     el.innerHTML = `<svg viewBox="0 0 1600 700" preserveAspectRatio="xMaxYMin slice">${scene.svg}</svg>`;
-    const today = bgStyle().clock && state.days.length && document.querySelector('#days .card[data-i="0"] .scene');
+    const today = state.days.length && document.querySelector('#days .card[data-i="0"] .scene');
     if (today) {
       const sc = cardScene(state.days[0], 0);
-      today.style.background = sc.bg; today.style.opacity = sc.op; today.innerHTML = sc.svg;
+      today.style.background = sc.bg || ""; today.style.opacity = sc.op ?? ""; today.innerHTML = sc.svg;
       today.parentElement.classList.toggle("night-ink", !!sc.nightInk);
     }
     const festive = festiveFor(ymd);
@@ -3012,12 +3088,13 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     if (!data.om.current) { $("now").innerHTML = ""; return; }
     const m = viewMoment(data.om);
     const open = !$("previewPanel").hidden;
-    const label = m.live ? "Now" : `<span class="pv-badge">Preview ${fmtMinutes(state.previewMin)}</span>`;
-    $("now").innerHTML = `
-      <span class="now-temp num">${weatherIcon(wmoCat(m.code), m.isDay)} ${label} ${deg(m.temp)}</span>
-      <span>${esc(WMO_TEXT[m.code] || "")}</span>
-      <span class="dot"></span><span class="num">Feels ${deg(m.feels)}</span>
-      <span class="dot upd-dot"></span><span class="upd">Updated ${fmtUpdatedTime(data.fetchedAt)}
+    const label = m.live ? "Now" : `Preview ${fmtMinutes(state.previewMin)}`;
+    const badge = m.live ? "" : `<span class="pv-badge">${label}</span>`;
+    $("now").innerHTML = `${badge}
+      <span class="big num" aria-label="${label} ${deg(m.temp)}">${deg(m.temp)}</span>
+      <span class="l1">${weatherIcon(wmoCat(m.code), m.isDay)} ${esc(WMO_TEXT[m.code] || "")}</span>
+      <span class="num">Feels ${deg(m.feels)}</span>
+      <span class="upd">Updated ${fmtUpdatedTime(data.fetchedAt)}
         <button class="clock-btn" type="button" data-action="preview" aria-expanded="${open}" aria-controls="previewPanel" aria-label="Preview another time of day" title="Preview another time of day">${UI.clock}</button></span>`;
   }
 
@@ -3075,11 +3152,17 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       <span style="left:min(${left.toFixed(1)}%, calc(100% - 6px));width:${width.toFixed(1)}%;background:linear-gradient(90deg, ${barEndColor(d.hi)}, ${barEndColor(d.lo)})"></span></div>`;
   }
 
-  // A day card's scene; for a style that follows the clock, the Today card also gets the time of day and moon
+  // A day card's scene. The Today card follows the clock in every style (the time of day and moon on the page, including a
+  // previewed time); the other days are always shown by day. Its text turns light when its sky is dark in light mode.
+  const NIGHT_INK_BELOW = .3;
+  const skyLuminance = (colors) => colors.reduce((t, c) => t + hexLuminance(c), 0) / colors.length;
   function cardScene(d, n) {
-    const ctx = { ymd: d.ymd };
-    if (n === 0 && bgStyle().clock && state.data?.om?.current) { const m = viewMoment(state.data.om); ctx.light = m.light; ctx.ph = moonPhase(m.ms); }
-    return bgStyle().card(d.cat, n + 1, n === 0, ctx);
+    const ctx = { ymd: d.ymd, light: FULL_DAY, ph: null };
+    if (n === 0 && state.data?.om?.current) { const m = viewMoment(state.data.om); ctx.light = m.light; ctx.ph = moonPhase(m.ms); }
+    const scene = bgStyle().card(d.cat, n + 1, n === 0, ctx);
+    // In light mode, a Today card whose sky has gone dark switches to light text (Basic's sky stays pale, so it never does)
+    const P = bgStyle().palette;
+    return { ...scene, nightInk: !!P && !darkScheme() && n === 0 && skyLuminance(blendSky(d.cat, ctx.light, P)) < NIGHT_INK_BELOW };
   }
 
   function renderCards(days) {
@@ -3093,7 +3176,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         ? `<div class="badges">${stickers.map((ev) => `<span class="badge" title="${esc(ev.name)}" style="--ring:${ev.ring}">${badgeSVG(ev.art, ev.name)}</span>`).join("")}</div>` : "";
       const special = events.length ? ` ${events.map((ev) => ev.label).join(", ")}.` : "";
       return `<article class="card${stickers.length ? " has-evt" : ""}${scene.nightInk ? " night-ink" : ""}" role="button" tabindex="0" data-i="${n}" data-badges="${stickers.length}" style="--s1:var(--${d.cat}-1);--s2:var(--${d.cat}-2)${stickers.length ? `;--ring:${stickers[0].ring}` : ""}" aria-label="${esc(dow)}: ${esc(d.label)}, high ${round(d.hi)}, low ${round(d.lo)}.${esc(special)} Open details.">
-        <div class="scene"${scene.bg ? ` style="background:${scene.bg};opacity:${scene.op}"` : ""}>${scene.svg}</div>
+        <div class="scene"${scene.bg ? ` style="background:${scene.bg}${scene.op != null ? `;opacity:${scene.op}` : ""}"` : ""}>${scene.svg}</div>
         ${badges}
         <div class="card-body${split}">
           <div class="main">
@@ -3361,6 +3444,39 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         <span class="ics">${["clear", "partly", "rain", "snow", "storm"].map((c) => weatherIcon(c, true, undefined, st.id)).join("")}</span>
       </button>`).join("");
   }
+  /* Temperature color and glow strength. The colors are the widgets' own list. */
+  const TEMP_COLORS = [["Auto", null], ["White", "#ffffff"], ["Soft gray", "#d5dbe2"], ["Charcoal", "#3a4552"], ["Black", "#0f141a"],
+    ["Sunshine", "#ffd23f"], ["Orange", "#ff9a3c"], ["Coral", "#ff6b6b"], ["Mint", "#5fe0b4"], ["Sky blue", "#5ab8ff"], ["Lavender", "#b9a3ff"]];
+  // Each step stacks more halo layers in a color; Medium is the default
+  // (tight layers repeat so the halo is solid right around small letters; wide ones soften it into the sky)
+  const GLOW_LAYERS = [[], [1, 4, 10], [1, 1, 2, 4, 8, 14, 22], [1, 1, 1, 2, 3, 6, 10, 16, 24], [1, 1, 1, 1, 2, 2, 4, 6, 10, 16, 24, 32]];
+  const GLOWS = ["Off", "Soft", "Medium", "Strong", "Max"];
+  const halo = (n, color) => GLOW_LAYERS[n].map((r) => `0 0 ${r}px ${color}`).join(", ") || "none";
+  function hexLuminance(hex) {
+    const ch = (i) => { const v = parseInt(hex.slice(i, i + 2), 16) / 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; };
+    return .2126 * ch(1) + .7152 * ch(3) + .0722 * ch(5);
+  }
+  function applyNowLook() {
+    const root = document.documentElement.style, color = TEMP_COLORS[state.tempColor]?.[1];
+    root.setProperty("--glow", halo(state.glow, "var(--bg)"));
+    if (color) {
+      // A light color gets a dark halo and a dark color a light one, so it reads on every sky
+      root.setProperty("--now-temp", color);
+      root.setProperty("--now-glow", halo(Math.max(state.glow, 1), hexLuminance(color) > .4 ? "rgba(10,16,24,.55)" : "rgba(255,255,255,.7)"));
+    } else { root.removeProperty("--now-temp"); root.removeProperty("--now-glow"); }
+  }
+  function renderNowLookSettings() {
+    $("tempColor").value = state.tempColor; $("tempColorVal").textContent = TEMP_COLORS[state.tempColor][0];
+    $("glowRange").value = state.glow; $("glowVal").textContent = GLOWS[state.glow];
+    // The swatches are a quicker way to tap the same choices; keyboard users get the slider, so they stay out of the tab order
+    $("tempSwatches").innerHTML = TEMP_COLORS.map(([name, c], i) =>
+      `<button type="button" tabindex="-1" ${c ? `style="--sw:${c}"` : 'class="auto"'} data-tc="${i}" aria-pressed="${i === state.tempColor}" aria-label="${name}" title="${name}"></button>`).join("");
+  }
+  function setNowLook(key, value) {
+    state[key] = value; store.set(key, value);
+    applyNowLook(); renderNowLookSettings();
+  }
+
   // Also called by the Android app to keep the page in step with the widgets' style
   function setIconStyle(id) {
     if (!ICON_SETS[id] || id === state.iconStyle) return;
@@ -3418,7 +3534,13 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     if (!ICON_SETS[state.iconStyle]) state.iconStyle = "glow";
     if (!BG_STYLES.some((s) => s.id === state.bgStyle)) state.bgStyle = "realistic";
     $("settingsBtn").innerHTML = UI.sliders;
-    $("settingsBtn").addEventListener("click", () => { renderStyleList(); renderBgList(); $("setDlg").showModal(); });
+    if (!TEMP_COLORS[state.tempColor]) state.tempColor = 0;
+    if (!GLOWS[state.glow]) state.glow = 2;
+    applyNowLook();
+    $("settingsBtn").addEventListener("click", () => { renderStyleList(); renderNowLookSettings(); renderBgList(); $("setDlg").showModal(); });
+    $("tempColor").addEventListener("input", (e) => setNowLook("tempColor", +e.target.value));
+    $("glowRange").addEventListener("input", (e) => setNowLook("glow", +e.target.value));
+    $("tempSwatches").addEventListener("click", (e) => { const b = e.target.closest("[data-tc]"); if (b) setNowLook("tempColor", +b.dataset.tc); });
     $("bgList").addEventListener("click", (e) => {
       const b = e.target.closest(".style-opt");
       if (b) { setBgStyle(b.dataset.bg); $("bgList").querySelector(`[data-bg="${state.bgStyle}"]`)?.focus(); }

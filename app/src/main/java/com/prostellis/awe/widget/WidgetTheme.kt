@@ -108,3 +108,24 @@ object TempColors {
         return (maxOf(x, y) + .05) / (minOf(x, y) + .05)
     }
 }
+
+/** Glow strength: the halo behind a widget's temperatures, set per widget. Medium is the default. */
+object Glow {
+    val NAMES = listOf("Off", "Soft", "Medium", "Strong", "Max")
+    const val DEFAULT = 2
+
+    /** Halo colors: near-black behind light text, white behind dark text. */
+    const val DARK = 0xFF0A1018.toInt()
+    const val LIGHT = 0xFFFFFFFF.toInt()
+
+    // Blur radius (dp at 20dp text) and opacity of each pass; a tight pass keeps edges crisp, wider ones soften into the sky
+    private val LAYERS = listOf(
+        emptyList(),
+        listOf(2f to .45f),
+        listOf(1.2f to .6f, 4f to .45f),
+        listOf(1.2f to .75f, 3f to .6f, 7f to .45f),
+        listOf(1f to .9f, 2.5f to .75f, 5f to .6f, 10f to .45f),
+    )
+
+    fun layers(step: Int): List<Pair<Float, Float>> = LAYERS[step.coerceIn(0, LAYERS.size - 1)]
+}

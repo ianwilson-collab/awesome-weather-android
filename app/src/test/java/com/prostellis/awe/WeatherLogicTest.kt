@@ -180,4 +180,14 @@ class WeatherLogicTest {
         assertFalse(WidgetRenderer.isSevenDay(310f))
         assertTrue(WidgetRenderer.isSevenDay(380f))
     }
+
+    @Test fun glowStepsGrowAndStayInRange() {
+        assertEquals(5, com.prostellis.awe.widget.Glow.NAMES.size)
+        assertEquals("Medium", com.prostellis.awe.widget.Glow.NAMES[com.prostellis.awe.widget.Glow.DEFAULT])
+        assertEquals(0, com.prostellis.awe.widget.Glow.layers(0).size)
+        for (step in 1..4) assertEquals(step, com.prostellis.awe.widget.Glow.layers(step).size)
+        // Out-of-range steps (from an older or damaged setting) fall back to the nearest one
+        assertEquals(com.prostellis.awe.widget.Glow.layers(4), com.prostellis.awe.widget.Glow.layers(9))
+        assertEquals(com.prostellis.awe.widget.Glow.layers(0), com.prostellis.awe.widget.Glow.layers(-1))
+    }
 }

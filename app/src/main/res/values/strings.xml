@@ -23,6 +23,8 @@
     <string name="settings_transparent">Transparent</string>
     <string name="settings_temp_color">Temperature color</string>
     <string name="settings_temp_color_help">Colors every temperature on this widget. Lows and labels stay as they are.</string>
+    <string name="settings_glow">Glow strength</string>
+    <string name="settings_glow_help">A soft halo behind the temperatures, so they stand out on any sky or wallpaper.</string>
     <string name="settings_temp_color_help_tiny">Auto picks white or near-black, whichever reads better.</string>
     <string name="settings_show_current">Show current weather</string>
     <string name="settings_show_current_help">Temperature and conditions at the top</string>

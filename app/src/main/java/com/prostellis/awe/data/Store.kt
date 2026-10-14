@@ -14,10 +14,13 @@ enum class RefreshMode(val minutes: Int?) {
     EVERY_30(30), EVERY_60(60), MANUAL(null);
 }
 
-/** Settings for one widget on the home screen. [tempColor] is a [com.prostellis.awe.widget.TempColors] choice (0 = Auto). */
-data class WidgetSettings(val transparency: Int, val refresh: RefreshMode, val showCurrent: Boolean, val tempColor: Int) {
+/**
+ * Settings for one widget on the home screen. [tempColor] is a [com.prostellis.awe.widget.TempColors] choice (0 = Auto);
+ * [glow] is a [com.prostellis.awe.widget.Glow] step for the halo behind the temperatures.
+ */
+data class WidgetSettings(val transparency: Int, val refresh: RefreshMode, val showCurrent: Boolean, val tempColor: Int, val glow: Int) {
     companion object {
-        val DEFAULT = WidgetSettings(transparency = 0, refresh = RefreshMode.EVERY_30, showCurrent = true, tempColor = 0)
+        val DEFAULT = WidgetSettings(transparency = 0, refresh = RefreshMode.EVERY_30, showCurrent = true, tempColor = 0, glow = com.prostellis.awe.widget.Glow.DEFAULT)
     }
 }
 
@@ -95,6 +98,7 @@ class Store(context: Context) {
             ?.let { runCatching { RefreshMode.valueOf(it) }.getOrNull() } ?: WidgetSettings.DEFAULT.refresh,
         showCurrent = prefs.getBoolean("w$id.showCurrent", WidgetSettings.DEFAULT.showCurrent),
         tempColor = prefs.getInt("w$id.tempColor", WidgetSettings.DEFAULT.tempColor),
+        glow = prefs.getInt("w$id.glow", WidgetSettings.DEFAULT.glow),
     )
 
     fun saveWidgetSettings(id: Int, s: WidgetSettings) {
@@ -103,6 +107,7 @@ class Store(context: Context) {
             .putString("w$id.refresh", s.refresh.name)
             .putBoolean("w$id.showCurrent", s.showCurrent)
             .putInt("w$id.tempColor", s.tempColor)
+            .putInt("w$id.glow", s.glow)
             .apply()
     }
 
@@ -114,7 +119,7 @@ class Store(context: Context) {
     }
 
     fun forgetWidget(id: Int) {
-        prefs.edit().remove("w$id.transparency").remove("w$id.refresh").remove("w$id.showCurrent").remove("w$id.tempColor").remove("w$id.updated").apply()
+        prefs.edit().remove("w$id.transparency").remove("w$id.refresh").remove("w$id.showCurrent").remove("w$id.tempColor").remove("w$id.glow").remove("w$id.updated").apply()
     }
 
     private fun download(url: String): String {

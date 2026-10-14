@@ -39,6 +39,7 @@ class WidgetSettingsActivity : Activity() {
     private var refresh = RefreshMode.EVERY_30
     private var showCurrent = true
     private var tempColor = 0
+    private var glow = Glow.DEFAULT
     private var iconStyle = IconStyle.GLOW
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +57,7 @@ class WidgetSettingsActivity : Activity() {
         refresh = saved.refresh
         showCurrent = saved.showCurrent
         tempColor = saved.tempColor
+        glow = saved.glow
         iconStyle = store.iconStyle
 
         setContentView(R.layout.activity_widget_settings)
@@ -87,6 +89,7 @@ class WidgetSettingsActivity : Activity() {
         })
 
         setUpTempColor()
+        setUpGlow()
 
         // The current weather can be turned off only on the forecast widget; on the others it's what the widget shows
         val forecast = kind == WidgetKind.FORECAST
@@ -194,7 +197,26 @@ class WidgetSettingsActivity : Activity() {
         })
     }
 
-    private fun settings() = WidgetSettings(transparency, refresh, showCurrent, tempColor)
+    /** Glow strength: Off to Max, for the halo behind this widget's temperatures. */
+    private fun setUpGlow() {
+        val seek = findViewById<SeekBar>(R.id.glow)
+        val value = findViewById<TextView>(R.id.glow_value)
+        seek.max = Glow.NAMES.size - 1
+        glow = glow.coerceIn(0, seek.max)
+        seek.progress = glow
+        value.text = Glow.NAMES[glow]
+        seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(bar: SeekBar, progress: Int, fromUser: Boolean) {
+                glow = progress
+                value.text = Glow.NAMES[glow]
+                drawPreview()
+            }
+            override fun onStartTrackingTouch(bar: SeekBar) = Unit
+            override fun onStopTrackingTouch(bar: SeekBar) = Unit
+        })
+    }
+
+    private fun settings() = WidgetSettings(transparency, refresh, showCurrent, tempColor, glow)
 
     private fun drawPreview() {
         val preview = findViewById<ImageView>(R.id.preview)
