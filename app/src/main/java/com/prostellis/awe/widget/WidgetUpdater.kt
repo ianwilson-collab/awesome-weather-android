@@ -86,6 +86,7 @@ object WidgetUpdater {
             sky = sky,
             showCurrent = settings.showCurrent || kind != WidgetKind.FORECAST,
             wallpaperLight = wallpaperLight,
+            showRain = settings.showRain,
         )
         return WidgetRenderer(context).render(kind, model, widthDp, heightDp, look, store.eventColors)
     }

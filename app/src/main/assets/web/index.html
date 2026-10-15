@@ -357,7 +357,7 @@ button { cursor: pointer; }
   gap: 10px;
   padding: 16px 18px 6px;
 }
-/* Hourly is collapsed by default (and after every page load); the header row toggles it */
+/* Hourly Forecast and Plan a Date start collapsed on every page load; the header row toggles them */
 summary.hourly-head { padding-bottom: 16px; list-style: none; cursor: pointer; }
 summary.hourly-head::-webkit-details-marker { display: none; }
 .hourly[open] > summary.hourly-head { padding-bottom: 6px; }
@@ -366,31 +366,8 @@ summary.hourly-head::-webkit-details-marker { display: none; }
 .hourly-head h2 { margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -.01em; }
 .hourly-head .hint { font-size: 13px; color: var(--ink-3); font-weight: 500; }
 
-.htable { --cols: 72px minmax(150px, 1.6fr) repeat(6, minmax(60px, 1fr)); padding: 0 10px 12px; }
-.hrow {
-  display: grid;
-  grid-template-columns: var(--cols);
-  align-items: center;
-  padding: 7px 8px;
-  border-top: 1px solid var(--line);
-  font-size: 14px;
-}
-.hrow.hhead {
-  position: sticky; top: 0; z-index: 2;
-  background: var(--surface);
-  border-top: 0;
-  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3);
-}
-.hrow .c-cond { display: flex; align-items: center; gap: 8px; min-width: 0; }
-.hrow .c-cond .ic { font-size: 22px; }
-.hrow .c-cond span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hrow .c-time { font-weight: 600; }
-.hrow .c-temp { font-weight: 700; }
-.hrow .c-rain { color: var(--rain-ink); font-weight: 600; }
-.hrow .muted { color: var(--ink-3); }
-.hrow.night { background: color-mix(in srgb, var(--surface-2) 70%, transparent); }
-.hrow.past, .dh-row.past { opacity: .6; }
-.htable .hrow.focus-row, .dd-hourly .dh-row.focus-row {
+.dh-row.past { opacity: .6; }
+.dd-hourly .dh-row.focus-row {
   position: relative;
   z-index: 1;
   border-top-color: transparent;
@@ -402,58 +379,11 @@ summary.hourly-head::-webkit-details-marker { display: none; }
   font-size: 15.5px;
   transform: scale(1.012);
 }
-.is-now .c-time { color: var(--accent); font-weight: 700; }
-.focus-row .c-temp { font-size: 17px; }
-.focus-row + .hrow, .focus-row + .dh-row { border-top-color: transparent; }
-.hday .range.d-range { width: 96px; flex: none; margin: 0; }
+.dh-row.is-now .c-time { color: var(--accent); font-weight: 700; }
+.dh-row.focus-row .c-temp { font-size: 17px; }
+.focus-row + .dh-row { border-top-color: transparent; }
 
-/* Day separator */
-.hday {
-  position: sticky; top: var(--hh, 33px); z-index: 1;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4px 12px;
-  margin: 14px 0 0;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: var(--surface-2);
-  box-shadow: 0 0 0 4px var(--surface);
-}
-.hday.first { margin-top: 4px; }
-.hday .d-name { font-weight: 700; font-size: 15px; }
-.hday .d-sum { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font-size: 13.5px; font-weight: 500; }
-.hday .d-sum .ic { font-size: 18px; }
-.hday .d-sun { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; color: var(--ink-3); font-size: 12.5px; }
-.hday .d-sun .ic { color: var(--sun-ink); font-size: 15px; }
-.hday + .hrow { border-top: 0; }
 
-@media (max-width: 720px) {
-  .htable { padding: 0 6px 10px; }
-  .htable { --cols: 50px 30px repeat(3, minmax(0, 1fr)); }
-  .hrow {
-    grid-template-areas:
-      "time cond temp rain wind"
-      "time cond feels amt wind";
-    column-gap: 6px;
-    row-gap: 1px;
-    padding: 6px 8px;
-    font-size: 14px;
-  }
-  .hrow .c-time { grid-area: time; font-size: 13px; }
-  .hrow .c-cond { grid-area: cond; }
-  .hrow .c-cond span { display: none; }
-  .hrow .c-temp { grid-area: temp; }
-  .hrow .c-feels { grid-area: feels; font-size: 12px; }
-  .hrow .c-rain { grid-area: rain; }
-  .hrow .c-amt { grid-area: amt; font-size: 12px; }
-  .hrow .c-cloud { display: none; }
-  .hrow .c-wind { grid-area: wind; display: flex; flex-direction: column; line-height: 1.2; }
-  .hrow .c-wind .gust { font-size: 12px; }
-  .hrow.hhead { font-size: 9.5px; letter-spacing: .05em; line-height: 1.2; padding-top: 8px; padding-bottom: 6px; }
-  .hday { padding: 9px 10px; gap: 2px 10px; }
-  .hday .d-sun { margin-left: 0; flex-basis: 100%; }
-}
 
 /* Settings button (top-right) and dialog */
 .set-btn { flex: none; }
@@ -659,7 +589,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
 .surprise { animation: surprise var(--sd, 4s) ease-in-out forwards; }
 @keyframes surprise { 0% { opacity: 0; transform: translateY(-6px); } 8%, 90% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 
-/* ---------- Extended outlook ---------- */
+/* ---------- Extended Forecast ---------- */
 .outlook { margin-top: 22px; padding-bottom: 6px; border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
 .orow {
   display: grid;
@@ -702,6 +632,77 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- Today card: big weather icon ---------- */
+.card .cond.cond-big { gap: 4px; margin-top: 6px; font-size: 16px; min-height: 0; }
+.card .cond.cond-big .ic { font-size: 64px; margin: -8px 0 -8px -12px; }
+
+/* ---------- Hourly Forecast: a sideways-scrolling chart, the day pinned on the left ---------- */
+.hz { --cw: 60px; --rail: 118px; display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); margin: 4px 10px 0; border-radius: 14px; background: var(--surface-2); overflow: hidden; }
+.hz-rail { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 4px; padding: 12px 10px 10px 12px; border-right: 1px solid var(--line); background: var(--surface-2); }
+.hz-rail .r-day { font-weight: 700; font-size: 16px; line-height: 1.1; }
+.hz-rail .r-date { font-size: 12.5px; color: var(--ink-2); font-weight: 500; }
+.hz-rail .r-sum { display: grid; justify-items: start; gap: 2px; margin-top: 6px; font-size: 13.5px; font-weight: 700; white-space: nowrap; }
+.hz-rail .r-sum .ic { font-size: 30px; margin-left: -3px; }
+.hz-rail .r-lab { font-size: 11.5px; color: var(--ink-3); font-weight: 500; line-height: 1.25; }
+.hz-rail .r-rain { font-size: 12px; font-weight: 600; color: var(--rain-ink); line-height: 1.3; }
+.hz-rail .r-rain.dry { color: var(--ink-3); font-weight: 500; }
+.hz-rail .r-sun { display: grid; gap: 2px; margin-top: auto; font-size: 11.5px; color: var(--ink-3); }
+.hz-rail .r-sun .arw { width: .85em; height: .85em; }
+.hz-now { align-self: flex-start; margin-top: 8px; padding: 5px 10px; white-space: nowrap; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--accent); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.hz-now[hidden] { display: none; }
+.hz-scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; overscroll-behavior-x: contain; }
+.hz-track { position: relative; height: 256px; }
+.hz-track > svg { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.hz-col { position: absolute; top: 0; bottom: 0; width: var(--cw); padding: 0; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.hz-col.night { background: color-mix(in srgb, var(--ink) 4.5%, transparent); }
+.hz-col.past > * { opacity: .45; }
+.hz-col:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 10px; }
+.hz-col.sel:not(.is-now)::before { content: ""; position: absolute; inset: 24px 3px 4px; border-radius: 12px; background: color-mix(in srgb, var(--accent) 12%, transparent); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 55%, transparent); }
+.hz-col .t { position: absolute; left: 0; right: 0; top: 34px; text-align: center; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.hz-col .i { position: absolute; left: 0; right: 0; top: 52px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 28px; line-height: 1; }
+.hz-col .i > * { display: block; margin: 0; flex: none; }
+.hz-col .v { position: absolute; left: 0; right: 0; text-align: center; font-size: 13.5px; font-weight: 700; }
+.hz-col .rp { position: absolute; left: 0; right: 0; text-align: center; font-size: 11.5px; font-weight: 700; color: var(--rain-ink); }
+.hz-col .ra { position: absolute; left: 0; right: 0; bottom: 3px; text-align: center; font-size: 11px; font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+/* Now: a tinted column with an accent edge, a filled "Now" label and a slightly bigger icon on the same row */
+.hz-col.is-now { z-index: 1; background: color-mix(in srgb, var(--accent) 14%, transparent); box-shadow: inset 0 3px 0 var(--accent); }
+.hz-col.is-now .t { left: 50%; right: auto; transform: translateX(-50%); top: 22px; padding: 3px 10px; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 700; }
+.hz-col.is-now .i { top: 51px; height: 34px; font-size: 34px; }
+.hz-day { position: absolute; top: 0; bottom: 0; border-left: 1.5px solid color-mix(in srgb, var(--ink) 22%, transparent); pointer-events: none; }
+.hz-day span { position: absolute; top: 7px; left: 6px; white-space: nowrap; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+.hz-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 8px 18px 0; font-size: 12px; color: var(--ink-3); }
+.hz-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+.hz-detail { margin: 10px 10px 14px; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); }
+.hz-detail h4 { margin: 0 0 8px; font-size: 14.5px; display: flex; align-items: center; gap: 8px; }
+.hz-detail h4 .ic { font-size: 24px; }
+.hz-detail dl { margin: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px 12px; }
+.hz-detail dt { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+.hz-detail dd { margin: 2px 0 0; font-size: 15px; font-weight: 600; }
+.hz-detail .muted { color: var(--ink-3); }
+
+/* ---------- Plan a Date ---------- */
+.p-body { display: grid; gap: 12px; padding: 4px 18px 16px; }
+.p-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; }
+.p-pick input { font: inherit; font-weight: 600; padding: 7px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); color-scheme: inherit; }
+.p-fc { display: flex; align-items: center; gap: 6px 10px; padding: 10px 12px; border-radius: 12px; background: color-mix(in srgb, var(--accent) 10%, var(--surface)); font-size: 14px; }
+.p-fc .ic { font-size: 24px; }
+.p-fc b { font-weight: 700; }
+.p-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.p-stats div { display: grid; gap: 2px; padding: 10px 12px; border-radius: 12px; background: var(--surface-2); }
+.p-stats span { font-size: 11.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-3); }
+.p-stats b { font-size: 18px; }
+.p-note { font-size: 12px; color: var(--ink-3); }
+
+@media (max-width: 720px) {
+  .hz { --cw: 52px; --rail: 92px; margin: 4px 6px 0; }
+  .hz-now { padding: 4px 8px; font-size: 11.5px; }
+  .hz-rail { padding: 10px 8px; }
+  .hz-rail .r-day { font-size: 15px; }
+  .hz-detail { margin: 10px 6px 12px; }
+  .hz-detail dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .p-body { padding: 4px 14px 14px; }
+}
 </style>
 </head>
 <body>
@@ -740,18 +741,23 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   <div class="alerts" id="alerts"></div>
   <section class="days" id="days" aria-label="7-day forecast"></section>
 
-  <details class="hourly" id="hourly">
-    <summary class="hourly-head"><h2>Hourly</h2><span class="hint">Today + next 2 days</span><span class="chev" id="hourlyChev"></span></summary>
-    <div class="htable" id="hourTable"></div>
-  </details>
-
   <section class="outlook" id="outlook" aria-labelledby="outlookTitle" hidden>
-    <div class="hourly-head"><h2 id="outlookTitle">Extended outlook</h2><span class="hint">Days 8–16 · less certain the further out it goes</span></div>
+    <div class="hourly-head"><h2 id="outlookTitle">Extended Forecast</h2><span class="hint">Days 8–16 · less certain the further out it goes</span></div>
     <div id="outlookList"></div>
   </section>
 
+  <details class="hourly" id="hourly">
+    <summary class="hourly-head"><h2>Hourly Forecast</h2><span class="hint">Next 7 days</span><span class="chev" id="hourlyChev"></span></summary>
+    <div id="hourTable"></div>
+  </details>
+
+  <details class="hourly plan" id="plan">
+    <summary class="hourly-head"><h2>Plan a Date</h2><span class="hint">What's typical on any date, from past years</span><span class="chev" id="planChev"></span></summary>
+    <div id="planBody"></div>
+  </details>
+
   <footer class="foot">
-    Forecast data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0)
+    Forecast and past-weather data from <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0)
     and the <a href="https://www.weather.gov/" target="_blank" rel="noopener">National Weather Service</a>,
     aurora outlook from <a href="https://www.swpc.noaa.gov/" target="_blank" rel="noopener">NOAA's Space Weather Prediction Center</a>.
     Lows are overnight lows. Tap any day for details.
@@ -832,7 +838,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   /* ================= Config ================= */
   const DEFAULT_LOC = { name: "Salem", region: "Oregon", country: "United States", cc: "US", lat: 44.9429, lon: -123.0351 };
   const STALE_MS = 30 * 60 * 1000;
-  const HOURLY_DAYS = 3;
+  const HOURLY_DAYS = 7;
   const US_STATES = { AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"District of Columbia",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming",PR:"Puerto Rico",GU:"Guam",VI:"U.S. Virgin Islands" };
   const STATE_ABBR = Object.fromEntries(Object.entries(US_STATES).map(([k, v]) => [v, k]));
 
@@ -853,7 +859,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     loading: false,
     previewMin: null, // minutes after midnight (15-min steps) while previewing another time; null = live
     days: [],         // the 7 day cards
-    extDays: [],      // extended outlook, days 8–16
+    extDays: [],      // Extended Forecast, days 8–16
     iconStyle: store.get("iconStyle", "glow"),    // weather symbol style: "default" (Basic), "glow" or "fine" (Fine Outline)
     tempColor: store.get("tempColor", 0),        // big temperature color: index into TEMP_COLORS (0 = Auto)
     glow: store.get("glow", 2),                  // halo behind the header text: index into GLOWS (2 = Medium)
@@ -1855,7 +1861,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     return null;
   }
   function onSkyTap(e) {
-    if (e.target.closest("button, a, input, label, .card, .hrow, .hday, .orow, dialog, .preview, .alert")) return;
+    if (e.target.closest("button, a, input, label, .card, .hz, .hz-detail, .plan, .orow, dialog, .preview, .alert")) return;
     const hit = skyBodyAt(e.clientX, e.clientY);
     if (!hit) { taps.n = 0; return; }
     const now = Date.now();
@@ -2987,7 +2993,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   }
 
   /* ================= Derived daily model ================= */
-  // Days from today+offset, count days long (cards: 0–6, extended outlook: 7–15)
+  // Days from today+offset, count days long (cards: 0–6, Extended Forecast: 7–15)
   function buildDays(data, offset = 0, count = 7) {
     const { om, nws } = data;
     const today = om.current?.time?.slice(0, 10) || om.daily.time[0];
@@ -3049,9 +3055,11 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       $("now").innerHTML = "";
       $("notices").innerHTML = `<div class="notice error">Couldn't load the forecast. Check your connection, then refresh the page.</div>`;
       $("hourly").hidden = true;
+      $("plan").hidden = true;
       return;
     }
     $("hourly").hidden = false;
+    $("plan").hidden = false;
 
     $("notices").innerHTML = notices.map((n) => `<div class="notice">${esc(n)}</div>`).join("");
 
@@ -3060,11 +3068,12 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     const days = buildDays(data);
     state.days = days;
     renderCards(days);
-    renderHourly(data, days);
     renderOutlook(data, days);
+    renderHourly(data, days);
+    if ($("plan").open) renderPlan();
   }
 
-  /* ---------- Extended outlook (days 8–16, Open-Meteo only) ---------- */
+  /* ---------- Extended Forecast (days 8–16, Open-Meteo only) ---------- */
   function renderOutlook(data, days) {
     const ext = buildDays(data, 7, 9).map((d) => ({ ...d, ext: true }));
     state.extDays = ext;
@@ -3181,7 +3190,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         <div class="card-body${split}">
           <div class="main">
             <div class="dhead"><span class="dow">${esc(dow)}</span><span class="date">${fmtMonDay(d.ymd)}</span></div>
-            <div class="cond">${weatherIcon(d.cat)}<span>${esc(d.label)}</span></div>
+            <div class="cond${n === 0 ? " cond-big" : ""}">${weatherIcon(d.cat)}<span>${esc(d.label)}</span></div>
             <div class="temps num"><span class="hi">${deg(d.hi)}</span><span class="lo">${deg(d.lo)}</span></div>
             ${rangeBar(d)}
             <div class="feels num">Feels like ${deg(d.feelsHi)} / ${deg(d.feelsLo)}</div>
@@ -3292,11 +3301,14 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     }
     if (!rows.length) return "";
     return `<section class="dd-hourly">
-      <h3>Hourly</h3>
+      <h3>Hourly Forecast</h3>
       <div class="dh-row dh-head"><div>Time</div><div>Conditions</div><div>Temp</div><div>Rain</div><div>Amount</div></div>
       ${rows.join("")}
     </section>`;
   }
+
+  // Scrolls Hourly Forecast to the current hour (set by renderHourly; used when the section is opened)
+  let hourlyToNow = () => {};
 
   function renderHourly(data, days) {
     const om = data.om, h = om.hourly;
@@ -3304,55 +3316,172 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     const today = om.current?.time?.slice(0, 10) || om.daily.time[0];
     const nowKey = om.current?.time?.slice(0, 13);
     const focusKey = viewMoment(om).focusKey;
-    const head = `<div class="hrow hhead">
-      <div class="c-time">Time</div><div class="c-cond"><span>Conditions</span></div>
-      <div class="c-temp">Temp</div><div class="c-feels">Feels</div>
-      <div class="c-rain">Rain</div><div class="c-amt">Amount</div>
-      <div class="c-cloud">Clouds</div><div class="c-wind">Wind</div>
-    </div>`;
-    const out = [head];
-    for (let k = 0; k < HOURLY_DAYS; k++) {
-      const ymd = addDays(today, k);
-      const day = days.find((d) => d.ymd === ymd);
-      const name = k === 0 ? `Today, ${fmtMonDay(ymd)}` : `${fmtDow(ymd)}, ${fmtMonDay(ymd)}`;
-      out.push(`<div class="hday${k === 0 ? " first" : ""}">
-        <span class="d-name">${esc(name)}</span>
-        ${day ? `<span class="d-sum num">${weatherIcon(day.cat)}${esc(day.label)} · ${deg(day.hi)} / ${deg(day.lo)}</span>
-        ${rangeBar(day, "d-range")}
-        <span class="d-sun num" aria-label="Sunrise ${fmtClock(day.sunrise)}, sunset ${fmtClock(day.sunset)}">${UI.sunPath}<span class="sun-times">${UI.sunUp}${fmtClock(day.sunrise)}${UI.sunDown}${fmtClock(day.sunset)}</span></span>` : ""}
-      </div>`);
-      for (let i = 0; i < h.time.length; i++) {
-        const t = h.time[i];
-        if (!t.startsWith(ymd)) continue;
-        const cat = wmoCat(h.weather_code[i]);
-        const isNow = t.slice(0, 13) === nowKey;
-        const isFocus = t.slice(0, 13) === focusKey;
-        const isPast = k === 0 && t.slice(0, 13) < focusKey;
-        const amt = inches(h.precipitation[i]);
-        const ws = h.wind_speed_10m[i], gust = h.wind_gusts_10m[i];
-        const showGust = hasGust(ws, gust);
-        out.push(`<div class="hrow${isNow ? " is-now" : ""}${isFocus ? " focus-row" : ""}${isPast ? " past" : ""}${h.is_day[i] ? "" : " night"}">
-          <div class="c-time num">${isNow ? "Now" : fmtClock(t, true)}</div>
-          <div class="c-cond" title="${esc(WMO_TEXT[h.weather_code[i]] || "")}">${weatherIcon(cat, !!h.is_day[i], edges[t.slice(0, 13)])}<span>${esc(WMO_TEXT[h.weather_code[i]] || "")}</span></div>
-          <div class="c-temp num">${deg(h.temperature_2m[i])}</div>
-          <div class="c-feels num muted">${deg(h.apparent_temperature[i])}</div>
-          <div class="c-rain num">${h.precipitation_probability[i] == null ? "—" : h.precipitation_probability[i] + "%"}</div>
-          <div class="c-amt num muted">${amt || "—"}</div>
-          <div class="c-cloud num muted">${h.cloud_cover[i] == null ? "—" : h.cloud_cover[i] + "%"}</div>
-          <div class="c-wind num"><span>${round(ws)} ${compass(h.wind_direction_10m[i])}</span>${showGust ? `<span class="muted gust"> g${round(gust)}</span>` : ""}</div>
-        </div>`);
+    const last = addDays(today, HOURLY_DAYS);
+    const idx = [];
+    for (let i = 0; i < h.time.length; i++) if (h.time[i] >= today && h.time[i] < last) idx.push(i);
+    if (!idx.length) { $("hourTable").innerHTML = ""; hourlyToNow = () => {}; return; }
+    const cw = matchMedia("(max-width: 720px)").matches ? 52 : 60;
+    const W = idx.length * cw;
+    const temps = idx.map((i) => h.temperature_2m[i]);
+    const tMax = Math.max(...temps), tMin = Math.min(...temps);
+    const smooth = (p, floor = Infinity) => {
+      let d = `M${p[0][0]},${p[0][1]}`;
+      for (let k = 1; k < p.length; k++) {
+        const p0 = p[k - 2] || p[k - 1], p1 = p[k - 1], p2 = p[k], p3 = p[k + 1] || p2;
+        d += ` C${p1[0] + (p2[0] - p0[0]) / 6},${Math.min(floor, p1[1] + (p2[1] - p0[1]) / 6)} ${p2[0] - (p3[0] - p1[0]) / 6},${Math.min(floor, p2[1] - (p3[1] - p1[1]) / 6)} ${p2[0]},${p2[1]}`;
       }
+      return d;
+    };
+    // Temperature line: warmest at 112, coolest at 166, with the temperature above each point
+    const Y0 = 112, Y1 = 166, y = (t) => tMax === tMin ? (Y0 + Y1) / 2 : Y0 + (tMax - t) / (tMax - tMin) * (Y1 - Y0);
+    const pts = idx.map((i, k) => [k * cw + cw / 2, y(h.temperature_2m[i])]);
+    const td = smooth(pts);
+    // Rain lane: the chance of rain as a filled curve, 0% at 236 and 100% at 198
+    const LT = 198, LB = 236, ry = (p) => LB - (p || 0) / 100 * (LB - LT);
+    const rpts = idx.map((i, k) => [k * cw + cw / 2, ry(h.precipitation_probability[i])]);
+    const rd = smooth(rpts, LB);
+    const nowK = Math.max(0, idx.findIndex((i) => h.time[i].slice(0, 13) === nowKey));
+    const stops = [0, .25, .5, .75, 1].map((u) => `<stop offset="${u}" stop-color="${tempColor(tMax - (tMax - tMin) * u)}"/>`).join("");
+    const svg = `<svg width="${W}" height="256" viewBox="0 0 ${W} 256" aria-hidden="true">
+      <defs><linearGradient id="hzLine" gradientUnits="userSpaceOnUse" x1="0" y1="${Y0}" x2="0" y2="${Y1}">${stops}</linearGradient>
+      <linearGradient id="hzArea" gradientUnits="userSpaceOnUse" x1="0" y1="${Y0}" x2="0" y2="${Y1 + 30}"><stop offset="0" stop-color="${tempColor(tMax)}" stop-opacity=".22"/><stop offset="1" stop-color="${tempColor(tMin)}" stop-opacity="0"/></linearGradient></defs>
+      <path d="${td} L${pts.at(-1)[0]},${Y1 + 30} L${pts[0][0]},${Y1 + 30} Z" fill="url(#hzArea)"/>
+      <path d="${td}" fill="none" stroke="url(#hzLine)" stroke-width="3" stroke-linecap="round"/>
+      ${pts.map(([px, py], k) => k === nowK ? `<circle cx="${px}" cy="${py}" r="4.5" fill="url(#hzLine)" stroke="var(--surface)" stroke-width="2"/>` : `<circle cx="${px}" cy="${py}" r="2.6" fill="url(#hzLine)"/>`).join("")}
+      <line x1="0" x2="${W}" y1="${(LT + LB) / 2}" y2="${(LT + LB) / 2}" stroke="var(--rain-ink)" stroke-opacity=".18" stroke-dasharray="3 5"/>
+      <line x1="0" x2="${W}" y1="${LB}" y2="${LB}" stroke="var(--rain-ink)" stroke-opacity=".3"/>
+      <path d="${rd} L${rpts.at(-1)[0]},${LB} L${rpts[0][0]},${LB} Z" fill="var(--rain-ink)" fill-opacity=".22"/>
+      <path d="${rd}" fill="none" stroke="var(--rain-ink)" stroke-opacity=".85" stroke-width="2"/>
+    </svg>`;
+    const cols = idx.map((i, k) => {
+      const t = h.time[i], key = t.slice(0, 13);
+      const isNow = key === nowKey, isPast = key < focusKey;
+      const pop = h.precipitation_probability[i], amt = h.precipitation[i] || 0;
+      const label = isNow ? "Now" : fmtClock(t, true);
+      // The chance shows only when rain is worth noticing (20% or more); the amount when at least 0.01″ falls
+      const chance = pop >= 20 ? `<span class="rp num" style="top:${ry(pop) - 17}px">${pop}%</span>` : "";
+      const amount = amt >= .01 ? `<span class="ra num">${amt.toFixed(2).replace(/^0/, "")}″</span>` : "";
+      return `<button type="button" class="hz-col${isNow ? " is-now" : ""}${isPast ? " past" : ""}${h.is_day[i] ? "" : " night"}" style="left:${k * cw}px" data-i="${i}"
+        aria-label="${esc(label)}: ${esc(WMO_TEXT[h.weather_code[i]] || "")}, ${deg(h.temperature_2m[i])}, rain ${pop == null ? "unknown" : pop + "%"}">
+        <span class="t num">${label}</span>
+        <span class="i">${weatherIcon(wmoCat(h.weather_code[i]), !!h.is_day[i], edges[key])}</span>
+        <span class="v num" style="top:${pts[k][1] - 24}px">${deg(h.temperature_2m[i])}</span>
+        ${chance}${amount}
+      </button>`;
+    }).join("");
+    // A divider and the day's name at each midnight
+    const marks = idx.map((i, k) => h.time[i].endsWith("T00:00") && k > 0 ? `<div class="hz-day" style="left:${k * cw}px"><span>${fmtDow(h.time[i].slice(0, 10), true)} ${fmtMonDay(h.time[i].slice(0, 10))}</span></div>` : "").join("");
+    $("hourTable").innerHTML = `<div class="hz" style="--cw:${cw}px">
+        <div class="hz-rail" id="hzRail" aria-live="polite"></div>
+        <div class="hz-scroll" id="hzScroll" tabindex="0" aria-label="Hourly forecast, scroll sideways"><div class="hz-track" style="width:${W}px">${svg}${marks}${cols}</div></div>
+      </div>
+      <div class="hz-legend"><span><i style="background:linear-gradient(90deg,${tempColor(tMin)},${tempColor(tMax)})"></i>Temperature</span><span><i style="background:color-mix(in srgb, var(--rain-ink) 35%, transparent);border:1.5px solid var(--rain-ink)"></i>Chance of rain (dashed line: 50%)</span><span>Amounts (″) show when at least 0.01″ falls in the hour</span><span>Tap an hour for feels like, amount, clouds and wind</span></div>
+      <div class="hz-detail" id="hzDetail"></div>`;
+
+    const sc = $("hzScroll"), rail = $("hzRail");
+    let railYmd = "";
+    // The left column shows the day in view, and a button back to Now when it's off screen
+    function paintRail() {
+      const k = Math.min(idx.length - 1, Math.max(0, Math.floor((sc.scrollLeft + cw * .6) / cw)));
+      const ymd = h.time[idx[k]].slice(0, 10);
+      if (ymd !== railYmd) {
+        railYmd = ymd;
+        const dd = days.find((x) => x.ymd === ymd), n = Math.round((Date.parse(ymd) - Date.parse(today)) / 864e5);
+        rail.innerHTML = `<span class="r-day">${n === 0 ? "Today" : fmtDow(ymd)}</span><span class="r-date">${fmtMonDay(ymd)}</span>
+          ${dd ? `<span class="r-sum num">${weatherIcon(dd.cat)}<span>${deg(dd.hi)}<span style="color:var(--ink-3);font-weight:500"> / ${deg(dd.lo)}</span></span></span><span class="r-lab">${esc(dd.label)}</span>
+          <span class="r-rain num${(dd.pop ?? 0) >= 20 ? "" : " dry"}">${(dd.pop ?? 0) >= 20 ? `Rain ${dd.pop}%${inches(dd.precip) ? ` · ${inches(dd.precip)}` : ""}` : "Dry"}</span>
+          <span class="r-sun num"><span>${UI.sunUp}${fmtClock(dd.sunrise)}</span><span>${UI.sunDown}${fmtClock(dd.sunset)}</span></span>` : ""}
+          <button type="button" class="hz-now" id="hzNow" hidden></button>`;
+        $("hzNow").addEventListener("click", () => sc.scrollTo({ left: Math.max(0, nowK * cw - cw * .4), behavior: "smooth" }));
+      }
+      const btn = $("hzNow");
+      btn.hidden = nowK * cw >= sc.scrollLeft - cw / 2 && nowK * cw <= sc.scrollLeft + sc.clientWidth - cw / 2;
+      btn.textContent = nowK * cw < sc.scrollLeft ? "← Now" : "Now →";
     }
-    const table = $("hourTable");
-    table.innerHTML = out.join("");
-    const headRow = table.querySelector(".hhead");
-    const syncOffset = () => table.style.setProperty("--hh", `${headRow.offsetHeight}px`);
-    syncOffset();
-    hourlyResize?.disconnect();
-    hourlyResize = new ResizeObserver(syncOffset);
-    hourlyResize.observe(headRow);
+    function pick(i) {
+      sc.querySelectorAll(".hz-col.sel").forEach((c) => c.classList.remove("sel"));
+      sc.querySelector(`.hz-col[data-i="${i}"]`)?.classList.add("sel");
+      const t = h.time[i], ymd = t.slice(0, 10), n = Math.round((Date.parse(ymd) - Date.parse(today)) / 864e5);
+      const ws = h.wind_speed_10m[i], gust = h.wind_gusts_10m[i], amt = inches(h.precipitation[i]);
+      const isNow = t.slice(0, 13) === nowKey;
+      $("hzDetail").innerHTML = `<h4>${weatherIcon(wmoCat(h.weather_code[i]), !!h.is_day[i], edges[t.slice(0, 13)])}${n === 0 ? "Today" : fmtDow(ymd)} · ${isNow ? "Now" : fmtClock(t)} · ${esc(WMO_TEXT[h.weather_code[i]] || "")}</h4>
+        <dl class="num"><div><dt>Temp</dt><dd>${deg(h.temperature_2m[i])}</dd></div><div><dt>Feels like</dt><dd>${deg(h.apparent_temperature[i])}</dd></div>
+        <div><dt>Rain</dt><dd style="color:var(--rain-ink)">${h.precipitation_probability[i] == null ? "—" : h.precipitation_probability[i] + "%"}</dd></div><div><dt>Amount</dt><dd>${amt || "—"}</dd></div>
+        <div><dt>Clouds</dt><dd>${h.cloud_cover[i] == null ? "—" : h.cloud_cover[i] + "%"}</dd></div><div><dt>Wind</dt><dd>${round(ws)} ${compass(h.wind_direction_10m[i])}${hasGust(ws, gust) ? ` <span class="muted" style="font-size:13px">g${round(gust)}</span>` : ""}</dd></div></dl>`;
+    }
+    sc.addEventListener("scroll", () => requestAnimationFrame(paintRail), { passive: true });
+    sc.addEventListener("click", (e) => { const c = e.target.closest(".hz-col"); if (c) pick(+c.dataset.i); });
+    // Opens on the current hour, with a sliver of the past showing on the left
+    hourlyToNow = () => { sc.scrollLeft = Math.max(0, nowK * cw - cw * .4); paintRail(); };
+    if ($("hourly").open) requestAnimationFrame(hourlyToNow); else paintRail();
+    pick(idx[nowK]);
   }
-  let hourlyResize = null;
+
+  /* ---------- Plan a Date: what's typical on any date, from the last 30 years here ---------- */
+  // Worked out once per location from Open-Meteo's historical data and saved, so picking a date is instant.
+  let planYmd = "";
+  let planLoading = null;
+  const normalsKey = () => `normals|${(+state.loc.lat).toFixed(2)}|${(+state.loc.lon).toFixed(2)}`;
+  // Day of a leap year (0–365) for a "YYYY-MM-DD" date, so Feb 29 has its own slot
+  const leapDay = (ymd) => (Date.UTC(2000, +ymd.slice(5, 7) - 1, +ymd.slice(8, 10)) - Date.UTC(2000, 0, 1)) / 864e5;
+  async function loadNormals() {
+    const saved = store.get(normalsKey(), null);
+    if (saved) return saved;
+    const y = new Date().getFullYear();
+    const p = new URLSearchParams({
+      latitude: state.loc.lat, longitude: state.loc.lon, start_date: `${y - 30}-01-01`, end_date: `${y - 1}-12-31`,
+      daily: "temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum",
+      temperature_unit: "fahrenheit", precipitation_unit: "inch", timezone: "auto"
+    });
+    const j = await fetchJSON(`https://archive-api.open-meteo.com/v1/archive?${p}`, { timeout: 45000, retries: 1 });
+    const d = j.daily, buckets = Array.from({ length: 366 }, () => []);
+    d.time.forEach((t, i) => { if (d.temperature_2m_max[i] != null && d.temperature_2m_min[i] != null) buckets[leapDay(t)].push(i); });
+    // Each date uses the 15 days around it in every year, so one odd year doesn't skew it
+    const normals = buckets.map((_, day) => {
+      let n = 0, hi = 0, lo = 0, wet = 0, frost = 0, snow = 0;
+      for (let k = -7; k <= 7; k++) for (const i of buckets[(day + k + 366) % 366]) {
+        n++; hi += d.temperature_2m_max[i]; lo += d.temperature_2m_min[i];
+        if ((d.precipitation_sum[i] || 0) >= .01) wet++;
+        if (d.temperature_2m_min[i] <= 32) frost++;
+        if ((d.snowfall_sum[i] || 0) >= .1) snow++;
+      }
+      return n ? [Math.round(hi / n), Math.round(lo / n), Math.round(wet / n * 100), Math.round(frost / n * 100), Math.round(snow / n * 100)] : null;
+    });
+    store.set(normalsKey(), normals);
+    return normals;
+  }
+  function renderPlan() {
+    const om = state.data.om, today = om.current?.time?.slice(0, 10) || om.daily.time[0];
+    if (!planYmd) planYmd = today;
+    const body = $("planBody");
+    const picker = `<label class="p-pick">Pick a date <input type="date" id="planDate" value="${planYmd}" min="${today}" max="${addDays(today, 366)}"></label>`;
+    const saved = store.get(normalsKey(), null);
+    if (!saved) {
+      body.innerHTML = `<div class="p-body">${picker}<p class="p-note" id="planMsg">Working out what's typical here from the last 30 years…</p></div>`;
+      wirePlan();
+      planLoading ||= loadNormals().then(() => { planLoading = null; if ($("plan").open) renderPlan(); }).catch(() => {
+        planLoading = null;
+        const msg = $("planMsg"); if (msg) msg.textContent = "Couldn't load past weather. Check your connection, then close and reopen this section.";
+      });
+      return;
+    }
+    const t = saved[leapDay(planYmd)];
+    const all = [...state.days, ...state.extDays], fc = all.find((x) => x.ymd === planYmd);
+    const stat = (label, v) => `<div><span>${label}</span><b>${v}</b></div>`;
+    body.innerHTML = `<div class="p-body">${picker}
+      ${fc ? `<div class="p-fc num">${weatherIcon(fc.cat)}<span>In the forecast for ${planYmd === today ? "today" : `${fmtDow(planYmd)}, ${fmtMonDay(planYmd)}`}: <b>${deg(fc.hi)} / ${deg(fc.lo)}</b> · ${esc(fc.label)}${fc.pop != null ? ` · rain ${fc.pop}%` : ""}</span></div>` : ""}
+      ${t ? `<div class="p-stats num">
+        ${stat("Typical high / low", `${t[0]}° / ${t[1]}°`)}
+        ${stat("Chance of rain", `${t[2]}%`)}
+        ${t[3] ? stat("Chance of frost", `${t[3]}%`) : ""}
+        ${t[4] ? stat("Chance of snow", `${t[4]}%`) : ""}
+      </div>` : ""}
+      <p class="p-note">From the last 30 years of weather on and around ${fmtMonDay(planYmd)} here.</p></div>`;
+    wirePlan();
+  }
+  function wirePlan() {
+    $("planDate").addEventListener("change", (e) => { if (e.target.value) { planYmd = e.target.value; renderPlan(); } });
+  }
 
   /* ================= Location dialog ================= */
   async function searchPlaces(q) {
@@ -3523,6 +3652,9 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   /* ================= Wiring ================= */
   function init() {
     $("hourlyChev").innerHTML = UI.chev;
+    $("planChev").innerHTML = UI.chev;
+    $("hourly").addEventListener("toggle", () => { if ($("hourly").open) hourlyToNow(); });
+    $("plan").addEventListener("toggle", () => { if ($("plan").open) { planYmd = ""; renderPlan(); } });
     document.querySelector(".place-btn").insertAdjacentHTML("afterbegin", UI.pin);
     document.querySelectorAll("[data-close]").forEach((b) => {
       b.innerHTML = UI.close;

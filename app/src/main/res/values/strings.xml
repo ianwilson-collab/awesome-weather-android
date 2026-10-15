@@ -31,6 +31,8 @@
     <string name="settings_show_current">Show current weather</string>
     <string name="settings_show_current_help">Temperature and conditions at the top</string>
     <string name="settings_show_current_always">Always on for this widget</string>
+    <string name="settings_show_rain">Show rain amounts</string>
+    <string name="settings_show_rain_help">The amount of rain under each day. Turn it off for taller temperature bars.</string>
     <string name="settings_icon_style">Icon style</string>
     <string name="settings_icon_style_help">Used by all your widgets and the app</string>
     <string name="style_basic">Basic</string>

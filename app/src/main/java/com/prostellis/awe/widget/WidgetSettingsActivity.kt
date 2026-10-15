@@ -40,6 +40,7 @@ class WidgetSettingsActivity : Activity() {
     private var showCurrent = true
     private var tempColor = 0
     private var glow = Glow.DEFAULT
+    private var showRain = true
     private var iconStyle = IconStyle.GLOW
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +59,7 @@ class WidgetSettingsActivity : Activity() {
         showCurrent = saved.showCurrent
         tempColor = saved.tempColor
         glow = saved.glow
+        showRain = saved.showRain
         iconStyle = store.iconStyle
 
         setContentView(R.layout.activity_widget_settings)
@@ -99,6 +101,13 @@ class WidgetSettingsActivity : Activity() {
             setOnCheckedChangeListener { _, on -> showCurrent = on; drawPreview() }
         }
         findViewById<TextView>(R.id.show_current_help).setText(if (forecast) R.string.settings_show_current_help else R.string.settings_show_current_always)
+
+        // Rain amounts: forecast widget only; turning them off gives their height to the temperature bars
+        findViewById<View>(R.id.show_rain_card).visibility = if (forecast) View.VISIBLE else View.GONE
+        findViewById<android.widget.Switch>(R.id.show_rain).apply {
+            isChecked = showRain
+            setOnCheckedChangeListener { _, on -> showRain = on; drawPreview() }
+        }
 
         // Icon style: shared by every widget and the app; each choice shows a few of its icons
         val styleButtons = mapOf(R.id.style_basic to IconStyle.BASIC, R.id.style_glow to IconStyle.GLOW, R.id.style_fine to IconStyle.FINE)
@@ -216,7 +225,7 @@ class WidgetSettingsActivity : Activity() {
         })
     }
 
-    private fun settings() = WidgetSettings(transparency, refresh, showCurrent, tempColor, glow)
+    private fun settings() = WidgetSettings(transparency, refresh, showCurrent, tempColor, glow, showRain)
 
     private fun drawPreview() {
         val preview = findViewById<ImageView>(R.id.preview)

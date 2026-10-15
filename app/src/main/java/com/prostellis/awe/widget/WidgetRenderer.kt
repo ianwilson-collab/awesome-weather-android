@@ -52,6 +52,8 @@ data class Look(
     val wallpaperLight: Boolean = false,
     /** A [Glow] step for the halo behind temperatures. */
     val glow: Int = Glow.DEFAULT,
+    /** Forecast widget: show the rain amount under each day. Off gives that height to the temperature bars. */
+    val showRain: Boolean = true,
 )
 
 /**
@@ -263,11 +265,13 @@ class WidgetRenderer(private val context: Context) {
             val nameBase = e + label * .74f
             val lowBase = h - e
             val mainBase = if (sub) lowBase - label * 1.05f - 2f * s else h - e
-            val iconTop = nameBase + label * .3f + 2f * s
-            val iconBottom = mainBase - main * .74f - 3f * s
-            // Hour tiles have no low line, so their icons fill the tile's width; the drawing has its own clear edge,
-            // so its box may run 15% past the tile while the visible art stays inside
-            val cellIcon = min(iconBottom - iconTop, if (hourly) tile.width() * 1.15f else tile.width() - 4f * s)
+            // Day tiles keep only small gaps above and below the icon (0.5 and 1 dp) so it can grow
+            val iconTop = nameBase + label * .3f + (if (sub) .5f else 2f) * s
+            val iconBottom = mainBase - main * .74f - (if (sub) 1f else 3f) * s
+            // The icon drawings have their own clear edge, so the icon's box may run past its space (15% wider on
+            // both tiles, 10% taller on day tiles) while the visible art stays clear of the text
+            val room = iconBottom - iconTop
+            val cellIcon = if (hourly) min(room, tile.width() * 1.15f) else min(room * 1.1f, tile.width() * 1.15f)
             centered(canvas, fit(name, label, 700, tile.width() - 2f), cx, nameBase, label, 700, t.ink2, t)
             WeatherIcons.draw(canvas, cat, day, cx - cellIcon / 2, (iconTop + iconBottom) / 2 - cellIcon / 2, cellIcon, t.icons, icons, t.textShadow)
             tempText(canvas, big, cx, mainBase, main, 700, tempColor, look.glow, centered = true)
@@ -374,7 +378,7 @@ class WidgetRenderer(private val context: Context) {
             text(canvas, fit(m.place.shortLabel, 14.5f, 600, aweLeft - 8f - band.left - 12f), band.left + 12f, band.centerY() + 5f, 14.5f, 600, t.ink, t)
         }
 
-        drawDays(canvas, RectF(padX, band.bottom + gap, w - padX, h - padBottom), m.days.take(dayCount), z, t, tempColor, look.glow)
+        drawDays(canvas, RectF(padX, band.bottom + gap, w - padX, h - padBottom), m.days.take(dayCount), z, t, tempColor, look.glow, look.showRain)
         return Rendered(bitmap, refresh, gear, t.ink2)
     }
 
@@ -386,7 +390,7 @@ class WidgetRenderer(private val context: Context) {
         }
     }
 
-    private fun drawDays(canvas: Canvas, area: RectF, days: List<com.prostellis.awe.weather.Day>, z: Sizes, t: WidgetTheme, tempColor: Int, glow: Int) {
+    private fun drawDays(canvas: Canvas, area: RectF, days: List<com.prostellis.awe.weather.Day>, z: Sizes, t: WidgetTheme, tempColor: Int, glow: Int, showRain: Boolean) {
         if (days.isEmpty()) return
         val gap = 2f
         val colW = (area.width() - gap * (days.size - 1)) / days.size
@@ -394,9 +398,10 @@ class WidgetRenderer(private val context: Context) {
         val wMax = temps.maxOrNull() ?: 0.0
         val wMin = temps.minOrNull() ?: 0.0
         val colTop = 2f; val amtBottom = 3f
-        val nameH = z.name * 1.16f; val iconH = z.icon + 1f; val amtH = z.amt * 1.1f // nameH leaves room for the event dot
+        val nameH = z.name * 1.16f; val iconH = z.icon + 1f; val amtH = z.amt * 1.1f // nameH leaves room for the event underline
         val tempsTop = area.top + colTop + nameH + iconH
-        val tempsH = area.bottom - amtBottom - amtH - 4f - tempsTop
+        // With rain amounts hidden, the bars run down to where the amounts were
+        val tempsH = if (showRain) area.bottom - amtBottom - amtH - 4f - tempsTop else area.bottom - amtBottom - tempsTop
         val labHi = z.hi * 1.08f; val labLo = z.lo * 1.08f
         val minBar = 12f
         val travel = max(minBar, tempsH - labHi - labLo - 6f)
@@ -411,9 +416,16 @@ class WidgetRenderer(private val context: Context) {
 
             val name = if (i == 0) "Today" else dayFormat.format(java.sql.Date.valueOf(d.ymd))
             centered(canvas, name, cx, area.top + colTop + z.name * .76f, z.name, 600, if (i == 0) t.todayName else t.ink, t)
-            // Event day (holiday, season, sky event): a small dot in the sticker's color under the name
+            // Event day (holiday, season, sky event): the name underlined in the sticker's color
             eventColors[d.ymd]?.let { color ->
-                canvas.drawCircle(cx, area.top + colTop + z.name * 1.01f, 2.2f * z.name / 15f, Paint(Paint.ANTI_ALIAS_FLAG).apply { this.color = color })
+                val half = measure(name, z.name, 600) / 2
+                val thick = 2.5f * z.name / 15f
+                val y = area.top + colTop + z.name * 1.04f
+                val line = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                    this.color = color; strokeWidth = thick; strokeCap = Paint.Cap.ROUND
+                    if (t.textShadow) setShadowLayer(2f, 0f, 0f, 0x59000000)
+                }
+                canvas.drawLine(cx - half + thick / 2, y, cx + half - thick / 2, y, line)
             }
             WeatherIcons.draw(canvas, d.cat, true, cx - z.icon / 2, area.top + colTop + nameH, z.icon, t.icons, icons, t.textShadow)
 
@@ -427,8 +439,8 @@ class WidgetRenderer(private val context: Context) {
                 centered(canvas, "${WeatherLogic.jsRound(d.lo)}°", cx, bottom + 2f + z.lo * .92f, z.lo, 500, t.ink2, t)
             }
 
-            // Rain amount in a soft blue pill, pinned to the bottom of the column
-            WeatherLogic.precipText(d.precip)?.let { amount ->
+            // Rain amount in a soft blue pill, pinned to the bottom of the column (unless turned off)
+            if (showRain) WeatherLogic.precipText(d.precip)?.let { amount ->
                 val tw = measure(amount, z.amt, 600)
                 val pillH = z.amt * 1.3f
                 val pill = RectF(cx - tw / 2 - 4f, area.bottom - amtBottom - pillH, cx + tw / 2 + 4f, area.bottom - amtBottom)

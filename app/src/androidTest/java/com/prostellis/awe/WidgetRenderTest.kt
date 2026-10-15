@@ -71,10 +71,10 @@ class WidgetRenderTest {
     private fun look(
         kind: WidgetKind, m: WidgetModel?, dark: Boolean, style: BgStyle = BgStyle.BASIC, transparency: Int = 0,
         icons: IconStyle = IconStyle.GLOW, tempColor: Int = 0, wallpaperLight: Boolean = false, showCurrent: Boolean = true,
-        ymd: String = "2026-10-08", glow: Int = Glow.DEFAULT,
+        ymd: String = "2026-10-08", glow: Int = Glow.DEFAULT, showRain: Boolean = true,
     ): Look {
         val sky = if (kind == WidgetKind.TINY || m == null) null else WidgetSky.picture(context, style, m.nowCat, m.light, dark, ymd)
-        return Look(transparency, WidgetTheme.pick(dark, transparency, wallpaperLight, sky?.isDark), dark, icons, tempColor, sky, showCurrent, wallpaperLight, glow)
+        return Look(transparency, WidgetTheme.pick(dark, transparency, wallpaperLight, sky?.isDark), dark, icons, tempColor, sky, showCurrent, wallpaperLight, glow, showRain)
     }
 
     private fun draw(kind: WidgetKind, m: WidgetModel?, size: Pair<Float, Float>, look: Look, events: Map<String, Int> = emptyMap()) =
@@ -181,7 +181,16 @@ class WidgetRenderTest {
         }
     }
 
-    /** Event days get a small dot in the sticker color under the day name. */
+    /** With rain amounts turned off, the forecast's temperature bars take their height. */
+    @Test fun drawsTheForecastWithoutRainAmounts() {
+        for (dark in listOf(false, true)) {
+            val tag = if (dark) "dark" else "light"
+            save("forecast-4x2-no-rain-$tag", draw(WidgetKind.FORECAST, model(morning), forecast4, look(WidgetKind.FORECAST, model(morning), dark, showRain = false)), null)
+            save("forecast-5x2-no-rain-$tag", draw(WidgetKind.FORECAST, model(morning), forecast5, look(WidgetKind.FORECAST, model(morning), dark, showRain = false)), null)
+        }
+    }
+
+    /** Event days get the day name underlined in the sticker color. */
     @Test fun marksEventDays() {
         val events = mapOf("2026-10-10" to 0xFF9AA6B4.toInt(), "2026-10-12" to 0xFFE8384F.toInt(), "2026-10-14" to 0xFF20B97F.toInt())
         for (dark in listOf(false, true)) {

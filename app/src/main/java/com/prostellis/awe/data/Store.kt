@@ -20,11 +20,11 @@ enum class RefreshMode(val minutes: Int?) {
 
 /**
  * Settings for one widget on the home screen. [tempColor] is a [com.prostellis.awe.widget.TempColors] choice (0 = Auto);
- * [glow] is a [com.prostellis.awe.widget.Glow] step for the halo behind the temperatures.
+ * [glow] is a [com.prostellis.awe.widget.Glow] step for the halo behind the temperatures; [showRain] shows the forecast widget's rain amounts.
  */
-data class WidgetSettings(val transparency: Int, val refresh: RefreshMode, val showCurrent: Boolean, val tempColor: Int, val glow: Int) {
+data class WidgetSettings(val transparency: Int, val refresh: RefreshMode, val showCurrent: Boolean, val tempColor: Int, val glow: Int, val showRain: Boolean) {
     companion object {
-        val DEFAULT = WidgetSettings(transparency = 0, refresh = RefreshMode.EVERY_30, showCurrent = true, tempColor = 0, glow = com.prostellis.awe.widget.Glow.DEFAULT)
+        val DEFAULT = WidgetSettings(transparency = 0, refresh = RefreshMode.EVERY_30, showCurrent = true, tempColor = 0, glow = com.prostellis.awe.widget.Glow.DEFAULT, showRain = true)
     }
 }
 
@@ -103,6 +103,7 @@ class Store(context: Context) {
         showCurrent = prefs.getBoolean("w$id.showCurrent", WidgetSettings.DEFAULT.showCurrent),
         tempColor = prefs.getInt("w$id.tempColor", WidgetSettings.DEFAULT.tempColor),
         glow = prefs.getInt("w$id.glow", WidgetSettings.DEFAULT.glow),
+        showRain = prefs.getBoolean("w$id.showRain", WidgetSettings.DEFAULT.showRain),
     )
 
     fun saveWidgetSettings(id: Int, s: WidgetSettings) {
@@ -112,6 +113,7 @@ class Store(context: Context) {
             .putBoolean("w$id.showCurrent", s.showCurrent)
             .putInt("w$id.tempColor", s.tempColor)
             .putInt("w$id.glow", s.glow)
+            .putBoolean("w$id.showRain", s.showRain)
             .apply()
     }
 
