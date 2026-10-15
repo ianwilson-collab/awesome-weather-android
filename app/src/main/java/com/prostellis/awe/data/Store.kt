@@ -5,7 +5,11 @@ import com.prostellis.awe.weather.EventDays
 import com.prostellis.awe.weather.Forecast
 import com.prostellis.awe.weather.Place
 import com.prostellis.awe.widget.BgStyle
+import com.prostellis.awe.widget.ClockColor
+import com.prostellis.awe.widget.ClockSettings
+import com.prostellis.awe.widget.DatePos
 import com.prostellis.awe.widget.IconStyle
+import com.prostellis.awe.widget.TimeFormat
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -111,6 +115,41 @@ class Store(context: Context) {
             .apply()
     }
 
+    fun clockSettings(id: Int): ClockSettings {
+        val d = ClockSettings()
+        val k = "w$id.clock."
+        return ClockSettings(
+            face = prefs.getString("${k}face", d.face) ?: d.face,
+            format = prefs.getString("${k}format", null)?.let { runCatching { TimeFormat.valueOf(it) }.getOrNull() } ?: d.format,
+            timeColor = ClockColor.decode(prefs.getString("${k}timeColor", null)),
+            glow = prefs.getInt("${k}glow", d.glow),
+            transparency = prefs.getInt("${k}transparency", d.transparency),
+            weather = prefs.getBoolean("${k}weather", d.weather),
+            hiLo = prefs.getBoolean("${k}hiLo", d.hiLo),
+            tempColor = ClockColor.decode(prefs.getString("${k}tempColor", null)),
+            date = prefs.getBoolean("${k}date", d.date),
+            datePos = prefs.getString("${k}datePos", null)?.let { runCatching { DatePos.valueOf(it) }.getOrNull() } ?: d.datePos,
+            dateColor = ClockColor.decode(prefs.getString("${k}dateColor", null)),
+        )
+    }
+
+    fun saveClockSettings(id: Int, s: ClockSettings) {
+        val k = "w$id.clock."
+        prefs.edit()
+            .putString("${k}face", s.face)
+            .putString("${k}format", s.format.name)
+            .putString("${k}timeColor", s.timeColor.encode())
+            .putInt("${k}glow", s.glow)
+            .putInt("${k}transparency", s.transparency)
+            .putBoolean("${k}weather", s.weather)
+            .putBoolean("${k}hiLo", s.hiLo)
+            .putString("${k}tempColor", s.tempColor.encode())
+            .putBoolean("${k}date", s.date)
+            .putString("${k}datePos", s.datePos.name)
+            .putString("${k}dateColor", s.dateColor.encode())
+            .apply()
+    }
+
     /** When this widget last showed newly downloaded data. */
     fun widgetUpdatedAt(id: Int): Long = prefs.getLong("w$id.updated", 0)
 
@@ -118,8 +157,11 @@ class Store(context: Context) {
         prefs.edit().putLong("w$id.updated", at).apply()
     }
 
+    /** Removes everything saved for a widget that's been taken off the home screen. */
     fun forgetWidget(id: Int) {
-        prefs.edit().remove("w$id.transparency").remove("w$id.refresh").remove("w$id.showCurrent").remove("w$id.tempColor").remove("w$id.glow").remove("w$id.updated").apply()
+        val edit = prefs.edit()
+        prefs.all.keys.filter { it.startsWith("w$id.") }.forEach { edit.remove(it) }
+        edit.apply()
     }
 
     private fun download(url: String): String {

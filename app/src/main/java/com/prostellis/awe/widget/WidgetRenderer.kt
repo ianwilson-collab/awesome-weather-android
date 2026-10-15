@@ -76,14 +76,7 @@ class WidgetRenderer(private val context: Context) {
         val bitmap = Bitmap.createBitmap((w * density).toInt(), (h * density).toInt(), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         canvas.scale(density, density)
-        val bgAlpha = 1f - look.transparency / 100f
-        val cat = model?.nowCat ?: Cat.PARTLY
-        val light = model?.light ?: Daylight(1.0, false, true)
-        when {
-            kind == WidgetKind.TINY -> drawTint(canvas, w, h, cat, light.isDay, bgAlpha)
-            look.sky != null -> drawPicture(canvas, w, h, look.sky, look.theme, bgAlpha)
-            else -> drawSky(canvas, w, h, cat, light, look.phoneDark, bgAlpha)
-        }
+        drawBackground(canvas, kind == WidgetKind.TINY, w, h, model, look)
         // Bands, columns and tiles run to the widget's edges; the rounded corners trim them
         canvas.clipPath(rounded(w, h))
         return when (kind) {
@@ -96,7 +89,20 @@ class WidgetRenderer(private val context: Context) {
 
     /* ---------------- Background ---------------- */
 
-    private fun rounded(w: Float, h: Float) = Path().apply { addRoundRect(RectF(0f, 0f, w, h), cornerDp, cornerDp, Path.Direction.CW) }
+    /** The widget's background: the 1×1's weather tint ([tint]), the style's sky picture, or Basic's drawn sky. Faded by Transparency. */
+    fun drawBackground(canvas: Canvas, tint: Boolean, w: Float, h: Float, model: WidgetModel?, look: Look) {
+        val bgAlpha = 1f - look.transparency / 100f
+        val cat = model?.nowCat ?: Cat.PARTLY
+        val light = model?.light ?: Daylight(1.0, false, true)
+        when {
+            tint -> drawTint(canvas, w, h, cat, light.isDay, bgAlpha)
+            look.sky != null -> drawPicture(canvas, w, h, look.sky, look.theme, bgAlpha)
+            else -> drawSky(canvas, w, h, cat, light, look.phoneDark, bgAlpha)
+        }
+    }
+
+    /** The widget's outline, with the home screen's corner radius. */
+    fun rounded(w: Float, h: Float) = Path().apply { addRoundRect(RectF(0f, 0f, w, h), cornerDp, cornerDp, Path.Direction.CW) }
 
     /** The style's still picture, filling the widget (cropped from the middle), with a light veil so text reads. */
     private fun drawPicture(canvas: Canvas, w: Float, h: Float, sky: SkyPicture, t: WidgetTheme, alpha: Float) {

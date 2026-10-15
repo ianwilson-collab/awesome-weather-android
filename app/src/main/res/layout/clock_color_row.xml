@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A color setting: its name and current choice, and a swatch. A tap opens the color picker. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="6dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="52dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/color_title"
+            style="@style/Awe.CardTitle" />
+
+        <TextView
+            android:id="@+id/color_value"
+            style="@style/Awe.Help" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/color_swatch"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:importantForAccessibility="no" />
+</LinearLayout>

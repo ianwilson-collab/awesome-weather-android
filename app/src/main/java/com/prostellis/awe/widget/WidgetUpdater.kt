@@ -28,10 +28,10 @@ object WidgetUpdater {
         ForecastWidget::class.java to WidgetKind.FORECAST,
     )
 
-    /** Every widget of ours currently on the home screen. */
+    /** Every widget of ours currently on the home screen, clocks included. */
     fun allIds(context: Context): IntArray {
         val m = AppWidgetManager.getInstance(context)
-        return PROVIDERS.keys.map { m.getAppWidgetIds(ComponentName(context, it)) }.reduce { a, b -> a + b }
+        return PROVIDERS.keys.map { m.getAppWidgetIds(ComponentName(context, it)) }.reduce { a, b -> a + b } + ClockUpdater.ids(context)
     }
 
     fun kindOf(context: Context, id: Int): WidgetKind? {
@@ -97,6 +97,7 @@ object WidgetUpdater {
 
     /** Redraws a widget. With [spinning], the refresh button shows the spinner instead. */
     fun update(context: Context, id: Int, spinning: Boolean = false) {
+        if (ClockUpdater.isClock(context, id)) { ClockUpdater.update(context, id); return }
         val kind = kindOf(context, id) ?: return
         val (w, h) = sizeDp(context, id, kind)
         val store = Store(context)

@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- AWE Clock settings. No background on the root: the live preview sits on the real wallpaper. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="12dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_back"
+            android:padding="11dp"
+            android:src="@drawable/ic_back"
+            android:tint="@color/ink" />
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="10dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/app_tile" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dm_sans"
+                android:fontVariationSettings="'wght' 700"
+                android:letterSpacing="0.3"
+                android:text="@string/wordmark_awesome"
+                android:textColor="@color/awe_gold"
+                android:textSize="8.5sp" />
+
+            <TextView
+                android:id="@+id/wordmark_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:fontFamily="@font/dm_sans"
+                android:fontVariationSettings="'wght' 700"
+                android:text="@string/wordmark_weather"
+                android:textColor="@color/awe_green"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dm_sans"
+                android:text="@string/settings_title_clock"
+                android:textColor="@color/ink3"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Live preview over the wallpaper; it stays in view while a color is being picked -->
+    <FrameLayout
+        android:id="@+id/preview_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="14dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="18dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/dm_sans"
+            android:fontVariationSettings="'wght' 600"
+            android:letterSpacing="0.05"
+            android:shadowColor="#80000000"
+            android:shadowDy="1"
+            android:shadowRadius="3"
+            android:text="@string/settings_preview"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
+
+        <ImageView
+            android:id="@+id/preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/bg">
+
+        <ScrollView
+            android:id="@+id/body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="14dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="20dp">
+
+                <!-- Time: format and the ten clock styles -->
+                <LinearLayout style="@style/Awe.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Awe.CardTitle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/clock_time" />
+
+                        <RadioGroup
+                            android:id="@+id/format_group"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/format_phone"
+                                style="@style/Awe.Pill"
+                                android:text="@string/clock_format_phone" />
+
+                            <RadioButton
+                                android:id="@+id/format_12"
+                                style="@style/Awe.Pill"
+                                android:text="@string/clock_format_12" />
+
+                            <RadioButton
+                                android:id="@+id/format_24"
+                                style="@style/Awe.Pill"
+                                android:text="@string/clock_format_24" />
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/Awe.Help"
+                        android:text="@string/clock_format_help" />
+
+                    <TextView
+                        style="@style/Awe.CardTitle"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/clock_style" />
+
+                    <GridLayout
+                        android:id="@+id/faces"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:columnCount="5" />
+                </LinearLayout>
+
+                <!-- Time color, glow and transparency -->
+                <LinearLayout style="@style/Awe.Card">
+
+                    <include
+                        android:id="@+id/row_time_color"
+                        layout="@layout/clock_color_row" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Awe.CardTitle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/clock_glow" />
+
+                        <TextView
+                            android:id="@+id/glow_value"
+                            style="@style/Awe.CardTitle"
+                            android:textColor="@color/accent" />
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/glow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:contentDescription="@string/clock_glow"
+                        android:progressTint="@color/accent"
+                        android:thumbTint="@color/accent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Awe.CardTitle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/clock_transparency" />
+
+                        <TextView
+                            android:id="@+id/transparency_value"
+                            style="@style/Awe.CardTitle"
+                            android:textColor="@color/accent" />
+                    </LinearLayout>
+
+                    <SeekBar
+                        android:id="@+id/transparency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:contentDescription="@string/clock_transparency"
+                        android:progressTint="@color/accent"
+                        android:thumbTint="@color/accent" />
+                </LinearLayout>
+
+                <!-- Weather, then day and date -->
+                <LinearLayout style="@style/Awe.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Awe.CardTitle"
+                                android:text="@string/clock_weather" />
+
+                            <TextView
+                                style="@style/Awe.Help"
+                                android:text="@string/clock_weather_help" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/weather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/clock_weather"
+                            android:thumbTint="@color/card"
+                            android:trackTint="@color/accent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/hilo_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Awe.Radio"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingStart="0dp"
+                            android:text="@string/clock_hilo" />
+
+                        <Switch
+                            android:id="@+id/hilo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/clock_hilo"
+                            android:thumbTint="@color/card"
+                            android:trackTint="@color/accent" />
+                    </LinearLayout>
+
+                    <include
+                        android:id="@+id/row_temp_color"
+                        layout="@layout/clock_color_row" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Awe.CardTitle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/clock_date" />
+
+                        <Switch
+                            android:id="@+id/date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/clock_date"
+                            android:thumbTint="@color/card"
+                            android:trackTint="@color/accent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/date_pos_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Awe.Radio"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingStart="0dp"
+                            android:text="@string/clock_date_pos" />
+
+                        <RadioGroup
+                            android:id="@+id/date_pos_group"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/date_above"
+                                style="@style/Awe.Pill"
+                                android:text="@string/clock_date_above" />
+
+                            <RadioButton
+                                android:id="@+id/date_below"
+                                style="@style/Awe.Pill"
+                                android:text="@string/clock_date_below" />
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <include
+                        android:id="@+id/row_date_color"
+                        layout="@layout/clock_color_row" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Awe.Help"
+                    android:layout_marginHorizontal="4dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/clock_taps_help" />
+
+                <TextView
+                    android:id="@+id/done"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/button_done"
+                    android:fontFamily="@font/dm_sans"
+                    android:fontVariationSettings="'wght' 700"
+                    android:gravity="center"
+                    android:text="@string/settings_done"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- The color picker opens here, over the settings, with the preview still showing above -->
+        <ScrollView
+            android:id="@+id/picker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/picker_body"
+                style="@style/Awe.Card"
+                android:layout_margin="14dp" />
+        </ScrollView>
+    </FrameLayout>
+</LinearLayout>

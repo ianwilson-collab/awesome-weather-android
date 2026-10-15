@@ -7,6 +7,8 @@
     <color name="ink2">#A8B5C2</color>
     <color name="ink3">#7C8996</color>
     <color name="accent">#6EA1FF</color>
+    <color name="line_strong">#29FFFFFF</color>
+    <color name="accent_soft">#246EA1FF</color>
     <color name="line">#14FFFFFF</color>
 
     <!-- AWE colors: ProStellis logo green and blue, sun gold -->

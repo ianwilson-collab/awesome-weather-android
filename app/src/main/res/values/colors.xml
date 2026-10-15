@@ -7,6 +7,8 @@
     <color name="ink2">#4A5A6A</color>
     <color name="ink3">#75828F</color>
     <color name="accent">#2F6FDB</color>
+    <color name="line_strong">#2914202B</color>
+    <color name="accent_soft">#142F6FDB</color>
     <color name="line">#1414202B</color>
 
     <!-- AWE colors: deeper versions on light backgrounds so they stay readable -->

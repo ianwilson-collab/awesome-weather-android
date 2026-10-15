@@ -52,6 +52,8 @@ object Refresh {
     fun dueIds(context: Context, now: Long): IntArray {
         val store = Store(context)
         return WidgetUpdater.allIds(context).filter { id ->
+            // A clock with the weather turned off never needs a download
+            if (ClockUpdater.isClock(context, id) && !store.clockSettings(id).weather) return@filter false
             val minutes = store.widgetSettings(id).refresh.minutes ?: return@filter false
             now - store.widgetUpdatedAt(id) >= (minutes - 3) * 60_000L
         }.toIntArray()
