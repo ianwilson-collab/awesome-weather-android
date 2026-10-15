@@ -99,14 +99,17 @@ object ClockUpdater {
         return views
     }
 
-    private val CLOCK_PACKAGES = listOf("com.google.android.deskclock", "com.sec.android.app.clockpackage", "com.android.deskclock")
+    private val CLOCK_PACKAGES = listOf(
+        "com.google.android.deskclock", "com.sec.android.app.clockpackage", "com.android.deskclock",
+        "com.oneplus.deskclock", "com.coloros.alarmclock",
+    )
 
-    /** The Clock app's alarms; failing that, the Clock app itself; failing that, AWE. */
+    /** The phone's Clock app (all its tabs); failing that, whatever answers "show alarms"; failing that, AWE. */
     private fun clockAppIntent(context: Context): PendingIntent {
         val pm = context.packageManager
         val alarms = Intent(AlarmClock.ACTION_SHOW_ALARMS)
-        val target = alarms.resolveActivity(pm)?.let { alarms.setComponent(it) }
-            ?: CLOCK_PACKAGES.firstNotNullOfOrNull { pm.getLaunchIntentForPackage(it) }
+        val target = CLOCK_PACKAGES.firstNotNullOfOrNull { pm.getLaunchIntentForPackage(it) }
+            ?: alarms.resolveActivity(pm)?.let { alarms.setComponent(it) }
             ?: Intent(context, MainActivity::class.java)
         return PendingIntent.getActivity(
             context, 1,
