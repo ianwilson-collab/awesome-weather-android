@@ -11,8 +11,8 @@ android {
         applicationId = "com.prostellis.awe"
         minSdk = 31
         targetSdk = 35
-        versionCode = 17
-        versionName = "2.2"
+        versionCode = 18
+        versionName = "2.2.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -59,6 +59,7 @@ dependencies {
     implementation("androidx.core:core:1.15.0")
     implementation("androidx.activity:activity:1.9.3")
     implementation("androidx.webkit:webkit:1.12.1")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.work:work-runtime:2.10.0")
 
     testImplementation("junit:junit:4.13.2")

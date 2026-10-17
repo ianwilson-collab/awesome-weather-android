@@ -64,7 +64,6 @@ class ClockSettingsActivity : Activity() {
         colorRow(R.id.row_time_color, Target.TIME)
         colorRow(R.id.row_temp_color, Target.TEMP)
         colorRow(R.id.row_date_color, Target.DATE)
-        colorRow(R.id.row_wxline_color, Target.DATE)
         switch(R.id.weather, settings.weather) { settings = settings.copy(weather = it) }
         switch(R.id.hilo, settings.hiLo) { settings = settings.copy(hiLo = it) }
         switch(R.id.date, settings.date) { settings = settings.copy(date = it) }
@@ -103,7 +102,7 @@ class ClockSettingsActivity : Activity() {
     /**
      * High and low and the temperature color show only with the weather on; position and date color only with the date on.
      * The weather line's settings: Same line as date (with the date on), its position (unless it's on the date's line),
-     * which side of the date (when both are on the same side of the clock), and its color when the date is off.
+     * and which side of the date (when both are on the same side of the clock). One color row serves both lines.
      */
     private fun showDependentRows() {
         fun show(id: Int, on: Boolean) { findViewById<View>(id).visibility = if (on) View.VISIBLE else View.GONE }
@@ -111,11 +110,10 @@ class ClockSettingsActivity : Activity() {
         show(R.id.hilo_row, s.weather)
         show(R.id.row_temp_color, s.weather)
         show(R.id.date_pos_row, s.date)
-        show(R.id.row_date_color, s.date)
+        show(R.id.row_date_color, s.date || s.wxLine)
         show(R.id.wx_same_row, s.wxLine && s.date)
         show(R.id.wx_pos_row, s.wxLine && !(s.date && s.wxSame))
         show(R.id.wx_order_row, s.wxLine && s.date && !s.wxSame && s.datePos == s.wxPos)
-        show(R.id.row_wxline_color, s.wxLine && !s.date)
     }
 
     private fun aboveBelow(groupId: Int, aboveId: Int, belowId: Int, current: DatePos, set: (DatePos) -> Unit) {

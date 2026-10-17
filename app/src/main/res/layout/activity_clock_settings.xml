@@ -244,7 +244,7 @@
                         android:thumbTint="@color/accent" />
                 </LinearLayout>
 
-                <!-- Weather, then day and date -->
+                <!-- Weather on the right: the temperature over a faint icon, with its high and low and color -->
                 <LinearLayout style="@style/Awe.Card">
 
                     <LinearLayout
@@ -299,11 +299,14 @@
                     <include
                         android:id="@+id/row_temp_color"
                         layout="@layout/clock_color_row" />
+                </LinearLayout>
+
+                <!-- The lines above and below the clock: day and date, and the weather line (today's temperature with its high and low), in one color -->
+                <LinearLayout style="@style/Awe.Card">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -353,17 +356,10 @@
                         </RadioGroup>
                     </LinearLayout>
 
-                    <include
-                        android:id="@+id/row_date_color"
-                        layout="@layout/clock_color_row" />
-                </LinearLayout>
-
-                <!-- Weather line: today's temperature with its high and low, in the date's color -->
-                <LinearLayout style="@style/Awe.Card">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -479,7 +475,7 @@
                     </LinearLayout>
 
                     <include
-                        android:id="@+id/row_wxline_color"
+                        android:id="@+id/row_date_color"
                         layout="@layout/clock_color_row" />
                 </LinearLayout>
 

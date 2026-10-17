@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.WindowInsets
 import android.webkit.GeolocationPermissions
@@ -20,6 +21,7 @@ import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.webkit.WebViewAssetLoader
 import com.prostellis.awe.data.Store
 import com.prostellis.awe.widget.BgStyle
@@ -28,12 +30,13 @@ import com.prostellis.awe.widget.Refresh
 import com.prostellis.awe.widget.WidgetUpdater
 
 /**
- * The app: the bundled web app (assets/web/index.html, unchanged) in a full-screen web view,
+ * The app: the bundled web app (assets/web/index.html, unchanged) in a full-screen web view, with pull to refresh,
  * plus a small bridge so the widgets follow the location, icon style, background style and event days from the app.
  */
 class MainActivity : ComponentActivity() {
 
     private lateinit var webView: WebView
+    private lateinit var pull: SwipeRefreshLayout
     private var pageReady = false
     private var openLocationWhenReady = false
     private var pendingGeolocation: Pair<String, GeolocationPermissions.Callback>? = null
@@ -48,7 +51,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val root = FrameLayout(this)
         webView = WebView(this)
-        root.addView(webView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+        // Pulling down at the top of the page downloads fresh weather for the whole page
+        pull = SwipeRefreshLayout(this).apply {
+            setColorSchemeColors(getColor(R.color.accent))
+            setProgressBackgroundColorSchemeColor(getColor(R.color.card))
+            setOnChildScrollUpCallback { _, _ -> webView.canScrollVertically(-1) }
+            setOnRefreshListener { refreshPage() }
+            addView(webView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
+        root.addView(pull, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
         setContentView(root)
         fitSystemBars(root)
         holdSplashUntilPageLoads(root)
@@ -114,8 +125,25 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        webView.onResume()
+        if (!pageReady) return
         // The style may have been changed in a widget's settings while the app was in the background
-        if (pageReady) syncIconStyle()
+        syncIconStyle()
+        // The phone may have kept the app in memory for days: fresh weather if what's showing is over half an hour old
+        webView.evaluateJavascript("window.awesomeWeather?.refreshIfStale()", null)
+    }
+
+    override fun onPause() {
+        webView.onPause()
+        super.onPause()
+    }
+
+    /** Pull to refresh: downloads fresh weather and hides the spinner when the page has redrawn (or after 30 seconds). */
+    private fun refreshPage() {
+        webView.evaluateJavascript(
+            "(window.awesomeWeather ? window.awesomeWeather.refresh() : Promise.resolve()).finally(() => AWEBridge.refreshDone())", null,
+        )
+        pull.postDelayed({ pull.isRefreshing = false }, 30_000)
     }
 
     /** The app shows the icon style saved for the widgets (the page saves its own copy and reports changes back). */
@@ -208,6 +236,12 @@ class MainActivity : ComponentActivity() {
     }
 
     private inner class Bridge {
+        /** A pull to refresh has finished. */
+        @JavascriptInterface
+        fun refreshDone() {
+            runOnUiThread { pull.isRefreshing = false }
+        }
+
         /** The web app saved a place (the same JSON it keeps in localStorage). */
         @JavascriptInterface
         fun placeSaved(json: String) {

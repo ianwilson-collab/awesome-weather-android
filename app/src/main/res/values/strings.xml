@@ -64,8 +64,8 @@
     <string name="clock_temp_color">Temperature color</string>
     <string name="clock_date">Day and date</string>
     <string name="clock_date_pos">Position</string>
-    <string name="clock_date_above">Above</string>
-    <string name="clock_date_below">Below</string>
+    <string name="clock_date_above">Above clock</string>
+    <string name="clock_date_below">Below clock</string>
     <string name="clock_date_color">Date color</string>
     <string name="clock_date_wxline_color">Date and weather line color</string>
     <string name="clock_wxline">Weather line</string>
@@ -74,9 +74,9 @@
     <string name="clock_wx_pos">Position</string>
     <string name="clock_wx_above">Above clock</string>
     <string name="clock_wx_below">Below clock</string>
-    <string name="clock_wx_order">Next to the date</string>
-    <string name="clock_wx_order_above">Above it</string>
-    <string name="clock_wx_order_below">Below it</string>
+    <string name="clock_wx_order">Position with date</string>
+    <string name="clock_wx_order_above">Above</string>
+    <string name="clock_wx_order_below">Below</string>
     <string name="clock_wxline_color">Weather line color</string>
     <string name="clock_taps_help">Tap the time for your Clock app, the weather for AWE. Long-press for these settings.</string>
     <string name="clock_open_clock">Open the Clock app</string>

@@ -856,7 +856,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   const state = {
     loc: store.get("loc", DEFAULT_LOC),
     data: null,       // { om, nws, fetchedAt, locKey }
-    loading: false,
+    loadPromise: null, // the download under way, shared by everything that asks for one
     previewMin: null, // minutes after midnight (15-min steps) while previewing another time; null = live
     days: [],         // the 7 day cards
     extDays: [],      // Extended Forecast, days 8–16
@@ -921,15 +921,18 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       const ctrl = new AbortController();
       const t = setTimeout(() => ctrl.abort(), timeout);
       try {
+        // The time limit covers the whole download, body included, so a stalled one can't hang
         const res = await fetch(url, { signal: ctrl.signal, headers, cache: "no-store" });
-        clearTimeout(t);
         if (!res.ok) {
+          clearTimeout(t);
           const err = new Error(`HTTP ${res.status}`);
           err.status = res.status;
           if (res.status === 404 || res.status === 400) throw err;
           lastErr = err;
         } else {
-          return await res.json();
+          const body = await res.json();
+          clearTimeout(t);
+          return body;
         }
       } catch (e) {
         clearTimeout(t);
@@ -2954,9 +2957,19 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     };
   }
 
-  async function load() {
-    if (state.loading) return;
-    state.loading = true;
+  // One download at a time: a second request (pull to refresh, coming back to the page) shares the one under way
+  function load() {
+    state.loadPromise ||= fetchAndRender().finally(() => { state.loadPromise = null; });
+    return state.loadPromise;
+  }
+  // Fresh data when it's more than half an hour old; otherwise just bring the sky up to the minute
+  function refreshIfStale() {
+    if (!state.data || Date.now() - state.data.fetchedAt > STALE_MS) return load();
+    refreshSky();
+    return Promise.resolve();
+  }
+
+  async function fetchAndRender() {
     const loc = state.loc;
     const key = locKey(loc);
     if (!state.data || state.data.locKey !== key) renderSkeleton();
@@ -2988,7 +3001,6 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         state.data = null;
       }
     }
-    state.loading = false;
     render(notices);
   }
 
@@ -3647,7 +3659,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     if ($("setDlg").open) renderBgList();
     if (state.data) { renderPageScene(state.data.om); renderCards(state.days); }
   }
-  window.awesomeWeather = { setIconStyle, setBgStyle, upcomingEvents };
+  window.awesomeWeather = { setIconStyle, setBgStyle, upcomingEvents, refresh: load, refreshIfStale };
 
   /* ================= Wiring ================= */
   function init() {
@@ -3728,9 +3740,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
 
     // Coming back to the page after a while (phone unlock, tab switch) pulls fresh data
     document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState !== "visible" || !state.data) return;
-      if (Date.now() - state.data.fetchedAt > STALE_MS) load();
-      else refreshSky();
+      if (document.visibilityState === "visible" && state.data) refreshIfStale();
     });
     // Keep the sky in step with sunrise/sunset if the page is left open
     setInterval(refreshSky, 2 * 60 * 1000);
