@@ -283,9 +283,36 @@ class WidgetRenderTest {
         }
     }
 
+    /** The widget and Clock settings screens load, light and dark; pictures show the outlined switches on and off. */
     @Test fun settingsScreenLoads() {
-        val themed = android.view.ContextThemeWrapper(context, R.style.Theme_Awe_WidgetSettings)
-        LayoutInflater.from(themed).inflate(R.layout.activity_widget_settings, FrameLayout(themed), false)
+        for (dark in listOf(false, true)) {
+            val config = android.content.res.Configuration(context.resources.configuration).apply {
+                uiMode = (uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK.inv()) or
+                    (if (dark) android.content.res.Configuration.UI_MODE_NIGHT_YES else android.content.res.Configuration.UI_MODE_NIGHT_NO)
+            }
+            val themed = android.view.ContextThemeWrapper(context.createConfigurationContext(config), R.style.Theme_Awe_WidgetSettings)
+            val tag = if (dark) "dark" else "light"
+            val widget = LayoutInflater.from(themed).inflate(R.layout.activity_widget_settings, FrameLayout(themed), false)
+            widget.findViewById<android.widget.Switch>(R.id.show_rain).isChecked = true
+            saveView("settings-widget-$tag", widget, themed)
+            val clock = LayoutInflater.from(themed).inflate(R.layout.activity_clock_settings, FrameLayout(themed), false)
+            for (id in listOf(R.id.weather, R.id.date, R.id.wxline)) clock.findViewById<android.widget.Switch>(id).isChecked = true
+            saveView("settings-clock-$tag", clock, themed)
+        }
+    }
+
+    /** Lays a screen out at 412 dp wide, as tall as it needs, on its background color, and saves it. */
+    private fun saveView(name: String, view: android.view.View, themed: Context) {
+        val d = themed.resources.displayMetrics.density
+        val w = (412 * d).toInt()
+        view.measure(android.view.View.MeasureSpec.makeMeasureSpec(w, android.view.View.MeasureSpec.EXACTLY),
+            android.view.View.MeasureSpec.makeMeasureSpec((2400 * d).toInt(), android.view.View.MeasureSpec.EXACTLY))
+        view.layout(0, 0, w, view.measuredHeight)
+        val bmp = Bitmap.createBitmap(w, view.measuredHeight, Bitmap.Config.ARGB_8888)
+        val c = Canvas(bmp)
+        c.drawColor(themed.getColor(R.color.bg))
+        view.draw(c)
+        File(out, "$name.png").outputStream().use { bmp.compress(Bitmap.CompressFormat.PNG, 90, it) }
     }
 
     /** Saves the widget as the home screen would show it: picture, plus its buttons on top. */

@@ -104,7 +104,8 @@ class ClockRenderer(private val context: Context) {
         }
         val lineSize = 11f * s
         val lineGap = 2f * s
-        val maxW = right - left - 4f * s
+        // Room for a line: the clock's width less the rounded corners the lines sit beside
+        val maxW = right - left - 20f * s
         above.forEachIndexed { k, parts -> drawLine(canvas, parts, mid, e + lineSize * .74f + k * (lineSize + lineGap), lineSize, maxW, settings.dateColor, t) }
         below.forEachIndexed { k, parts -> drawLine(canvas, parts, mid, h - e - lineSize * .22f - (below.size - 1 - k) * (lineSize + lineGap), lineSize, maxW, settings.dateColor, t) }
         val top = if (above.isEmpty()) e + 1f * s else e + above.size * (lineSize + lineGap) - lineGap + 3f * s
