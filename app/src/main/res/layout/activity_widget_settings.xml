@@ -128,324 +128,338 @@
         </FrameLayout>
     </FrameLayout>
 
-    <ScrollView
-        android:id="@+id/body"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/bg"
-        android:fillViewport="true">
+        android:background="@color/bg">
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/body"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="14dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="20dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
             <LinearLayout
-                android:id="@+id/location_row"
-                style="@style/Awe.Card"
-                android:background="@drawable/card_clickable"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/Awe.CardTitle"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="@string/settings_location" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/location_value"
-                        style="@style/Awe.CardTitle" />
-
-                    <TextView
-                        style="@style/Awe.Help"
-                        android:layout_marginTop="0dp"
-                        android:text="@string/settings_location_hint" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="6dp"
-                    android:importantForAccessibility="no"
-                    android:src="@drawable/ic_chevron"
-                    android:tint="@color/ink3" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/Awe.Card">
-
-                <TextView
-                    style="@style/Awe.CardTitle"
-                    android:text="@string/settings_icon_style" />
-
-                <TextView
-                    style="@style/Awe.Help"
-                    android:text="@string/settings_icon_style_help" />
-
-                <RadioGroup
-                    android:id="@+id/icon_style_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp">
-
-                    <RadioButton
-                        android:id="@+id/style_basic"
-                        style="@style/Awe.Radio"
-                        android:layout_height="52dp"
-                        android:text="@string/style_basic" />
-
-                    <RadioButton
-                        android:id="@+id/style_glow"
-                        style="@style/Awe.Radio"
-                        android:layout_height="52dp"
-                        android:text="@string/style_glow" />
-
-                    <RadioButton
-                        android:id="@+id/style_fine"
-                        style="@style/Awe.Radio"
-                        android:layout_height="52dp"
-                        android:text="@string/style_fine" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout style="@style/Awe.Card">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/Awe.CardTitle"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/settings_temp_color" />
-
-                    <TextView
-                        android:id="@+id/temp_color_value"
-                        style="@style/Awe.CardTitle"
-                        android:textColor="@color/accent" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/temp_color_help"
-                    style="@style/Awe.Help"
-                    android:text="@string/settings_temp_color_help" />
-
-                <SeekBar
-                    android:id="@+id/temp_color"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:contentDescription="@string/settings_temp_color"
-                    android:progressTint="@color/accent"
-                    android:thumbTint="@color/accent" />
-
-                <LinearLayout
-                    android:id="@+id/temp_swatches"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="4dp" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/Awe.Card">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/Awe.CardTitle"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/settings_glow" />
-
-                    <TextView
-                        android:id="@+id/glow_value"
-                        style="@style/Awe.CardTitle"
-                        android:textColor="@color/accent" />
-                </LinearLayout>
-
-                <TextView
-                    style="@style/Awe.Help"
-                    android:text="@string/settings_glow_help" />
-
-                <SeekBar
-                    android:id="@+id/glow"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:contentDescription="@string/settings_glow"
-                    android:progressTint="@color/accent"
-                    android:thumbTint="@color/accent" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/Awe.Card">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/Awe.CardTitle"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/settings_transparency" />
-
-                    <TextView
-                        android:id="@+id/transparency_value"
-                        style="@style/Awe.CardTitle"
-                        android:textColor="@color/accent" />
-                </LinearLayout>
-
-                <TextView
-                    style="@style/Awe.Help"
-                    android:text="@string/settings_transparency_help" />
-
-                <SeekBar
-                    android:id="@+id/transparency"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:contentDescription="@string/settings_transparency"
-                    android:progressTint="@color/accent"
-                    android:thumbTint="@color/accent" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="4dp">
-
-                    <TextView
-                        style="@style/Awe.Help"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/settings_solid" />
-
-                    <TextView
-                        style="@style/Awe.Help"
-                        android:text="@string/settings_transparent" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/Awe.Card"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/Awe.CardTitle"
-                        android:text="@string/settings_show_current" />
-
-                    <TextView
-                        android:id="@+id/show_current_help"
-                        style="@style/Awe.Help"
-                        android:text="@string/settings_show_current_help" />
-                </LinearLayout>
-
-                <Switch
-                    android:id="@+id/show_current"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/settings_show_current"
-                    android:thumbTint="@color/card"
-                    android:trackTint="@color/accent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/show_rain_card"
-                style="@style/Awe.Card"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/Awe.CardTitle"
-                        android:text="@string/settings_show_rain" />
-
-                    <TextView
-                        style="@style/Awe.Help"
-                        android:text="@string/settings_show_rain_help" />
-                </LinearLayout>
-
-                <Switch
-                    android:id="@+id/show_rain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/settings_show_rain"
-                    android:thumbTint="@color/card"
-                    android:trackTint="@color/accent" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/Awe.Card">
-
-                <TextView
-                    style="@style/Awe.CardTitle"
-                    android:text="@string/settings_refresh" />
-
-                <RadioGroup
-                    android:id="@+id/refresh_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp">
-
-                    <RadioButton
-                        android:id="@+id/refresh_30"
-                        style="@style/Awe.Radio"
-                        android:text="@string/settings_refresh_30" />
-
-                    <RadioButton
-                        android:id="@+id/refresh_60"
-                        style="@style/Awe.Radio"
-                        android:text="@string/settings_refresh_60" />
-
-                    <RadioButton
-                        android:id="@+id/refresh_manual"
-                        style="@style/Awe.Radio"
-                        android:text="@string/settings_refresh_manual" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/done"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/button_done"
-                android:fontFamily="@font/dm_sans"
-                android:fontVariationSettings="'wght' 700"
-                android:gravity="center"
-                android:text="@string/settings_done"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="14dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="20dp">
+
+                <LinearLayout
+                    android:id="@+id/location_row"
+                    style="@style/Awe.Card"
+                    android:background="@drawable/card_clickable"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Awe.CardTitle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/settings_location" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/location_value"
+                            style="@style/Awe.CardTitle" />
+
+                        <TextView
+                            style="@style/Awe.Help"
+                            android:layout_marginTop="0dp"
+                            android:text="@string/settings_location_hint" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="6dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_chevron"
+                        android:tint="@color/ink3" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Awe.Card">
+
+                    <TextView
+                        style="@style/Awe.CardTitle"
+                        android:text="@string/settings_icon_style" />
+
+                    <TextView
+                        style="@style/Awe.Help"
+                        android:text="@string/settings_icon_style_help" />
+
+                    <RadioGroup
+                        android:id="@+id/icon_style_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+
+                        <RadioButton
+                            android:id="@+id/style_basic"
+                            style="@style/Awe.Radio"
+                            android:layout_height="52dp"
+                            android:text="@string/style_basic" />
+
+                        <RadioButton
+                            android:id="@+id/style_fine"
+                            style="@style/Awe.Radio"
+                            android:layout_height="52dp"
+                            android:text="@string/style_fine" />
+
+                        <RadioButton
+                            android:id="@+id/style_3d"
+                            style="@style/Awe.Radio"
+                            android:layout_height="52dp"
+                            android:text="@string/style_3d" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout style="@style/Awe.Card">
+
+                    <!-- Temperature color: the same picker as the Clock -->
+                    <include
+                        android:id="@+id/row_temp_color"
+                        layout="@layout/clock_color_row" />
+
+                    <TextView
+                        android:id="@+id/temp_color_help"
+                        style="@style/Awe.Help"
+                        android:text="@string/settings_temp_color_help" />
+
+                    <!-- Forecast only: the day names take the temperature color too -->
+                    <LinearLayout
+                        android:id="@+id/days_too_row"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/Awe.CardTitle"
+                                android:text="@string/settings_days_too" />
+
+                            <TextView
+                                style="@style/Awe.Help"
+                                android:text="@string/settings_days_too_help" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/days_too"
+                            style="@style/Awe.Switch"
+                            android:contentDescription="@string/settings_days_too" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout style="@style/Awe.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Awe.CardTitle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/settings_glow" />
+
+                        <TextView
+                            android:id="@+id/glow_value"
+                            style="@style/Awe.CardTitle"
+                            android:textColor="@color/accent" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/Awe.Help"
+                        android:text="@string/settings_glow_help" />
+
+                    <SeekBar
+                        android:id="@+id/glow"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:contentDescription="@string/settings_glow"
+                        android:progressTint="@color/accent"
+                        android:thumbTint="@color/accent" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Awe.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Awe.CardTitle"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/settings_transparency" />
+
+                        <TextView
+                            android:id="@+id/transparency_value"
+                            style="@style/Awe.CardTitle"
+                            android:textColor="@color/accent" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/Awe.Help"
+                        android:text="@string/settings_transparency_help" />
+
+                    <SeekBar
+                        android:id="@+id/transparency"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:contentDescription="@string/settings_transparency"
+                        android:progressTint="@color/accent"
+                        android:thumbTint="@color/accent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="4dp">
+
+                        <TextView
+                            style="@style/Awe.Help"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/settings_solid" />
+
+                        <TextView
+                            style="@style/Awe.Help"
+                            android:text="@string/settings_transparent" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/Awe.Card"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Awe.CardTitle"
+                            android:text="@string/settings_show_current" />
+
+                        <TextView
+                            android:id="@+id/show_current_help"
+                            style="@style/Awe.Help"
+                            android:text="@string/settings_show_current_help" />
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/show_current"
+                        style="@style/Awe.Switch"
+                        android:contentDescription="@string/settings_show_current" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/show_rain_card"
+                    style="@style/Awe.Card"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Awe.CardTitle"
+                            android:text="@string/settings_show_rain" />
+
+                        <TextView
+                            style="@style/Awe.Help"
+                            android:text="@string/settings_show_rain_help" />
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/show_rain"
+                        style="@style/Awe.Switch"
+                        android:contentDescription="@string/settings_show_rain" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Awe.Card">
+
+                    <TextView
+                        style="@style/Awe.CardTitle"
+                        android:text="@string/settings_refresh" />
+
+                    <RadioGroup
+                        android:id="@+id/refresh_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+
+                        <RadioButton
+                            android:id="@+id/refresh_30"
+                            style="@style/Awe.Radio"
+                            android:text="@string/settings_refresh_30" />
+
+                        <RadioButton
+                            android:id="@+id/refresh_60"
+                            style="@style/Awe.Radio"
+                            android:text="@string/settings_refresh_60" />
+
+                        <RadioButton
+                            android:id="@+id/refresh_manual"
+                            style="@style/Awe.Radio"
+                            android:text="@string/settings_refresh_manual" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/done"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/button_done"
+                    android:fontFamily="@font/dm_sans"
+                    android:fontVariationSettings="'wght' 700"
+                    android:gravity="center"
+                    android:text="@string/settings_done"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- The color picker opens here, over the settings, with the preview still showing above -->
+        <ScrollView
+            android:id="@+id/picker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/picker_body"
+                style="@style/Awe.Card"
+                android:layout_margin="14dp" />
+        </ScrollView>
+    </FrameLayout>
 </LinearLayout>

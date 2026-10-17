@@ -65,7 +65,7 @@ data class ClockColor(val family: ColorFamily, val index: Int = 0, val hex: Int 
 /** A text fill: a plain color, or a shader for metallic and gradient colors. [light] picks the glow's halo (dark behind light). */
 class TextFill(val color: Int, val shader: Shader?, val light: Boolean)
 
-/** The picker's presets: 16 solids (the widgets' temperature colors plus five more), 12 metallics and 12 gradients. */
+/** The picker's presets: 16 solids (Auto first; the first 11 were the widgets' colors before 2.2), 12 metallics and 12 gradients. */
 object ClockPalette {
     val SOLID: List<Pair<String, Int?>> = listOf(
         "Auto" to null, "White" to 0xFFFFFFFF.toInt(), "Soft gray" to 0xFFD5DBE2.toInt(), "Charcoal" to 0xFF3A4552.toInt(),
@@ -148,7 +148,11 @@ object ClockPalette {
 enum class TimeFormat { PHONE, H12, H24 }
 enum class DatePos { ABOVE, BELOW }
 
-/** Settings for one clock widget. Every color starts on Auto. */
+/**
+ * Settings for one clock widget. Every color starts on Auto. The weather line (today's temperature with its high and low)
+ * shares the date's color: with [wxSame] and the date on, it joins the date's line; otherwise it sits [wxPos] the clock,
+ * and [wxOrder] the date when both are on the same side.
+ */
 data class ClockSettings(
     val face: String = "clean",
     val format: TimeFormat = TimeFormat.PHONE,
@@ -161,4 +165,8 @@ data class ClockSettings(
     val date: Boolean = false,
     val datePos: DatePos = DatePos.BELOW,
     val dateColor: ClockColor = ClockColor.AUTO,
+    val wxLine: Boolean = false,
+    val wxSame: Boolean = true,
+    val wxPos: DatePos = DatePos.BELOW,
+    val wxOrder: DatePos = DatePos.BELOW,
 )

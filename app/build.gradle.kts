@@ -11,8 +11,8 @@ android {
         applicationId = "com.prostellis.awe"
         minSdk = 31
         targetSdk = 35
-        versionCode = 16
-        versionName = "2.1.2"
+        versionCode = 17
+        versionName = "2.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

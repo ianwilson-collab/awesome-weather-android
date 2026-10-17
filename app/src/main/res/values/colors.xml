@@ -11,6 +11,11 @@
     <color name="accent_soft">#142F6FDB</color>
     <color name="line">#1414202B</color>
 
+    <!-- Settings switches: ProStellis pale green outline (same in both modes), track when off and when it can't be changed -->
+    <color name="switch_outline">#E2EFD9</color>
+    <color name="switch_off">#D5DBE2</color>
+    <color name="switch_disabled">#A9C3EE</color>
+
     <!-- AWE colors: deeper versions on light backgrounds so they stay readable -->
     <color name="awe_gold">#C98A06</color>
     <color name="awe_green">#2F9E78</color>

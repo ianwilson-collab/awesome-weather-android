@@ -52,4 +52,17 @@
         <item name="android:textColor">@color/pill_text</item>
         <item name="android:textSize">13sp</item>
     </style>
+
+    <!-- Settings switches: our own track (with the pale green outline) and thumb; the white tints leave them as drawn -->
+    <style name="Awe.Switch" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="android:track">@drawable/switch_track</item>
+        <item name="android:switchMinWidth">44dp</item>
+        <item name="android:thumbTint">#FFFFFFFF</item>
+        <item name="android:thumbTintMode">multiply</item>
+        <item name="android:trackTint">#FFFFFFFF</item>
+        <item name="android:trackTintMode">multiply</item>
+    </style>
 </resources>

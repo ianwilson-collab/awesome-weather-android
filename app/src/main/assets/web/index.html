@@ -860,7 +860,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     previewMin: null, // minutes after midnight (15-min steps) while previewing another time; null = live
     days: [],         // the 7 day cards
     extDays: [],      // Extended Forecast, days 8–16
-    iconStyle: store.get("iconStyle", "glow"),    // weather symbol style: "default" (Basic), "glow" or "fine" (Fine Outline)
+    iconStyle: store.get("iconStyle", "glow"),    // weather symbol style: "default" (Basic), "fine" (Fine Outline) or "glow" (3D)
     tempColor: store.get("tempColor", 0),        // big temperature color: index into TEMP_COLORS (0 = Auto)
     glow: store.get("glow", 2),                  // halo behind the header text: index into GLOWS (2 = Medium)
     bgStyle: store.get("bgStyle", "realistic")    // background and animation style: "default" (Basic), "painterly", "realistic" (Dynamic), "illustration" or "mthood"
@@ -1127,11 +1127,11 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       `<path d="${half(!sunRight)}" style="fill:var(--moon-icon);stroke:var(--ink-3);stroke-width:1.4"/>` +
       `<g style="fill:var(--moon-icon-crater);stroke:none"><circle cx="${mx(2.6)}" cy="10" r="1.3"/><circle cx="${mx(1.7)}" cy="14.6" r=".8"/><circle cx="${mx(4.1)}" cy="13.2" r=".6"/></g>`;
   }
-  /* ---------- Icon styles: Basic (clean outline), Glow (soft 3D light), Fine Outline ---------- */
+  /* ---------- Icon styles, in the order offered: Basic (clean outline), Fine Outline, 3D (soft light; its id is still "glow") ---------- */
   const ICON_STYLES = [
     { id: "default", name: "Basic", desc: "Clean outlines, clear at any size." },
-    { id: "glow", name: "Glow", desc: "Soft 3D light and gradients." },
-    { id: "fine", name: "Fine Outline", desc: "Thin, precise lines with small details." }
+    { id: "fine", name: "Fine Outline", desc: "Thin, precise lines with small details." },
+    { id: "glow", name: "3D", desc: "Soft light and gradients." }
   ];
   const svgW = (inner, sw) => `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
   let iconSeq = 0;
@@ -1185,7 +1185,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     storm: () => '<path d="M12.5 15.5l-2.5 4h3l-1.5 3.5" style="stroke:var(--sun-ink)"/>'
   };
 
-  // Glow: sunlit clouds (one light from the upper left, a shade and bright rim on each puff), glowing sun and moon
+  // 3D: sunlit clouds (one light from the upper left, a shade and bright rim on each puff), glowing sun and moon
   const PUFFS = [[13.6, 11.6, 5.3], [8.6, 14, 4.2], [18, 15.1, 3.6]];
   const arcD = (cx, cy, r, a0, a1) => { const pt = (a) => `${(cx + Math.cos(a * Math.PI / 180) * r).toFixed(2)} ${(cy + Math.sin(a * Math.PI / 180) * r).toFixed(2)}`; return `M${pt(a0)}A${r} ${r} 0 0 1 ${pt(a1)}`; };
   const puffBlob = (fill, tr) => `<g${tf(tr)} style="fill:${fill};stroke:none">${PUFFS.map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join("")}<rect x="5" y="14" width="15" height="4.9" rx="2.45"/></g>`;

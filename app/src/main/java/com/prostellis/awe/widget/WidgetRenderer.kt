@@ -2,6 +2,7 @@ package com.prostellis.awe.widget
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BlurMaskFilter
 import android.graphics.Canvas
 import android.graphics.LinearGradient
 import android.graphics.Paint
@@ -42,9 +43,11 @@ data class Look(
     val theme: WidgetTheme,
     /** The phone is in dark mode (Basic's sky uses the app's dark palette). */
     val phoneDark: Boolean,
-    val iconStyle: IconStyle = IconStyle.GLOW,
-    /** A [TempColors] choice; 0 = Auto. */
-    val tempColor: Int = 0,
+    val iconStyle: IconStyle = IconStyle.THREE_D,
+    /** The temperature color, from the same picker as the Clock (Auto is the widget's own text color). */
+    val tempColor: ClockColor = ClockColor.AUTO,
+    /** Forecast widget: the day names take the temperature color too. */
+    val daysToo: Boolean = false,
     /** The background style's still picture; null draws Basic's sky. */
     val sky: SkyPicture? = null,
     val showCurrent: Boolean = true,
@@ -67,7 +70,7 @@ class WidgetRenderer(private val context: Context) {
     private val font: Typeface = context.resources.getFont(R.font.dm_sans)
     private val timeFormat = SimpleDateFormat("h:mm a", Locale.US)
     private val dayFormat = SimpleDateFormat("EEE", Locale.US)
-    private var icons = IconStyle.GLOW
+    private var icons = IconStyle.THREE_D
     private var eventColors: Map<String, Int> = emptyMap()
 
     fun render(kind: WidgetKind, model: WidgetModel?, widthDp: Float, heightDp: Float, look: Look, events: Map<String, Int> = emptyMap()): Rendered {
@@ -196,14 +199,14 @@ class WidgetRenderer(private val context: Context) {
         // Auto: white or near-black against the tint (and the wallpaper, as it shows through)
         val wall = if (look.wallpaperLight) 0xFFDFE6F0.toInt() else 0xFF1D2232.toInt()
         val behind = WeatherLogic.mix(wall, look.transparency / 100.0, tile)
-        val color = TempColors.color(look.tempColor, TempColors.readableOn(behind))
         val big = z * .6f; val small = big * .5f
         val num = "${m.temp}"
         val numW = measure(num, big, 700, -.02f * big); val degW = measure("°", small, 700)
         val x = (w - numW - degW) / 2
         val baseline = h / 2 + big * .36f
-        glowing(canvas, num, x, baseline, paint(big, 700, color, null, -.02f * big, shadow = false), look.glow)
-        glowing(canvas, "°", x + numW, baseline - small * .46f, paint(small, 700, color, null, shadow = false), look.glow)
+        val fill = ClockPalette.fill(look.tempColor, TempColors.readableOn(behind), baseline - big * .74f, baseline)
+        glowing(canvas, num, x, baseline, paint(big, 700, 0, null, -.02f * big, shadow = false), look.glow, fill)
+        glowing(canvas, "°", x + numW, baseline - small * .46f, paint(small, 700, 0, null, shadow = false), look.glow, fill)
         // The refresh button in white or near-black against the tint, like Auto
         return Rendered(bitmap, refresh, null, TempColors.readableOn(behind))
     }
@@ -226,18 +229,16 @@ class WidgetRenderer(private val context: Context) {
         }
         val cols = columns(w)
         val count = if (hourly) min(HOUR_CELLS[cols], m.hours.size) else min(DAY_CELLS[cols], m.days.size)
-        val tempColor = TempColors.color(look.tempColor, t.ink)
-
         val e = EDGE_TEXT * s
         if (count == 0) {
             // The whole widget is the current weather, drawn like the 1×1
-            drawCurrent(canvas, 0f, right, h, e, s, fullPlace(m), m, t, look, tempColor)
+            drawCurrent(canvas, 0f, right, h, e, s, fullPlace(m), m, t, look)
             return Rendered(bitmap, refresh, null, t.ink2)
         }
 
         // The current weather on the left, drawn like the 1×1
         val curW = 78f * s
-        drawCurrent(canvas, 0f, curW, h, e, s, m.place.name, m, t, look, tempColor)
+        drawCurrent(canvas, 0f, curW, h, e, s, m.place.name, m, t, look)
 
         // Tiles run top to bottom: name at the top edge, low at the bottom edge, high just above it, and the icon fills the rest
         val label = 9.5f * s; val main = 12.5f * s
@@ -274,7 +275,7 @@ class WidgetRenderer(private val context: Context) {
             val cellIcon = if (hourly) min(room, tile.width() * 1.15f) else min(room * 1.1f, tile.width() * 1.15f)
             centered(canvas, fit(name, label, 700, tile.width() - 2f), cx, nameBase, label, 700, t.ink2, t)
             WeatherIcons.draw(canvas, cat, day, cx - cellIcon / 2, (iconTop + iconBottom) / 2 - cellIcon / 2, cellIcon, t.icons, icons, t.textShadow)
-            tempText(canvas, big, cx, mainBase, main, 700, tempColor, look.glow, centered = true)
+            tempText(canvas, big, cx, mainBase, main, 700, look.tempColor, t.ink, look.glow, centered = true)
             small?.let { centered(canvas, it, cx, lowBase, label, 600, t.ink2, t) }
         }
         return Rendered(bitmap, refresh, null, t.ink2)
@@ -284,7 +285,7 @@ class WidgetRenderer(private val context: Context) {
      * The current weather between [left] and [right], drawn like the 1×1: the place at the top edge, the condition at
      * the bottom edge, and between them a large temperature (number and half-size degree) over a big, faint weather icon.
      */
-    private fun drawCurrent(canvas: Canvas, left: Float, right: Float, h: Float, e: Float, s: Float, place: String, m: WidgetModel, t: WidgetTheme, look: Look, color: Int) {
+    private fun drawCurrent(canvas: Canvas, left: Float, right: Float, h: Float, e: Float, s: Float, place: String, m: WidgetModel, t: WidgetTheme, look: Look) {
         val label = 9.5f * s; val cx = (left + right) / 2; val wide = right - left
         val nameBase = e + label * .74f; val condBase = h - e - label * .22f
         val top = nameBase + label * .3f + 2f * s; val bottom = condBase - label * .74f - 3f * s
@@ -302,8 +303,9 @@ class WidgetRenderer(private val context: Context) {
         val numW = measure(num, big, 700, -.02f * big)
         val x = cx - (numW + measure("°", small, 700)) / 2
         val baseline = (top + bottom) / 2 + big * .36f
-        glowing(canvas, num, x, baseline, paint(big, 700, color, null, -.02f * big, shadow = false), look.glow)
-        glowing(canvas, "°", x + numW, baseline - small * .46f, paint(small, 700, color, null, shadow = false), look.glow)
+        val fill = ClockPalette.fill(look.tempColor, t.ink, baseline - big * .74f, baseline)
+        glowing(canvas, num, x, baseline, paint(big, 700, 0, null, -.02f * big, shadow = false), look.glow, fill)
+        glowing(canvas, "°", x + numW, baseline - small * .46f, paint(small, 700, 0, null, shadow = false), look.glow, fill)
         centered(canvas, fit(place, label, 600, wide - 6f), cx, nameBase, label, 600, t.ink2, t)
         centered(canvas, fit(m.nowText, label, 600, wide - 6f), cx, condBase, label, 600, t.ink2, t)
     }
@@ -325,7 +327,6 @@ class WidgetRenderer(private val context: Context) {
         val t = look.theme
         val transparency = look.transparency
         val showCurrent = look.showCurrent
-        val tempColor = TempColors.color(look.tempColor, t.ink)
         val sevenDay = isSevenDay(w)
         val dayCount = if (sevenDay) 7 else 5
         // Edge to edge: no outer margins. Text keeps the size it had with 8 dp margins, so the won space goes to the bars.
@@ -361,7 +362,7 @@ class WidgetRenderer(private val context: Context) {
             WeatherIcons.draw(canvas, m.nowCat, m.light.isDay, band.left + 9f, band.centerY() - z.bandIcon / 2, z.bandIcon, t.icons, icons, t.textShadow)
             val tempText = "${m.temp}°"
             val tempX = band.left + 9f + z.bandIcon + 9f
-            tempText(canvas, tempText, tempX, band.centerY() + z.bandTemp * .36f, z.bandTemp, 600, tempColor, look.glow, letterSpacingDp = -1f)
+            tempText(canvas, tempText, tempX, band.centerY() + z.bandTemp * .36f, z.bandTemp, 600, look.tempColor, t.ink, look.glow, letterSpacingDp = -1f)
             val midX = tempX + measure(tempText, z.bandTemp, 600, -1f) + 9f
             val place = m.place.shortLabel
             val widest = max(measure(m.nowText, z.cond, 600), measure(place, z.place, 600))
@@ -378,7 +379,7 @@ class WidgetRenderer(private val context: Context) {
             text(canvas, fit(m.place.shortLabel, 14.5f, 600, aweLeft - 8f - band.left - 12f), band.left + 12f, band.centerY() + 5f, 14.5f, 600, t.ink, t)
         }
 
-        drawDays(canvas, RectF(padX, band.bottom + gap, w - padX, h - padBottom), m.days.take(dayCount), z, t, tempColor, look.glow, look.showRain)
+        drawDays(canvas, RectF(padX, band.bottom + gap, w - padX, h - padBottom), m.days.take(dayCount), z, t, look)
         return Rendered(bitmap, refresh, gear, t.ink2)
     }
 
@@ -390,8 +391,9 @@ class WidgetRenderer(private val context: Context) {
         }
     }
 
-    private fun drawDays(canvas: Canvas, area: RectF, days: List<com.prostellis.awe.weather.Day>, z: Sizes, t: WidgetTheme, tempColor: Int, glow: Int, showRain: Boolean) {
+    private fun drawDays(canvas: Canvas, area: RectF, days: List<com.prostellis.awe.weather.Day>, z: Sizes, t: WidgetTheme, look: Look) {
         if (days.isEmpty()) return
+        val showRain = look.showRain
         val gap = 2f
         val colW = (area.width() - gap * (days.size - 1)) / days.size
         val temps = days.flatMap { listOfNotNull(it.hi, it.lo) }
@@ -415,7 +417,10 @@ class WidgetRenderer(private val context: Context) {
             if (i == 0) canvas.drawRect(col, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = t.today })
 
             val name = if (i == 0) "Today" else dayFormat.format(java.sql.Date.valueOf(d.ymd))
-            centered(canvas, name, cx, area.top + colTop + z.name * .76f, z.name, 600, if (i == 0) t.todayName else t.ink, t)
+            val nameBase = area.top + colTop + z.name * .76f
+            // Day names too: the names take the temperature color (and its glow) when one is picked
+            if (look.daysToo && !look.tempColor.isAuto) tempText(canvas, name, cx, nameBase, z.name, 600, look.tempColor, t.ink, look.glow, centered = true)
+            else centered(canvas, name, cx, nameBase, z.name, 600, if (i == 0) t.todayName else t.ink, t)
             // Event day (holiday, season, sky event): the name underlined in the sticker's color
             eventColors[d.ymd]?.let { color ->
                 val half = measure(name, z.name, 600) / 2
@@ -435,7 +440,7 @@ class WidgetRenderer(private val context: Context) {
                 val bar = Paint(Paint.ANTI_ALIAS_FLAG)
                 bar.shader = LinearGradient(0f, top, 0f, bottom, WeatherLogic.tempColor(d.hi), WeatherLogic.tempColor(d.lo), Shader.TileMode.CLAMP)
                 canvas.drawRoundRect(RectF(cx - z.bar / 2, top, cx + z.bar / 2, bottom), z.bar, z.bar, bar)
-                tempText(canvas, "${WeatherLogic.jsRound(d.hi)}°", cx, top - 4f, z.hi, 700, tempColor, glow, centered = true)
+                tempText(canvas, "${WeatherLogic.jsRound(d.hi)}°", cx, top - 4f, z.hi, 700, look.tempColor, t.ink, look.glow, centered = true)
                 centered(canvas, "${WeatherLogic.jsRound(d.lo)}°", cx, bottom + 2f + z.lo * .92f, z.lo, 500, t.ink2, t)
             }
 
@@ -476,27 +481,38 @@ class WidgetRenderer(private val context: Context) {
         canvas.drawText(s, cx - p.measureText(s) / 2f, baseline, p)
     }
 
-    /** A temperature, with the Glow strength setting's halo behind it. */
+    /** A temperature in [color] ([auto] for Auto), with the Glow strength setting's halo behind it. */
     private fun tempText(
-        canvas: Canvas, s: String, x: Float, baseline: Float, size: Float, weight: Int, color: Int, glow: Int,
+        canvas: Canvas, s: String, x: Float, baseline: Float, size: Float, weight: Int, color: ClockColor, auto: Int, glow: Int,
         letterSpacingDp: Float = 0f, centered: Boolean = false,
     ) {
-        val p = paint(size, weight, color, null, letterSpacingDp, shadow = false)
-        glowing(canvas, s, if (centered) x - p.measureText(s) / 2f else x, baseline, p, glow)
+        val p = paint(size, weight, 0, null, letterSpacingDp, shadow = false)
+        val fill = ClockPalette.fill(color, auto, baseline - size * .74f, baseline)
+        glowing(canvas, s, if (centered) x - p.measureText(s) / 2f else x, baseline, p, glow, fill)
     }
 
     /**
-     * Draws [s] once per [Glow] layer, each pass adding a soft halo (dark behind light colors, light behind dark ones),
-     * so the halo builds up the way stacked text-shadows do in the app. Sizes scale with the text.
+     * Draws [s] in [fill] once per [Glow] layer, each pass adding a soft halo (dark behind light colors, light behind
+     * dark ones), so the halo builds up the way stacked text-shadows do in the app. Sizes scale with the text.
+     * Metallic and gradient fills get their halo from blurred plain passes, since a shadow would take the fill's colors.
      */
-    private fun glowing(canvas: Canvas, s: String, x: Float, baseline: Float, p: TextPaint, glow: Int) {
-        val halo = if (TempColors.isLight(p.color)) Glow.DARK else Glow.LIGHT
+    private fun glowing(canvas: Canvas, s: String, x: Float, baseline: Float, p: TextPaint, glow: Int, fill: TextFill) {
+        val halo = if (fill.light) Glow.DARK else Glow.LIGHT
         val scale = p.textSize / 20f
+        p.color = fill.color
         Glow.layers(glow).forEach { (radius, alpha) ->
-            p.setShadowLayer(radius * scale, 0f, 0f, (halo and 0xFFFFFF) or ((alpha * 255).toInt() shl 24))
-            canvas.drawText(s, x, baseline, p)
+            val haloColor = (halo and 0xFFFFFF) or ((alpha * 255).toInt() shl 24)
+            if (fill.shader == null) {
+                p.setShadowLayer(radius * scale, 0f, 0f, haloColor)
+                canvas.drawText(s, x, baseline, p)
+            } else {
+                canvas.drawText(s, x, baseline, TextPaint(p).apply {
+                    color = haloColor; maskFilter = BlurMaskFilter(max(radius * scale, .1f), BlurMaskFilter.Blur.NORMAL)
+                })
+            }
         }
         p.clearShadowLayer()
+        p.shader = fill.shader
         canvas.drawText(s, x, baseline, p)
     }
 

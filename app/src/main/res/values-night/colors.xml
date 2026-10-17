@@ -11,6 +11,10 @@
     <color name="accent_soft">#246EA1FF</color>
     <color name="line">#14FFFFFF</color>
 
+    <!-- Settings switches: track when off and when it can't be changed -->
+    <color name="switch_off">#3A4552</color>
+    <color name="switch_disabled">#34507A</color>
+
     <!-- AWE colors: ProStellis logo green and blue, sun gold -->
     <color name="awe_gold">#FFC24A</color>
     <color name="awe_green">#95DABD</color>

@@ -78,17 +78,8 @@ data class WidgetTheme(
     }
 }
 
-/** The temperature colors offered in widget settings. Auto uses the widget's own text color, or on the 1×1 white or near-black, whichever reads better. */
+/** Helpers for temperature colors: Auto is the widget's own text color, or on the 1×1 white or near-black, whichever reads better. */
 object TempColors {
-    val CHOICES: List<Pair<String, Int?>> = listOf(
-        "Auto" to null, "White" to 0xFFFFFFFF.toInt(), "Soft gray" to 0xFFD5DBE2.toInt(), "Charcoal" to 0xFF3A4552.toInt(),
-        "Black" to 0xFF0F141A.toInt(), "Sunshine" to 0xFFFFD23F.toInt(), "Orange" to 0xFFFF9A3C.toInt(), "Coral" to 0xFFFF6B6B.toInt(),
-        "Mint" to 0xFF5FE0B4.toInt(), "Sky blue" to 0xFF5AB8FF.toInt(), "Lavender" to 0xFFB9A3FF.toInt(),
-    )
-
-    /** The chosen color, or [auto] for Auto (and for anything unknown). */
-    fun color(choice: Int, auto: Int): Int = CHOICES.getOrNull(choice)?.second ?: auto
-
     /** White or near-black, whichever stands out more against [behind] (WCAG contrast). */
     fun readableOn(behind: Int): Int =
         if (contrast(0xFFFFFFFF.toInt(), behind) >= contrast(NEAR_BLACK, behind)) 0xFFFFFFFF.toInt() else NEAR_BLACK
