@@ -1,0 +1,2 @@
+10-17 14:54:50.446  5204  5238 I TestRunner: started: drawsTheForecastWithoutRainAmounts(com.prostellis.awe.WidgetRenderTest)
+10-17 14:54:50.978  5204  5238 I TestRunner: finished: drawsTheForecastWithoutRainAmounts(com.prostellis.awe.WidgetRenderTest)

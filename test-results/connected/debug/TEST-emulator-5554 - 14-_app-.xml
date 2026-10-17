@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.prostellis.awe.ClockRenderTest" tests="25" failures="0" errors="0" skipped="0" time="46.327" timestamp="2026-10-17T14:55:03" hostname="localhost">
+  <properties>
+    <property name="device" value="emulator-5554 - 14" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="drawsColorsAndGlow" classname="com.prostellis.awe.ClockRenderTest" time="2.274" />
+  <testcase name="homeScreenViewsAndSettingsLoad" classname="com.prostellis.awe.ClockRenderTest" time="0.342" />
+  <testcase name="drawsEverySizeAndOption" classname="com.prostellis.awe.ClockRenderTest" time="5.441" />
+  <testcase name="tapAreasFollowTheWeatherBlock" classname="com.prostellis.awe.ClockRenderTest" time="0.109" />
+  <testcase name="drawsTransparencyAndEveryBackgroundStyle" classname="com.prostellis.awe.ClockRenderTest" time="0.405" />
+  <testcase name="drawsTheWeatherLine" classname="com.prostellis.awe.ClockRenderTest" time="1.357" />
+  <testcase name="drawsEveryClockStyle" classname="com.prostellis.awe.ClockRenderTest" time="1.187" />
+  <testcase name="drawsEveryGlowStrength" classname="com.prostellis.awe.WidgetRenderTest" time="5.101" />
+  <testcase name="drawsEveryBackgroundStyle" classname="com.prostellis.awe.WidgetRenderTest" time="12.09" />
+  <testcase name="homeScreenViewsLoad" classname="com.prostellis.awe.WidgetRenderTest" time="2.31" />
+  <testcase name="drawsTransparencyOverAWallpaper" classname="com.prostellis.awe.WidgetRenderTest" time="0.811" />
+  <testcase name="drawsMtHoodThroughTheYear" classname="com.prostellis.awe.WidgetRenderTest" time="0.901" />
+  <testcase name="drawsExtremeTemperaturesWithoutOverlap" classname="com.prostellis.awe.WidgetRenderTest" time="0.679" />
+  <testcase name="drawsTheForecastWithoutRainAmounts" classname="com.prostellis.awe.WidgetRenderTest" time="0.53" />
+  <testcase name="drawsLoadingStateBeforeTheFirstDownload" classname="com.prostellis.awe.WidgetRenderTest" time="0.056" />
+  <testcase name="drawsEveryWidgetAndWidth" classname="com.prostellis.awe.WidgetRenderTest" time="3.739" />
+  <testcase name="everyWidgetHasRefreshOnlyTheForecastHasSettings" classname="com.prostellis.awe.WidgetRenderTest" time="0.708" />
+  <testcase name="everySkyPictureIsBundled" classname="com.prostellis.awe.WidgetRenderTest" time="0.857" />
+  <testcase name="drawsTheWeatherTint" classname="com.prostellis.awe.WidgetRenderTest" time="0.326" />
+  <testcase name="drawsTemperatureColors" classname="com.prostellis.awe.WidgetRenderTest" time="3.216" />
+  <testcase name="settingsScreenLoads" classname="com.prostellis.awe.WidgetRenderTest" time="0.907" />
+  <testcase name="marksEventDays" classname="com.prostellis.awe.WidgetRenderTest" time="0.629" />
+  <testcase name="drawsEveryIconStyle" classname="com.prostellis.awe.WidgetRenderTest" time="1.708" />
+  <testcase name="drawsIconSheet" classname="com.prostellis.awe.WidgetRenderTest" time="0.052" />
+  <testcase name="drawsTheForecastWithoutCurrentWeather" classname="com.prostellis.awe.WidgetRenderTest" time="0.252" />
+</testsuite>

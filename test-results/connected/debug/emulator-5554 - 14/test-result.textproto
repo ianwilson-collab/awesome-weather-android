@@ -1,0 +1,1421 @@
+# proto-message: google.testing.platform.proto.api.core.TestSuiteResult
+# 2026-10-17T14:55:03.974074574Z:
+test_suite_meta_data {
+  scheduled_test_case_count: 25
+  device {
+    id: "emulator-5554"
+    friendly_name: "primary"
+  }
+}
+test_status: PASSED
+test_result {
+  test_case {
+    test_class: "ClockRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsColorsAndGlow"
+    start_time {
+      seconds: 1792248857
+      nanos: 530000000
+    }
+    end_time {
+      seconds: 1792248859
+      nanos: 874000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.ClockRenderTest-drawsColorsAndGlow.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "ClockRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "homeScreenViewsAndSettingsLoad"
+    start_time {
+      seconds: 1792248859
+      nanos: 897000000
+    }
+    end_time {
+      seconds: 1792248860
+      nanos: 250000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.ClockRenderTest-homeScreenViewsAndSettingsLoad.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "ClockRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsEverySizeAndOption"
+    start_time {
+      seconds: 1792248860
+      nanos: 255000000
+    }
+    end_time {
+      seconds: 1792248865
+      nanos: 691000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.ClockRenderTest-drawsEverySizeAndOption.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "ClockRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "tapAreasFollowTheWeatherBlock"
+    start_time {
+      seconds: 1792248865
+      nanos: 698000000
+    }
+    end_time {
+      seconds: 1792248865
+      nanos: 799000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.ClockRenderTest-tapAreasFollowTheWeatherBlock.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "ClockRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsTransparencyAndEveryBackgroundStyle"
+    start_time {
+      seconds: 1792248865
+      nanos: 805000000
+    }
+    end_time {
+      seconds: 1792248866
+      nanos: 208000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.ClockRenderTest-drawsTransparencyAndEveryBackgroundStyle.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "ClockRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsTheWeatherLine"
+    start_time {
+      seconds: 1792248866
+      nanos: 213000000
+    }
+    end_time {
+      seconds: 1792248867
+      nanos: 569000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.ClockRenderTest-drawsTheWeatherLine.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "ClockRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsEveryClockStyle"
+    start_time {
+      seconds: 1792248867
+      nanos: 574000000
+    }
+    end_time {
+      seconds: 1792248868
+      nanos: 761000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.ClockRenderTest-drawsEveryClockStyle.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsEveryGlowStrength"
+    start_time {
+      seconds: 1792248868
+      nanos: 765000000
+    }
+    end_time {
+      seconds: 1792248873
+      nanos: 864000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsEveryGlowStrength.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsEveryBackgroundStyle"
+    start_time {
+      seconds: 1792248873
+      nanos: 866000000
+    }
+    end_time {
+      seconds: 1792248885
+      nanos: 956000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsEveryBackgroundStyle.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "homeScreenViewsLoad"
+    start_time {
+      seconds: 1792248885
+      nanos: 958000000
+    }
+    end_time {
+      seconds: 1792248888
+      nanos: 267000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-homeScreenViewsLoad.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsTransparencyOverAWallpaper"
+    start_time {
+      seconds: 1792248888
+      nanos: 269000000
+    }
+    end_time {
+      seconds: 1792248889
+      nanos: 73000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsTransparencyOverAWallpaper.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsMtHoodThroughTheYear"
+    start_time {
+      seconds: 1792248889
+      nanos: 77000000
+    }
+    end_time {
+      seconds: 1792248889
+      nanos: 981000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsMtHoodThroughTheYear.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsExtremeTemperaturesWithoutOverlap"
+    start_time {
+      seconds: 1792248889
+      nanos: 983000000
+    }
+    end_time {
+      seconds: 1792248890
+      nanos: 661000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsExtremeTemperaturesWithoutOverlap.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsTheForecastWithoutRainAmounts"
+    start_time {
+      seconds: 1792248890
+      nanos: 663000000
+    }
+    end_time {
+      seconds: 1792248891
+      nanos: 191000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsTheForecastWithoutRainAmounts.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsLoadingStateBeforeTheFirstDownload"
+    start_time {
+      seconds: 1792248891
+      nanos: 193000000
+    }
+    end_time {
+      seconds: 1792248891
+      nanos: 244000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsLoadingStateBeforeTheFirstDownload.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsEveryWidgetAndWidth"
+    start_time {
+      seconds: 1792248891
+      nanos: 251000000
+    }
+    end_time {
+      seconds: 1792248894
+      nanos: 989000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsEveryWidgetAndWidth.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "everyWidgetHasRefreshOnlyTheForecastHasSettings"
+    start_time {
+      seconds: 1792248894
+      nanos: 991000000
+    }
+    end_time {
+      seconds: 1792248895
+      nanos: 696000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-everyWidgetHasRefreshOnlyTheForecastHasSettings.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "everySkyPictureIsBundled"
+    start_time {
+      seconds: 1792248895
+      nanos: 698000000
+    }
+    end_time {
+      seconds: 1792248896
+      nanos: 553000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-everySkyPictureIsBundled.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsTheWeatherTint"
+    start_time {
+      seconds: 1792248896
+      nanos: 556000000
+    }
+    end_time {
+      seconds: 1792248896
+      nanos: 883000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsTheWeatherTint.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsTemperatureColors"
+    start_time {
+      seconds: 1792248896
+      nanos: 885000000
+    }
+    end_time {
+      seconds: 1792248900
+      nanos: 99000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsTemperatureColors.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "settingsScreenLoads"
+    start_time {
+      seconds: 1792248900
+      nanos: 101000000
+    }
+    end_time {
+      seconds: 1792248901
+      nanos: 6000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-settingsScreenLoads.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "marksEventDays"
+    start_time {
+      seconds: 1792248901
+      nanos: 8000000
+    }
+    end_time {
+      seconds: 1792248901
+      nanos: 636000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-marksEventDays.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsEveryIconStyle"
+    start_time {
+      seconds: 1792248901
+      nanos: 638000000
+    }
+    end_time {
+      seconds: 1792248903
+      nanos: 346000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsEveryIconStyle.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsIconSheet"
+    start_time {
+      seconds: 1792248903
+      nanos: 348000000
+    }
+    end_time {
+      seconds: 1792248903
+      nanos: 399000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsIconSheet.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "WidgetRenderTest"
+    test_package: "com.prostellis.awe"
+    test_method: "drawsTheForecastWithoutCurrentWeather"
+    start_time {
+      seconds: 1792248903
+      nanos: 401000000
+    }
+    end_time {
+      seconds: 1792248903
+      nanos: 653000000
+    }
+    device {
+      id: "emulator-5554"
+      friendly_name: "primary"
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/logcat-com.prostellis.awe.WidgetRenderTest-drawsTheForecastWithoutCurrentWeather.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/cpuinfo"
+    }
+  }
+}
+output_artifact {
+  label {
+    label: "test-results.log"
+    namespace: "com.google.testing.platform.runtime.android.driver.AndroidInstrumentationDriver"
+  }
+  source_path {
+    path: "/home/runner/work/awesome-weather-android/awesome-weather-android/app/build/outputs/androidTest-results/connected/debug/emulator-5554 - 14/testlog/test-results.log"
+  }
+  type: TEST_DATA
+  mime_type: "text/plain"
+}

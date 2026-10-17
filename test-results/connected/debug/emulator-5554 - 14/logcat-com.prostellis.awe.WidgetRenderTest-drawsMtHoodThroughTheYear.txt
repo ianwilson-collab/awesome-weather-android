@@ -1,0 +1,2 @@
+10-17 14:54:48.844  5204  5238 I TestRunner: started: drawsMtHoodThroughTheYear(com.prostellis.awe.WidgetRenderTest)
+10-17 14:54:49.753  5204  5238 I TestRunner: finished: drawsMtHoodThroughTheYear(com.prostellis.awe.WidgetRenderTest)

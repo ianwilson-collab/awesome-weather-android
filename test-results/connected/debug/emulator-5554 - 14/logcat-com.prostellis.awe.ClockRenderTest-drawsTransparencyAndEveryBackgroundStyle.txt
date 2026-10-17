@@ -1,0 +1,8 @@
+10-17 14:54:25.581  5204  5238 I TestRunner: started: drawsTransparencyAndEveryBackgroundStyle(com.prostellis.awe.ClockRenderTest)
+10-17 14:54:25.823   336   367 I netd    : setProcSysNet(4, 2, wlan0, retrans_time_ms, 750) <0.09ms>
+10-17 14:54:25.824   336   367 I netd    : setProcSysNet(4, 2, wlan0, ucast_solicit, 10) <0.02ms>
+10-17 14:54:25.824   336   367 I netd    : setProcSysNet(6, 2, wlan0, retrans_time_ms, 750) <0.09ms>
+10-17 14:54:25.824   336   367 I netd    : setProcSysNet(6, 2, wlan0, ucast_solicit, 10) <0.03ms>
+10-17 14:54:25.908  5280  5280 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.clearcut.bootcount.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentBoundBrokerService }
+10-17 14:54:25.908  5280  5280 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.clearcut.bootcount.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentBoundBrokerService }
+10-17 14:54:25.980  5204  5238 I TestRunner: finished: drawsTransparencyAndEveryBackgroundStyle(com.prostellis.awe.ClockRenderTest)

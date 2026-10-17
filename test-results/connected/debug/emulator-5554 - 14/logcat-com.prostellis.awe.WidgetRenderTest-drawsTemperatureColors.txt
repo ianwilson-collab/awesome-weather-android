@@ -1,0 +1,22 @@
+10-17 14:54:56.663  5204  5238 I TestRunner: started: drawsTemperatureColors(com.prostellis.awe.WidgetRenderTest)
+10-17 14:54:57.165  4087  4087 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_EXECUTE_QUEUED_GenericWorkerQueueAction elapsedRealTime: 208495 currentTimeMillis: 1792248897165
+10-17 14:54:57.166  4087  4192 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_BACKGROUND_QUEUED_GenericWorkerQueueAction elapsedRealTime: 208496 currentTimeMillis: 1792248897166
+10-17 14:54:57.168  4087  4191 I BugleJobs: GenericWorkerQueueAction: Work found
+10-17 14:54:57.170  4087  4194 I BugleJobs: GenericWorkerQueueAction: Rescheduling immediately to continue processing since we didn't yet reach the end.
+10-17 14:54:57.171  4087  4191 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_RESPONSE_QUEUED_GenericWorkerQueueAction elapsedRealTime: 208501 currentTimeMillis: 1792248897171
+10-17 14:54:57.179  4087  4087 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_EXECUTE_QUEUED_GenericWorkerQueueAction elapsedRealTime: 208509 currentTimeMillis: 1792248897179
+10-17 14:54:57.179  4087  4194 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_BACKGROUND_QUEUED_GenericWorkerQueueAction elapsedRealTime: 208509 currentTimeMillis: 1792248897179
+10-17 14:54:57.181  4087  4192 I BugleJobs: GenericWorkerQueueAction: Bailing early, no work found, no failed work found
+10-17 14:54:57.181  4087  4192 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_RESPONSE_QUEUED_GenericWorkerQueueAction elapsedRealTime: 208511 currentTimeMillis: 1792248897181
+10-17 14:54:57.194  5352  5851 I ChimeraConfigurator: Starting update, reason: 4 urgentFeatures: vision.ocr:-1
+10-17 14:54:57.202  5352  5851 I ChimeraConfigurator: Detected pending changes for urgent request: [vision.ocr]. Pending module sets: container:2318189190800+mlkit.ocr.common,tflite_dynamite:2627305025100800+tflite_dynamite,vision_ocr:2316024025100000+vision.ocr
+10-17 14:54:57.209  5352  5851 I GmsDebugLogger: [73] 1801
+10-17 14:54:57.216  5352  5851 W ZappDownloader: No successful module downloads for requested features [vision.ocr].
+10-17 14:54:57.218  5352  5851 I GmsDebugLogger: [30] [VisionOcrDynamite.integ:231602402100000],[TfliteDynamiteDynamite.integ:262730502100800],[MlkitOcrCommon.optional:231818100800]
+10-17 14:54:57.224  5352  5851 W ChimeraConfigService: Retry attempt was throttled. [CONTEXT service_id=264 ]
+10-17 14:54:57.224  5352  5851 I GmsDebugLogger: [83] 1 [vision.ocr]
+10-17 14:54:57.228  5352  5847 W Vision  : Request for optional module download of ocr failed. Request again.
+10-17 14:54:57.228  5352  5847 W Vision  : Would have logged:
+10-17 14:54:57.228  5352  5847 W Vision  : # dsae@37884fe7
+10-17 14:54:57.229  5352  5847 I Vision  : Schedule retrying download ocr at 208559 with backoff 20 seconds
+10-17 14:54:59.880  5204  5238 I TestRunner: finished: drawsTemperatureColors(com.prostellis.awe.WidgetRenderTest)

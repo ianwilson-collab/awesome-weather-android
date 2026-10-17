@@ -1,0 +1,3 @@
+10-17 14:55:00.783  5204  5238 I TestRunner: started: marksEventDays(com.prostellis.awe.WidgetRenderTest)
+10-17 14:55:00.897  5352  5421 D TrafficStats: tagSocket(135) with statsTag=0x30001803, statsUid=-1
+10-17 14:55:01.413  5204  5238 I TestRunner: finished: marksEventDays(com.prostellis.awe.WidgetRenderTest)

@@ -1,0 +1,2 @@
+10-17 14:54:55.464  5204  5238 I TestRunner: started: everySkyPictureIsBundled(com.prostellis.awe.WidgetRenderTest)
+10-17 14:54:56.322  5204  5238 I TestRunner: finished: everySkyPictureIsBundled(com.prostellis.awe.WidgetRenderTest)

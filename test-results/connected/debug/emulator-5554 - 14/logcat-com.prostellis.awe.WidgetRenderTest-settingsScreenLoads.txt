@@ -1,0 +1,64 @@
+10-17 14:54:59.881  5204  5238 I TestRunner: started: settingsScreenLoads(com.prostellis.awe.WidgetRenderTest)
+10-17 14:55:00.042   838   925 D EGL_emulation: app_time_stats: avg=39422.42ms min=39422.42ms max=39422.42ms count=1
+10-17 14:55:00.046  1632  1905 I AiAiEcho: Predicting[0]:
+10-17 14:55:00.047  1632  1905 I AiAiEcho: EchoTargets:
+10-17 14:55:00.047  1632  1905 I AiAiEcho: Filtered by AiAi flag check:
+10-17 14:55:00.047  1632  1905 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:
+10-17 14:55:00.048  1632  1905 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+10-17 14:55:00.050   838   838 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+10-17 14:55:00.059  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.061  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.062  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.063  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.063  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.064  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.065  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.066  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.067  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.068  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.069  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.069  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.070  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.070  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.071  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.292  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.295  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.295  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.295  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.296  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.297  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.297  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.298  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.299  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.299  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.301  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.301  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.487  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.489  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.490  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.490  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.490  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.491  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.492  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.492  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.493  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.494  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.495  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.495  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.496  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.496  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.496  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.595  5204  5211 W .prostellis.awe: Cleared Reference was only reachable from finalizer (only reported once)
+10-17 14:55:00.722  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.724  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.725  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.726  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.727  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.728  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.728  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.729  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.730  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.731  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.733  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.733  5204  5238 W RippleDrawable: Thread doesn't have a looper. Skipping animation.
+10-17 14:55:00.782  5204  5238 I TestRunner: finished: settingsScreenLoads(com.prostellis.awe.WidgetRenderTest)

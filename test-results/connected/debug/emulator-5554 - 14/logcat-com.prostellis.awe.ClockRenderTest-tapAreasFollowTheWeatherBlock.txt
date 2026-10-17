@@ -1,0 +1,20 @@
+10-17 14:54:25.474  5204  5238 I TestRunner: started: tapAreasFollowTheWeatherBlock(com.prostellis.awe.ClockRenderTest)
+10-17 14:54:25.476  5280  5339 W GmsUrlRequestImpl: Content-Type header is overwritten.
+10-17 14:54:25.491  5280  5341 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.languageprofile.GcmTaskService finished executing. cause:5 result: 1 elapsed_millis: 103 uptime_millis: 103 exec_start_elapsed_seconds: 176 [CONTEXT service_id=218 ]
+10-17 14:54:25.504   336  5562 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+10-17 14:54:25.507   336  5563 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-17 14:54:25.507   336  5563 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7bd3cbb56f50
+10-17 14:54:25.508   336  5563 I resolv  : doQuery: rcode=0, ancount=8, return value=264
+10-17 14:54:25.508   336  5564 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-17 14:54:25.508   336  5564 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7bd46bb579d0
+10-17 14:54:25.509   336  5564 I resolv  : doQuery: rcode=0, ancount=8, return value=168
+10-17 14:54:25.510  5280  5560 D TrafficStats: tagSocket(177) with statsTag=0x401, statsUid=10131
+10-17 14:54:25.514  5280  5560 D TrafficStats: tagSocket(177) with statsTag=0x401, statsUid=10131
+10-17 14:54:25.517  5280  5560 D TrafficStats: tagSocket(177) with statsTag=0x401, statsUid=10131
+10-17 14:54:25.522  5280  5560 D TrafficStats: tagSocket(177) with statsTag=0x401, statsUid=10131
+10-17 14:54:25.526  5280  5560 D TrafficStats: tagSocket(177) with statsTag=0x401, statsUid=10131
+10-17 14:54:25.528  5280  5560 D TrafficStats: tagSocket(177) with statsTag=0x401, statsUid=10131
+10-17 14:54:25.530  5280  5560 D TrafficStats: tagSocket(177) with statsTag=0x401, statsUid=10131
+10-17 14:54:25.532  5280  5560 D TrafficStats: tagSocket(177) with statsTag=0x401, statsUid=10131
+10-17 14:54:25.533  5280  5560 D TrafficStats: tagSocket(177) with statsTag=0x401, statsUid=10131
+10-17 14:54:25.580  5204  5238 I TestRunner: finished: tapAreasFollowTheWeatherBlock(com.prostellis.awe.ClockRenderTest)

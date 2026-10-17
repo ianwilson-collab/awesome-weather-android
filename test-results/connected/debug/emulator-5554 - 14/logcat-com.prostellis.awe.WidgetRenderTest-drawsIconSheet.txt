@@ -1,0 +1,6 @@
+10-17 14:55:03.128  5204  5238 I TestRunner: started: drawsIconSheet(com.prostellis.awe.WidgetRenderTest)
+10-17 14:55:03.146  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:03.147  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:03.149  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:03.150  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:03.179  5204  5238 I TestRunner: finished: drawsIconSheet(com.prostellis.awe.WidgetRenderTest)

@@ -1,0 +1,18 @@
+10-17 14:55:01.414  5204  5238 I TestRunner: started: drawsEveryIconStyle(com.prostellis.awe.WidgetRenderTest)
+10-17 14:55:02.064  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:02.065  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:02.081  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:02.081  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:02.206  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:02.206  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:02.220  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:02.220  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:02.343  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:02.344  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:02.361  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:02.361  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:02.485  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:02.486  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:02.500  5204  5238 W PathParser: Points are too far apart 4.000002671357121
+10-17 14:55:02.501  5204  5238 W PathParser: Points are too far apart 4.000002671357128
+10-17 14:55:03.127  5204  5238 I TestRunner: finished: drawsEveryIconStyle(com.prostellis.awe.WidgetRenderTest)

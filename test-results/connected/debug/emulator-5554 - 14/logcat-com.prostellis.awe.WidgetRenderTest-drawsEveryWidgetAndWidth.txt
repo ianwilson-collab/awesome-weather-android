@@ -1,0 +1,3 @@
+10-17 14:54:51.029  5204  5238 I TestRunner: started: drawsEveryWidgetAndWidth(com.prostellis.awe.WidgetRenderTest)
+10-17 14:54:53.878  5352  5352 I NearbySharing: SharingTileService destroyed [CONTEXT service_id=194 ]
+10-17 14:54:54.757  5204  5238 I TestRunner: finished: drawsEveryWidgetAndWidth(com.prostellis.awe.WidgetRenderTest)

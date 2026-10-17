@@ -1,0 +1,17 @@
+10-17 14:54:54.759  5204  5238 I TestRunner: started: everyWidgetHasRefreshOnlyTheForecastHasSettings(com.prostellis.awe.WidgetRenderTest)
+10-17 14:54:55.085  4087  4087 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_EXECUTE_QUEUED_CountryCodeDetectorAction elapsedRealTime: 206415 currentTimeMillis: 1792248895085
+10-17 14:54:55.085  4087  4087 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_EXECUTE_QUEUED_SelfParticipantsRefreshAction elapsedRealTime: 206415 currentTimeMillis: 1792248895085
+10-17 14:54:55.086  4087  4620 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_BACKGROUND_QUEUED_CountryCodeDetectorAction elapsedRealTime: 206416 currentTimeMillis: 1792248895086
+10-17 14:54:55.086  4087  4620 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_BACKGROUND_QUEUED_SelfParticipantsRefreshAction elapsedRealTime: 206416 currentTimeMillis: 1792248895086
+10-17 14:54:55.088  4087  4194 I Bugle   : CountryCodeDetector: updateMainDeviceCountry from default subscription network country. detected country: us
+10-17 14:54:55.089  4087  4194 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_RESPONSE_QUEUED_CountryCodeDetectorAction elapsedRealTime: 206419 currentTimeMillis: 1792248895088
+10-17 14:54:55.089  4087  4194 I BugleDataModel: ParticipantRefresh: ContactContentObserver created
+10-17 14:54:55.089  4087  4194 I BugleDataModel: ParticipantFullRefresh: Start participant refresh. refreshMode: SELF_ONLY
+10-17 14:54:55.094  4087  4194 I BugleDataModel: SelfParticipantsData#refreshSelfParticipantList([1])
+10-17 14:54:55.102  4087  4194 I BugleDataModel: SelfParticipantsData#findSelfParticipantForSim cant find self by serial for sub=1
+10-17 14:54:55.104  4087  4194 I BugleDataModel: SelfParticipantsData: insertSelfParticipant. participantId: 2, selfParticipantId: 2, subId: 1
+10-17 14:54:55.120  4087  4194 I Bugle   : CountryCodeDetector: updateMainDeviceCountry from default subscription network country. detected country: us
+10-17 14:54:55.137  4087  4194 I BugleDataModel: SubscriptionsTracker bindToTrackingMap bound participants: [ParticipantId=1 subId=-1, ParticipantId=2 subId=1]
+10-17 14:54:55.161  4087  4194 I BugleDataModel: ParticipantFullRefresh: Number of participants refreshed: 2
+10-17 14:54:55.163  4087  4194 I BugleDataModel: ActionExecutorImpl: Timestamp for ACTION_RESPONSE_QUEUED_SelfParticipantsRefreshAction elapsedRealTime: 206493 currentTimeMillis: 1792248895163
+10-17 14:54:55.463  5204  5238 I TestRunner: finished: everyWidgetHasRefreshOnlyTheForecastHasSettings(com.prostellis.awe.WidgetRenderTest)

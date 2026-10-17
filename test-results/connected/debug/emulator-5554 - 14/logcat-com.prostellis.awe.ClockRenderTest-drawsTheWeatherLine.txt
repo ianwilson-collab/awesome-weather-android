@@ -1,0 +1,101 @@
+10-17 14:54:25.982  5204  5238 I TestRunner: started: drawsTheWeatherLine(com.prostellis.awe.ClockRenderTest)
+10-17 14:54:26.071  5280  5339 W GLSUser : [AppCertManager] Exception while requesting key:
+10-17 14:54:26.071  5280  5339 W GLSUser : java.util.concurrent.ExecutionException: avvw: Parse Proto Exception.
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dlnv.s(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dlnv.get(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at oub.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):78)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at otz.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):8)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at otv.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at otx.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at otx.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at abxk.r(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at abxw.e(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at abxw.g(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at cyeg.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):27)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at czpd.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):78)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at java.lang.Thread.run(Thread.java:1012)
+10-17 14:54:26.071  5280  5339 W GLSUser : Caused by: avvw: Parse Proto Exception.
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at avwn.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at avxk.onSucceeded(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at jf.onSucceeded(:com.google.android.gms.dynamite_cronetdynamite@231818047@23.18.18 (190800-0):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at ie.run(:com.google.android.gms.dynamite_cronetdynamite@231818047@23.18.18 (190800-0):4)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	... 6 more
+10-17 14:54:26.071  5280  5339 W GLSUser : Caused by: dzfz: Protocol message contained an invalid tag (zero).
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dzdb.k(:com.google.android.gms@231818047@23.18.18 (190800-535401451):13)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dzha.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):47)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dzha.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):45)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dzfd.A(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dzex.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dzcx.d(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dzcx.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at dzcx.n(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at avwn.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	at avwn.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+10-17 14:54:26.071  5280  5339 W GLSUser : 	... 9 more
+10-17 14:54:26.074  5280  5339 W GLSUser : [DeviceKeyStore] Cannot load key: Device key file not found.
+10-17 14:54:26.087   336  5571 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+10-17 14:54:26.090   336  5573 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-17 14:54:26.090   336  5573 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7bd46bb58630
+10-17 14:54:26.090   336  5573 I resolv  : doQuery: rcode=0, ancount=8, return value=173
+10-17 14:54:26.094   336  5572 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-17 14:54:26.094   336  5572 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7bd3cbb54a90
+10-17 14:54:26.094   336  5572 I resolv  : doQuery: rcode=0, ancount=8, return value=269
+10-17 14:54:26.097  5280  5475 D TrafficStats: tagSocket(182) with statsTag=0x34000609, statsUid=10125
+10-17 14:54:26.104  5280  5475 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+10-17 14:54:26.104  5280  5475 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-17 14:54:26.104  5280  5475 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.400   838   838 D StatusBarIconController: ignoring old pipeline callbacks, because the new mobile icons are enabled
+10-17 14:54:26.626  5280  5475 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+10-17 14:54:26.626  5280  5475 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-17 14:54:26.627  5280  5475 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: Voilatile gRPC failure INVALID_ARGUMENT: Application credential header not valid. Please fix the client to pass a valid application credential header. [CONTEXT service_id=6 ]
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: enms: INVALID_ARGUMENT: Application credential header not valid. Please fix the client to pass a valid application credential header.
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at enmr.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at abxw.u(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at abxw.e(:com.google.android.gms@231818047@23.18.18 (190800-535401451):17)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at abxw.g(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at cyeg.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):27)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at czpd.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):78)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:26.748  5280  5339 W GlsClientGrpc: 	at java.lang.Thread.run(Thread.java:1012)
+10-17 14:54:27.053  5280  5489 E bwel    : Phenotype registration failed [CONTEXT service_id=51 ]
+10-17 14:54:27.053  5280  5489 E bwel    : java.util.concurrent.TimeoutException: Timed out waiting for Task
+10-17 14:54:27.053  5280  5489 E bwel    : 	at cfsz.o(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at bwel.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):12)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at com.google.android.gms.phenotype.sync.HeterodyneSyncTaskChimeraService.d(:com.google.android.gms@231818047@23.18.18 (190800-535401451):8)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at com.google.android.gms.phenotype.sync.HeterodyneSyncTaskChimeraService.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):10)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at avzs.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-17 14:54:27.053  5280  5489 E bwel    : 	at java.lang.Thread.run(Thread.java:1012)
+10-17 14:54:27.076  5280  5280 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.auth.account.data.service.START pkg=com.google.android.gms }
+10-17 14:54:27.077  5280  5280 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.cast.service.BIND_CAST_DEVICE_CONTROLLER_SERVICE pkg=com.google.android.gms }
+10-17 14:54:27.078  5280  5280 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.clearcut.bootcount.service.START pkg=com.google.android.gms }
+10-17 14:54:27.079  5280  5280 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.semanticlocation.service.START_ODLH pkg=com.google.android.gms }
+10-17 14:54:27.105  5280  5280 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.clearcut.bootcount.service.START pkg=com.google.android.gms }
+10-17 14:54:27.107  5352  5352 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.mobstore.service.START pkg=com.google.android.gms }
+10-17 14:54:27.107  5352  5352 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.languageprofile.service.START pkg=com.google.android.gms }
+10-17 14:54:27.109  5352  5352 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.wallet.service.BIND pkg=com.google.android.gms }
+10-17 14:54:27.110  5352  5352 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.pay.service.BIND dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+10-17 14:54:27.115  5352  5352 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.wallet.service.BIND pkg=com.google.android.gms }
+10-17 14:54:27.116  5352  5352 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.wallet.service.BIND pkg=com.google.android.gms }
+10-17 14:54:27.142  5352  5427 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.googlequicksearchbox componentName=null serviceId=36
+10-17 14:54:27.147  5352  5393 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-17 14:54:27.147  5352  5427 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.googlequicksearchbox componentName=AMBIENT_ASSISTANT serviceId=32
+10-17 14:54:27.173  5352  5393 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-17 14:54:27.342  5204  5238 I TestRunner: finished: drawsTheWeatherLine(com.prostellis.awe.ClockRenderTest)
