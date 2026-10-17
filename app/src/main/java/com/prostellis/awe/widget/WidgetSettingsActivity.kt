@@ -8,11 +8,9 @@ import android.graphics.Canvas
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.SeekBar
@@ -38,10 +36,12 @@ class WidgetSettingsActivity : Activity() {
     private var transparency = 0
     private var refresh = RefreshMode.EVERY_30
     private var showCurrent = true
-    private var tempColor = 0
+    private var tempColor = ClockColor.AUTO
     private var glow = Glow.DEFAULT
     private var showRain = true
-    private var iconStyle = IconStyle.GLOW
+    private var daysToo = false
+    private var iconStyle = IconStyle.THREE_D
+    private lateinit var picker: ColorPicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +60,7 @@ class WidgetSettingsActivity : Activity() {
         tempColor = saved.tempColor
         glow = saved.glow
         showRain = saved.showRain
+        daysToo = saved.daysToo
         iconStyle = store.iconStyle
 
         setContentView(R.layout.activity_widget_settings)
@@ -109,15 +110,22 @@ class WidgetSettingsActivity : Activity() {
             setOnCheckedChangeListener { _, on -> showRain = on; drawPreview() }
         }
 
-        // Icon style: shared by every widget and the app; each choice shows a few of its icons
-        val styleButtons = mapOf(R.id.style_basic to IconStyle.BASIC, R.id.style_glow to IconStyle.GLOW, R.id.style_fine to IconStyle.FINE)
+        // Day names too: forecast widget only; the day names take the temperature color
+        findViewById<View>(R.id.days_too_row).visibility = if (forecast) View.VISIBLE else View.GONE
+        findViewById<android.widget.Switch>(R.id.days_too).apply {
+            isChecked = daysToo
+            setOnCheckedChangeListener { _, on -> daysToo = on; drawPreview() }
+        }
+
+        // Icon style: shared by every widget and the app; each choice shows a few of its icons (3D, until now Glow, is IconStyle.THREE_D)
+        val styleButtons = mapOf(R.id.style_basic to IconStyle.BASIC, R.id.style_fine to IconStyle.FINE, R.id.style_3d to IconStyle.THREE_D)
         for ((id, style) in styleButtons) {
             findViewById<RadioButton>(id).setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, iconSample(style), null)
         }
         val styleGroup = findViewById<RadioGroup>(R.id.icon_style_group)
         styleGroup.check(styleButtons.entries.first { it.value == iconStyle }.key)
         styleGroup.setOnCheckedChangeListener { _, checked ->
-            iconStyle = styleButtons[checked] ?: IconStyle.GLOW
+            iconStyle = styleButtons[checked] ?: IconStyle.THREE_D
             drawPreview()
         }
 
@@ -156,54 +164,38 @@ class WidgetSettingsActivity : Activity() {
     private fun fitSystemBars() {
         val header = findViewById<View>(R.id.header)
         val body = findViewById<View>(R.id.body)
+        val picker = findViewById<View>(R.id.picker)
         val headerTop = header.paddingTop
         findViewById<View>(R.id.root).setOnApplyWindowInsetsListener { _, insets ->
             val bars = insets.getInsets(android.view.WindowInsets.Type.systemBars())
             header.setPadding(header.paddingLeft, headerTop + bars.top, header.paddingRight, header.paddingBottom)
             body.setPadding(0, 0, 0, bars.bottom)
+            picker.setPadding(0, 0, 0, bars.bottom)
             android.view.WindowInsets.CONSUMED
         }
     }
 
-    /** Temperature color: a slider through Auto and ten colors, with the same choices as swatches underneath. */
+    /** Temperature color: one row that opens the Clock's color picker. */
     private fun setUpTempColor() {
-        val seek = findViewById<SeekBar>(R.id.temp_color)
-        val value = findViewById<TextView>(R.id.temp_color_value)
-        val row = findViewById<LinearLayout>(R.id.temp_swatches)
         if (kind == WidgetKind.TINY) findViewById<TextView>(R.id.temp_color_help).setText(R.string.settings_temp_color_help_tiny)
-        val d = resources.displayMetrics.density
-        val swatches = TempColors.CHOICES.mapIndexed { i, (name, color) ->
-            View(this).apply {
-                contentDescription = name
-                background = GradientDrawable().apply {
-                    shape = GradientDrawable.OVAL
-                    // Auto shows both of its picks: white and near-black
-                    if (color == null) { colors = intArrayOf(0xFFFFFFFF.toInt(), 0xFF141A22.toInt()); orientation = GradientDrawable.Orientation.TL_BR }
-                    else setColor(color)
-                }
-                setOnClickListener { seek.progress = i }
-                row.addView(this, LinearLayout.LayoutParams(0, (22 * d).toInt(), 1f).apply { marginStart = (3 * d).toInt(); marginEnd = (3 * d).toInt() })
-            }
-        }
-        fun show() {
-            value.text = TempColors.CHOICES[tempColor].first
-            swatches.forEachIndexed { i, v ->
-                (v.background as GradientDrawable).setStroke((if (i == tempColor) 3 * d else 1 * d).toInt(), getColor(if (i == tempColor) R.color.accent else R.color.line))
-            }
-        }
-        seek.max = TempColors.CHOICES.size - 1
-        tempColor = tempColor.coerceIn(0, seek.max)
-        seek.progress = tempColor
-        show()
-        seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(bar: SeekBar, progress: Int, fromUser: Boolean) {
-                tempColor = progress
-                show()
-                drawPreview()
-            }
-            override fun onStartTrackingTouch(bar: SeekBar) = Unit
-            override fun onStopTrackingTouch(bar: SeekBar) = Unit
-        })
+        picker = ColorPicker(this, findViewById(R.id.body), findViewById(R.id.picker), findViewById(R.id.picker_body),
+            onPreview = { c -> drawPreview(settings().copy(tempColor = c)) },
+            onClose = { c -> tempColor = c; paintTempColor(); drawPreview() })
+        findViewById<View>(R.id.row_temp_color).setOnClickListener { picker.open(getString(R.string.settings_temp_color), tempColor) }
+        paintTempColor()
+    }
+
+    private fun paintTempColor() {
+        val row = findViewById<View>(R.id.row_temp_color)
+        row.findViewById<TextView>(R.id.color_title).setText(R.string.settings_temp_color)
+        row.findViewById<TextView>(R.id.color_value).text = ClockPalette.label(tempColor)
+        row.findViewById<ImageView>(R.id.color_swatch).setImageDrawable(SwatchDrawable(tempColor, getColor(R.color.line_strong)))
+        row.contentDescription = "${getString(R.string.settings_temp_color)}: ${ClockPalette.label(tempColor)}"
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        if (picker.isOpen) picker.close(keep = false) else super.onBackPressed()
     }
 
     /** Glow strength: Off to Max, for the halo behind this widget's temperatures. */
@@ -225,12 +217,12 @@ class WidgetSettingsActivity : Activity() {
         })
     }
 
-    private fun settings() = WidgetSettings(transparency, refresh, showCurrent, tempColor, glow, showRain)
+    private fun settings() = WidgetSettings(transparency, refresh, showCurrent, tempColor, glow, showRain, daysToo)
 
-    private fun drawPreview() {
+    private fun drawPreview(s: WidgetSettings = settings()) {
         val preview = findViewById<ImageView>(R.id.preview)
         val (w, h) = WidgetUpdater.sizeDp(this, widgetId, kind)
-        val r = WidgetUpdater.renderFor(this, kind, w, h, settings(), iconStyle)
+        val r = WidgetUpdater.renderFor(this, kind, w, h, s, iconStyle)
         val density = resources.displayMetrics.density
         // Real size when it fits; otherwise scaled down to the screen width.
         val container = findViewById<View>(R.id.preview_container)

@@ -19,12 +19,21 @@ enum class RefreshMode(val minutes: Int?) {
 }
 
 /**
- * Settings for one widget on the home screen. [tempColor] is a [com.prostellis.awe.widget.TempColors] choice (0 = Auto);
- * [glow] is a [com.prostellis.awe.widget.Glow] step for the halo behind the temperatures; [showRain] shows the forecast widget's rain amounts.
+ * Settings for one widget on the home screen. [tempColor] comes from the same picker as the Clock (Auto by default);
+ * [glow] is a [com.prostellis.awe.widget.Glow] step for the halo behind the temperatures; [showRain] shows the forecast
+ * widget's rain amounts; [daysToo] gives the forecast widget's day names the temperature color too.
  */
-data class WidgetSettings(val transparency: Int, val refresh: RefreshMode, val showCurrent: Boolean, val tempColor: Int, val glow: Int, val showRain: Boolean) {
+data class WidgetSettings(
+    val transparency: Int = 0,
+    val refresh: RefreshMode = RefreshMode.EVERY_30,
+    val showCurrent: Boolean = true,
+    val tempColor: ClockColor = ClockColor.AUTO,
+    val glow: Int = com.prostellis.awe.widget.Glow.DEFAULT,
+    val showRain: Boolean = true,
+    val daysToo: Boolean = false,
+) {
     companion object {
-        val DEFAULT = WidgetSettings(transparency = 0, refresh = RefreshMode.EVERY_30, showCurrent = true, tempColor = 0, glow = com.prostellis.awe.widget.Glow.DEFAULT, showRain = true)
+        val DEFAULT = WidgetSettings()
     }
 }
 
@@ -101,19 +110,26 @@ class Store(context: Context) {
         refresh = prefs.getString("w$id.refresh", null)
             ?.let { runCatching { RefreshMode.valueOf(it) }.getOrNull() } ?: WidgetSettings.DEFAULT.refresh,
         showCurrent = prefs.getBoolean("w$id.showCurrent", WidgetSettings.DEFAULT.showCurrent),
-        tempColor = prefs.getInt("w$id.tempColor", WidgetSettings.DEFAULT.tempColor),
+        tempColor = widgetTempColor(id),
         glow = prefs.getInt("w$id.glow", WidgetSettings.DEFAULT.glow),
         showRain = prefs.getBoolean("w$id.showRain", WidgetSettings.DEFAULT.showRain),
+        daysToo = prefs.getBoolean("w$id.daysToo", WidgetSettings.DEFAULT.daysToo),
     )
+
+    /** The temperature color; a widget last saved before 2.2 keeps its color (the old 11 are the first 11 solids). */
+    private fun widgetTempColor(id: Int): ClockColor = prefs.getString("w$id.tempFill", null)?.let(ClockColor::decode)
+        ?: ClockColor.decode("solid:${prefs.getInt("w$id.tempColor", 0)}")
 
     fun saveWidgetSettings(id: Int, s: WidgetSettings) {
         prefs.edit()
             .putInt("w$id.transparency", s.transparency)
             .putString("w$id.refresh", s.refresh.name)
             .putBoolean("w$id.showCurrent", s.showCurrent)
-            .putInt("w$id.tempColor", s.tempColor)
+            .putString("w$id.tempFill", s.tempColor.encode())
+            .remove("w$id.tempColor")
             .putInt("w$id.glow", s.glow)
             .putBoolean("w$id.showRain", s.showRain)
+            .putBoolean("w$id.daysToo", s.daysToo)
             .apply()
     }
 
@@ -130,8 +146,12 @@ class Store(context: Context) {
             hiLo = prefs.getBoolean("${k}hiLo", d.hiLo),
             tempColor = ClockColor.decode(prefs.getString("${k}tempColor", null)),
             date = prefs.getBoolean("${k}date", d.date),
-            datePos = prefs.getString("${k}datePos", null)?.let { runCatching { DatePos.valueOf(it) }.getOrNull() } ?: d.datePos,
+            datePos = pos(prefs.getString("${k}datePos", null)) ?: d.datePos,
             dateColor = ClockColor.decode(prefs.getString("${k}dateColor", null)),
+            wxLine = prefs.getBoolean("${k}wxLine", d.wxLine),
+            wxSame = prefs.getBoolean("${k}wxSame", d.wxSame),
+            wxPos = pos(prefs.getString("${k}wxPos", null)) ?: d.wxPos,
+            wxOrder = pos(prefs.getString("${k}wxOrder", null)) ?: d.wxOrder,
         )
     }
 
@@ -149,8 +169,14 @@ class Store(context: Context) {
             .putBoolean("${k}date", s.date)
             .putString("${k}datePos", s.datePos.name)
             .putString("${k}dateColor", s.dateColor.encode())
+            .putBoolean("${k}wxLine", s.wxLine)
+            .putBoolean("${k}wxSame", s.wxSame)
+            .putString("${k}wxPos", s.wxPos.name)
+            .putString("${k}wxOrder", s.wxOrder.name)
             .apply()
     }
+
+    private fun pos(name: String?) = name?.let { runCatching { DatePos.valueOf(it) }.getOrNull() }
 
     /** When this widget last showed newly downloaded data. */
     fun widgetUpdatedAt(id: Int): Long = prefs.getLong("w$id.updated", 0)

@@ -16,13 +16,16 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-/** The weather-symbol style chosen in the app or a widget's settings: Basic, Glow or Fine Outline. [id] is the web app's name for it. */
+/**
+ * The weather-symbol style chosen in the app or a widget's settings, in the order they're offered: Basic, Fine Outline
+ * and 3D. [id] is the web app's name for it (3D was called Glow, and keeps that id so saved choices stay as they are).
+ */
 enum class IconStyle(val id: String) {
-    BASIC("default"), GLOW("glow"), FINE("fine");
+    BASIC("default"), FINE("fine"), THREE_D("glow");
 
     companion object {
-        /** People who never picked a style get Glow, as in the app. */
-        fun fromId(id: String?): IconStyle = entries.firstOrNull { it.id == id } ?: GLOW
+        /** People who never picked a style get 3D, as in the app. */
+        fun fromId(id: String?): IconStyle = entries.firstOrNull { it.id == id } ?: THREE_D
     }
 }
 
@@ -49,7 +52,7 @@ object WeatherIcons {
     private val FINE_DRIZZLE = path("M8 18.8v1.2M12 20v1.2M16 18.8v1.2M10 22.2v1M14 22.2v1")
     private val FINE_BOLT = path("M13.2 14.2l-3 4.4h3l-2 4.4")
 
-    /** Glow clouds are three puffs on a rounded base: (center x, center y, radius). */
+    /** 3D clouds are three puffs on a rounded base: (center x, center y, radius). */
     private val PUFFS = listOf(Triple(13.6f, 11.6f, 5.3f), Triple(8.6f, 14f, 4.2f), Triple(18f, 15.1f, 3.6f))
     private val BASE = RectF(5f, 14f, 20f, 18.9f)
     private val FLAKES = listOf(7.4f to 19.7f, 16.6f to 19.7f, 12f to 22.1f)
@@ -164,7 +167,7 @@ object WeatherIcons {
 
     private fun sun(canvas: Canvas, style: IconStyle, c: IconColors) = when (style) {
         IconStyle.BASIC -> basicSun(canvas, 12f, 12f, 4.2f, 2.6f, c)
-        IconStyle.GLOW -> {
+        IconStyle.THREE_D -> {
             canvas.drawCircle(12f, 12f, 11f, shade(radial(12f, 12f, 11f, intArrayOf(alpha(0xFFC640, .55f), alpha(0xFFC640, .55f), alpha(0xFFC640, 0f)), floatArrayOf(0f, .35f, 1f))))
             // SVG: radial gradient centered at 38% / 35% of the 10.8-wide circle, radius 70% of it
             canvas.drawCircle(12f, 12f, 5.4f, shade(radial(10.704f, 10.38f, 7.56f, intArrayOf(0xFFFFF4B8.toInt(), 0xFFFFBE2E.toInt(), 0xFFFF8F1F.toInt()), floatArrayOf(0f, .55f, 1f))))
@@ -197,7 +200,7 @@ object WeatherIcons {
                 canvas.drawCircle(9.4f, 9.8f, 1.7f, fill); canvas.drawCircle(14.6f, 13.4f, 1.3f, fill)
                 canvas.drawCircle(11f, 15.4f, .9f, fill); canvas.drawCircle(14.2f, 8.6f, .7f, fill)
             }
-            IconStyle.GLOW -> {
+            IconStyle.THREE_D -> {
                 canvas.drawCircle(12f, 12f, 11f, shade(radial(12f, 12f, 11f, intArrayOf(alpha(0xFFF2C2, .45f), alpha(0xFFF2C2, .45f), alpha(0xFFF2C2, 0f)), floatArrayOf(0f, .4f, 1f))))
                 glowMoonFill(canvas, GLOW_MOON)
             }
@@ -218,7 +221,7 @@ object WeatherIcons {
     private fun smallMoon(canvas: Canvas, style: IconStyle, c: IconColors) {
         when (style) {
             IconStyle.BASIC -> crescent(canvas, c)
-            IconStyle.GLOW -> glowMoonFill(canvas, CRESCENT)
+            IconStyle.THREE_D -> glowMoonFill(canvas, CRESCENT)
             IconStyle.FINE -> {
                 fill.color = c.cloudFill; canvas.drawPath(CRESCENT, fill)
                 stroke.color = c.lineInk; canvas.drawPath(CRESCENT, stroke)
@@ -239,7 +242,7 @@ object WeatherIcons {
                 fill.color = c.cloudFill; canvas.drawPath(CLOUD, fill)
                 stroke.color = c.stroke; canvas.drawPath(CLOUD, stroke)
             }
-            IconStyle.GLOW -> {
+            IconStyle.THREE_D -> {
                 // Soft shadow first, nudged down and right
                 at(canvas, dx, dy, scale) { canvas.save(); canvas.translate(.4f, 1f); puffs(canvas) { fill.color = c.glowShadow; fill }; canvas.restore() }
                 at(canvas, dx, dy, scale) { sunlitCloud(canvas, c) }
@@ -257,7 +260,7 @@ object WeatherIcons {
         canvas.drawRoundRect(BASE, 2.45f, 2.45f, paint())
     }
 
-    /** Glow cloud: one light from the upper left, a soft shade on each puff's edge and a bright rim along its top. */
+    /** 3D cloud: one light from the upper left, a soft shade on each puff's edge and a bright rim along its top. */
     private fun sunlitCloud(canvas: Canvas, c: IconColors) {
         val body = radial(10.5f, 8.5f, 13f, intArrayOf(0xFFFFFFFF.toInt(), c.glowA, c.glowB), floatArrayOf(0f, .45f, 1f))
         for ((x, y, r) in PUFFS) {
@@ -281,7 +284,7 @@ object WeatherIcons {
                 stroke.color = c.stroke
                 canvas.drawLine(5f, 19f, 19f, 19f, stroke); canvas.drawLine(8f, 22f, 17f, 22f, stroke)
             }
-            IconStyle.GLOW -> {
+            IconStyle.THREE_D -> {
                 for (r in listOf(RectF(2.5f, 18.3f, 21.5f, 20.5f), RectF(5f, 21.4f, 19f, 23.6f))) {
                     val g = LinearGradient(r.left, 0f, r.right, 0f, intArrayOf(alpha(0xA9B7C8, 0f), 0xFFA9B7C8.toInt(), alpha(0xA9B7C8, 0f)), floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
                     canvas.drawRoundRect(r, 1.1f, 1.1f, shade(g))
@@ -300,7 +303,7 @@ object WeatherIcons {
                 canvas.drawLine(16f, 19f, 16f, 19.6f, stroke); canvas.drawLine(10f, 22.4f, 10f, 23f, stroke)
                 canvas.drawLine(14f, 22.4f, 14f, 23f, stroke)
             }
-            IconStyle.GLOW -> {
+            IconStyle.THREE_D -> {
                 for ((x, y) in listOf(8f to 19.6f, 12f to 20.6f, 16f to 19.6f, 10f to 23f, 14f to 23f)) {
                     val d = drop(x, y, .5f); val b = RectF(); d.computeBounds(b, true)
                     canvas.drawPath(d, shade(vertical(b.top, b.bottom, 0xFFA8D3FF.toInt(), 0xFF2F74D6.toInt())))
@@ -324,7 +327,7 @@ object WeatherIcons {
                 canvas.drawLine(8.5f, 18.5f, 7.5f, 22f, stroke); canvas.drawLine(12.5f, 18.5f, 11.5f, 22f, stroke)
                 canvas.drawLine(16.5f, 18.5f, 15.5f, 22f, stroke)
             }
-            IconStyle.GLOW -> {
+            IconStyle.THREE_D -> {
                 stroke.color = 0xFF000000.toInt(); stroke.strokeWidth = 1.9f
                 stroke.shader = vertical(18f, 22.6f, 0xFFA8D3FF.toInt(), 0xFF2F74D6.toInt())
                 for (x in listOf(8.6f, 12.6f, 16.6f)) canvas.drawLine(x, 18.4f, x - 1.1f, 22.2f, stroke)
@@ -343,7 +346,7 @@ object WeatherIcons {
     private fun storm(canvas: Canvas, style: IconStyle, c: IconColors) {
         when (style) {
             IconStyle.BASIC -> { stroke.color = c.sun; canvas.drawPath(BOLT, stroke) }
-            IconStyle.GLOW -> {
+            IconStyle.THREE_D -> {
                 canvas.drawCircle(12.8f, 17.6f, 5f, shade(radial(12.8f, 17.6f, 5f, intArrayOf(alpha(0xFFD54A, .5f), alpha(0xFFD54A, .5f), alpha(0xFFD54A, 0f)), floatArrayOf(0f, .2f, 1f))))
                 val b = RectF(); GLOW_BOLT.computeBounds(b, true)
                 canvas.drawPath(GLOW_BOLT, shade(vertical(b.top, b.bottom, 0xFFFFF1A6.toInt(), 0xFFFFA514.toInt())))

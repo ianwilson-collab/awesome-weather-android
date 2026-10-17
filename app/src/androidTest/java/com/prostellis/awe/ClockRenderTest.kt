@@ -54,7 +54,7 @@ class ClockRenderTest {
 
     private fun look(dark: Boolean, style: BgStyle = BgStyle.DYNAMIC, transparency: Int = 0, glow: Int = 2): Look {
         val sky = WidgetSky.picture(context, style, model.nowCat, model.light, dark, "2026-10-08")
-        return Look(transparency, WidgetTheme.pick(dark, transparency, false, sky?.isDark), dark, IconStyle.GLOW, sky = sky, glow = glow)
+        return Look(transparency, WidgetTheme.pick(dark, transparency, false, sky?.isDark), dark, IconStyle.THREE_D, sky = sky, glow = glow)
     }
 
     private fun draw(s: ClockSettings, w: Float, dark: Boolean = false, style: BgStyle = BgStyle.DYNAMIC, m: WidgetModel? = model) =
@@ -93,6 +93,26 @@ class ClockRenderTest {
             save("clock-grad-$i", draw(ClockSettings(timeColor = ClockColor(ColorFamily.GRAD, i)), 233f, dark = i % 2 == 0))
         }
         for (glow in 0..4) save("clock-glow-$glow", draw(ClockSettings(glow = glow, timeColor = ClockColor(ColorFamily.METAL, 0)), 310f, style = BgStyle.MT_HOOD))
+    }
+
+    /** The weather line in every arrangement, on the 4×1 and 2×1, and in the date's color. */
+    @Test fun drawsTheWeatherLine() {
+        val combos = listOf(
+            "below" to ClockSettings(weather = false, wxLine = true),
+            "above" to ClockSettings(weather = false, wxLine = true, wxPos = DatePos.ABOVE),
+            "same-below" to ClockSettings(weather = false, wxLine = true, date = true),
+            "same-above" to ClockSettings(weather = false, wxLine = true, date = true, datePos = DatePos.ABOVE),
+            "under-date" to ClockSettings(weather = false, wxLine = true, date = true, wxSame = false),
+            "over-date" to ClockSettings(weather = false, wxLine = true, date = true, wxSame = false, wxOrder = DatePos.ABOVE),
+            "both-above" to ClockSettings(weather = false, wxLine = true, date = true, datePos = DatePos.ABOVE, wxSame = false, wxPos = DatePos.ABOVE),
+            "split" to ClockSettings(weather = false, wxLine = true, date = true, datePos = DatePos.ABOVE, wxSame = false),
+            "with-right" to ClockSettings(wxLine = true, date = true),
+            "heat" to ClockSettings(weather = false, wxLine = true, date = true, wxSame = false, dateColor = ClockColor(ColorFamily.GRAD, 0)),
+        )
+        for ((tag, s) in combos) {
+            save("clock-wxline-$tag", draw(s, 310f))
+            save("clock-wxline-$tag-2x1", draw(s, 152f, dark = true))
+        }
     }
 
     @Test fun drawsTransparencyAndEveryBackgroundStyle() {

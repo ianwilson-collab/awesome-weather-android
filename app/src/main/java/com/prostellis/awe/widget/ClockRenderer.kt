@@ -23,7 +23,7 @@ class ClockRendered(val bitmap: Bitmap, val timeArea: RectF, val weatherArea: Re
 
 /**
  * Draws the clock widget as approved on the mock-up board: hours and minutes as large as the row allows,
- * an optional day and date above or below, and an optional weather block on the right drawn like the 1×1.
+ * an optional day and date and an optional weather line above or below, and an optional weather block on the right drawn like the 1×1.
  * Laid out in dp at a 74 dp row and scaled with the row's height.
  */
 class ClockRenderer(private val context: Context) {
@@ -84,26 +84,31 @@ class ClockRenderer(private val context: Context) {
             weatherArea = RectF(right, 0f, w, h)
         }
 
-        // Day and date, above or below the time
+        // Day and date and the weather line, above or below the time. A line is one or more parts ("Wed, Oct 14" and
+        // "71° · 78° / 52°") joined by a dot, all in the date's color; a line shrinks (not below 7 dp) only if it won't fit.
         val left = 4f * s
         val mid = (left + right) / 2
-        var top = e + 1f * s
-        var bottom = h - e - 1f * s
+        val dateText = SimpleDateFormat("EEE, MMM d", Locale.getDefault()).format(Date(now))
+        val wxText = if (settings.wxLine && model != null) weatherLine(model) else null
+        val same = wxText != null && settings.date && settings.wxSame
+        val above = mutableListOf<List<Part>>()
+        val below = mutableListOf<List<Part>>()
         if (settings.date) {
-            val size = 11f * s
-            val y = if (settings.datePos == DatePos.ABOVE) e + size * .74f else h - e - size * .22f
-            val fill = ClockPalette.fill(settings.dateColor, t.ink2, y - size * .74f, y)
-            val text = SimpleDateFormat("EEE, MMM d", Locale.getDefault()).format(Date(now))
-            val p = paint(ui, size, 600)
-            val x = mid - p.measureText(text) / 2
-            if (t.textShadow) {
-                val sh = TextPaint(p).apply { color = 0x73000000; maskFilter = BlurMaskFilter(2f, BlurMaskFilter.Blur.NORMAL) }
-                canvas.drawText(text, x, y + 1f, sh)
-            }
-            applyFill(p, fill)
-            canvas.drawText(text, x, y, p)
-            if (settings.datePos == DatePos.ABOVE) top = e + size + 3f * s else bottom = h - e - size - 3f * s
+            val dateLine = if (same) listOf(Part(dateText, t.ink2), Part(wxText!!, t.ink)) else listOf(Part(dateText, t.ink2))
+            (if (settings.datePos == DatePos.ABOVE) above else below).add(dateLine)
         }
+        if (wxText != null && !same) {
+            val side = if (settings.wxPos == DatePos.ABOVE) above else below
+            val beforeDate = settings.date && settings.datePos == settings.wxPos && settings.wxOrder == DatePos.ABOVE
+            side.add(if (beforeDate) 0 else side.size, listOf(Part(wxText, t.ink)))
+        }
+        val lineSize = 11f * s
+        val lineGap = 2f * s
+        val maxW = right - left - 4f * s
+        above.forEachIndexed { k, parts -> drawLine(canvas, parts, mid, e + lineSize * .74f + k * (lineSize + lineGap), lineSize, maxW, settings.dateColor, t) }
+        below.forEachIndexed { k, parts -> drawLine(canvas, parts, mid, h - e - lineSize * .22f - (below.size - 1 - k) * (lineSize + lineGap), lineSize, maxW, settings.dateColor, t) }
+        val top = if (above.isEmpty()) e + 1f * s else e + above.size * (lineSize + lineGap) - lineGap + 3f * s
+        val bottom = if (below.isEmpty()) h - e - 1f * s else h - e - below.size * (lineSize + lineGap) + lineGap - 3f * s
 
         // The time: digits as tall as the space allows, shrunk only if the width runs out
         val face = ClockFace.byId(settings.face)
@@ -123,6 +128,42 @@ class ClockRenderer(private val context: Context) {
         val fill = ClockPalette.fill(settings.timeColor, t.ink, baseline - dh * size, baseline)
         glowText(canvas, time, x, baseline, p, fill, settings.glow)
         return ClockRendered(bitmap, RectF(0f, 0f, right, h), weatherArea)
+    }
+
+    /** One part of a date or weather line, and its Auto color. */
+    private class Part(val text: String, val auto: Int)
+
+    /** "71° · 78° / 52°": the temperature now, then today's high and low. */
+    private fun weatherLine(model: WidgetModel): String {
+        val today = model.days.firstOrNull()
+        val hi = today?.hi?.let { "${WeatherLogic.jsRound(it)}°" } ?: "—"
+        val lo = today?.lo?.let { "${WeatherLogic.jsRound(it)}°" } ?: "—"
+        return "${model.temp}° · $hi / $lo"
+    }
+
+    /** A line of [parts] centered on [cx], each in [color] (or its own Auto color), joined by a dot. */
+    private fun drawLine(canvas: Canvas, parts: List<Part>, cx: Float, y: Float, fullSize: Float, maxW: Float, color: ClockColor, t: WidgetTheme) {
+        val sep = "  ·  "
+        fun width(size: Float) = parts.sumOf { measure(ui, it.text, size, 600).toDouble() }.toFloat() + (parts.size - 1) * measure(ui, sep, size, 600)
+        var size = fullSize
+        while (size > 7f * fullSize / 11f && width(size) > maxW) size -= .25f
+        var x = cx - width(size) / 2
+        parts.forEachIndexed { i, part ->
+            if (i > 0) { shadowed(canvas, sep, x, y, paint(ui, size, 600), TextFill(t.ink2, null, false), t); x += measure(ui, sep, size, 600) }
+            val p = paint(ui, size, 600)
+            shadowed(canvas, part.text, x, y, p, ClockPalette.fill(color, part.auto, y - size * .74f, y), t)
+            x += p.measureText(part.text)
+        }
+    }
+
+    /** Small text with the soft shadow the widgets use on dark skies. */
+    private fun shadowed(canvas: Canvas, s: String, x: Float, y: Float, p: TextPaint, fill: TextFill, t: WidgetTheme) {
+        if (t.textShadow) {
+            val sh = TextPaint(p).apply { color = 0x73000000; maskFilter = BlurMaskFilter(2f, BlurMaskFilter.Blur.NORMAL) }
+            canvas.drawText(s, x, y + 1f, sh)
+        }
+        applyFill(p, fill)
+        canvas.drawText(s, x, y, p)
     }
 
     private fun paint(type: Typeface, size: Float, weight: Int) = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {

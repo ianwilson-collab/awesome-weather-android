@@ -8,6 +8,9 @@ import com.prostellis.awe.weather.Place
 import com.prostellis.awe.weather.SkyPalette
 import com.prostellis.awe.weather.WeatherLogic
 import com.prostellis.awe.widget.BgStyle
+import com.prostellis.awe.widget.ClockColor
+import com.prostellis.awe.widget.ClockPalette
+import com.prostellis.awe.widget.ColorFamily
 import com.prostellis.awe.widget.IconStyle
 import com.prostellis.awe.widget.TempColors
 import com.prostellis.awe.widget.WidgetRenderer
@@ -132,9 +135,12 @@ class WeatherLogicTest {
     @Test fun iconStylesUseTheWebAppNames() {
         assertEquals(IconStyle.BASIC, IconStyle.fromId("default"))
         assertEquals(IconStyle.FINE, IconStyle.fromId("fine"))
-        // Never picked (or unknown): Glow, the app's default
-        assertEquals(IconStyle.GLOW, IconStyle.fromId(null))
-        assertEquals(IconStyle.GLOW, IconStyle.fromId("something else"))
+        // 3D keeps Glow's id, so a saved choice stays as it was
+        assertEquals(IconStyle.THREE_D, IconStyle.fromId("glow"))
+        assertEquals(listOf(IconStyle.BASIC, IconStyle.FINE, IconStyle.THREE_D), IconStyle.entries)
+        // Never picked (or unknown): 3D, the app's default
+        assertEquals(IconStyle.THREE_D, IconStyle.fromId(null))
+        assertEquals(IconStyle.THREE_D, IconStyle.fromId("something else"))
     }
 
     @Test fun backgroundStylesUseTheWebAppNames() {
@@ -166,8 +172,13 @@ class WeatherLogicTest {
     @Test fun temperatureColorAutoPicksWhateverReadsBetter() {
         assertEquals(0xFF141A22.toInt(), TempColors.readableOn(0xFFFFD98A.toInt()))
         assertEquals(0xFFFFFFFF.toInt(), TempColors.readableOn(0xFF26386A.toInt()))
-        assertEquals(0xFF5AB8FF.toInt(), TempColors.color(9, auto = 0))
-        assertEquals(123, TempColors.color(0, auto = 123))
+    }
+
+    @Test fun widgetColorsFromBefore22CarryOver() {
+        // The old 11 temperature colors are the first 11 solids, so a saved index reads as the same color
+        assertEquals(ClockColor(ColorFamily.SOLID, 9), ClockColor.decode("solid:9"))
+        assertEquals(0xFF5AB8FF.toInt(), ClockPalette.SOLID[9].second)
+        assertEquals(ClockColor.AUTO, ClockColor.decode("solid:42"))
     }
 
     @Test fun eventDaysReadTheWebAppColors() {
