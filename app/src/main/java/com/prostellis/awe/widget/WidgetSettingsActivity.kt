@@ -1,6 +1,5 @@
 package com.prostellis.awe.widget
 
-import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.graphics.Bitmap
@@ -16,6 +15,7 @@ import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.TextView
 import com.prostellis.awe.MainActivity
+import androidx.activity.ComponentActivity
 import com.prostellis.awe.R
 import com.prostellis.awe.data.RefreshMode
 import com.prostellis.awe.data.Store
@@ -28,7 +28,7 @@ import kotlin.math.min
  * and from the forecast widget's gear button. The real wallpaper shows behind the preview, so the
  * sliders show exactly what the home screen will look like.
  */
-class WidgetSettingsActivity : Activity() {
+class WidgetSettingsActivity : ComponentActivity() {
 
     private var widgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private lateinit var kind: WidgetKind
@@ -191,11 +191,6 @@ class WidgetSettingsActivity : Activity() {
         row.findViewById<TextView>(R.id.color_value).text = ClockPalette.label(tempColor)
         row.findViewById<ImageView>(R.id.color_swatch).setImageDrawable(SwatchDrawable(tempColor, getColor(R.color.line_strong)))
         row.contentDescription = "${getString(R.string.settings_temp_color)}: ${ClockPalette.label(tempColor)}"
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (picker.isOpen) picker.close(keep = false) else super.onBackPressed()
     }
 
     /** Glow strength: Off to Max, for the halo behind this widget's temperatures. */

@@ -7,7 +7,7 @@
     <string name="widget_daily_description">The current weather. Stretch it wider for the coming days.</string>
     <string name="widget_hourly_label">AWE Hourly</string>
     <string name="widget_hourly_description">The current weather and the next hours. Stretch it wider for more hours.</string>
-    <string name="widget_forecast_label">Forecast</string>
+    <string name="widget_forecast_label">AWE Forecast</string>
     <string name="widget_forecast_description">Now plus 5 days. Stretch it wider for 7 days.</string>
     <string name="widget_clock_label">AWE Clock</string>
     <string name="widget_clock_description">The time in big digits, with the weather and the date if you like.</string>
@@ -78,6 +78,9 @@
     <string name="clock_wx_order_above">Above</string>
     <string name="clock_wx_order_below">Below</string>
     <string name="clock_wxline_color">Weather line color</string>
+    <string name="clock_minute">Keep the clock on the minute</string>
+    <string name="clock_minute_help">Android needs your OK for AWE to change the clock right at each minute. Without it, the time can run a few minutes behind.</string>
+    <string name="clock_minute_allow">Allow</string>
     <string name="clock_taps_help">Tap the time for your Clock app, the weather for AWE. Long-press for these settings.</string>
     <string name="clock_open_clock">Open the Clock app</string>
     <string name="clock_open_app">Open AWE Weather</string>

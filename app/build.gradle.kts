@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.prostellis.awe"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.prostellis.awe"
         minSdk = 31
-        targetSdk = 35
-        versionCode = 18
-        versionName = "2.2.1"
+        targetSdk = 36
+        versionCode = 19
+        versionName = "2.3"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,12 +42,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
-    }
-
-    lint {
-        // The clock widget redraws each minute with an exact alarm. USE_EXACT_ALARM is meant for clock and alarm apps;
-        // AWE is installed from GitHub, not Google Play, so Play's review of it doesn't apply.
-        disable += "ExactAlarm"
     }
 
     testOptions {
