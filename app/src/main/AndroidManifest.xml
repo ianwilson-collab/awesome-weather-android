@@ -5,11 +5,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Approximate location only: enough for a city-level forecast -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- The clock widget redraws at the start of each minute -->
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
-    <uses-permission
-        android:name="android.permission.SCHEDULE_EXACT_ALARM"
-        android:maxSdkVersion="32" />
+    <!-- The clock widget redraws at the start of each minute; Android asks you to allow this once (Clock settings has the button) -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <!-- Fallback for the clock widget's time tap: most Clock apps only open their alarms for apps that hold this -->
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
@@ -126,7 +123,7 @@
                 android:resource="@xml/widget_clock_info" />
         </receiver>
 
-        <!-- The clock's minute alarm, plus the time, time zone and language changing, and app updates -->
+        <!-- The clock's minute alarm, plus the time, time zone and language changing, app updates, and the minute permission being allowed -->
         <receiver
             android:name=".widget.ClockTickReceiver"
             android:exported="false">
@@ -135,6 +132,7 @@
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.LOCALE_CHANGED" />
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
             </intent-filter>
         </receiver>
 

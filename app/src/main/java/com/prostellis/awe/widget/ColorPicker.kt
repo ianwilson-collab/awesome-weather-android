@@ -1,6 +1,7 @@
 package com.prostellis.awe.widget
 
-import android.app.Activity
+import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import android.graphics.Color
 import android.text.InputType
 import android.util.TypedValue
@@ -22,10 +23,10 @@ import com.prostellis.awe.R
  * The color picker the Clock and weather widget settings share: Custom (a saturation-and-brightness square, a hue
  * strip, the 16 solid presets and a hex code), Metallic and Gradient. It opens over the settings ([settings] hides,
  * [scroll] shows with the picker built into [body]), so the live preview above stays in view. [onPreview] gets each
- * choice as it's made; [onClose] gets the color to keep (the one it opened with, on Cancel).
+ * choice as it's made; [onClose] gets the color to keep (the one it opened with, on Cancel). Back works like Cancel.
  */
 class ColorPicker(
-    private val activity: Activity,
+    private val activity: ComponentActivity,
     private val settings: View,
     private val scroll: ScrollView,
     private val body: LinearLayout,
@@ -38,7 +39,14 @@ class ColorPicker(
     private class Pick(val title: String, var tab: ColorFamily, var h: Float, var s: Float, var v: Float, val before: ClockColor, var choice: ClockColor)
     private var pick: Pick? = null
 
-    val isOpen get() = pick != null
+    /** While the picker is open, Back cancels it instead of leaving the settings. */
+    private val back = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() = close(keep = false)
+    }
+
+    init {
+        activity.onBackPressedDispatcher.addCallback(activity, back)
+    }
 
     fun open(title: String, current: ClockColor) {
         val start = when (current.family) {
@@ -49,6 +57,7 @@ class ColorPicker(
         val hsv = FloatArray(3).also { Color.colorToHSV(start, it) }
         val tab = if (current.family == ColorFamily.METAL || current.family == ColorFamily.GRAD) current.family else ColorFamily.CUSTOM
         pick = Pick(title, tab, hsv[0], hsv[1], hsv[2], current, current)
+        back.isEnabled = true
         settings.visibility = View.GONE
         scroll.apply { visibility = View.VISIBLE; scrollTo(0, 0) }
         paint()
@@ -57,6 +66,7 @@ class ColorPicker(
     fun close(keep: Boolean) {
         val p = pick ?: return
         pick = null
+        back.isEnabled = false
         scroll.visibility = View.GONE
         settings.visibility = View.VISIBLE
         onClose(if (keep) p.choice else p.before)

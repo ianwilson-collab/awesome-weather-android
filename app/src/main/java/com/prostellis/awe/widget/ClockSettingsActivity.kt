@@ -1,12 +1,14 @@
 package com.prostellis.awe.widget
 
-import android.app.Activity
+import android.app.AlarmManager
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.Shader
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -17,6 +19,7 @@ import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.Switch
 import android.widget.TextView
+import androidx.activity.ComponentActivity
 import com.prostellis.awe.R
 import com.prostellis.awe.data.Store
 import kotlin.math.min
@@ -26,7 +29,7 @@ import kotlin.math.min
  * (each through the same picker), glow, transparency, the weather on the right, the day and date, and the weather
  * line. Opens when the clock is placed and by long-pressing it.
  */
-class ClockSettingsActivity : Activity() {
+class ClockSettingsActivity : ComponentActivity() {
 
     private var widgetId = AppWidgetManager.INVALID_APPWIDGET_ID
     private lateinit var store: Store
@@ -72,10 +75,20 @@ class ClockSettingsActivity : Activity() {
         aboveBelow(R.id.date_pos_group, R.id.date_above, R.id.date_below, settings.datePos) { settings = settings.copy(datePos = it) }
         aboveBelow(R.id.wx_pos_group, R.id.wx_above, R.id.wx_below, settings.wxPos) { settings = settings.copy(wxPos = it) }
         aboveBelow(R.id.wx_order_group, R.id.wx_order_above, R.id.wx_order_below, settings.wxOrder) { settings = settings.copy(wxOrder = it) }
+        findViewById<View>(R.id.minute_allow).setOnClickListener {
+            startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:$packageName")))
+        }
         findViewById<View>(R.id.done).setOnClickListener { save(); finish() }
 
         showDependentRows()
         findViewById<ImageView>(R.id.preview).post { drawPreview() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Back from Android's "Alarms and reminders" page: hide the card once the minute permission is allowed
+        val allowed = getSystemService(AlarmManager::class.java).canScheduleExactAlarms()
+        findViewById<View>(R.id.minute_card).visibility = if (allowed) View.GONE else View.VISIBLE
     }
 
     /** Header below the status bar, buttons above the navigation bar. */
@@ -222,11 +235,6 @@ class ClockSettingsActivity : Activity() {
             row.findViewById<ImageView>(R.id.color_swatch).setImageDrawable(SwatchDrawable(c, getColor(R.color.line_strong)))
             row.contentDescription = "${title(target)}: ${ClockPalette.label(c)}"
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        if (picker.isOpen) picker.close(keep = false) else super.onBackPressed()
     }
 
     /* ---------------- Preview and saving ---------------- */

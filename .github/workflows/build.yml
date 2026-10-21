@@ -46,7 +46,7 @@ jobs:
           AWE_KEYSTORE_PASSWORD: ${{ secrets.AWE_KEYSTORE_PASSWORD }}
           AWE_KEY_ALIAS: ${{ secrets.AWE_KEY_ALIAS }}
           AWE_KEY_PASSWORD: ${{ secrets.AWE_KEY_PASSWORD }}
-        run: bash .github/scripts/gradle.sh assembleRelease
+        run: bash .github/scripts/gradle.sh assembleRelease bundleRelease
 
       - name: Name the APK and check whether this version is new
         id: version
@@ -55,6 +55,8 @@ jobs:
         run: |
           version=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
           cp app/build/outputs/apk/release/app-release.apk "AWE-v$version.apk"
+          # The same version as an app bundle, the file Google Play takes (signed with the same key, Play's upload key)
+          cp app/build/outputs/bundle/release/app-release.aab "AWE-v$version.aab"
           echo "version=$version" >> "$GITHUB_OUTPUT"
           if gh release view "v$version" -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
             echo "publish=false" >> "$GITHUB_OUTPUT"
@@ -65,7 +67,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: apk
-          path: AWE-v*.apk
+          path: |
+            AWE-v*.apk
+            AWE-v*.aab
 
   device-check:
     name: On-device checks and screenshots
@@ -136,7 +140,10 @@ jobs:
           tag_name: v${{ needs.build.outputs.version }}
           target_commitish: ${{ github.sha }}
           name: AWE v${{ needs.build.outputs.version }} · Awesome Weather for Android
-          files: AWE-v*.apk
+          files: |
+            AWE-v*.apk
+            AWE-v*.aab
           body: |
             **To install on your phone:** open this page in Chrome on your phone, tap the `.apk` file below, then tap **Open** and **Install**.
             The first time, Android asks you to allow Chrome to install apps; allow it once.
+            The `.aab` file is the same version for Google Play; you don't need it on your phone.
