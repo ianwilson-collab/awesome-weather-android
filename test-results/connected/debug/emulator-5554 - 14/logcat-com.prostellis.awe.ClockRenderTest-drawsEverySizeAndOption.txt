@@ -1,0 +1,51 @@
+10-21 00:13:54.112  5667  5714 I TestRunner: started: drawsEverySizeAndOption(com.prostellis.awe.ClockRenderTest)
+10-21 00:13:54.113  1029  1029 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-21 00:13:54.113  1029  1029 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-21 00:13:54.114   844   844 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-21 00:13:54.116   844   912 D StylusManager: Stylus InputDevice changed: 10 virtio_input_multi_touch_7
+10-21 00:13:54.121   844   912 D StylusManager: Stylus InputDevice changed: 14 virtio_input_multi_touch_11
+10-21 00:13:54.123   844   912 D StylusManager: Stylus InputDevice changed: 8 virtio_input_multi_touch_5
+10-21 00:13:54.123   844   912 D StylusManager: Stylus InputDevice changed: 4 virtio_input_multi_touch_1
+10-21 00:13:54.123   844   912 D StylusManager: Stylus InputDevice changed: 12 virtio_input_multi_touch_9
+10-21 00:13:54.124   844   912 D StylusManager: Stylus InputDevice changed: 6 virtio_input_multi_touch_3
+10-21 00:13:54.124  1053  1321 D ImsResolver: maybeAddedImsService, packageName: com.prostellis.awe
+10-21 00:13:54.124   844   912 D StylusManager: Stylus InputDevice changed: 9 virtio_input_multi_touch_6
+10-21 00:13:54.124   844   912 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+10-21 00:13:54.124   844   912 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+10-21 00:13:54.125   844   912 D StylusManager: Stylus InputDevice changed: 7 virtio_input_multi_touch_4
+10-21 00:13:54.137  1616  1616 I AiAiEcho: AppFetcherImpl onPackageChanged com.prostellis.awe.
+10-21 00:13:54.138  1616  3534 I AiAiEcho: AppIndexer Package:[com.prostellis.awe] UserProfile:[0] Enabled:[true].
+10-21 00:13:54.138  1616  3534 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.prostellis.awe], userId:[0], reason:[package is updated.].
+10-21 00:13:54.193  1107  1766 D EGL_emulation: app_time_stats: avg=941.36ms min=87.13ms max=1795.59ms count=2
+10-21 00:13:54.607  4990  5644 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-21 00:13:54.613  4990  5192 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-21 00:13:54.614  4990  5192 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-21 00:13:54.618  4990  5645 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-21 00:13:54.624  5051  5101 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-21 00:13:54.626  5051  5101 I Icing   : Indexing done com.google.android.gms-apps
+10-21 00:13:54.645  5051  5101 I Icing   : Indexing com.google.android.gms-internal.3p:MobileApplication from com.google.android.gms
+10-21 00:13:54.647  5051  5101 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-21 00:13:54.703  4990  5052 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskService started execution. cause:4 exec_start_elapsed_seconds: 139 [CONTEXT service_id=218 ]
+10-21 00:13:54.704  4990  5052 V NFC     : this device does not have NFC support
+10-21 00:13:54.704  4990  5052 W TapAndPay: NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=79 ]
+10-21 00:13:54.704  4990  5052 W TapAndPay: java.lang.NullPointerException: NfcAdapter is null
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:152)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at cdoy.<init>(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at com.google.android.gms.tapandpay.hce.task.TapAndPayAidRegistrationTaskOperation.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskChimeraService.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at avzs.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-21 00:13:54.704  4990  5052 W TapAndPay: 	at java.lang.Thread.run(Thread.java:1012)
+10-21 00:13:54.707  4990  5052 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskService finished executing. cause:4 result: 3 elapsed_millis: 6 uptime_millis: 6 exec_start_elapsed_seconds: 139 [CONTEXT service_id=218 ]
+10-21 00:13:54.722  4990  5018 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.auth.account.be.legacy.AuthCronService started execution. cause:5 exec_start_elapsed_seconds: 139 [CONTEXT service_id=218 ]
+10-21 00:13:54.728  4990  5018 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.auth.account.be.legacy.AuthCronService finished executing. cause:5 result: 3 elapsed_millis: 7 uptime_millis: 7 exec_start_elapsed_seconds: 139 [CONTEXT service_id=218 ]
+10-21 00:13:55.850   844   844 D StatusBarIconController: ignoring old pipeline callback because the new wifi icon is enabled
+10-21 00:13:56.034   526   776 D ConnectivityService: releasing NetworkRequest [ REQUEST id=142, [ Transports: CELLULAR Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_VCN_MANAGED Uid: 10132 RequestorUid: 10132 RequestorPkg: com.google.android.googlequicksearchbox UnderlyingNetworks: Null] ] (release request)
+10-21 00:13:56.034   526   776 I ConnectivityService: Update capabilities for net 101 : -FOREGROUND
+10-21 00:13:56.035   338   370 I netd    : networkSetPermissionForNetwork(101, 1) <1.12ms>
+10-21 00:13:56.263  5667  5714 I TestRunner: finished: drawsEverySizeAndOption(com.prostellis.awe.ClockRenderTest)

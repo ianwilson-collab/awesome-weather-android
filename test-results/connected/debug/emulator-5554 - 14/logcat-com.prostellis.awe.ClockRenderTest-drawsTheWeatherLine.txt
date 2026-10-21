@@ -1,0 +1,2 @@
+10-21 00:13:56.586  5667  5714 I TestRunner: started: drawsTheWeatherLine(com.prostellis.awe.ClockRenderTest)
+10-21 00:13:57.445  5667  5714 I TestRunner: finished: drawsTheWeatherLine(com.prostellis.awe.ClockRenderTest)

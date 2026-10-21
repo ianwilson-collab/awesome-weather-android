@@ -1,0 +1,8 @@
+10-21 00:13:53.976  5667  5714 I TestRunner: started: homeScreenViewsAndSettingsLoad(com.prostellis.awe.ClockRenderTest)
+10-21 00:13:54.025  5667  5714 D CompatibilityChangeReporter: Compat change id reported: 210923482; UID 10192; state: ENABLED
+10-21 00:13:54.032  5667  5714 D CompatibilityChangeReporter: Compat change id reported: 171228096; UID 10192; state: ENABLED
+10-21 00:13:54.101   846  5610 I PermissionControllerServiceImpl: Updating user sensitive for uid 10192
+10-21 00:13:54.103   526   631 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+10-21 00:13:54.108  1053  1053 D CarrierSvcBindHelper: onPackageModified: com.prostellis.awe
+10-21 00:13:54.109  1053  1053 D CarrierSvcBindHelper: No carrier app for: 0
+10-21 00:13:54.110  5667  5714 I TestRunner: finished: homeScreenViewsAndSettingsLoad(com.prostellis.awe.ClockRenderTest)

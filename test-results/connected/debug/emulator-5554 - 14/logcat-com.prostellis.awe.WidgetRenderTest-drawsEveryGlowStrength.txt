@@ -1,0 +1,14 @@
+10-21 00:13:58.184  5667  5714 I TestRunner: started: drawsEveryGlowStrength(com.prostellis.awe.WidgetRenderTest)
+10-21 00:13:58.871  5667  5720 D ProfileInstaller: Installing profile for com.prostellis.awe
+10-21 00:13:59.000  1029  1342 D BtGatt.ScanManager: uid 10131 isForeground true scanMode -1
+10-21 00:13:59.000  1029  1342 D BtGatt.ScanManager: uid 10131 isForeground true scanMode 1
+10-21 00:13:59.001  1029  1342 D BtGatt.ScanManager: uid 10131 isForeground true scanMode -1
+10-21 00:13:59.077  5051  5051 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.constellation.service.START pkg=com.google.android.gms }
+10-21 00:14:00.029   844   913 D EGL_emulation: app_time_stats: avg=18591.09ms min=475.72ms max=36706.46ms count=2
+10-21 00:14:00.031  1616  1968 I AiAiEcho: Predicting[0]:
+10-21 00:14:00.031  1616  1968 I AiAiEcho: EchoTargets:
+10-21 00:14:00.031  1616  1968 I AiAiEcho: Filtered by AiAi flag check:
+10-21 00:14:00.031  1616  1968 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:
+10-21 00:14:00.032  1616  1968 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+10-21 00:14:00.045   844   844 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+10-21 00:14:01.181  5667  5714 I TestRunner: finished: drawsEveryGlowStrength(com.prostellis.awe.WidgetRenderTest)

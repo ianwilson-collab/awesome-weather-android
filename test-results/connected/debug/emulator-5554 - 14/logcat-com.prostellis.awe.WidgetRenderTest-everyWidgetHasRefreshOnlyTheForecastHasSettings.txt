@@ -1,0 +1,3 @@
+10-21 00:14:13.145  5667  5714 I TestRunner: started: everyWidgetHasRefreshOnlyTheForecastHasSettings(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:13.279   844   844 D StatusBarIconController: ignoring old pipeline callbacks, because the new mobile icons are enabled
+10-21 00:14:13.595  5667  5714 I TestRunner: finished: everyWidgetHasRefreshOnlyTheForecastHasSettings(com.prostellis.awe.WidgetRenderTest)

@@ -1,0 +1,2 @@
+10-21 00:14:10.585  5667  5714 I TestRunner: started: drawsLoadingStateBeforeTheFirstDownload(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:10.616  5667  5714 I TestRunner: finished: drawsLoadingStateBeforeTheFirstDownload(com.prostellis.awe.WidgetRenderTest)

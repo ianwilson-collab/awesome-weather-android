@@ -1,0 +1,3 @@
+10-21 00:14:17.085  5667  5714 I TestRunner: started: marksEventDays(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:17.181  5667  5676 W .prostellis.awe: Cleared Reference was only reachable from finalizer (only reported once)
+10-21 00:14:17.482  5667  5714 I TestRunner: finished: marksEventDays(com.prostellis.awe.WidgetRenderTest)

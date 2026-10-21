@@ -1,0 +1,75 @@
+10-21 00:14:14.432  5667  5714 I TestRunner: started: drawsTemperatureColors(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:15.105  1956  1956 V ContactsProvider: Scheduled notifyChange started.
+10-21 00:14:15.107  1029  1029 D BluetoothPbapService:  onChange on contact uri
+10-21 00:14:15.113  1029  5802 D BluetoothPbapUtils: primaryVersionCounter = 0, secondaryVersionCounter=0
+10-21 00:14:15.133  4990  5735 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.icing.proxy.IcingInternalCorporaUpdateService started execution. cause:9 exec_start_elapsed_seconds: 160 [CONTEXT service_id=218 ]
+10-21 00:14:15.136  4990  5735 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.icing.proxy.IcingInternalCorporaUpdateService finished executing. cause:9 result: 1 elapsed_millis: 16 uptime_millis: 16 exec_start_elapsed_seconds: 160 [CONTEXT service_id=218 ]
+10-21 00:14:15.826  5051  5805 I ChimeraConfigurator: Starting update, reason: 4 urgentFeatures: vision.ocr:-1
+10-21 00:14:15.834  5051  5805 I ChimeraConfigurator: Detected pending changes for urgent request: [vision.ocr]. Pending module sets: container:2318189190800+mlkit.ocr.common,tflite_dynamite:2640104055100800+tflite_dynamite,vision_ocr:2316024025100000+vision.ocr
+10-21 00:14:15.839  5051  5805 I GmsDebugLogger: [73] 1801
+10-21 00:14:15.842  5051  5805 W ZappDownloader: No successful module downloads for requested features [vision.ocr].
+10-21 00:14:15.842  5051  5805 I GmsDebugLogger: [30] [VisionOcrDynamite.integ:231602402100000],[TfliteDynamiteDynamite.integ:264010405100800],[MlkitOcrCommon.optional:231818100800]
+10-21 00:14:15.846  5051  5805 W ChimeraConfigService: Retry attempt was throttled. [CONTEXT service_id=264 ]
+10-21 00:14:15.846  5051  5805 I GmsDebugLogger: [83] 1 [vision.ocr]
+10-21 00:14:15.849  5051  5803 W Vision  : Request for optional module download of ocr failed. Request again.
+10-21 00:14:15.849  5051  5803 W Vision  : Would have logged:
+10-21 00:14:15.849  5051  5803 W Vision  : # dsae@37884fe7
+10-21 00:14:15.849  5051  5803 I Vision  : Schedule retrying download ocr at 160731 with backoff 20 seconds
+10-21 00:14:16.039   526   540 D ConnectivityService: requestNetwork for uid/pid:10132/1699 activeRequest: null callbackRequest: 145 [NetworkRequest [ REQUEST id=145, [ Transports: CELLULAR Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_VCN_MANAGED Uid: 10132 RequestorUid: 10132 RequestorPkg: com.google.android.googlequicksearchbox UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+10-21 00:14:16.040   338   370 I netd    : networkSetPermissionForNetwork(101, 0) <0.59ms>
+10-21 00:14:16.042   526   776 D ConnectivityService: NetReassign [145 : null → 101] [c 0] [a 3] [i 1]
+10-21 00:14:16.043   526   776 D ConnectivityService: reportNetworkConnectivity(100, false) by 10132
+10-21 00:14:16.043  1006  2677 D NetworkMonitor/100: Forcing reevaluation for UID 10132. Dns signal count: 0
+10-21 00:14:16.044  1006  5810 D TrafficStats: tagSocket(6) with statsTag=0xffffff81, statsUid=-1
+10-21 00:14:16.045  1006  5810 D TrafficStats: tagSocket(6) with statsTag=0xffffff81, statsUid=-1
+10-21 00:14:16.046   338  5812 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-21 00:14:16.046   338  5812 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7181b3210110
+10-21 00:14:16.048   338  5813 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-21 00:14:16.049   338  5813 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7181c3211610
+10-21 00:14:16.053  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.053  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.053  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.054  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.054  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.054  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.055  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.055  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.056  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.056  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.057  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.057  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.058  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.058  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.058  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.059  1006  1006 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.059  1006  5810 D NetworkMonitor/100: PROBE_DNS www.google.com 15ms OK 142.251.150.119,142.251.156.119,142.251.153.119,142.251.151.119,142.251.155.119,142.251.154.119,142.251.157.119,142.251.152.119,2001:4860:4829:7700::,2001:4860:482c:7700::,2001:4860:482a:7700::,2001:4860:4826:7700::,2001:4860:482b:7700::,2001:4860:482d:7700::,2001:4860:4828:7700::,2001:4860:4827:7700::
+10-21 00:14:16.060  1006  5811 D TrafficStats: tagSocket(68) with statsTag=0xffffff81, statsUid=-1
+10-21 00:14:16.061  1006  5811 D TrafficStats: tagSocket(68) with statsTag=0xffffff81, statsUid=-1
+10-21 00:14:16.062   338  5815 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-21 00:14:16.062   338  5815 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7181e320e010
+10-21 00:14:16.065   338  5816 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-21 00:14:16.065   338  5816 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7181e3210850
+10-21 00:14:16.066  1006  1006 D TrafficStats: tagSocket(68) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.066  1006  1006 D TrafficStats: tagSocket(68) with statsTag=0xffffffff, statsUid=-1
+10-21 00:14:16.066  1006  5811 D NetworkMonitor/100: PROBE_DNS connectivitycheck.gstatic.com 5ms OK 142.251.150.120,2001:4860:4826:7800::
+10-21 00:14:16.067   338  5817 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-21 00:14:16.067   338  5818 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-21 00:14:16.068   338  5818 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7181e320e010
+10-21 00:14:16.068   338  5818 I resolv  : doQuery: rcode=0, ancount=1, return value=75
+10-21 00:14:16.069   338  5814 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-21 00:14:16.069   338  5819 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-21 00:14:16.069   338  5819 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7181e3210850
+10-21 00:14:16.069   338  5819 I resolv  : doQuery: rcode=0, ancount=1, return value=63
+10-21 00:14:16.069  1006  5811 D TrafficStats: tagSocket(68) with statsTag=0xffffff81, statsUid=-1
+10-21 00:14:16.071   338  5820 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-21 00:14:16.071   338  5820 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7181b3210110
+10-21 00:14:16.071   338  5820 I resolv  : doQuery: rcode=0, ancount=8, return value=256
+10-21 00:14:16.077   338  5821 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-21 00:14:16.077   338  5821 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7181c3211610
+10-21 00:14:16.077   338  5821 I resolv  : doQuery: rcode=0, ancount=8, return value=160
+10-21 00:14:16.078  1006  5810 D TrafficStats: tagSocket(6) with statsTag=0xffffff81, statsUid=-1
+10-21 00:14:16.099  1006  5811 D NetworkMonitor/100: PROBE_HTTP http://connectivitycheck.gstatic.com/generate_204 time=32ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Content-Length=[0], Cross-Origin-Resource-Policy=[cross-origin], Date=[Wed, 21 Oct 2026 00:14:16 GMT], X-Android-Received-Millis=[1792541656099], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792541656086]}
+10-21 00:14:16.129  1006  5810 D NetworkMonitor/100: PROBE_HTTPS https://www.google.com/generate_204 time=69ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Alt-Svc=[h3=":443"; ma=2592000,h3-29=":443"; ma=2592000], Connection=[close], Content-Length=[0], Cross-Origin-Resource-Policy=[cross-origin], Date=[Wed, 21 Oct 2026 00:14:16 GMT], X-Android-Received-Millis=[1792541656129], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792541656115]}
+10-21 00:14:16.130  1006  5809 D NetworkMonitor/100: isCaptivePortal: isSuccessful()=true isPortal()=false RedirectUrl=null isPartialConnectivity()=false Time=87ms
+10-21 00:14:16.132   526   776 D ConnectivityService: [100 WIFI] validation passed
+10-21 00:14:16.575  5667  5714 I TestRunner: finished: drawsTemperatureColors(com.prostellis.awe.WidgetRenderTest)

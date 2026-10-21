@@ -1,0 +1,10 @@
+10-21 00:14:09.141  5667  5714 I TestRunner: started: drawsMtHoodThroughTheYear(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:09.161  3230  3522 I GMS_MM_Logger: Memory Metric Logging not allowed. Stopping.
+10-21 00:14:09.227   338   370 I netd    : setProcSysNet(4, 2, wlan0, retrans_time_ms, 750) <0.05ms>
+10-21 00:14:09.227   338   370 I netd    : setProcSysNet(4, 2, wlan0, ucast_solicit, 10) <0.01ms>
+10-21 00:14:09.227   338   370 I netd    : setProcSysNet(6, 2, wlan0, retrans_time_ms, 750) <0.01ms>
+10-21 00:14:09.227   338   370 I netd    : setProcSysNet(6, 2, wlan0, ucast_solicit, 10) <0.00ms>
+10-21 00:14:09.290  4990  5271 D TrafficStats: tagSocket(117) with statsTag=0x1065fff, statsUid=10141
+10-21 00:14:09.384  4990  5271 D TrafficStats: tagSocket(154) with statsTag=0x1065fff, statsUid=10129
+10-21 00:14:09.748  4990  5052 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.clearcut.uploader.QosUploaderService finished executing. cause:5 result: 1 elapsed_millis: 2752 uptime_millis: 2752 exec_start_elapsed_seconds: 151 [CONTEXT service_id=218 ]
+10-21 00:14:09.750  5667  5714 I TestRunner: finished: drawsMtHoodThroughTheYear(com.prostellis.awe.WidgetRenderTest)

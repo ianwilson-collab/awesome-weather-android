@@ -1,0 +1,11 @@
+10-21 00:13:53.185  5667  5714 I TestRunner: started: drawsColorsAndGlow(com.prostellis.awe.ClockRenderTest)
+10-21 00:13:53.188   846  5593 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
+10-21 00:13:53.189   846  5593 I Role    : com.google.android.gms not qualified for android.app.role.SYSTEM_CALL_STREAMING due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.telecom.CallStreamingService', mCategories='[]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='android.permission.BIND_CALL_STREAMING_SERVICE', mQueryFlags=0, mMetaData=[]}
+10-21 00:13:53.189   846  5593 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.SYSTEM_CALL_STREAMING
+10-21 00:13:53.189   846  5593 W Role    : Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
+10-21 00:13:53.225  5667  5714 W PathParser: Points are too far apart 4.733727810650888
+10-21 00:13:53.226  5667  5714 W PathParser: Points are too far apart 5.010973215696723
+10-21 00:13:53.279   844   844 D StatusBarIconController: ignoring old pipeline callbacks, because the new mobile icons are enabled
+10-21 00:13:53.285  1699  1699 W JobService: onNetworkChanged() not implemented in com.google.android.apps.gsa.tasks.BackgroundTasksJobService. Must override in a subclass.
+10-21 00:13:53.285  2744  2744 W JobService: onNetworkChanged() not implemented in com.android.voicemail.impl.scheduling.TaskSchedulerJobService. Must override in a subclass.
+10-21 00:13:53.975  5667  5714 I TestRunner: finished: drawsColorsAndGlow(com.prostellis.awe.ClockRenderTest)

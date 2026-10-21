@@ -1,0 +1,2 @@
+10-21 00:13:56.321  5667  5714 I TestRunner: started: drawsTransparencyAndEveryBackgroundStyle(com.prostellis.awe.ClockRenderTest)
+10-21 00:13:56.584  5667  5714 I TestRunner: finished: drawsTransparencyAndEveryBackgroundStyle(com.prostellis.awe.ClockRenderTest)

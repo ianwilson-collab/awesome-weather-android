@@ -1,0 +1,8 @@
+10-21 00:14:18.658  5667  5714 I TestRunner: started: drawsIconSheet(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:18.658  5051  5744 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-21 00:14:18.662  5051  5744 I Icing   : Indexing done com.google.android.gms-apps
+10-21 00:14:18.670  5667  5714 W PathParser: Points are too far apart 4.000002671357121
+10-21 00:14:18.671  5667  5714 W PathParser: Points are too far apart 4.000002671357128
+10-21 00:14:18.672  5667  5714 W PathParser: Points are too far apart 4.000002671357121
+10-21 00:14:18.672  5667  5714 W PathParser: Points are too far apart 4.000002671357128
+10-21 00:14:18.688  5667  5714 I TestRunner: finished: drawsIconSheet(com.prostellis.awe.WidgetRenderTest)

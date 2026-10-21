@@ -1,0 +1,2 @@
+10-21 00:14:09.751  5667  5714 I TestRunner: started: drawsExtremeTemperaturesWithoutOverlap(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:10.190  5667  5714 I TestRunner: finished: drawsExtremeTemperaturesWithoutOverlap(com.prostellis.awe.WidgetRenderTest)

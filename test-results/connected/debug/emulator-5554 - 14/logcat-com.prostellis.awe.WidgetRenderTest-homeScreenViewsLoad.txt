@@ -1,0 +1,50 @@
+10-21 00:14:06.981  5667  5714 I TestRunner: started: homeScreenViewsLoad(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:07.002  4990  5721 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.clearcut.uploader.QosUploaderService started execution. cause:5 exec_start_elapsed_seconds: 151 [CONTEXT service_id=218 ]
+10-21 00:14:07.007  4990  5735 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.clearcut.uploader.QosUploaderService finished executing. cause:5 result: 1 elapsed_millis: 52 uptime_millis: 52 exec_start_elapsed_seconds: 151 [CONTEXT service_id=218 ]
+10-21 00:14:07.046  4990  5736 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.udc.service.UdcContextInitService started execution. cause:5 exec_start_elapsed_seconds: 151 [CONTEXT service_id=218 ]
+10-21 00:14:07.056  4990  5735 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.udc.service.UdcContextInitService finished executing. cause:5 result: 1 elapsed_millis: 16 uptime_millis: 16 exec_start_elapsed_seconds: 151 [CONTEXT service_id=218 ]
+10-21 00:14:07.252   338  5794 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+10-21 00:14:07.252   338  5795 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-21 00:14:07.255   338  5796 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-21 00:14:07.262   338  5795 I resolv  : res_nsend: used send_dg 261 terrno: 0
+10-21 00:14:07.262   338  5795 I resolv  : doQuery: rcode=0, ancount=8, return value=261
+10-21 00:14:07.262   338  5796 I resolv  : res_nsend: used send_dg 165 terrno: 0
+10-21 00:14:07.262   338  5796 I resolv  : doQuery: rcode=0, ancount=8, return value=165
+10-21 00:14:07.265  4990  5271 D TrafficStats: tagSocket(147) with statsTag=0x1065fff, statsUid=10132
+10-21 00:14:07.371  4096  4201 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of bdxy@9356864
+10-21 00:14:07.380  5051  5316 I PeopleGalProvider: Gal directories started.
+10-21 00:14:07.380  5051  5316 I PeopleGalProvider: Method 1 completed.
+10-21 00:14:07.380  5051  5316 I PeopleGalProvider: Method 1 finished successfully.
+10-21 00:14:07.384  5051  5096 I Icing   : updateResources: need to parse arkh{com.google.android.gms}
+10-21 00:14:07.391  4990  5014 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-21 00:14:07.391  4990  5014 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-21 00:14:07.400  5051  5096 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-21 00:14:07.400  5051  5096 I Icing   : Indexing done com.google.android.gms-apps
+10-21 00:14:07.406  4990  5733 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-21 00:14:07.411  4990  5733 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-21 00:14:08.113   526   631 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+10-21 00:14:08.117   846  5610 I PermissionControllerServiceImpl: Updating user sensitive for uid 10154
+10-21 00:14:08.118  1053  1053 D CarrierSvcBindHelper: onPackageModified: com.google.android.contacts
+10-21 00:14:08.118  1053  1053 D CarrierSvcBindHelper: No carrier app for: 0
+10-21 00:14:08.119  1029  1029 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-21 00:14:08.119  1029  1029 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+10-21 00:14:08.120   844   912 D StylusManager: Stylus InputDevice changed: 11 virtio_input_multi_touch_8
+10-21 00:14:08.120   844   844 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-21 00:14:08.121   844   912 D StylusManager: Stylus InputDevice changed: 10 virtio_input_multi_touch_7
+10-21 00:14:08.123   526   554 E system_server: No package ID 7f found for resource ID 0x7f080107.
+10-21 00:14:08.123   526   554 E system_server: No package ID 7f found for resource ID 0x7f150560.
+10-21 00:14:08.124   844   912 D StylusManager: Stylus InputDevice changed: 14 virtio_input_multi_touch_11
+10-21 00:14:08.124   844   912 D StylusManager: Stylus InputDevice changed: 8 virtio_input_multi_touch_5
+10-21 00:14:08.124   844   912 D StylusManager: Stylus InputDevice changed: 4 virtio_input_multi_touch_1
+10-21 00:14:08.124   844   912 D StylusManager: Stylus InputDevice changed: 12 virtio_input_multi_touch_9
+10-21 00:14:08.124   844   912 D StylusManager: Stylus InputDevice changed: 6 virtio_input_multi_touch_3
+10-21 00:14:08.124   844   912 D StylusManager: Stylus InputDevice changed: 9 virtio_input_multi_touch_6
+10-21 00:14:08.124   844   912 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+10-21 00:14:08.125   844   912 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+10-21 00:14:08.125   844   912 D StylusManager: Stylus InputDevice changed: 7 virtio_input_multi_touch_4
+10-21 00:14:08.130  1053  1321 D ImsResolver: maybeAddedImsService, packageName: com.google.android.contacts
+10-21 00:14:08.132  1616  1616 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.contacts.
+10-21 00:14:08.132  1616  2495 I AiAiEcho: AppIndexer Package:[com.google.android.contacts] UserProfile:[0] Enabled:[true].
+10-21 00:14:08.132  1616  2495 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.contacts], userId:[0], reason:[package is updated.].
+10-21 00:14:08.194  1107  1766 D EGL_emulation: app_time_stats: avg=14000.63ms min=14000.63ms max=14000.63ms count=1
+10-21 00:14:08.568  5667  5714 I TestRunner: finished: homeScreenViewsLoad(com.prostellis.awe.WidgetRenderTest)

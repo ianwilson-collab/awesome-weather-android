@@ -1,0 +1,2 @@
+10-21 00:14:10.616  5667  5714 I TestRunner: started: drawsEveryWidgetAndWidth(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:13.144  5667  5714 I TestRunner: finished: drawsEveryWidgetAndWidth(com.prostellis.awe.WidgetRenderTest)

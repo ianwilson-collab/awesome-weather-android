@@ -1,0 +1,12 @@
+10-21 00:14:08.569  5667  5714 I TestRunner: started: drawsTransparencyOverAWallpaper(com.prostellis.awe.WidgetRenderTest)
+10-21 00:14:08.611  4096  4201 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of bdxy@9356864
+10-21 00:14:08.625  4990  5022 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-21 00:14:08.627  4990  5022 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-21 00:14:08.634  4990  5733 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-21 00:14:08.635  4990  5785 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-21 00:14:08.638  5051  5100 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-21 00:14:08.640  5051  5100 I Icing   : Indexing done com.google.android.gms-apps
+10-21 00:14:08.642  5051  5100 I Icing   : Indexing com.google.android.gms-internal.3p:MobileApplication from com.google.android.gms
+10-21 00:14:08.643  5051  5100 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-21 00:14:08.973  4990  5271 D TrafficStats: tagSocket(187) with statsTag=0x1065fff, statsUid=-1
+10-21 00:14:09.140  5667  5714 I TestRunner: finished: drawsTransparencyOverAWallpaper(com.prostellis.awe.WidgetRenderTest)
