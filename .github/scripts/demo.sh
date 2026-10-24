@@ -32,6 +32,9 @@ TMX=$(adb shell getevent -pl "$TDEV" | awk '/ABS_MT_POSITION_X/ {for (i=1;i<=NF;
 TMY=$(adb shell getevent -pl "$TDEV" | awk '/ABS_MT_POSITION_Y/ {for (i=1;i<=NF;i++) if ($i=="max") {gsub(",","",$(i+1)); print $(i+1)}}')
 echo "Touchscreen $TDEV max $TMX x $TMY"
 adb push .github/scripts/touch.sh /data/local/tmp/touch.sh > /dev/null
+# Writing touch events needs root (allowed on this emulator image)
+adb root; sleep 3; adb wait-for-device
+adb shell sendevent "$TDEV" 0 0 0 && echo "Touch events OK" || echo "::warning title=Demo::Can't send touch events"
 # fdrag x1 y1 x2 y2 [hold] [rest]
 fdrag() { adb shell sh /data/local/tmp/touch.sh "$TDEV" "$TMX" "$TMY" "$W" "$H" "$1" "$2" "$3" "$4" "${5:-1.2}" "${6:-1.5}"; }
 
@@ -60,8 +63,8 @@ place() {
   # The list is taller than the screen: slide it up until the widget shows
   local p="" i
   for i in 1 2 3 4; do
-    p=$(dump | python3 .github/scripts/ui.py --desc "$1 widget") && { read -r x y <<< "$p"; [ "$y" -lt $((H * 72 / 100)) ] && break; p=""; }
-    swipe $((W / 2)) $((H * 80 / 100)) $((W / 2)) $((H * 55 / 100)) 700; sleep 1.2
+    p=$(dump | python3 .github/scripts/ui.py --desc "$1 widget") && { read -r x y <<< "$p"; [ "$y" -lt $((H * 75 / 100)) ] && [ "$y" -gt $((H * 20 / 100)) ] && break; p=""; }
+    swipe $((W / 2)) $((H * 85 / 100)) $((W / 2)) $((H * 40 / 100)) 600; sleep 1.5
   done
   [ -n "$p" ] || { echo "::warning title=Demo::$1 not in the widget list" >&2; dump > "$D/steps/missing-$n.xml"; adb shell input keyevent KEYCODE_HOME; sleep 2; return 1; }
   read -r x y <<< "$p"
