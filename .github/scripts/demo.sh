@@ -54,8 +54,14 @@ shot home
 place() {
   # Open all apps, long-press AWE Weather and pick Widgets: the list shows just AWE's widgets
   adb shell input keyevent KEYCODE_HOME; sleep 1
-  swipe $((W / 2)) $((H * 88 / 100)) $((W / 2)) $((H * 25 / 100)) 400; sleep 2; shot apps
-  local ic; ic=$(where --text "AWE Weather") || { adb shell input keyevent KEYCODE_HOME; return 1; }
+  local ic="" k
+  for k in 88 74 88; do
+    swipe $((W / 2)) $((H * k / 100)) $((W / 2)) $((H * 25 / 100)) 400; sleep 2
+    ic=$(dump | python3 .github/scripts/ui.py --text "AWE Weather") && break
+    adb shell input keyevent KEYCODE_HOME; sleep 1.5
+  done
+  shot apps
+  [ -n "$ic" ] || { echo "::warning title=Demo::App list didn't open" >&2; return 1; }
   hold $ic; sleep 1.5; shot menu
   tap --text Widgets || { adb shell input keyevent KEYCODE_HOME; return 1; }; sleep 2.5; shot list
   dump > "$D/steps/list-$n.xml"
@@ -87,7 +93,6 @@ if place "AWE Forecast" $((W / 2)) $((H * 33 / 100)); then
 mark "Make it yours"
 sleep 2
 tap --id style_fine; sleep 1.2; tap --id style_basic; sleep 1.2; tap --id style_3d; sleep 1.2
-p=$(where --id glow) && { read -r x y <<< "$p"; swipe $((x - 200)) $y $((x + 250)) $y 900; sleep 1; }
 tap --id row_temp_color && { sleep 1.5; mark "Any color"; tap --text Metallic; sleep 1.2; tap --desc Gold || true; sleep 1.5; shot picker-gold; tap --text OK; sleep 1.5; }
 swipe $((W / 2)) $((H * 75 / 100)) $((W / 2)) $((H * 30 / 100)) 900; sleep 1.5
 swipe $((W / 2)) $((H * 75 / 100)) $((W / 2)) $((H * 30 / 100)) 900; sleep 1.5
@@ -101,7 +106,7 @@ rec resize
 mark "From 1×1 to 5×2"
 place "AWE 1×1" $((W * 80 / 100)) $((H * 53 / 100)) && finish
 place "AWE Daily" $((W * 30 / 100)) $((H * 53 / 100)) && finish
-mark "Stretch for more days"
+mark "Resize to fit"
 # The Daily widget is the last one placed; long-press it for the resize frame, then pull its right edge across
 if b=$(where --cls AppWidgetHostView --near $((W * 30 / 100)) $((H * 53 / 100)) --bounds); then
   read -r x1 y1 x2 y2 <<< "$b"; hold $(((x1 + x2) / 2)) $(((y1 + y2) / 2)); sleep 1.5; shot resize-frame
