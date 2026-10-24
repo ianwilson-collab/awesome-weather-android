@@ -1,0 +1,20 @@
+Screen 1080 x 2400
+Touchscreen /dev/input/event2 max 32767 x 32767
+.github/scripts/touch.sh: 1 file pushed, 0 skipped. 7.9 MB/s (779 bytes in 0.000s)
+restarting adbd as root
+Touch events OK
+Performing Streamed Install
+Success
+Night mode: no
+/sdcard/widgets.mp4: 1 file pulled, 0 skipped. 137.2 MB/s (6730472 bytes in 0.047s)
+/sdcard/resize.mp4: 1 file pulled, 0 skipped. 170.8 MB/s (13462366 bytes in 0.075s)
+/sdcard/clock.mp4: 1 file pulled, 0 skipped. 121.1 MB/s (11204377 bytes in 0.088s)
+total 30688
+drwxr-xr-x 3 runner runner     4096 Oct 24 23:42 .
+drwxr-xr-x 9 runner runner     4096 Oct 24 23:36 ..
+-rw-r--r-- 1 runner runner 11204377 Oct 24 23:42 clock.mp4
+-rw-r--r-- 1 runner runner      492 Oct 24 23:42 demo.log
+-rw-r--r-- 1 runner runner      295 Oct 24 23:42 marks.txt
+-rw-r--r-- 1 runner runner 13462366 Oct 24 23:40 resize.mp4
+drwxr-xr-x 2 runner runner     4096 Oct 24 23:42 steps
+-rw-r--r-- 1 runner runner  6730472 Oct 24 23:39 widgets.mp4

@@ -1,0 +1,11 @@
+widgets 1.0 Pick a widget
+widgets 44.9 Make it yours
+widgets 60.4 Any color
+resize 1.0 From 1×1 to 5×2
+resize 82.6 Resize to fit
+clock 1.0 AWE Clock
+clock 40.7 Right on the minute
+clock 54.4 10 clock styles
+clock 67.8 Any color
+clock 84.5 Date and weather line
+clock 118.2 On your home screen
