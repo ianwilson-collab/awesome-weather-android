@@ -52,10 +52,13 @@ shot home
 
 # Opens the widget list, finds AWE Weather and drags the widget named $1 to ($2, $3)
 place() {
-  # Long-press the AWE Weather icon and pick Widgets: the list shows just AWE's widgets
-  local ic; ic=$(where --text "AWE Weather" || where --desc "AWE Weather") || return 1
+  # Open all apps, long-press AWE Weather and pick Widgets: the list shows just AWE's widgets
+  adb shell input keyevent KEYCODE_HOME; sleep 1
+  swipe $((W / 2)) $((H * 88 / 100)) $((W / 2)) $((H * 25 / 100)) 400; sleep 2; shot apps
+  local ic; ic=$(where --text "AWE Weather") || { adb shell input keyevent KEYCODE_HOME; return 1; }
   hold $ic; sleep 1.5; shot menu
   tap --text Widgets || { adb shell input keyevent KEYCODE_HOME; return 1; }; sleep 2.5; shot list
+  dump > "$D/steps/list-$n.xml"
   # The widget's preview sits above its name: find the name, then the preview just above it
   local p="" i lb
   for i in 1 2 3 4; do
