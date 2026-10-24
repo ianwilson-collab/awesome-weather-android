@@ -63,11 +63,14 @@ place() {
   # The list is taller than the screen: slide it up until the widget shows
   local p="" i
   for i in 1 2 3 4; do
-    p=$(dump | python3 .github/scripts/ui.py --desc "$1 widget") && { read -r x y <<< "$p"; [ "$y" -lt $((H * 75 / 100)) ] && [ "$y" -gt $((H * 20 / 100)) ] && break; p=""; }
+    p=$(dump | python3 .github/scripts/ui.py --desc "$1 widget") && { read -r x y <<< "$p"; [ "$y" -lt $((H * 86 / 100)) ] && [ "$y" -gt $((H * 15 / 100)) ] && break; p=""; }
     swipe $((W / 2)) $((H * 85 / 100)) $((W / 2)) $((H * 40 / 100)) 600; sleep 1.5; shot scrolled
   done
   [ -n "$p" ] || { echo "::warning title=Demo::$1 not in the widget list" >&2; dump > "$D/steps/missing-$n.xml"; adb shell input keyevent KEYCODE_HOME; sleep 2; return 1; }
   read -r x y <<< "$p"
+  # Android 15's widget list adds a widget with a tap and its Add button; otherwise drag it
+  adb shell input tap $x $y; sleep 1.8; shot tapped
+  if tap --text "Add" || tap --text "Add to home screen"; then sleep 4; shot placed; return 0; fi
   fdrag $x $y "$2" "$3" 1.2 3 & local fp=$!
   sleep 4.5; shot dragging; wait $fp; sleep 4; shot placed
 }
@@ -97,7 +100,7 @@ mark "Stretch for more days"
 # The Daily widget is the last one placed; long-press it for the resize frame, then pull its right edge across
 if b=$(where --cls AppWidgetHostView --near $((W * 30 / 100)) $((H * 53 / 100)) --bounds); then
   read -r x1 y1 x2 y2 <<< "$b"; hold $(((x1 + x2) / 2)) $(((y1 + y2) / 2)); sleep 1.5; shot resize-frame
-  fdrag $((x2 - 6)) $(((y1 + y2) / 2)) $((W - 40)) $(((y1 + y2) / 2)) 0.3 1; sleep 2; shot resized
+  swipe $((x2 - 6)) $(((y1 + y2) / 2)) $((W - 40)) $(((y1 + y2) / 2)) 1500; sleep 2; shot resized
   adb shell input keyevent KEYCODE_BACK; sleep 2
 fi
 shot widgets-home

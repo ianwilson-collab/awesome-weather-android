@@ -4,7 +4,7 @@ dev=$1; mx=$2; my=$3; sw=$4; sh=$5; x1=$6; y1=$7; x2=$8; y2=$9; hold=${10}; rest
 px() { echo $(( $1 * mx / sw )); }
 py() { echo $(( $1 * my / sh )); }
 at() { sendevent $dev 3 53 $(px $1); sendevent $dev 3 54 $(py $2); sendevent $dev 0 0 0; }
-sendevent $dev 3 57 7; sendevent $dev 1 330 1; at $x1 $y1
+sendevent $dev 3 47 0; sendevent $dev 3 57 7; sendevent $dev 1 330 1; at $x1 $y1
 sleep $hold
 at $((x1 + 8)) $((y1 + 8)); sleep 0.8
 i=1
