@@ -3,7 +3,7 @@
 Match by --id (resource id, short or full), --text or --desc (exact, or *contains*). --nth picks among matches."""
 import re, sys, argparse, xml.etree.ElementTree as ET
 ap = argparse.ArgumentParser()
-ap.add_argument("--id"); ap.add_argument("--text"); ap.add_argument("--desc"); ap.add_argument("--cls"); ap.add_argument("--longclick", action="store_true") ap.add_argument("--nth", type=int, default=0)
+ap.add_argument("--id"); ap.add_argument("--text"); ap.add_argument("--desc"); ap.add_argument("--cls"); ap.add_argument("--longclick", action="store_true"); ap.add_argument("--nth", type=int, default=0)
 ap.add_argument("--bounds", action="store_true"); ap.add_argument("--near", nargs=2, type=int)
 a = ap.parse_args()
 raw = sys.stdin.read()
