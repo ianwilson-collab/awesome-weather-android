@@ -1,0 +1,10 @@
+10-24 23:39:40.469  4989  5052 I TestRunner: started: everySkyPictureIsBundled(com.prostellis.awe.WidgetRenderTest)
+10-24 23:39:41.145  2021  5620 D DownloadManager: [13] Finished with status SUCCESS
+10-24 23:39:41.172  1732  5607 W BlobLobber: Not processing download id 13, not a BlobLobber blob
+10-24 23:39:41.172  1732  5607 W BlobLobber: Notification for download id 13 which we didn't know or failed
+10-24 23:39:41.181  1732  1732 I BgTaskExecutorImpl: Starting NONEXCLUSIVE background task ZIP_DOWNLOAD_PROCESSOR.
+10-24 23:39:41.183  1732  2122 I ModelDnldProcssHelpr: #handleDownloadComplete, downloadId=13
+10-24 23:39:41.183  1732  2122 E ModelDnldProcssHelpr: pending download info for pending_hotword_model_download_info is null
+10-24 23:39:41.183  1732  2122 E ModelDnldProcssHelpr: pending download info for pending_xgoogle_hotword_model_download_info is null
+10-24 23:39:41.236  1732  2103 I ZipDownloadProcessorTsk: cacheDestination: /data/user/0/com.google.android.googlequicksearchbox/app_g3_models/en-US.zip
+10-24 23:39:41.329  4989  5052 I TestRunner: finished: everySkyPictureIsBundled(com.prostellis.awe.WidgetRenderTest)

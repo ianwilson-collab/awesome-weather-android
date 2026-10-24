@@ -1,0 +1,100 @@
+10-24 23:39:18.050  4989  5052 I TestRunner: started: drawsTheWeatherLine(com.prostellis.awe.ClockRenderTest)
+10-24 23:39:18.057   519   618 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+10-24 23:39:18.057   828   911 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+10-24 23:39:18.057   828   911 D StylusManager: Stylus InputDevice changed: 12 virtio_input_multi_touch_9
+10-24 23:39:18.058   828   911 D StylusManager: Stylus InputDevice changed: 7 virtio_input_multi_touch_4
+10-24 23:39:18.058   828   911 D StylusManager: Stylus InputDevice changed: 11 virtio_input_multi_touch_8
+10-24 23:39:18.058   828   911 D StylusManager: Stylus InputDevice changed: 10 virtio_input_multi_touch_7
+10-24 23:39:18.058   828   911 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+10-24 23:39:18.059   828   911 D StylusManager: Stylus InputDevice changed: 6 virtio_input_multi_touch_3
+10-24 23:39:18.059   828   911 D StylusManager: Stylus InputDevice changed: 4 virtio_input_multi_touch_1
+10-24 23:39:18.059   828   911 D StylusManager: Stylus InputDevice changed: 14 virtio_input_multi_touch_11
+10-24 23:39:18.060   828   911 D StylusManager: Stylus InputDevice changed: 8 virtio_input_multi_touch_5
+10-24 23:39:18.060   828   911 D StylusManager: Stylus InputDevice changed: 9 virtio_input_multi_touch_6
+10-24 23:39:18.060   828   911 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+10-24 23:39:18.061   828   911 D StylusManager: Stylus InputDevice changed: 12 virtio_input_multi_touch_9
+10-24 23:39:18.062   841  1006 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
+10-24 23:39:18.063   841  1006 I Role    : com.google.android.gms not qualified for android.app.role.SYSTEM_CALL_STREAMING due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.telecom.CallStreamingService', mCategories='[]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='android.permission.BIND_CALL_STREAMING_SERVICE', mQueryFlags=0, mMetaData=[]}
+10-24 23:39:18.063   841  1006 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.SYSTEM_CALL_STREAMING
+10-24 23:39:18.064   841  1006 W Role    : Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
+10-24 23:39:18.068  1046  1386 D ImsResolver: maybeAddedImsService, packageName: com.google.android.gms
+10-24 23:39:18.107   828   911 D StylusManager: Stylus InputDevice changed: 7 virtio_input_multi_touch_4
+10-24 23:39:18.124   828   911 D StylusManager: Stylus InputDevice changed: 11 virtio_input_multi_touch_8
+10-24 23:39:18.166   519   545 E system_server: No package ID 7f found for resource ID 0x7f080107.
+10-24 23:39:18.169   519   545 E system_server: No package ID 7f found for resource ID 0x7f150560.
+10-24 23:39:18.175  1611  1611 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.contacts.
+10-24 23:39:18.176  1611  3819 I AiAiEcho: AppIndexer Package:[com.google.android.contacts] UserProfile:[0] Enabled:[true].
+10-24 23:39:18.176  1611  3819 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.contacts], userId:[0], reason:[package is updated.].
+10-24 23:39:18.195  1611  1611 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.gms.
+10-24 23:39:18.196  1611  3814 I AiAiEcho: AppIndexer Package:[com.google.android.gms] UserProfile:[0] Enabled:[true].
+10-24 23:39:18.196  1611  3814 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.gms], userId:[0], reason:[package is updated.].
+10-24 23:39:18.202  1068  1791 D EGL_emulation: app_time_stats: avg=4495.90ms min=4495.90ms max=4495.90ms count=1
+10-24 23:39:18.419  1459  1459 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.asterism.service.START pkg=com.google.android.gms }
+10-24 23:39:18.504   519   980 D ConnectivityService: requestNetwork for uid/pid:10132/1732 activeRequest: null callbackRequest: 132 [NetworkRequest [ REQUEST id=132, [ Transports: CELLULAR Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_VCN_MANAGED Uid: 10132 RequestorUid: 10132 RequestorPkg: com.google.android.googlequicksearchbox UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+10-24 23:39:18.506   335   365 I netd    : networkSetPermissionForNetwork(101, 0) <0.64ms>
+10-24 23:39:18.511   519   762 D ConnectivityService: NetReassign [132 : null → 101] [c 0] [a 5] [i 2]
+10-24 23:39:18.513   519   762 D ConnectivityService: reportNetworkConnectivity(100, false) by 10132
+10-24 23:39:18.513   991  2535 D NetworkMonitor/100: Forcing reevaluation for UID 10132. Dns signal count: 0
+10-24 23:39:18.519  4128  4263 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of bdxy@ebf08e7
+10-24 23:39:18.520  4128  4263 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of bdxy@ebf08e7
+10-24 23:39:18.522   991  5136 D TrafficStats: tagSocket(6) with statsTag=0xffffff81, statsUid=-1
+10-24 23:39:18.523   991  5135 D TrafficStats: tagSocket(68) with statsTag=0xffffff81, statsUid=-1
+10-24 23:39:18.526   991  5136 D TrafficStats: tagSocket(6) with statsTag=0xffffff81, statsUid=-1
+10-24 23:39:18.527   991  5135 D TrafficStats: tagSocket(68) with statsTag=0xffffff81, statsUid=-1
+10-24 23:39:18.529   335  5137 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-24 23:39:18.530   335  5137 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7d9945317fd0
+10-24 23:39:18.530  1459  1474 I PeopleGalProvider: Gal directories started.
+10-24 23:39:18.530  1459  1474 I PeopleGalProvider: Method 1 completed.
+10-24 23:39:18.530  1459  1474 I PeopleGalProvider: Method 1 finished successfully.
+10-24 23:39:18.534   335  5138 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-24 23:39:18.534   335  5138 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7d97c5313a90
+10-24 23:39:18.534   335  5140 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-24 23:39:18.535   335  5140 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7d98753197f0
+10-24 23:39:18.535   335  5139 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-24 23:39:18.535   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.535   335  5139 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7d9945318890
+10-24 23:39:18.536   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.536   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.537   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.537   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.539   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.540   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.540   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.543  1423  4772 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-24 23:39:18.552   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.555   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.560   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.564   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.565   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.565   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.567   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.571   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.571   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.571   991  5135 D NetworkMonitor/100: PROBE_DNS www.google.com 48ms OK 142.251.156.119,142.251.152.119,142.251.151.119,142.251.153.119,142.251.150.119,142.251.154.119,142.251.157.119,142.251.155.119,2001:4860:482a:7700::,2001:4860:482c:7700::,2001:4860:4828:7700::,2001:4860:4827:7700::,2001:4860:4826:7700::,2001:4860:4829:7700::,2001:4860:482b:7700::,2001:4860:482d:7700::
+10-24 23:39:18.572   991   991 D TrafficStats: tagSocket(6) with statsTag=0xffffffff, statsUid=-1
+10-24 23:39:18.573   991  5136 D NetworkMonitor/100: PROBE_DNS connectivitycheck.gstatic.com 50ms OK 142.251.150.120,2001:4860:4826:7800::
+10-24 23:39:18.574   335  5141 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-24 23:39:18.574   335  5143 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-24 23:39:18.574   335  5143 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7d9945317fd0
+10-24 23:39:18.574   335  5143 I resolv  : doQuery: rcode=0, ancount=1, return value=75
+10-24 23:39:18.576   335  5144 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-24 23:39:18.576   335  5144 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7d9945318890
+10-24 23:39:18.576   335  5144 I resolv  : doQuery: rcode=0, ancount=1, return value=63
+10-24 23:39:18.578   991  5136 D TrafficStats: tagSocket(6) with statsTag=0xffffff81, statsUid=-1
+10-24 23:39:18.583  1423  5097 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-24 23:39:18.583   335  5142 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-24 23:39:18.585   335  5145 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-24 23:39:18.585   335  5145 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7d97c5313a90
+10-24 23:39:18.585   335  5145 I resolv  : doQuery: rcode=0, ancount=8, return value=256
+10-24 23:39:18.586   335  5146 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-24 23:39:18.586   335  5146 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7d98753197f0
+10-24 23:39:18.586   335  5146 I resolv  : doQuery: rcode=0, ancount=8, return value=160
+10-24 23:39:18.587   991  5135 D TrafficStats: tagSocket(68) with statsTag=0xffffff81, statsUid=-1
+10-24 23:39:18.588  1423  5097 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+10-24 23:39:18.594  1423  5097 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+10-24 23:39:18.600  1459  2456 I Icing   : updateResources: need to parse arkh{com.google.android.gms}
+10-24 23:39:18.603   991  5136 D NetworkMonitor/100: PROBE_HTTP http://connectivitycheck.gstatic.com/generate_204 time=30ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Content-Length=[0], Cross-Origin-Resource-Policy=[cross-origin], Date=[Sat, 24 Oct 2026 23:39:18 GMT], X-Android-Received-Millis=[1792885158602], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792885158591]}
+10-24 23:39:18.692   991  5135 D NetworkMonitor/100: PROBE_HTTPS https://www.google.com/generate_204 time=119ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Alt-Svc=[h3=":443"; ma=2592000,h3-29=":443"; ma=2592000], Connection=[close], Content-Length=[0], Cross-Origin-Resource-Policy=[cross-origin], Date=[Sat, 24 Oct 2026 23:39:18 GMT], X-Android-Received-Millis=[1792885158692], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792885158682]}
+10-24 23:39:18.694   991  5134 D NetworkMonitor/100: isCaptivePortal: isSuccessful()=true isPortal()=false RedirectUrl=null isPartialConnectivity()=false Time=174ms
+10-24 23:39:18.695   519   762 D ConnectivityService: [100 WIFI] validation passed
+10-24 23:39:19.066  4989  5052 I TestRunner: finished: drawsTheWeatherLine(com.prostellis.awe.ClockRenderTest)

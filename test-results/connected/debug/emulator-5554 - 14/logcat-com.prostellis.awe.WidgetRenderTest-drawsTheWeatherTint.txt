@@ -1,0 +1,7 @@
+10-24 23:39:41.330  4989  5052 I TestRunner: started: drawsTheWeatherTint(com.prostellis.awe.WidgetRenderTest)
+10-24 23:39:41.439  2308  5671 W DiskBasedLogger: Disk-based log buffer doesn't exist, so there's nothing to clean up.
+10-24 23:39:41.485   335   365 I netd    : tetherGetStats() -> {[]} <0.49ms>
+10-24 23:39:41.494   335   365 I netd    : bandwidthSetGlobalAlert(2097152) <0.07ms>
+10-24 23:39:41.508   335   365 I netd    : bandwidthRemoveInterfaceQuota(eth0) <0.41ms>
+10-24 23:39:41.509   335   365 I netd    : bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <0.32ms>
+10-24 23:39:42.034  4989  5052 I TestRunner: finished: drawsTheWeatherTint(com.prostellis.awe.WidgetRenderTest)

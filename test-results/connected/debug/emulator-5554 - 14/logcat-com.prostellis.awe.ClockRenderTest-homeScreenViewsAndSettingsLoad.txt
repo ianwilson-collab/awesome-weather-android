@@ -1,0 +1,98 @@
+10-24 23:39:13.858  4989  5052 I TestRunner: started: homeScreenViewsAndSettingsLoad(com.prostellis.awe.ClockRenderTest)
+10-24 23:39:13.865  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): RequestWithImsiState: event HTTP Response [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.865  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): InProgressState: event HTTP Response [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.866  4128  5007 W BugleRcsEngine: [115] bpxc.w: Unable to send diagnostic log
+10-24 23:39:13.867  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): RequestWithImsiState: event HTTP 503 (Unavailable) [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.867  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): InProgressState: event HTTP 503 (Unavailable) [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.867  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): Connection unavailable. Retry in 2130 seconds [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.867  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): transitionTo: destState=ReplayRequestState [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.868  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): onTransitionRequested RequestWithImsiState [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.868  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): Exit RequestWithImsiState [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.868  4128  5007 W BugleRcsEngine: [115] bpxc.w: Unable to send diagnostic log
+10-24 23:39:13.868  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): Exit InProgressState [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.868  4128  5007 W BugleRcsEngine: [115] bpxc.w: Unable to send diagnostic log
+10-24 23:39:13.868  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): Enter ReplayRequestState [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.870  4128  5007 W BugleRcsEngine: [115] bpxc.w: Unable to send diagnostic log
+10-24 23:39:13.870  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): ReplayRequestState: event Retry after [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.872  4128  5007 I BugleRcsWorker: [seqId=0][workId=f1596063-2ba3-4ce5-9bad-ba31d8df311b] Provisioning Engine entered ReplayRequestState, request will be re-attempted in 2130
+10-24 23:39:13.872  4128  5007 I BugleRcsWorker: [seqId=0][workId=f1596063-2ba3-4ce5-9bad-ba31d8df311b] finish provisioning task with result Success {mOutputData=Data {}}
+10-24 23:39:13.872  4128  5007 I BugleRcsWorker: [seqId=0][workId=f1596063-2ba3-4ce5-9bad-ba31d8df311b] RCS provisioning task has finished with result Success {mOutputData=Data {}}
+10-24 23:39:13.873  4128  4228 W BugleRcsEngine: [52] brcu.d: [SR]: Single Registration is disabled. Skipping Single Registration capability check for subId: 1, OS.isAtLeastS:[true], enableSingleRegistrationProvisioning:[false]
+10-24 23:39:13.874  4128  4519 I BugleRcsEngine: [82] brfq.d: (PEv2-SM-Bugle-14728008): quit [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.876  4128  4228 I BugleRcsEngine: [52] brnl.e: No RCS Configuration was found in Bugle for simID: redacted-pii:sim_id[chars:20,last3:897]
+10-24 23:39:13.885  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): transitionTo: destState=bqjk [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.885  4128  5007 I BugleRcsEngine: [115] brfq.d: (PEv2-SM-Bugle-14728008): Exit ReplayRequestState [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.886  4128  4234 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=5cdfe110-fe13-4278-ab88-54646b5d8e76, tags={ com.google.android.apps.messaging.rcsprovisioning.RcsProvisioningListenableWorker, provisioning } ]
+10-24 23:39:13.910  4128  5007 W BugleRcsEngine: [115] bpxc.w: Unable to send diagnostic log
+10-24 23:39:13.910  4128  5007 W BugleRcsEngine: [115] brfq.e: (PEv2-SM-Bugle-14728008): onQuitting [808a1081-6946-400f-85c3-fb083403d1a2]
+10-24 23:39:13.910  4128  5007 I BugleRcsEngine: [115] brjv.b: RcsAvailabilityManager: Calculating Rcs Availability
+10-24 23:39:13.911  4128  4209 W BugleRcsEngine: [41] bpxc.w: Unable to send diagnostic log
+10-24 23:39:13.911  4128  5007 I BugleRcsEngine: [115] brnl.C: Bugle is default SMS app: true
+10-24 23:39:13.912  4128  5007 I BugleRcsEngine: [115] brjv.b: Bugle has minimum required RCS permissions: true
+10-24 23:39:13.912  4128  5007 I BugleRcsEngine: [115] brnl.B: Rcs is enabled from user settings: true
+10-24 23:39:13.912  4128  5007 I BugleRcsEngine: [115] brox.b: Using config server URL from bqas
+10-24 23:39:13.913  4128  5007 I BugleRcsEngine: [115] brnl.e: No RCS Configuration was found in Bugle for simID: redacted-pii:sim_id[chars:20,last3:897]
+10-24 23:39:13.913  4128  5007 I BugleRcsEngine: [115] brnl.e: No RCS Configuration was found in Bugle for simID: redacted-pii:sim_id[chars:20,last3:897]
+10-24 23:39:13.915  4128  5007 I BugleRcsEngine: [115] brjv.b: Config state is not ACCEPTED, provisioning still in progress
+10-24 23:39:13.915  4128  5007 I BugleRcsEngine: [115] brjv.b: RcsAvailabilityManager: Rcs Availability still CARRIER_SETUP_PENDING (Carrier RCS is not set up)
+10-24 23:39:13.929  4989  5052 D CompatibilityChangeReporter: Compat change id reported: 210923482; UID 10192; state: ENABLED
+10-24 23:39:13.933  1423  4742 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:13.934  1423  4742 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:13.940  4989  5052 D CompatibilityChangeReporter: Compat change id reported: 171228096; UID 10192; state: ENABLED
+10-24 23:39:13.941  4128  4209 W BugleRcsEngine: [41] bpxc.w: Unable to send diagnostic log
+10-24 23:39:13.950  1423  4742 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:13.954  2725  5054 W SystemServiceRegistry: No service published for: persistent_data_block
+10-24 23:39:13.961  1459  3460 I Icing   : Indexing done com.google.android.gms-apps
+10-24 23:39:13.962  4128  4228 I BugleRcsEngine: [52] zzo.l: Scheduled provisioning task with 2130 seconds delay, APPEND policy, trigger is STATE_MACHINE_REPLAY, workerId is 312eb70e-bfd4-4374-a9a1-9cdb40680b3f
+10-24 23:39:13.973  1459  3460 I Icing   : Indexing com.google.android.gms-internal.3p:MobileApplication from com.google.android.gms
+10-24 23:39:14.008  1459  3460 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-24 23:39:14.013  1423  2747 W BpBinder: Large outgoing transaction of 329804 bytes, interface descriptor , code 4
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_birthdaydoodle_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_call_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_canvas_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_chkpkg_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_crashtest_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_dining_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_doodle_notifications_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_imageviewer_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_ipa_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_jslocation_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_localintent_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_messaging_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_nativesrp_activity_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_nativesrp_presenter_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_nowcontent_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_recents_activity_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_save_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_searchresults_activity_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_test_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag AndroidGsaVelourJars__velour_weather_jar__name to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag bindle_flags__bloblobber_blob to integer.
+10-24 23:39:14.015  1732  2123 W A       : Can't format flag bindle_flags__velour_jar to integer.
+10-24 23:39:14.022  1732  2103 I A       : Refusing EXCLUSIVE task 24, it is already pending. Try again in 316 seconds.
+10-24 23:39:14.027  1732  2122 I FedAssExpListener: Fed-ass not supported for signed out users.
+10-24 23:39:14.027  1732  2122 I FedAssExpListener: Successfully processed experiments changed.
+10-24 23:39:14.027  1732  2122 I A       : NGA enabled in interactor.
+10-24 23:39:14.028  1732  2103 I OpaEligibilityChecker: send OpaEligibilityChange broadcast to CommonBroadcastReceiver
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: Invalid input from icing corpus JSON flag.
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: android.util.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line 123 column 2
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.syntaxError(JsonReader.java:1162)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.checkLenient(JsonReader.java:840)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.nextInArray(JsonReader.java:615)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.peek(JsonReader.java:345)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.hasNext(JsonReader.java:321)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.searchbox.c.b.b.k.c(PG:7)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.searchbox.c.b.b.j.a(Unknown Source:2)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.search.core.i.r.run(PG:5)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.libraries.gsa.k.a.h.run(PG:2)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.logger.f.a.a.l.p(PG:2)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.logger.f.a.a.g.run(Unknown Source:4)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.util.c.a.cf.b(PG:1)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.util.c.a.ci.run(PG:1)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.libraries.i.ae.run(PG:1)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.libraries.i.k.run(PG:2)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at com.google.android.libraries.i.p.run(PG:4)
+10-24 23:39:14.030  1732  2103 W CorpusConfigHelper: 	at java.lang.Thread.run(Thread.java:1012)
+10-24 23:39:14.055  4989  5052 I TestRunner: finished: homeScreenViewsAndSettingsLoad(com.prostellis.awe.ClockRenderTest)

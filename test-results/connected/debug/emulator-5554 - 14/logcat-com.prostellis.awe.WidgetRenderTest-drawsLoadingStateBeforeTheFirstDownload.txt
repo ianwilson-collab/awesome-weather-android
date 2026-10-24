@@ -1,0 +1,3 @@
+10-24 23:39:34.446  4989  5052 I TestRunner: started: drawsLoadingStateBeforeTheFirstDownload(com.prostellis.awe.WidgetRenderTest)
+10-24 23:39:34.499   519   528 I system_server: Background young concurrent copying GC freed 1022473(20MB) AllocSpace objects, 2(40KB) LOS objects, 39% free, 31MB/52MB, paused 32us,43us total 107.762ms
+10-24 23:39:34.500  4989  5052 I TestRunner: finished: drawsLoadingStateBeforeTheFirstDownload(com.prostellis.awe.WidgetRenderTest)

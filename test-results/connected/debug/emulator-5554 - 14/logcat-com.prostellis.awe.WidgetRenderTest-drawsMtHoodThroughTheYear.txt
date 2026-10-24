@@ -1,0 +1,58 @@
+10-24 23:39:32.677  4989  5052 I TestRunner: started: drawsMtHoodThroughTheYear(com.prostellis.awe.WidgetRenderTest)
+10-24 23:39:32.882   828   828 D StatusBarIconController: ignoring old pipeline callbacks, because the new mobile icons are enabled
+10-24 23:39:32.882   828   912 D EGL_emulation: app_time_stats: avg=8013.86ms min=8013.86ms max=8013.86ms count=1
+10-24 23:39:33.036  5200  5312 I NearbyDiscovery: FastPairScanner: isScreenOn=true, scanWithScreenOff=false, isLocationEnabled=true, disableLocationRequirement=true, isDiscoveryScanningEnabled=true, during24GhzWifiWarmingUpPeriod=false [CONTEXT service_id=265 ]
+10-24 23:39:33.036  5200  5312 D BluetoothAdapter: isLeEnabled(): ON
+10-24 23:39:33.037  5200  5312 I NearbyDiscovery: FastPairScanner: eventType=INTERNAL_DOWNGRADE_SCAN, intReq=true, scanning=true, scanAllowed=true, bleEnabled=true, bleScanAvailable=false, lockScanRate=false, startScanningByLowPowerMode=false [CONTEXT service_id=265 ]
+10-24 23:39:33.037  5200  5312 I NearbyDiscovery: FastPairScanner: Stopping scan [CONTEXT service_id=265 ]
+10-24 23:39:33.038  5200  5312 D BluetoothAdapter: isLeEnabled(): ON
+10-24 23:39:33.040  1018  1316 D BtGatt.GattService: stopScan() - queue size =3
+10-24 23:39:33.041  1018  1316 D ActivityAttributionService: notifyActivityAttributionInfo UID=1002 packageName=com.google.android.bluetooth deviceAddress=no_active_device_address
+10-24 23:39:33.041  1018  1316 I bt_btif : packages/modules/Bluetooth/system/btif/src/bluetooth.cc:829 get_profile_interface: get_profile_interface: id = activity_attribution
+10-24 23:39:33.041  1018  1304 D BtGatt.ScanManager: handling stopping scan  [ScanClient scanModeApp 2 scanModeUsed 2 [appScanStats com.google.uid.shared:10131]]
+10-24 23:39:33.041  1018  1304 I bt_stack: [INFO:le_scanning_manager.cc(204)] ScanFilterParamSetup in shim layer
+10-24 23:39:33.042  1018  1268 D BtGatt.GattService: onScanFilterParamsConfigured() - clientIf=1, status=0, action=0, availableSpace=0
+10-24 23:39:33.042  1018  1268 D BtGatt.ScanManager: callback done for scannerId - 1 status - 0
+10-24 23:39:33.042  1018  1304 I bt_stack: [INFO:le_scanning_manager.cc(204)] ScanFilterParamSetup in shim layer
+10-24 23:39:33.043  1018  1268 D BtGatt.GattService: onScanFilterParamsConfigured() - clientIf=1, status=0, action=0, availableSpace=0
+10-24 23:39:33.043  1018  1268 D BtGatt.ScanManager: callback done for scannerId - 1 status - 0
+10-24 23:39:33.043  1018  1304 D BtGatt.ScanManager: configureRegularScanParams() - queue=2
+10-24 23:39:33.045  1018  1316 D BtGatt.GattService: unregisterScanner() - scannerId=1
+10-24 23:39:33.045  1018  1316 I bt_stack: [INFO:le_scanning_manager.cc(162)] Unregister in shim layer, scanner_id:1
+10-24 23:39:33.046  5200  5312 I NearbyDiscovery: FastPairScanner: isScreenOn=true, scanWithScreenOff=false, isLocationEnabled=true, disableLocationRequirement=true, isDiscoveryScanningEnabled=true, during24GhzWifiWarmingUpPeriod=false [CONTEXT service_id=265 ]
+10-24 23:39:33.049  5200  5312 I NearbyDiscovery: FastPairScanner: Start scanning internally in LOW_POWER_SCANNING [CONTEXT service_id=265 ]
+10-24 23:39:33.050  5200  5312 D BluetoothAdapter: isLeEnabled(): ON
+10-24 23:39:33.052  1018  1316 D BtGatt.GattService: registerScanner() - UUID=75c904bd-3e32-4f17-bab6-95f0a285574c
+10-24 23:39:33.052  1018  1316 I bt_stack: [INFO:le_scanning_manager.cc(155)] RegisterScanner in shim layer
+10-24 23:39:33.053  1018  1268 D BtGatt.GattService: onScannerRegistered() - UUID=75c904bd-3e32-4f17-bab6-95f0a285574c, scannerId=1, status=0
+10-24 23:39:33.053  5200  5266 D BluetoothLeScanner: onScannerRegistered() - status=0 scannerId=1 mScannerId=0
+10-24 23:39:33.053  1018  1316 D BtGatt.GattService: start scan with filters
+10-24 23:39:33.054  1018  1316 D BtGatt.GattService: enforcePrivilegedPermissionIfNeeded([BluetoothLeScanFilter [mDeviceName=null, mDeviceAddress=null, mUuid=null, mUuidMask=null, mServiceSolicitationUuid=null, mServiceSolicitationUuidMask=null, mServiceDataUuid=0000fff6-0000-1000-8000-00805f9b34fb, mServiceData=[0], mServiceDataMask=[0], mManufacturerId=-1, mManufacturerData=null, mManufacturerDataMask=null, mAdvertisingDataType=-1, mAdvertisingData=null, mAdvertisingDataMask=null, mTransportBlockFilter=null], BluetoothLeScanFilter [mDeviceName=null, mDeviceAddress=null, mUuid=null, mUuidMask=null, mServiceSolicitationUuid=null, mServiceSolicitationUuidMask=null, mServiceDataUuid=0000fe2c-0000-1000-8000-00805f9b34fb, mServiceData=[0], mServiceDataMask=[0], mManufacturerId=-1, mManufacturerData=null, mManufacturerDataMask=null, mAdvertisingDataType=-1, mAdvertisingData=null, mAdvertisingDataMask=null, mTransportBlockFilter=null]])
+10-24 23:39:33.055  1018  1316 D BtGatt.ScanManager: startScan()  [ScanClient scanModeApp 1 scanModeUsed 1 [appScanStats com.google.uid.shared:10131]]
+10-24 23:39:33.055  1018  1316 D ActivityAttributionService: notifyActivityAttributionInfo UID=1002 packageName=com.google.android.bluetooth deviceAddress=no_active_device_address
+10-24 23:39:33.055  1018  1316 I bt_btif : packages/modules/Bluetooth/system/btif/src/bluetooth.cc:829 get_profile_interface: get_profile_interface: id = activity_attribution
+10-24 23:39:33.056  1018  1304 D BtGatt.ScanManager: handling starting scan
+10-24 23:39:33.056  1018  1304 I bt_stack: [INFO:le_scanning_manager.cc(268)] ScanFilterEnable in shim layer
+10-24 23:39:33.057  1018  1268 D BtGatt.GattService: onScanFilterEnableDisabled() - clientIf=1, status=0, action=1
+10-24 23:39:33.057  1018  1268 D BtGatt.ScanManager: callback done for scannerId - 1 status - 0
+10-24 23:39:33.057  1018  1304 I bt_stack: [INFO:le_scanning_manager.cc(243)] ScanFilterAdd in shim layer
+10-24 23:39:33.058  1018  1268 D BtGatt.GattService: onScanFilterConfig() - clientIf=1, action = 0 status = 0, filterType=0, availableSpace=0
+10-24 23:39:33.058  1018  1268 D BtGatt.ScanManager: callback done for scannerId - 1 status - 0
+10-24 23:39:33.058  1018  1243 I bluetooth: packages/modules/Bluetooth/system/gd/hci/le_scanning_manager.cc:1369 on_advertising_filter_complete: Got a Command complete LE_ADV_FILTER, status UNKNOWN_CONNECTION
+10-24 23:39:33.058  1018  1304 D BtGatt.ScanManager: configureFilterParamter 500 10000 1 0
+10-24 23:39:33.059  1018  1304 I bt_stack: [INFO:le_scanning_manager.cc(204)] ScanFilterParamSetup in shim layer
+10-24 23:39:33.059  1018  1268 D BtGatt.GattService: onScanFilterParamsConfigured() - clientIf=1, status=0, action=0, availableSpace=0
+10-24 23:39:33.060  1018  1268 D BtGatt.ScanManager: callback done for scannerId - 1 status - 0
+10-24 23:39:33.060  1018  1304 I bt_stack: [INFO:le_scanning_manager.cc(243)] ScanFilterAdd in shim layer
+10-24 23:39:33.060  1018  1268 D BtGatt.GattService: onScanFilterConfig() - clientIf=1, action = 0 status = 0, filterType=0, availableSpace=0
+10-24 23:39:33.060  1018  1268 D BtGatt.ScanManager: callback done for scannerId - 1 status - 0
+10-24 23:39:33.060  1018  1304 D BtGatt.ScanManager: configureFilterParamter 500 10000 1 0
+10-24 23:39:33.061  1018  1304 I bt_stack: [INFO:le_scanning_manager.cc(204)] ScanFilterParamSetup in shim layer
+10-24 23:39:33.061  1018  1243 I bluetooth: packages/modules/Bluetooth/system/gd/hci/le_scanning_manager.cc:1369 on_advertising_filter_complete: Got a Command complete LE_ADV_FILTER, status UNKNOWN_CONNECTION
+10-24 23:39:33.061  1018  1268 D BtGatt.GattService: onScanFilterParamsConfigured() - clientIf=1, status=0, action=0, availableSpace=0
+10-24 23:39:33.061  1018  1268 D BtGatt.ScanManager: callback done for scannerId - 1 status - 0
+10-24 23:39:33.061  1018  1304 D BtGatt.ScanManager: configureRegularScanParams() - queue=3
+10-24 23:39:33.061  1018  1304 D BtGatt.ScanManager: apply scan timeout (300000)to scannerId 1
+10-24 23:39:33.062  5200  5312 I NearbyDiscovery: FastPairScanner: Starting LOW_POWER_SCANNING scanning [CONTEXT service_id=265 ]
+10-24 23:39:33.079  5200  5237 I NearbySharing: FastInitiation warming period has ended [CONTEXT service_id=194 ]
+10-24 23:39:33.374  4989  5052 I TestRunner: finished: drawsMtHoodThroughTheYear(com.prostellis.awe.WidgetRenderTest)

@@ -1,0 +1,4 @@
+10-24 23:39:32.083  4989  5052 I TestRunner: started: drawsTransparencyOverAWallpaper(com.prostellis.awe.WidgetRenderTest)
+10-24 23:39:32.610  5311  5311 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.findmydevice.spot.service.management.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+10-24 23:39:32.612  5311  5311 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.findmydevice.spot.service.locationreport.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+10-24 23:39:32.676  4989  5052 I TestRunner: finished: drawsTransparencyOverAWallpaper(com.prostellis.awe.WidgetRenderTest)

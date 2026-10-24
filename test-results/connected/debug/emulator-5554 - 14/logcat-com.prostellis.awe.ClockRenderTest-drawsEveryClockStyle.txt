@@ -1,0 +1,16 @@
+10-24 23:39:19.067  4989  5052 I TestRunner: started: drawsEveryClockStyle(com.prostellis.awe.ClockRenderTest)
+10-24 23:39:19.540  4989  5052 D CompatibilityChangeReporter: Compat change id reported: 247079863; UID 10192; state: ENABLED
+10-24 23:39:19.591  1459  2456 I Icing   : Indexing com.google.android.gms-internal.3p:MobileApplication from com.google.android.gms
+10-24 23:39:19.596  1459  2456 I Icing   : Indexing done com.google.android.gms-internal.3p:MobileApplication
+10-24 23:39:19.630  1459  2456 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-24 23:39:19.636  1459  2456 I Icing   : Indexing done com.google.android.gms-apps
+10-24 23:39:19.667  1423  4742 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:19.675  1423  4742 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:19.688  1423  1485 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:19.694  1423  1485 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:19.700  1423  1485 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:19.722  1423  1476 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:19.725  1423  1476 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:19.729  1423  1476 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:19.741  1423  4742 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-24 23:39:19.827  4989  5052 I TestRunner: finished: drawsEveryClockStyle(com.prostellis.awe.ClockRenderTest)

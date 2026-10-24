@@ -1,0 +1,16 @@
+10-24 23:39:39.645  4989  5052 I TestRunner: started: everyWidgetHasRefreshOnlyTheForecastHasSettings(com.prostellis.awe.WidgetRenderTest)
+10-24 23:39:39.649  5200  5525 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.pay.gcmtask.PayGcmTaskService finished executing. cause:5 result: 1 elapsed_millis: 68 uptime_millis: 68 exec_start_elapsed_seconds: 114 [CONTEXT service_id=218 ]
+10-24 23:39:39.671  5200  5325 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.auth.account.be.legacy.AuthCronService started execution. cause:5 exec_start_elapsed_seconds: 114 [CONTEXT service_id=218 ]
+10-24 23:39:39.709  5200  5325 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.auth.account.be.legacy.AuthCronService finished executing. cause:5 result: 3 elapsed_millis: 45 uptime_millis: 45 exec_start_elapsed_seconds: 114 [CONTEXT service_id=218 ]
+10-24 23:39:39.744  5311  5364 I Pay     : Device does not support HCE. [CONTEXT service_id=198 ]
+10-24 23:39:39.746  5200  5328 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.pay.gcmtask.PayGcmTaskService started execution. cause:5 exec_start_elapsed_seconds: 114 [CONTEXT service_id=218 ]
+10-24 23:39:39.750  5200  5328 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.pay.gcmtask.PayGcmTaskService finished executing. cause:5 result: 2 elapsed_millis: 12 uptime_millis: 12 exec_start_elapsed_seconds: 114 [CONTEXT service_id=218 ]
+10-24 23:39:39.802  5200  5325 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.pay.gcmtask.PayGcmTaskService started execution. cause:5 exec_start_elapsed_seconds: 115 [CONTEXT service_id=218 ]
+10-24 23:39:39.807  5200  5328 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.pay.gcmtask.PayGcmTaskService finished executing. cause:5 result: 1 elapsed_millis: 9 uptime_millis: 9 exec_start_elapsed_seconds: 115 [CONTEXT service_id=218 ]
+10-24 23:39:39.854  5200  5325 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.pay.gcmtask.PayGcmTaskService started execution. cause:5 exec_start_elapsed_seconds: 115 [CONTEXT service_id=218 ]
+10-24 23:39:39.886  5200  5328 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.pay.gcmtask.PayGcmTaskService finished executing. cause:5 result: 1 elapsed_millis: 61 uptime_millis: 61 exec_start_elapsed_seconds: 115 [CONTEXT service_id=218 ]
+10-24 23:39:40.116  5200  5325 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.udc.service.UdcContextInitService started execution. cause:5 exec_start_elapsed_seconds: 115 [CONTEXT service_id=218 ]
+10-24 23:39:40.140  5200  5328 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.udc.service.UdcContextInitService finished executing. cause:5 result: 1 elapsed_millis: 66 uptime_millis: 66 exec_start_elapsed_seconds: 115 [CONTEXT service_id=218 ]
+10-24 23:39:40.365   335   365 I netd    : tetherGetStats() -> {[]} <0.50ms>
+10-24 23:39:40.373   335   365 I netd    : bandwidthSetGlobalAlert(2097152) <0.07ms>
+10-24 23:39:40.468  4989  5052 I TestRunner: finished: everyWidgetHasRefreshOnlyTheForecastHasSettings(com.prostellis.awe.WidgetRenderTest)

@@ -1,0 +1,83 @@
+10-24 23:39:30.341  4989  5052 I TestRunner: started: homeScreenViewsLoad(com.prostellis.awe.WidgetRenderTest)
+10-24 23:39:30.725  5200  5206 I .gms.persistent: Background concurrent copying GC freed 188288(10MB) AllocSpace objects, 0(0B) LOS objects, 49% free, 12MB/25MB, paused 29us,173us total 105.640ms
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: Could not register for notifications with InnerTube:
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: abqx: zvm: Precondition check failed.
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at abqn.apply(Unknown Source:4)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at yyi.r(PG:5)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at yyi.b(PG:2)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at abqp.d(PG:4)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at agsb.c(PG:63)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at agsb.j(PG:38)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at agsb.d(PG:3)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at agrz.run(Unknown Source:2)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at smg.run(PG:2)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at java.lang.Thread.run(Thread.java:1012)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at snu.run(PG:5)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: Caused by: zvm: Precondition check failed.
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at abpb.e(PG:5)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at zhp.f(PG:1)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at zhp.e(PG:1)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at zgl.run(PG:19)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at aosb.run(PG:3)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at yxr.run(PG:11)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at java.lang.Thread.run(Thread.java:1012)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: Caused by: efc
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	at zgl.run(PG:13)
+10-24 23:39:30.734  1689  2668 W YouTubeMusic: 	... 5 more
+10-24 23:39:31.009  5311  5311 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.mobstore.service.START pkg=com.google.android.gms }
+10-24 23:39:31.009  5311  5311 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.languageprofile.service.START pkg=com.google.android.gms }
+10-24 23:39:31.010  5311  5311 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.wallet.service.BIND pkg=com.google.android.gms }
+10-24 23:39:31.033  1018  1304 D BtGatt.ScanManager: uid 10131 isForeground true scanMode 2
+10-24 23:39:31.033  1018  1304 D BtGatt.ScanManager: uid 10131 isForeground true scanMode -1
+10-24 23:39:31.033  1018  1304 D BtGatt.ScanManager: uid 10131 isForeground true scanMode 2
+10-24 23:39:31.034  5200  5200 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.auth.account.data.service.START pkg=com.google.android.gms }
+10-24 23:39:31.035  1018  1304 D BtGatt.ScanManager: uid 10131 isForeground true scanMode 2
+10-24 23:39:31.035  1018  1304 D BtGatt.ScanManager: uid 10131 isForeground true scanMode -1
+10-24 23:39:31.035  1018  1304 D BtGatt.ScanManager: uid 10131 isForeground true scanMode 2
+10-24 23:39:31.035  5200  5200 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.cast.service.BIND_CAST_DEVICE_CONTROLLER_SERVICE pkg=com.google.android.gms }
+10-24 23:39:31.038  5200  5200 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.semanticlocation.service.START_ODLH pkg=com.google.android.gms }
+10-24 23:39:31.038  5200  5200 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.clearcut.bootcount.service.START pkg=com.google.android.gms }
+10-24 23:39:31.041  5311  5311 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.wallet.service.BIND pkg=com.google.android.gms }
+10-24 23:39:31.041  5311  5311 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.wallet.service.BIND pkg=com.google.android.gms }
+10-24 23:39:31.047  5200  5200 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.phenotype.service.START pkg=com.google.android.gms }
+10-24 23:39:31.047  5200  5200 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.phenotype.service.START pkg=com.google.android.gms }
+10-24 23:39:31.048  5200  5200 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.cast.service.BIND_CAST_DEVICE_CONTROLLER_SERVICE pkg=com.google.android.gms }
+10-24 23:39:31.049  5200  5200 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.cast.service.BIND_CAST_DEVICE_CONTROLLER_SERVICE pkg=com.google.android.gms }
+10-24 23:39:31.059   519   762 D ConnectivityService: NetReassign [no changes] [c 0] [a 0] [i 0]
+10-24 23:39:31.059  5200  5226 I CastDatabase: Opening the database
+10-24 23:39:31.075  5311  5390 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.googlequicksearchbox componentName=AMBIENT_ASSISTANT serviceId=32
+10-24 23:39:31.082  5311  5390 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.googlequicksearchbox componentName=null serviceId=36
+10-24 23:39:31.082  5311  5363 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-24 23:39:31.090  5200  5200 I CastSocket: Adding new CastClientAuthKeyManager. [CONTEXT service_id=161 ]
+10-24 23:39:31.092  5200  5200 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.clearcut.bootcount.service.START pkg=com.google.android.gms }
+10-24 23:39:31.107  5311  5363 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-24 23:39:31.126  5200  5226 I SQLiteCastDBHelper: Creating cast database
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: Retrieving snapshot for com.google.android.gms.playlog.uploader failed
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: java.util.concurrent.TimeoutException: Timed out waiting for Task
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at cfsz.o(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at bwch.e(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at bwch.j(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at bwch.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at com.google.android.gms.clearcut.uploader.QosUploaderChimeraService.g(:com.google.android.gms@231818047@23.18.18 (190800-535401451):19)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at com.google.android.gms.clearcut.uploader.QosUploaderChimeraService.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at avzs.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-24 23:39:31.585  5200  5334 E PhenotypeFlagCommitter: 	at java.lang.Thread.run(Thread.java:1012)
+10-24 23:39:31.588  5200  5200 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.clearcut.bootcount.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentBoundBrokerService }
+10-24 23:39:31.588  5200  5200 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.clearcut.bootcount.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentBoundBrokerService }
+10-24 23:39:31.633  5200  5226 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.clearcut.uploader.QosUploaderService finished executing. cause:5 result: 1 elapsed_millis: 2069 uptime_millis: 2069 exec_start_elapsed_seconds: 104 [CONTEXT service_id=218 ]
+10-24 23:39:31.673  5200  5334 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.clearcut.uploader.QosUploaderService started execution. cause:5 exec_start_elapsed_seconds: 106 [CONTEXT service_id=218 ]
+10-24 23:39:32.032   519  3317 D WifiNl80211Manager: Scan result ready event
+10-24 23:39:32.032   519  3317 D WifiNative: Scan result ready event
+10-24 23:39:32.082  4989  5052 I TestRunner: finished: homeScreenViewsLoad(com.prostellis.awe.WidgetRenderTest)

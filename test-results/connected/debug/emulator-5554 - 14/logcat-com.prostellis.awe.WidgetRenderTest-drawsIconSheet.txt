@@ -1,0 +1,36 @@
+10-24 23:39:48.296  4989  5052 I TestRunner: started: drawsIconSheet(com.prostellis.awe.WidgetRenderTest)
+10-24 23:39:48.304  1732  2123 I FedAssExpListener: Fed-ass not supported for signed out users.
+10-24 23:39:48.306  1732  2123 I FedAssExpListener: Successfully processed experiments changed.
+10-24 23:39:48.306  1732  2113 I A       : NGA enabled in interactor.
+10-24 23:39:48.306  1732  2103 I OpaEligibilityChecker: send OpaEligibilityChange broadcast to CommonBroadcastReceiver
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: Invalid input from icing corpus JSON flag.
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: android.util.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line 123 column 2
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.syntaxError(JsonReader.java:1162)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.checkLenient(JsonReader.java:840)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.nextInArray(JsonReader.java:615)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.peek(JsonReader.java:345)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at android.util.JsonReader.hasNext(JsonReader.java:321)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.searchbox.c.b.b.k.c(PG:7)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.searchbox.c.b.b.j.a(Unknown Source:2)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.search.core.i.r.run(PG:5)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.libraries.gsa.k.a.h.run(PG:2)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.logger.f.a.a.l.p(PG:2)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.logger.f.a.a.g.run(Unknown Source:4)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.util.c.a.cf.b(PG:1)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.apps.gsa.shared.util.c.a.ci.run(PG:1)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.libraries.i.ae.run(PG:1)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.libraries.i.k.run(PG:2)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at com.google.android.libraries.i.p.run(PG:4)
+10-24 23:39:48.310  1732  2103 W CorpusConfigHelper: 	at java.lang.Thread.run(Thread.java:1012)
+10-24 23:39:48.313  4989  5052 W PathParser: Points are too far apart 4.000002671357121
+10-24 23:39:48.314  4989  5052 W PathParser: Points are too far apart 4.000002671357128
+10-24 23:39:48.315  4128  4222 I BuglePhenotype: Notify about updates in current package [CONTEXT current_package_name="com.google.android.ims.library" ]
+10-24 23:39:48.316  4989  5052 W PathParser: Points are too far apart 4.000002671357121
+10-24 23:39:48.317  4989  5052 W PathParser: Points are too far apart 4.000002671357128
+10-24 23:39:48.326  5311  5390 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.googlequicksearchbox componentName=agsa_icing_connection serviceId=33
+10-24 23:39:48.328  5311  5372 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.googlequicksearchbox componentName=agsa_icing_connection serviceId=32
+10-24 23:39:48.332  4128  4222 I Bugle   : RcsAvailabilityUtilForProvisioningEngineV2: onCsLibPhenotypeUpdated
+10-24 23:39:48.336  5311  5364 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-24 23:39:48.339  4989  5052 I TestRunner: finished: drawsIconSheet(com.prostellis.awe.WidgetRenderTest)
