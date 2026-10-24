@@ -61,9 +61,8 @@ place() {
   for i in 1 2 3 4; do
     if lb=$(dump | python3 .github/scripts/ui.py --text "$1" --bounds); then
       read -r lx1 ly1 lx2 ly2 <<< "$lb"
-      p=$(dump | python3 .github/scripts/ui.py --longclick --near $(((lx1 + lx2) / 2)) $((ly1 - 150))) && break
+      p=$(dump | python3 .github/scripts/ui.py --longclick --above $(((lx1 + lx2) / 2)) $ly1) && break
     fi
-    [ $i -eq 1 ] && { tap --text "AWE Weather" || true; sleep 2; continue; }
     swipe $((W / 2)) $((H * 75 / 100)) $((W / 2)) $((H * 50 / 100)) 600; sleep 1.5; shot scrolled
   done
   [ -n "$p" ] || { echo "::warning title=Demo::$1 not in the widget list" >&2; dump > "$D/steps/missing-$n.xml"; adb shell input keyevent KEYCODE_HOME; sleep 2; return 1; }
@@ -74,6 +73,9 @@ place() {
   fdrag $x $y "$2" "$3" 1.2 3 & local fp=$!
   sleep 4.5; shot dragging; wait $fp; sleep 4; shot placed
 }
+
+# Scrolls a settings screen to its end and taps Done
+finish() { local i; for i in 1 2 3; do swipe $((W / 2)) $((H * 78 / 100)) $((W / 2)) $((H * 30 / 100)) 500; sleep 0.8; done; tap --id done; sleep 3; }
 
 # ---- Clip 1: the widget list and the Forecast widget's settings
 rec widgets
@@ -94,8 +96,8 @@ stop
 # ---- Clip 2: more widgets, and stretching the Daily widget wider
 rec resize
 mark "From 1×1 to 5×2"
-place "AWE 1×1" $((W * 80 / 100)) $((H * 53 / 100)) && { tap --id done; sleep 3; }
-place "AWE Daily" $((W * 30 / 100)) $((H * 53 / 100)) && { tap --id done; sleep 3; }
+place "AWE 1×1" $((W * 80 / 100)) $((H * 53 / 100)) && finish
+place "AWE Daily" $((W * 30 / 100)) $((H * 53 / 100)) && finish
 mark "Stretch for more days"
 # The Daily widget is the last one placed; long-press it for the resize frame, then pull its right edge across
 if b=$(where --cls AppWidgetHostView --near $((W * 30 / 100)) $((H * 53 / 100)) --bounds); then
@@ -128,7 +130,7 @@ tap --id wxline; sleep 1.5
 tap --id date_below; sleep 1.2
 shot clock-settings
 swipe $((W / 2)) $((H * 75 / 100)) $((W / 2)) $((H * 30 / 100)) 900; sleep 1.2
-tap --id done; sleep 4; shot clock-home
+finish; sleep 1; shot clock-home
 mark "On your home screen"
 sleep 3
 fi
