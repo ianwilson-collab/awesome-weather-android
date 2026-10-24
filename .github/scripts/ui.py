@@ -3,7 +3,7 @@
 Match by --id (resource id, short or full), --text or --desc (exact, or *contains*). --nth picks among matches."""
 import re, sys, argparse, xml.etree.ElementTree as ET
 ap = argparse.ArgumentParser()
-ap.add_argument("--id"); ap.add_argument("--text"); ap.add_argument("--desc"); ap.add_argument("--nth", type=int, default=0)
+ap.add_argument("--id"); ap.add_argument("--text"); ap.add_argument("--desc"); ap.add_argument("--cls"); ap.add_argument("--nth", type=int, default=0)
 ap.add_argument("--bounds", action="store_true")
 a = ap.parse_args()
 raw = sys.stdin.read()
@@ -16,6 +16,7 @@ hits = []
 for n in ET.fromstring(raw).iter("node"):
     rid = n.get("resource-id", "")
     if a.id and not (rid == a.id or rid.endswith(":id/" + a.id)): continue
+    if a.cls and a.cls not in n.get("class", ""): continue
     if not ok(n.get("text"), a.text) or not ok(n.get("content-desc"), a.desc): continue
     x1, y1, x2, y2 = map(int, re.findall(r"\d+", n.get("bounds")))
     if x2 > x1 and y2 > y1: hits.append((x1, y1, x2, y2))

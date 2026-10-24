@@ -42,19 +42,24 @@ shot home
 # Opens the widget list, finds AWE Weather and drags the widget named $1 to ($2, $3)
 place() {
   hold $((W / 2)) $((H * 45 / 100)); sleep 1.5; shot menu
-  tap --text Widgets || return 1; sleep 2.5; shot picker
-  if p=$(where --text "*Search*"); then adb shell input tap $p; sleep 1; adb shell input text AWE; sleep 2; adb shell input keyevent KEYCODE_BACK; sleep 1; fi
-  shot search
+  tap --text Widgets || { adb shell input keyevent KEYCODE_HOME; return 1; }; sleep 2.5; shot picker
+  if p=$(where --text "Search"); then adb shell input tap $p; sleep 1; adb shell input text AWE; sleep 2; adb shell input keyevent KEYCODE_BACK; sleep 1; fi
   tap --text "AWE Weather" || true; sleep 2; shot list
-  local p; p=$(where --text "$1") || return 1
+  # The list is taller than the screen: slide it up until the widget shows
+  local p="" i
+  for i in 1 2 3 4; do
+    p=$(dump | python3 .github/scripts/ui.py --desc "$1 widget") && break
+    swipe $((W / 2)) $((H * 80 / 100)) $((W / 2)) $((H * 45 / 100)) 700; sleep 1.2
+  done
+  [ -n "$p" ] || { echo "::warning title=Demo::$1 not in the widget list" >&2; dump > "$D/steps/missing-$n.xml"; adb shell input keyevent KEYCODE_HOME; sleep 2; return 1; }
   read -r x y <<< "$p"
-  drag $x $((y - 120)) "$2" "$3" 1.4; sleep 4; shot placed
+  drag $x $y "$2" "$3" 1.4; sleep 4; shot placed
 }
 
 # ---- Clip 1: the widget list and the Forecast widget's settings
 rec widgets
 mark "Pick a widget"
-place "AWE Forecast" $((W / 2)) $((H * 30 / 100))
+if place "AWE Forecast" $((W / 2)) $((H * 25 / 100)); then
 mark "Make it yours"
 sleep 2
 tap --id style_fine; sleep 1.2; tap --id style_basic; sleep 1.2; tap --id style_3d; sleep 1.2
@@ -64,27 +69,28 @@ swipe $((W / 2)) $((H * 75 / 100)) $((W / 2)) $((H * 30 / 100)) 900; sleep 1.5
 swipe $((W / 2)) $((H * 75 / 100)) $((W / 2)) $((H * 30 / 100)) 900; sleep 1.5
 shot wsettings-bottom
 tap --id done; sleep 3; shot forecast-home
+fi
 stop
 
 # ---- Clip 2: resizing, and two more widgets
 rec resize
 mark "Resize to fit"
-if b=$(where --desc "*AWE Forecast*" --bounds || where --text "*Updated*" --bounds); then
+if b=$(where --cls AppWidgetHostView --bounds); then
   read -r x1 y1 x2 y2 <<< "$b"; hold $(((x1 + x2) / 2)) $(((y1 + y2) / 2)); sleep 1.5; shot resize-frame
   drag $((x2 - 4)) $(((y1 + y2) / 2)) $((x2 - (x2 - x1) / 4)) $(((y1 + y2) / 2)) 0.6; sleep 1.5
   drag $(((x1 + x2) / 2)) $((y2 - 4)) $(((x1 + x2) / 2)) $((y2 + (y2 - y1) / 2)) 0.6; sleep 1.5; shot resized
   adb shell input keyevent KEYCODE_BACK; sleep 2
 fi
 mark "From 1×1 to 5×2"
-place "AWE Daily" $((W / 2)) $((H * 62 / 100)) && { tap --id done; sleep 3; }
-place "AWE 1×1" $((W * 20 / 100)) $((H * 78 / 100)) && { tap --id done; sleep 3; }
+place "AWE Daily" $((W * 30 / 100)) $((H * 43 / 100)) && { tap --id done; sleep 3; }
+place "AWE 1×1" $((W * 80 / 100)) $((H * 43 / 100)) && { tap --id done; sleep 3; }
 shot three
 stop
 
 # ---- Clip 3: AWE Clock and its settings, including minute updates
 rec clock
 mark "AWE Clock"
-place "AWE Clock" $((W / 2)) $((H * 22 / 100))
+if place "AWE Clock" $((W / 2)) $((H * 55 / 100)); then
 sleep 1.5
 mark "Right on the minute"
 tap --id minute_allow; sleep 3; shot alarms-page
@@ -106,6 +112,7 @@ swipe $((W / 2)) $((H * 75 / 100)) $((W / 2)) $((H * 30 / 100)) 900; sleep 1.2
 tap --id done; sleep 4; shot clock-home
 mark "On your home screen"
 sleep 3
+fi
 stop
 
 adb shell settings put system show_touches 0
