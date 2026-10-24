@@ -64,11 +64,12 @@ place() {
   local p="" i
   for i in 1 2 3 4; do
     p=$(dump | python3 .github/scripts/ui.py --desc "$1 widget") && { read -r x y <<< "$p"; [ "$y" -lt $((H * 75 / 100)) ] && [ "$y" -gt $((H * 20 / 100)) ] && break; p=""; }
-    swipe $((W / 2)) $((H * 85 / 100)) $((W / 2)) $((H * 40 / 100)) 600; sleep 1.5
+    swipe $((W / 2)) $((H * 85 / 100)) $((W / 2)) $((H * 40 / 100)) 600; sleep 1.5; shot scrolled
   done
   [ -n "$p" ] || { echo "::warning title=Demo::$1 not in the widget list" >&2; dump > "$D/steps/missing-$n.xml"; adb shell input keyevent KEYCODE_HOME; sleep 2; return 1; }
   read -r x y <<< "$p"
-  fdrag $x $y "$2" "$3" 1.2 1.8; sleep 4; shot placed
+  fdrag $x $y "$2" "$3" 1.2 3 & local fp=$!
+  sleep 4.5; shot dragging; wait $fp; sleep 4; shot placed
 }
 
 # ---- Clip 1: the widget list and the Forecast widget's settings
