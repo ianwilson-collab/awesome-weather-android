@@ -26,6 +26,14 @@ stop() { sleep 1.5; adb shell pkill -INT screenrecord || true; wait $RP 2>/dev/n
 
 read -r W H < <(adb shell wm size | grep -oE '[0-9]+x[0-9]+' | tail -1 | tr x ' ')
 echo "Screen $W x $H"
+# The touchscreen, for drags made of real touch events (a widget only drops if the finger rests over the spot)
+TDEV=$(adb shell getevent -pl | awk '/^add device/ {d=$4} /ABS_MT_POSITION_X/ {print d; exit}')
+TMX=$(adb shell getevent -pl "$TDEV" | awk '/ABS_MT_POSITION_X/ {for (i=1;i<=NF;i++) if ($i=="max") {gsub(",","",$(i+1)); print $(i+1)}}')
+TMY=$(adb shell getevent -pl "$TDEV" | awk '/ABS_MT_POSITION_Y/ {for (i=1;i<=NF;i++) if ($i=="max") {gsub(",","",$(i+1)); print $(i+1)}}')
+echo "Touchscreen $TDEV max $TMX x $TMY"
+adb push .github/scripts/touch.sh /data/local/tmp/touch.sh > /dev/null
+# fdrag x1 y1 x2 y2 [hold] [rest]
+fdrag() { adb shell sh /data/local/tmp/touch.sh "$TDEV" "$TMX" "$TMY" "$W" "$H" "$1" "$2" "$3" "$4" "${5:-1.2}" "${6:-1.5}"; }
 
 adb install -r AWE-v*.apk
 adb shell cmd alarm set-timezone America/Los_Angeles || true
@@ -39,7 +47,7 @@ adb shell am start -n "$PKG/.MainActivity" > /dev/null; sleep 50
 adb shell input keyevent KEYCODE_HOME; sleep 4
 # Clear the home page's three app icons (dragged to Remove) so the widgets have room
 for app in Gmail Photos YouTube; do
-  p=$(where --text "$app") && { read -r x y <<< "$p"; adb shell input draganddrop $x $((y - 60)) $((W / 2)) $((H * 6 / 100)) 1500; sleep 2; }
+  p=$(where --text "$app") && { read -r x y <<< "$p"; fdrag $x $((y - 70)) $((W / 2)) $((H * 7 / 100)); sleep 2; }
 done
 shot home
 
@@ -52,12 +60,12 @@ place() {
   # The list is taller than the screen: slide it up until the widget shows
   local p="" i
   for i in 1 2 3 4; do
-    p=$(dump | python3 .github/scripts/ui.py --desc "$1 widget") && break
-    swipe $((W / 2)) $((H * 80 / 100)) $((W / 2)) $((H * 45 / 100)) 700; sleep 1.2
+    p=$(dump | python3 .github/scripts/ui.py --desc "$1 widget") && { read -r x y <<< "$p"; [ "$y" -lt $((H * 72 / 100)) ] && break; p=""; }
+    swipe $((W / 2)) $((H * 80 / 100)) $((W / 2)) $((H * 55 / 100)) 700; sleep 1.2
   done
   [ -n "$p" ] || { echo "::warning title=Demo::$1 not in the widget list" >&2; dump > "$D/steps/missing-$n.xml"; adb shell input keyevent KEYCODE_HOME; sleep 2; return 1; }
   read -r x y <<< "$p"
-  adb shell input draganddrop $x $y "$2" "$3" 2500; sleep 4; shot placed
+  fdrag $x $y "$2" "$3" 1.2 1.8; sleep 4; shot placed
 }
 
 # ---- Clip 1: the widget list and the Forecast widget's settings
@@ -85,7 +93,7 @@ mark "Stretch for more days"
 # The Daily widget is the last one placed; long-press it for the resize frame, then pull its right edge across
 if b=$(where --cls AppWidgetHostView --near $((W * 30 / 100)) $((H * 53 / 100)) --bounds); then
   read -r x1 y1 x2 y2 <<< "$b"; hold $(((x1 + x2) / 2)) $(((y1 + y2) / 2)); sleep 1.5; shot resize-frame
-  drag $((x2 - 6)) $(((y1 + y2) / 2)) $((W - 30)) $(((y1 + y2) / 2)) 0.5; sleep 2; shot resized
+  fdrag $((x2 - 6)) $(((y1 + y2) / 2)) $((W - 40)) $(((y1 + y2) / 2)) 0.3 1; sleep 2; shot resized
   adb shell input keyevent KEYCODE_BACK; sleep 2
 fi
 shot widgets-home
