@@ -48,24 +48,22 @@ adb shell settings put global animator_duration_scale 1
 # Warm-up: Play services settles, and the app downloads the forecast the widgets will show
 adb shell am start -n "$PKG/.MainActivity" > /dev/null; sleep 50
 adb shell input keyevent KEYCODE_HOME; sleep 4
-# Clear the home page's three app icons (dragged to Remove) so the widgets have room
-for app in Gmail Photos YouTube; do
-  p=$(where --text "$app") && { read -r x y <<< "$p"; fdrag $x $((y - 70)) $((W / 2)) $((H * 7 / 100)); sleep 2; }
-done
 shot home
 
 # Opens the widget list, finds AWE Weather and drags the widget named $1 to ($2, $3)
 place() {
-  hold $((W / 2)) $((H * 45 / 100)); sleep 1.5; shot menu
-  tap --text Widgets || { adb shell input keyevent KEYCODE_HOME; return 1; }; sleep 2.5; shot picker
-  tap --text "AWE Weather" || true; sleep 2; shot list
+  # Long-press the AWE Weather icon and pick Widgets: the list shows just AWE's widgets
+  local ic; ic=$(where --text "AWE Weather" || where --desc "AWE Weather") || return 1
+  hold $ic; sleep 1.5; shot menu
+  tap --text Widgets || { adb shell input keyevent KEYCODE_HOME; return 1; }; sleep 2.5; shot list
   # The widget's preview sits above its name: find the name, then the preview just above it
   local p="" i lb
-  for i in 1 2 3; do
+  for i in 1 2 3 4; do
     if lb=$(dump | python3 .github/scripts/ui.py --text "$1" --bounds); then
       read -r lx1 ly1 lx2 ly2 <<< "$lb"
       p=$(dump | python3 .github/scripts/ui.py --longclick --near $(((lx1 + lx2) / 2)) $((ly1 - 150))) && break
     fi
+    [ $i -eq 1 ] && { tap --text "AWE Weather" || true; sleep 2; continue; }
     swipe $((W / 2)) $((H * 75 / 100)) $((W / 2)) $((H * 50 / 100)) 600; sleep 1.5; shot scrolled
   done
   [ -n "$p" ] || { echo "::warning title=Demo::$1 not in the widget list" >&2; dump > "$D/steps/missing-$n.xml"; adb shell input keyevent KEYCODE_HOME; sleep 2; return 1; }
