@@ -205,6 +205,13 @@ class MainActivity : ComponentActivity() {
                 if (k === "wx7.bgStyle") AWEBridge.bgStyleSaved(JSON.parse(v));
                 if (k === "wx7.cache") sendEvents();
               };
+              // Pull to refresh is off while a popup (day details, settings, location) is open, so dragging down scrolls the popup
+              let popup = false;
+              const watchPopups = () => {
+                const open = !!document.querySelector("dialog[open]");
+                if (open !== popup) { popup = open; AWEBridge.popupOpen(open); }
+              };
+              new MutationObserver(watchPopups).observe(document.body, { subtree: true, attributes: true, attributeFilter: ["open"] });
               report(localStorage.getItem("wx7.loc"));
               const bg = localStorage.getItem("wx7.bgStyle");
               if (bg) AWEBridge.bgStyleSaved(JSON.parse(bg));
@@ -236,6 +243,12 @@ class MainActivity : ComponentActivity() {
     }
 
     private inner class Bridge {
+        /** A popup opened or closed in the page: pulling down scrolls the popup instead of refreshing. */
+        @JavascriptInterface
+        fun popupOpen(open: Boolean) {
+            runOnUiThread { pull.isEnabled = !open }
+        }
+
         /** A pull to refresh has finished. */
         @JavascriptInterface
         fun refreshDone() {
