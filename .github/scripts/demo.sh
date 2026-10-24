@@ -58,13 +58,15 @@ shot home
 place() {
   hold $((W / 2)) $((H * 45 / 100)); sleep 1.5; shot menu
   tap --text Widgets || { adb shell input keyevent KEYCODE_HOME; return 1; }; sleep 2.5; shot picker
-  if p=$(where --text "Search"); then adb shell input tap $p; sleep 1; adb shell input text AWE; sleep 2; adb shell input keyevent KEYCODE_BACK; sleep 1; fi
   tap --text "AWE Weather" || true; sleep 2; shot list
-  # The list is taller than the screen: slide it up until the widget shows
-  local p="" i
-  for i in 1 2 3 4; do
-    p=$(dump | python3 .github/scripts/ui.py --desc "$1 widget") && { read -r x y <<< "$p"; [ "$y" -lt $((H * 86 / 100)) ] && [ "$y" -gt $((H * 15 / 100)) ] && break; p=""; }
-    swipe $((W / 2)) $((H * 85 / 100)) $((W / 2)) $((H * 40 / 100)) 600; sleep 1.5; shot scrolled
+  # The widget's preview sits above its name: find the name, then the preview just above it
+  local p="" i lb
+  for i in 1 2 3; do
+    if lb=$(dump | python3 .github/scripts/ui.py --text "$1" --bounds); then
+      read -r lx1 ly1 lx2 ly2 <<< "$lb"
+      p=$(dump | python3 .github/scripts/ui.py --longclick --near $(((lx1 + lx2) / 2)) $((ly1 - 150))) && break
+    fi
+    swipe $((W / 2)) $((H * 75 / 100)) $((W / 2)) $((H * 50 / 100)) 600; sleep 1.5; shot scrolled
   done
   [ -n "$p" ] || { echo "::warning title=Demo::$1 not in the widget list" >&2; dump > "$D/steps/missing-$n.xml"; adb shell input keyevent KEYCODE_HOME; sleep 2; return 1; }
   read -r x y <<< "$p"
