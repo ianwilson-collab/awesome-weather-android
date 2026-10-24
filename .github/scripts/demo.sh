@@ -37,6 +37,10 @@ adb shell settings put global animator_duration_scale 1
 # Warm-up: Play services settles, and the app downloads the forecast the widgets will show
 adb shell am start -n "$PKG/.MainActivity" > /dev/null; sleep 50
 adb shell input keyevent KEYCODE_HOME; sleep 4
+# Clear the home page's three app icons (dragged to Remove) so the widgets have room
+for app in Gmail Photos YouTube; do
+  p=$(where --text "$app") && { read -r x y <<< "$p"; adb shell input draganddrop $x $((y - 60)) $((W / 2)) $((H * 6 / 100)) 1500; sleep 2; }
+done
 shot home
 
 # Opens the widget list, finds AWE Weather and drags the widget named $1 to ($2, $3)
@@ -53,13 +57,13 @@ place() {
   done
   [ -n "$p" ] || { echo "::warning title=Demo::$1 not in the widget list" >&2; dump > "$D/steps/missing-$n.xml"; adb shell input keyevent KEYCODE_HOME; sleep 2; return 1; }
   read -r x y <<< "$p"
-  drag $x $y "$2" "$3" 1.4; sleep 4; shot placed
+  adb shell input draganddrop $x $y "$2" "$3" 2500; sleep 4; shot placed
 }
 
 # ---- Clip 1: the widget list and the Forecast widget's settings
 rec widgets
 mark "Pick a widget"
-if place "AWE Forecast" $((W / 2)) $((H * 25 / 100)); then
+if place "AWE Forecast" $((W / 2)) $((H * 33 / 100)); then
 mark "Make it yours"
 sleep 2
 tap --id style_fine; sleep 1.2; tap --id style_basic; sleep 1.2; tap --id style_3d; sleep 1.2
@@ -72,25 +76,25 @@ tap --id done; sleep 3; shot forecast-home
 fi
 stop
 
-# ---- Clip 2: resizing, and two more widgets
+# ---- Clip 2: more widgets, and stretching the Daily widget wider
 rec resize
-mark "Resize to fit"
-if b=$(where --cls AppWidgetHostView --bounds); then
+mark "From 1×1 to 5×2"
+place "AWE 1×1" $((W * 80 / 100)) $((H * 53 / 100)) && { tap --id done; sleep 3; }
+place "AWE Daily" $((W * 30 / 100)) $((H * 53 / 100)) && { tap --id done; sleep 3; }
+mark "Stretch for more days"
+# The Daily widget is the last one placed; long-press it for the resize frame, then pull its right edge across
+if b=$(where --cls AppWidgetHostView --near $((W * 30 / 100)) $((H * 53 / 100)) --bounds); then
   read -r x1 y1 x2 y2 <<< "$b"; hold $(((x1 + x2) / 2)) $(((y1 + y2) / 2)); sleep 1.5; shot resize-frame
-  drag $((x2 - 4)) $(((y1 + y2) / 2)) $((x2 - (x2 - x1) / 4)) $(((y1 + y2) / 2)) 0.6; sleep 1.5
-  drag $(((x1 + x2) / 2)) $((y2 - 4)) $(((x1 + x2) / 2)) $((y2 + (y2 - y1) / 2)) 0.6; sleep 1.5; shot resized
+  drag $((x2 - 6)) $(((y1 + y2) / 2)) $((W - 30)) $(((y1 + y2) / 2)) 0.5; sleep 2; shot resized
   adb shell input keyevent KEYCODE_BACK; sleep 2
 fi
-mark "From 1×1 to 5×2"
-place "AWE Daily" $((W * 30 / 100)) $((H * 43 / 100)) && { tap --id done; sleep 3; }
-place "AWE 1×1" $((W * 80 / 100)) $((H * 43 / 100)) && { tap --id done; sleep 3; }
-shot three
+shot widgets-home
 stop
 
 # ---- Clip 3: AWE Clock and its settings, including minute updates
 rec clock
 mark "AWE Clock"
-if place "AWE Clock" $((W / 2)) $((H * 55 / 100)); then
+if place "AWE Clock" $((W / 2)) $((H * 66 / 100)); then
 sleep 1.5
 mark "Right on the minute"
 tap --id minute_allow; sleep 3; shot alarms-page
