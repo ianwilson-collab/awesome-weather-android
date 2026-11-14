@@ -1,0 +1,19 @@
+name: Probe Open-Meteo
+on:
+  push:
+    branches: [probe-openmeteo]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          B="https://api.open-meteo.com/v1/forecast?latitude=44.9429&longitude=-123.0351"
+          WEB="&current=temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,precipitation_sum,snowfall_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,wind_gusts_10m,wind_direction_10m,is_day&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=auto"
+          for days in 16 8; do
+            r=$(curl -s -o /tmp/b -w "%{http_code} %{time_total}s" -H "Origin: https://appassets.androidplatform.net" -D /tmp/h "$B$WEB&forecast_days=$days")
+            echo "::warning title=web days=$days::$r $(grep -i access-control-allow-origin /tmp/h | tr -d '\r') $(head -c 300 /tmp/b)"
+          done
+          r=$(curl -s -o /tmp/b -w "%{http_code}" "$B&current=temperature_2m&forecast_days=8")
+          echo "::warning title=widget-like::$r $(head -c 200 /tmp/b)"
+          r=$(curl -s -o /tmp/b -w "%{http_code}" "https://archive-api.open-meteo.com/v1/archive?latitude=44.94&longitude=-123.03&start_date=2025-11-01&end_date=2025-11-05&daily=temperature_2m_min")
+          echo "::warning title=archive::$r $(head -c 200 /tmp/b)"
