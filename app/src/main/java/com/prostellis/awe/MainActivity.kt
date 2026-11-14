@@ -28,6 +28,10 @@ import com.prostellis.awe.widget.BgStyle
 import com.prostellis.awe.widget.IconStyle
 import com.prostellis.awe.widget.Refresh
 import com.prostellis.awe.widget.WidgetUpdater
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.concurrent.Executors
 
 /**
  * The app: the bundled web app (assets/web/index.html, unchanged) in a full-screen web view, with pull to refresh,
@@ -138,6 +142,11 @@ class MainActivity : ComponentActivity() {
         super.onPause()
     }
 
+    override fun onDestroy() {
+        network.shutdownNow()
+        super.onDestroy()
+    }
+
     /** Pull to refresh: downloads fresh weather and hides the spinner when the page has redrawn (or after 30 seconds). */
     private fun refreshPage() {
         webView.evaluateJavascript(
@@ -243,6 +252,33 @@ class MainActivity : ComponentActivity() {
     }
 
     private inner class Bridge {
+        /**
+         * The page's own connection failed: download [url] here instead (the way the widgets do, which keeps working when
+         * the web view's connection gets stuck) and hand the text back to window.aweFetched. Weather services only.
+         */
+        @JavascriptInterface
+        fun fetchText(id: String, url: String, accept: String) {
+            val host = runCatching { URL(url) }.getOrNull()?.takeIf { it.protocol == "https" }?.host
+            if (host !in WEATHER_HOSTS) { deliver(id, false, "not allowed"); return }
+            network.execute {
+                val result = runCatching {
+                    val c = URL(url).openConnection() as HttpURLConnection
+                    c.connectTimeout = 15_000; c.readTimeout = 20_000
+                    c.setRequestProperty("Accept", accept)
+                    c.setRequestProperty("User-Agent", "AWE Weather (github.com/ianwilson-collab/awesome-weather-android)")
+                    try {
+                        if (c.responseCode !in 200..299) error("HTTP ${c.responseCode}")
+                        c.inputStream.bufferedReader().use { it.readText() }
+                    } finally { c.disconnect() }
+                }
+                deliver(id, result.isSuccess, result.getOrElse { it.message ?: "failed" })
+            }
+        }
+
+        private fun deliver(id: String, ok: Boolean, text: String) = runOnUiThread {
+            webView.evaluateJavascript("window.aweFetched(${JSONObject.quote(id)}, $ok, ${JSONObject.quote(text)})", null)
+        }
+
         /** A popup opened or closed in the page: pulling down scrolls the popup instead of refreshing. */
         @JavascriptInterface
         fun popupOpen(open: Boolean) {
@@ -284,7 +320,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val network = Executors.newFixedThreadPool(3)
+
     companion object {
+        private val WEATHER_HOSTS = setOf(
+            "api.open-meteo.com", "archive-api.open-meteo.com", "geocoding-api.open-meteo.com",
+            "api.weather.gov", "services.swpc.noaa.gov",
+        )
         const val EXTRA_OPEN_LOCATION = "com.prostellis.awe.OPEN_LOCATION"
         private const val APP_HOST = "appassets.androidplatform.net"
         private const val START_URL = "https://$APP_HOST/assets/web/index.html"

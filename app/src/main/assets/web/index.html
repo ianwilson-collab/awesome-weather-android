@@ -226,6 +226,8 @@ button { cursor: pointer; }
   font-size: 14px;
 }
 .notice.error { border-left: 4px solid #d9534f; }
+.notice-retry { margin-left: 6px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
+.notice-retry:disabled { opacity: .6; cursor: default; }
 .alerts { display: grid; gap: 8px; margin-bottom: 16px; }
 .alert {
   border-radius: 12px;
@@ -941,8 +943,27 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       }
       if (attempt < retries) await new Promise((r) => setTimeout(r, 700));
     }
+    // In the Android app, the page's own connection can get stuck while the phone's is fine: ask the app to fetch it instead
+    if (window.AWEBridge?.fetchText && lastErr?.status !== 404 && lastErr?.status !== 400) return nativeFetchJSON(url, headers);
     throw lastErr;
   }
+  const nativeWaits = {};
+  function nativeFetchJSON(url, headers) {
+    return new Promise((resolve, reject) => {
+      const id = Math.random().toString(36).slice(2);
+      const timer = setTimeout(() => { delete nativeWaits[id]; reject(new Error("timeout")); }, 25000);
+      nativeWaits[id] = { resolve, reject, timer };
+      window.AWEBridge.fetchText(id, url, headers?.Accept || "application/json");
+    });
+  }
+  // The Android app calls this with what it downloaded
+  window.aweFetched = (id, ok, text) => {
+    const w = nativeWaits[id];
+    if (!w) return;
+    delete nativeWaits[id]; clearTimeout(w.timer);
+    if (!ok) { w.reject(new Error(text || "failed")); return; }
+    try { w.resolve(JSON.parse(text)); } catch (e) { w.reject(e); }
+  };
 
   /* ================= Weather categories ================= */
   // WMO weather codes (Open-Meteo) → display category
@@ -2992,16 +3013,44 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
         store.set("loc", state.loc);
       }
       store.set("cache", state.data);
+      state.backup = false;
     } else {
       const cached = store.get("cache", null);
       if (cached && cached.locKey === key) {
-        state.data = cached;
-        notices.push(`Couldn't reach the forecast service. Showing the saved forecast from ${new Date(cached.fetchedAt).toLocaleString("en-US", { weekday: "short", hour: "numeric", minute: "2-digit" })}.`);
+        const nws = nwsR.status === "fulfilled" && Object.keys(nwsR.value.days).length ? nwsR.value : null;
+        state.data = { ...cached, om: upToNow(cached.om), nws: nws || cached.nws, nwsFirst: !!nws };
+        state.backup = true;
+        notices.push(nws
+          ? `Open-Meteo isn't answering, so the National Weather Service forecast is filling in. Hourly details are from ${savedAgo(cached.fetchedAt)}.`
+          : `Couldn't reach the forecast service. Showing the forecast saved ${savedAgo(cached.fetchedAt)}.`);
       } else {
         state.data = null;
       }
     }
     render(notices);
+    scheduleRetry();
+  }
+
+  // While a saved forecast is showing, quietly try again every 5 minutes
+  function scheduleRetry() {
+    clearTimeout(state.retryTimer);
+    if (state.backup || !state.data) state.retryTimer = setTimeout(() => load(), 5 * 60 * 1000);
+  }
+  function savedAgo(ts) {
+    const h = (Date.now() - ts) / 3600000;
+    if (h < 1) return `${Math.max(1, Math.round(h * 60))} minutes ago`;
+    if (h < 36) return `${Math.round(h)} hour${Math.round(h) === 1 ? "" : "s"} ago`;
+    return `${Math.round(h / 24 * 2) / 2} days ago`.replace(".5", "½");
+  }
+  // A saved forecast, moved on to the current hour: "now" comes from that hour's forecast, so the cards start at the real today
+  function upToNow(om) {
+    const local = new Date(Date.now() + (om.utc_offset_seconds || 0) * 1000).toISOString().slice(0, 13);
+    const h = om.hourly, i = h.time.findIndex((t) => t.slice(0, 13) === local);
+    if (i < 0) return om;
+    return { ...om, current: {
+      ...om.current, time: h.time[i], temperature_2m: h.temperature_2m[i], apparent_temperature: h.apparent_temperature[i],
+      weather_code: h.weather_code[i], is_day: h.is_day[i], wind_speed_10m: h.wind_speed_10m[i], wind_direction_10m: h.wind_direction_10m[i]
+    } };
   }
 
   /* ================= Derived daily model ================= */
@@ -3016,14 +3065,15 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       const d = om.daily;
       const dom = dominantForDay(om, ymd);
       const night = overnight(om, ymd);
+      const n = data.nwsFirst ? nws?.days?.[ymd] : null, nMain = n?.day || n?.night;
       out.push({
         ymd, idx: i,
-        cat: dom.cat, label: dom.label,
-        hi: d.temperature_2m_max[i],
-        lo: night.lo ?? d.temperature_2m_min[i],
+        cat: nMain ? nwsCat(nMain.short) : dom.cat, label: nMain ? nMain.short : dom.label,
+        hi: n?.day?.temp ?? d.temperature_2m_max[i],
+        lo: n?.night?.temp ?? night.lo ?? d.temperature_2m_min[i],
         feelsHi: d.apparent_temperature_max[i],
         feelsLo: night.feelsLo ?? d.apparent_temperature_min[i],
-        pop: d.precipitation_probability_max[i],
+        pop: n ? Math.max(n.day?.pop ?? 0, n.night?.pop ?? 0) : d.precipitation_probability_max[i],
         precip: d.precipitation_sum[i],
         snow: d.snowfall_sum[i],
         wind: d.wind_speed_10m_max[i],
@@ -3073,7 +3123,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     $("hourly").hidden = false;
     $("plan").hidden = false;
 
-    $("notices").innerHTML = notices.map((n) => `<div class="notice">${esc(n)}</div>`).join("");
+    $("notices").innerHTML = notices.map((n) => `<div class="notice">${esc(n)}${state.backup ? ` <button type="button" class="notice-retry" data-action="retry">Try again</button>` : ""}</div>`).join("");
 
     renderNow(data);
     renderAlerts(data.nws?.alerts || []);
@@ -3115,7 +3165,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       <span class="big num" aria-label="${label} ${deg(m.temp)}">${deg(m.temp)}</span>
       <span class="l1">${weatherIcon(wmoCat(m.code), m.isDay)} ${esc(WMO_TEXT[m.code] || "")}</span>
       <span class="num">Feels ${deg(m.feels)}</span>
-      <span class="upd">Updated ${fmtUpdatedTime(data.fetchedAt)}
+      <span class="upd">${state.backup ? `Saved ${new Date(data.fetchedAt).toLocaleString("en-US", { weekday: "short", hour: "numeric", minute: "2-digit" })}` : `Updated ${fmtUpdatedTime(data.fetchedAt)}`}
         <button class="clock-btn" type="button" data-action="preview" aria-expanded="${open}" aria-controls="previewPanel" aria-label="Preview another time of day" title="Preview another time of day">${UI.clock}</button></span>`;
   }
 
@@ -3701,6 +3751,12 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     });
 
     $("now").addEventListener("click", (e) => { if (e.target.closest('[data-action="preview"]')) showPreview($("previewPanel").hidden); });
+    $("notices").addEventListener("click", (e) => {
+      const b = e.target.closest('[data-action="retry"]');
+      if (!b) return;
+      b.disabled = true; b.textContent = "Checking…";
+      load();
+    });
     $("pvRange").addEventListener("input", (e) => {
       const step = +e.target.value;
       setPreview(step === liveStep() ? null : step * 15);
