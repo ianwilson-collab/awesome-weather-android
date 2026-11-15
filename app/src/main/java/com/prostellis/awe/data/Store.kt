@@ -3,6 +3,7 @@ package com.prostellis.awe.data
 import android.content.Context
 import com.prostellis.awe.weather.EventDays
 import com.prostellis.awe.weather.Forecast
+import com.prostellis.awe.weather.NwsBackup
 import com.prostellis.awe.weather.Place
 import com.prostellis.awe.widget.BgStyle
 import com.prostellis.awe.widget.ClockColor
@@ -92,11 +93,15 @@ class Store(context: Context) {
     /** The saved forecast, only if it belongs to the current place. */
     fun forecastForCurrentPlace(): SavedForecast? = savedForecast()?.takeIf { it.placeKey == place.key }
 
-    /** Downloads a fresh forecast for the current place. Returns true on success; the old forecast is kept on failure. */
+    /**
+     * Downloads a fresh forecast for the current place: Open-Meteo first, then (in the U.S.) the National Weather Service.
+     * Returns true on success; when both fail the old forecast is kept.
+     */
     fun refreshForecast(): Boolean {
         val p = place
-        val json = runCatching { download(Forecast.url(p)) }.getOrNull() ?: return false
-        if (runCatching { Forecast.parse(json) }.isFailure) return false
+        val json = runCatching { download(Forecast.url(p)) }.getOrNull()?.takeIf { runCatching { Forecast.parse(it) }.isSuccess }
+            ?: NwsBackup.forecastJson(p, forecastForCurrentPlace()?.forecast)?.takeIf { runCatching { Forecast.parse(it) }.isSuccess }
+            ?: return false
         prefs.edit()
             .putString(KEY_FORECAST, json)
             .putLong(KEY_FETCHED_AT, System.currentTimeMillis())
