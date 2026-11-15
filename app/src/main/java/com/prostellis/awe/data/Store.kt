@@ -10,8 +10,7 @@ import com.prostellis.awe.widget.ClockSettings
 import com.prostellis.awe.widget.DatePos
 import com.prostellis.awe.widget.IconStyle
 import com.prostellis.awe.widget.TimeFormat
-import java.net.HttpURLConnection
-import java.net.URL
+import java.io.File
 
 /** How often a widget refreshes on its own. */
 enum class RefreshMode(val minutes: Int?) {
@@ -43,6 +42,7 @@ data class SavedForecast(val forecast: Forecast, val fetchedAt: Long, val placeK
 /** Everything the app and widgets keep on the phone. */
 class Store(context: Context) {
     private val prefs = context.applicationContext.getSharedPreferences("awe", Context.MODE_PRIVATE)
+    private val files = context.applicationContext.filesDir
 
     /** The place saved in the app; the web app's default until one is picked. */
     val place: Place
@@ -192,19 +192,36 @@ class Store(context: Context) {
         edit.apply()
     }
 
-    private fun download(url: String): String {
-        val conn = URL(url).openConnection() as HttpURLConnection
-        conn.connectTimeout = 8000
-        conn.readTimeout = 8000
-        try {
-            if (conn.responseCode != 200) error("HTTP ${conn.responseCode}")
-            return conn.inputStream.bufferedReader().use { it.readText() }
-        } finally {
-            conn.disconnect()
-        }
+    private fun download(url: String): String = Net.get(url, timeoutMs = 8000)
+
+    /** The app page's full forecast request, so the background refresh can download it on the widgets' schedule. */
+    var appForecastUrl: String?
+        get() = prefs.getString(KEY_APP_URL, null)
+        set(value) = prefs.edit().putString(KEY_APP_URL, value).apply()
+
+    /** Downloads the app page's forecast in the background. The page shows it on its next open if it's newer than its own. */
+    fun refreshAppForecast(): Boolean {
+        val url = appForecastUrl ?: return false
+        val body = runCatching { Net.get(url) }.getOrNull() ?: return false
+        val tmp = File(files, "$APP_FILE.tmp")
+        tmp.writeText(body)
+        if (!tmp.renameTo(File(files, APP_FILE))) return false
+        prefs.edit().putLong(KEY_APP_AT, System.currentTimeMillis()).putString(KEY_APP_FOR, url).apply()
+        return true
+    }
+
+    /** The background copy of the page's forecast as {"at": time, "body": forecast}, when it was made for [url]. */
+    fun appForecast(url: String): String? {
+        if (prefs.getString(KEY_APP_FOR, null) != url) return null
+        val body = runCatching { File(files, APP_FILE).readText() }.getOrNull() ?: return null
+        return """{"at":${prefs.getLong(KEY_APP_AT, 0)},"body":$body}"""
     }
 
     private companion object {
+        const val KEY_APP_URL = "appForecastUrl"
+        const val KEY_APP_FOR = "appForecastFor"
+        const val KEY_APP_AT = "appForecastAt"
+        const val APP_FILE = "app-forecast.json"
         const val KEY_PLACE = "place"
         const val KEY_FORECAST = "forecast"
         const val KEY_FETCHED_AT = "fetchedAt"

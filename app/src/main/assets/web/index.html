@@ -918,6 +918,8 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   }
 
   async function fetchJSON(url, { timeout = 15000, retries = 1, headers } = {}) {
+    // In the Android app every download goes through the phone's own connection (the web view's can get stuck)
+    if (window.AWEBridge?.fetchText) return nativeFetchJSON(url, { timeout, retries, headers });
     let lastErr;
     for (let attempt = 0; attempt <= retries; attempt++) {
       const ctrl = new AbortController();
@@ -943,25 +945,38 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       }
       if (attempt < retries) await new Promise((r) => setTimeout(r, 700));
     }
-    // In the Android app, the page's own connection can get stuck while the phone's is fine: ask the app to fetch it instead
-    if (window.AWEBridge?.fetchText && lastErr?.status !== 404 && lastErr?.status !== 400) return nativeFetchJSON(url, headers);
     throw lastErr;
   }
   const nativeWaits = {};
-  function nativeFetchJSON(url, headers) {
-    return new Promise((resolve, reject) => {
-      const id = Math.random().toString(36).slice(2);
-      const timer = setTimeout(() => { delete nativeWaits[id]; reject(new Error("timeout")); }, 25000);
-      nativeWaits[id] = { resolve, reject, timer };
-      window.AWEBridge.fetchText(id, url, headers?.Accept || "application/json");
-    });
+  async function nativeFetchJSON(url, { timeout, retries, headers }) {
+    let lastErr;
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        return await new Promise((resolve, reject) => {
+          const id = Math.random().toString(36).slice(2);
+          const timer = setTimeout(() => { delete nativeWaits[id]; reject(new Error("timeout")); }, timeout + 5000);
+          nativeWaits[id] = { resolve, reject, timer };
+          window.AWEBridge.fetchText(id, url, headers?.Accept || "application/json", timeout);
+        });
+      } catch (e) {
+        lastErr = e;
+        if (e.status === 404 || e.status === 400) break;
+      }
+      if (attempt < retries) await new Promise((r) => setTimeout(r, 700));
+    }
+    throw lastErr;
   }
   // The Android app calls this with what it downloaded
   window.aweFetched = (id, ok, text) => {
     const w = nativeWaits[id];
     if (!w) return;
     delete nativeWaits[id]; clearTimeout(w.timer);
-    if (!ok) { w.reject(new Error(text || "failed")); return; }
+    if (!ok) {
+      const err = new Error(text || "failed"), status = /^HTTP (\d+)/.exec(text || "");
+      if (status) err.status = +status[1];
+      w.reject(err);
+      return;
+    }
     try { w.resolve(JSON.parse(text)); } catch (e) { w.reject(e); }
   };
 
@@ -2925,7 +2940,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
 
 
   /* ================= Data loading ================= */
-  async function loadOpenMeteo(loc) {
+  function omUrl(loc) {
     const p = new URLSearchParams({
       latitude: loc.lat, longitude: loc.lon,
       current: "temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m,wind_direction_10m",
@@ -2934,7 +2949,24 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
       temperature_unit: "fahrenheit", wind_speed_unit: "mph", precipitation_unit: "inch",
       timezone: "auto", forecast_days: "16"
     });
-    return fetchJSON(`https://api.open-meteo.com/v1/forecast?${p}`);
+    return `https://api.open-meteo.com/v1/forecast?${p}`;
+  }
+  async function loadOpenMeteo(loc) {
+    // The Android app downloads this same forecast in the background on the widgets' schedule
+    window.AWEBridge?.rememberForecastUrl?.(omUrl(loc));
+    return fetchJSON(omUrl(loc));
+  }
+  // In the Android app: show the background download right away when it's newer than what's on screen
+  function usePrefetched(loc, key) {
+    const raw = window.AWEBridge?.prefetchedForecast?.(omUrl(loc));
+    if (!raw) return;
+    const { at, body } = JSON.parse(raw);
+    const base = state.data?.locKey === key ? state.data : store.get("cache", null);
+    if (!base || base.locKey !== key || at <= base.fetchedAt) return;
+    state.data = { ...base, om: body, fetchedAt: at, nwsFirst: false };
+    state.backup = false;
+    store.set("cache", state.data);
+    render([]);
   }
 
   async function loadNWS(loc) {
@@ -2994,6 +3026,7 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     const loc = state.loc;
     const key = locKey(loc);
     if (!state.data || state.data.locKey !== key) renderSkeleton();
+    usePrefetched(loc, key);
 
     const [omR, nwsR, kpR, frR] = await Promise.allSettled([
       loadOpenMeteo(loc),

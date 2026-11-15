@@ -71,6 +71,8 @@ class RefreshWorker(context: Context, params: WorkerParameters) : Worker(context
             if (ok) store.markWidgetUpdated(id, now)
             WidgetUpdater.update(applicationContext, id)
         }
+        // The app follows the widgets' schedule: its full forecast is downloaded too, ready for the next time it opens
+        if (ok) store.refreshAppForecast()
         return if (ok || inputData.getIntArray(Refresh.KEY_IDS) == null) Result.success() else Result.retry()
     }
 }

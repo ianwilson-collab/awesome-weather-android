@@ -23,13 +23,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.webkit.WebViewAssetLoader
+import com.prostellis.awe.data.Net
 import com.prostellis.awe.data.Store
 import com.prostellis.awe.widget.BgStyle
 import com.prostellis.awe.widget.IconStyle
 import com.prostellis.awe.widget.Refresh
 import com.prostellis.awe.widget.WidgetUpdater
 import org.json.JSONObject
-import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.Executors
 
@@ -253,27 +253,30 @@ class MainActivity : ComponentActivity() {
 
     private inner class Bridge {
         /**
-         * The page's own connection failed: download [url] here instead (the way the widgets do, which keeps working when
-         * the web view's connection gets stuck) and hand the text back to window.aweFetched. Weather services only.
+         * Every download the page makes comes here and goes through the phone's own connection (the way the widgets
+         * download), so the web view's connection can't get stuck. The text goes back to window.aweFetched. Weather services only.
          */
         @JavascriptInterface
-        fun fetchText(id: String, url: String, accept: String) {
-            val host = runCatching { URL(url) }.getOrNull()?.takeIf { it.protocol == "https" }?.host
-            if (host !in WEATHER_HOSTS) { deliver(id, false, "not allowed"); return }
+        fun fetchText(id: String, url: String, accept: String, timeoutMs: Int) {
+            if (!allowed(url)) { deliver(id, false, "not allowed"); return }
             network.execute {
-                val result = runCatching {
-                    val c = URL(url).openConnection() as HttpURLConnection
-                    c.connectTimeout = 15_000; c.readTimeout = 20_000
-                    c.setRequestProperty("Accept", accept)
-                    c.setRequestProperty("User-Agent", "AWE Weather (github.com/ianwilson-collab/awesome-weather-android)")
-                    try {
-                        if (c.responseCode !in 200..299) error("HTTP ${c.responseCode}")
-                        c.inputStream.bufferedReader().use { it.readText() }
-                    } finally { c.disconnect() }
-                }
+                val result = runCatching { Net.get(url, accept, timeoutMs) }
                 deliver(id, result.isSuccess, result.getOrElse { it.message ?: "failed" })
             }
         }
+
+        /** The page's full forecast request, for the background refresh to download on the widgets' schedule. */
+        @JavascriptInterface
+        fun rememberForecastUrl(url: String) {
+            if (allowed(url)) Store(applicationContext).appForecastUrl = url
+        }
+
+        /** The background copy of the forecast for [url] ({"at", "body"}), or "" when there isn't one. */
+        @JavascriptInterface
+        fun prefetchedForecast(url: String): String = Store(applicationContext).appForecast(url) ?: ""
+
+        private fun allowed(url: String) =
+            runCatching { URL(url) }.getOrNull()?.takeIf { it.protocol == "https" }?.host in WEATHER_HOSTS
 
         private fun deliver(id: String, ok: Boolean, text: String) = runOnUiThread {
             webView.evaluateJavascript("window.aweFetched(${JSONObject.quote(id)}, $ok, ${JSONObject.quote(text)})", null)
