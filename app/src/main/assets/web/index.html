@@ -3162,8 +3162,6 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     renderAlerts(data.nws?.alerts || []);
     const days = buildDays(data);
     state.days = days;
-    state.barScale = barScale(data);
-    if (!store.get(normalsKey(), null)) normalsReady().then(() => { if (state.data) { state.barScale = barScale(state.data); renderCards(state.days); renderOutlook(state.data, state.days); } }).catch(() => {});
     renderCards(days);
     renderOutlook(data, days);
     renderHourly(data, days);
@@ -3241,28 +3239,12 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     }
     return `rgb(${TEMP_STOPS[TEMP_STOPS.length - 1][1]})`;
   }
-  // One scale for every bar across the 16 days, warm on the left. Each end sits halfway between what's typical and the record
-  // (warmest high, coldest low in 30 years) for those dates. Days past an end stop at the edge; their color still shows how far.
-  function barScale(data) {
-    const dates = buildDays(data, 0, 16), normals = store.get(normalsKey(), null);
-    if (normals) {
-      let hot = -Infinity, cold = Infinity;
-      for (const d of dates) {
-        const n = normals[leapDay(d.ymd)];
-        if (!n) continue;
-        hot = Math.max(hot, (n[0] + n[5]) / 2);
-        cold = Math.min(cold, (n[1] + n[6]) / 2);
-      }
-      if (hot > cold) return { hot: Math.round(hot), cold: Math.round(cold) };
-    }
-    // Until the past weather has downloaded: the forecast's own range, with room on each side
-    const his = dates.map((d) => d.hi).filter((v) => v != null), los = dates.map((d) => d.lo).filter((v) => v != null);
-    return { hot: Math.round(Math.max(...his) + 5), cold: Math.round(Math.min(...los) - 5) };
-  }
+  // Every bar shares one fixed scale, warm on the left: 80° at the left edge, 32° at the right. Days past an end stop at the
+  // edge; their colors still show how far past it they are.
+  const BAR_HOT = 80, BAR_COLD = 32;
   function rangeBar(d, cls = "") {
     if (d.lo == null || d.hi == null) return "";
-    const { hot, cold } = state.barScale;
-    const pos = (t) => ((hot - Math.min(Math.max(t, cold), hot)) / (hot - cold)) * 100;
+    const pos = (t) => ((BAR_HOT - Math.min(Math.max(t, BAR_COLD), BAR_HOT)) / (BAR_HOT - BAR_COLD)) * 100;
     const left = pos(d.hi), width = pos(d.lo) - left;
     // Every color between the high and the low, so none is skipped
     const n = Math.max(2, Math.ceil((d.hi - d.lo) / 2) + 1);
@@ -3530,15 +3512,10 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
   /* ---------- Plan a Date: what's typical on any date, from the last 30 years here ---------- */
   // Worked out once per location from Open-Meteo's historical data and saved, so picking a date is instant.
   let planYmd = "";
-  const normalsKey = () => `normals2|${(+state.loc.lat).toFixed(2)}|${(+state.loc.lon).toFixed(2)}`;
+  let planLoading = null;
+  const normalsKey = () => `normals|${(+state.loc.lat).toFixed(2)}|${(+state.loc.lon).toFixed(2)}`;
   // Day of a leap year (0–365) for a "YYYY-MM-DD" date, so Feb 29 has its own slot
   const leapDay = (ymd) => (Date.UTC(2000, +ymd.slice(5, 7) - 1, +ymd.slice(8, 10)) - Date.UTC(2000, 0, 1)) / 864e5;
-  // One download at a time, shared by Plan a Date and the temperature bars
-  let normalsLoading = null;
-  function normalsReady() {
-    normalsLoading ||= loadNormals().finally(() => { normalsLoading = null; });
-    return normalsLoading;
-  }
   async function loadNormals() {
     const saved = store.get(normalsKey(), null);
     if (saved) return saved;
@@ -3553,16 +3530,14 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     d.time.forEach((t, i) => { if (d.temperature_2m_max[i] != null && d.temperature_2m_min[i] != null) buckets[leapDay(t)].push(i); });
     // Each date uses the 15 days around it in every year, so one odd year doesn't skew it
     const normals = buckets.map((_, day) => {
-      let n = 0, hi = 0, lo = 0, wet = 0, frost = 0, snow = 0, recHi = -Infinity, recLo = Infinity;
+      let n = 0, hi = 0, lo = 0, wet = 0, frost = 0, snow = 0;
       for (let k = -7; k <= 7; k++) for (const i of buckets[(day + k + 366) % 366]) {
         n++; hi += d.temperature_2m_max[i]; lo += d.temperature_2m_min[i];
-        recHi = Math.max(recHi, d.temperature_2m_max[i]); recLo = Math.min(recLo, d.temperature_2m_min[i]);
         if ((d.precipitation_sum[i] || 0) >= .01) wet++;
         if (d.temperature_2m_min[i] <= 32) frost++;
         if ((d.snowfall_sum[i] || 0) >= .1) snow++;
       }
-      // [typical high, typical low, % wet, % frost, % snow, record high, record low]
-      return n ? [Math.round(hi / n), Math.round(lo / n), Math.round(wet / n * 100), Math.round(frost / n * 100), Math.round(snow / n * 100), Math.round(recHi), Math.round(recLo)] : null;
+      return n ? [Math.round(hi / n), Math.round(lo / n), Math.round(wet / n * 100), Math.round(frost / n * 100), Math.round(snow / n * 100)] : null;
     });
     store.set(normalsKey(), normals);
     return normals;
@@ -3576,7 +3551,8 @@ body:has(dialog[open]) :is(.page-scene, .festive, .days) *, body:has(dialog[open
     if (!saved) {
       body.innerHTML = `<div class="p-body">${picker}<p class="p-note" id="planMsg">Working out what's typical here from the last 30 years…</p></div>`;
       wirePlan();
-      normalsReady().then(() => { if ($("plan").open) renderPlan(); }).catch(() => {
+      planLoading ||= loadNormals().then(() => { planLoading = null; if ($("plan").open) renderPlan(); }).catch(() => {
+        planLoading = null;
         const msg = $("planMsg"); if (msg) msg.textContent = "Couldn't load past weather. Check your connection, then close and reopen this section.";
       });
       return;
