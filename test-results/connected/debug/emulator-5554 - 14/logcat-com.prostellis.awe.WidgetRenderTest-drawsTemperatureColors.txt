@@ -1,0 +1,11 @@
+11-15 02:46:58.335  5497  5522 I TestRunner: started: drawsTemperatureColors(com.prostellis.awe.WidgetRenderTest)
+11-15 02:46:58.578  5175  5175 I NearbySharing: SharingTileService destroyed [CONTEXT service_id=194 ]
+11-15 02:46:58.762  5175  5236 D TrafficStats: tagSocket(81) with statsTag=0x30001803, statsUid=-1
+11-15 02:47:00.006  1648  2079 I AiAiEcho: Predicting[0]:
+11-15 02:47:00.006  1648  2079 I AiAiEcho: EchoTargets:
+11-15 02:47:00.006  1648  2079 I AiAiEcho: Filtered by AiAi flag check:
+11-15 02:47:00.006  1648  2079 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata:
+11-15 02:47:00.006  1648  2079 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+11-15 02:47:00.024   907   986 D EGL_emulation: app_time_stats: avg=17837.15ms min=17837.15ms max=17837.15ms count=1
+11-15 02:47:00.025   907   907 W PageIndicator: Total number of pages invalid: 0. Assuming 1 page.
+11-15 02:47:00.609  5497  5522 I TestRunner: finished: drawsTemperatureColors(com.prostellis.awe.WidgetRenderTest)

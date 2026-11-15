@@ -1,0 +1,23 @@
+11-15 02:46:34.974  5497  5522 I TestRunner: started: tapAreasFollowTheWeatherBlock(com.prostellis.awe.ClockRenderTest)
+11-15 02:46:34.998  5116  5207 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.gass.chimera.SchedulePeriodicTasksService finished executing. cause:5 result: 1 elapsed_millis: 44 uptime_millis: 44 exec_start_elapsed_seconds: 100 [CONTEXT service_id=218 ]
+11-15 02:46:35.014  1116  1116 D CarrierSvcBindHelper: onPackageModified: com.google.android.gms
+11-15 02:46:35.015  1116  1116 D CarrierSvcBindHelper: No carrier app for: 0
+11-15 02:46:35.015   523   696 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+11-15 02:46:35.018   907   983 D StylusManager: Stylus InputDevice changed: 11 virtio_input_multi_touch_8
+11-15 02:46:35.022  1099  1099 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-15 02:46:35.022  1099  1099 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-15 02:46:35.023   908  4935 I PermissionControllerServiceImpl: Updating user sensitive for uid 10131
+11-15 02:46:35.023   907   907 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+11-15 02:46:35.025   907   983 D StylusManager: Stylus InputDevice changed: 7 virtio_input_multi_touch_4
+11-15 02:46:35.026   907   983 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+11-15 02:46:35.026   907   983 D StylusManager: Stylus InputDevice changed: 4 virtio_input_multi_touch_1
+11-15 02:46:35.036  1116  1383 D ImsResolver: maybeAddedImsService, packageName: com.google.android.gms
+11-15 02:46:35.038   907   983 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+11-15 02:46:35.048  5116  5207 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.gass.chimera.SchedulePeriodicTasksService started execution. cause:5 exec_start_elapsed_seconds: 100 [CONTEXT service_id=218 ]
+11-15 02:46:35.057   907   983 D StylusManager: Stylus InputDevice changed: 10 virtio_input_multi_touch_7
+11-15 02:46:35.058   907   983 D StylusManager: Stylus InputDevice changed: 9 virtio_input_multi_touch_6
+11-15 02:46:35.059   907   983 D StylusManager: Stylus InputDevice changed: 12 virtio_input_multi_touch_9
+11-15 02:46:35.059   907   983 D StylusManager: Stylus InputDevice changed: 8 virtio_input_multi_touch_5
+11-15 02:46:35.059   907   983 D StylusManager: Stylus InputDevice changed: 6 virtio_input_multi_touch_3
+11-15 02:46:35.059   907   983 D StylusManager: Stylus InputDevice changed: 14 virtio_input_multi_touch_11
+11-15 02:46:35.071  5497  5522 I TestRunner: finished: tapAreasFollowTheWeatherBlock(com.prostellis.awe.ClockRenderTest)

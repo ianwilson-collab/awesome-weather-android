@@ -1,0 +1,35 @@
+11-15 02:47:01.637  5497  5522 I TestRunner: started: drawsEveryIconStyle(com.prostellis.awe.WidgetRenderTest)
+11-15 02:47:02.105  1903  1903 V ContactsProvider: Scheduled notifyChange started.
+11-15 02:47:02.106  1099  1099 D BluetoothPbapService:  onChange on contact uri
+11-15 02:47:02.116  1099  5751 D BluetoothPbapUtils: primaryVersionCounter = 0, secondaryVersionCounter=0
+11-15 02:47:02.131  5116  5205 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.icing.proxy.IcingInternalCorporaUpdateService started execution. cause:9 exec_start_elapsed_seconds: 128 [CONTEXT service_id=218 ]
+11-15 02:47:02.136  5116  5563 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.icing.proxy.IcingInternalCorporaUpdateService finished executing. cause:9 result: 1 elapsed_millis: 14 uptime_millis: 14 exec_start_elapsed_seconds: 128 [CONTEXT service_id=218 ]
+11-15 02:47:02.168  5497  5522 W PathParser: Points are too far apart 4.000002671357121
+11-15 02:47:02.168  5497  5522 W PathParser: Points are too far apart 4.000002671357128
+11-15 02:47:02.175   907   907 D StatusBarIconController: ignoring old pipeline callbacks, because the new mobile icons are enabled
+11-15 02:47:02.181  5497  5522 W PathParser: Points are too far apart 4.000002671357121
+11-15 02:47:02.182  5497  5522 W PathParser: Points are too far apart 4.000002671357128
+11-15 02:47:02.277  5497  5522 W PathParser: Points are too far apart 4.000002671357121
+11-15 02:47:02.277  5497  5522 W PathParser: Points are too far apart 4.000002671357128
+11-15 02:47:02.287  5497  5522 W PathParser: Points are too far apart 4.000002671357121
+11-15 02:47:02.288  5497  5522 W PathParser: Points are too far apart 4.000002671357128
+11-15 02:47:02.350  5175  5752 I ChimeraConfigurator: Starting update, reason: 4 urgentFeatures: vision.ocr:-1
+11-15 02:47:02.359  5175  5752 I ChimeraConfigurator: Detected pending changes for urgent request: [vision.ocr]. Pending module sets: container:2318189190800+mlkit.ocr.common,tflite_dynamite:2640104055100800+tflite_dynamite,vision_ocr:2316024025100000+vision.ocr
+11-15 02:47:02.368  5175  5752 I GmsDebugLogger: [73] 1801
+11-15 02:47:02.371  5175  5752 W ZappDownloader: No successful module downloads for requested features [vision.ocr].
+11-15 02:47:02.372  5175  5752 I GmsDebugLogger: [30] [VisionOcrDynamite.integ:231602402100000],[TfliteDynamiteDynamite.integ:264010405100800],[MlkitOcrCommon.optional:231818100800]
+11-15 02:47:02.374  5175  5752 W ChimeraConfigService: Retry attempt was throttled. [CONTEXT service_id=264 ]
+11-15 02:47:02.374  5175  5752 I GmsDebugLogger: [83] 1 [vision.ocr]
+11-15 02:47:02.376  5175  5753 W Vision  : Request for optional module download of ocr failed. Request again.
+11-15 02:47:02.376  5175  5753 W Vision  : Would have logged:
+11-15 02:47:02.376  5175  5753 W Vision  : # dsae@37884fe7
+11-15 02:47:02.377  5175  5753 I Vision  : Schedule retrying download ocr at 128305 with backoff 20 seconds
+11-15 02:47:02.397  5497  5522 W PathParser: Points are too far apart 4.000002671357121
+11-15 02:47:02.398  5497  5522 W PathParser: Points are too far apart 4.000002671357128
+11-15 02:47:02.410  5497  5522 W PathParser: Points are too far apart 4.000002671357121
+11-15 02:47:02.410  5497  5522 W PathParser: Points are too far apart 4.000002671357128
+11-15 02:47:02.506  5497  5522 W PathParser: Points are too far apart 4.000002671357121
+11-15 02:47:02.506  5497  5522 W PathParser: Points are too far apart 4.000002671357128
+11-15 02:47:02.516  5497  5522 W PathParser: Points are too far apart 4.000002671357121
+11-15 02:47:02.516  5497  5522 W PathParser: Points are too far apart 4.000002671357128
+11-15 02:47:02.944  5497  5522 I TestRunner: finished: drawsEveryIconStyle(com.prostellis.awe.WidgetRenderTest)

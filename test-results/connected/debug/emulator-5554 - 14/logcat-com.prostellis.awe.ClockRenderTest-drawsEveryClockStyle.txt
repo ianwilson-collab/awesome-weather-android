@@ -1,0 +1,49 @@
+11-15 02:46:36.812  5497  5522 I TestRunner: started: drawsEveryClockStyle(com.prostellis.awe.ClockRenderTest)
+11-15 02:46:36.930   523   684 I RoleService: Granting default roles...
+11-15 02:46:36.930   908  4378 I PermissionControllerServiceImpl: Updating user sensitive for uid 10132
+11-15 02:46:36.933  1116  1116 D CarrierSvcBindHelper: onPackageModified: com.google.android.googlequicksearchbox
+11-15 02:46:36.934   523   696 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+11-15 02:46:36.935  1116  1116 D CarrierSvcBindHelper: No carrier app for: 0
+11-15 02:46:36.940   907   983 D StylusManager: Stylus InputDevice changed: 11 virtio_input_multi_touch_8
+11-15 02:46:36.943  1099  1099 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-15 02:46:36.944  1099  1099 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-15 02:46:36.947   907   907 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+11-15 02:46:36.950  1116  1383 D ImsResolver: maybeAddedImsService, packageName: com.google.android.googlequicksearchbox
+11-15 02:46:36.957   908  1078 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
+11-15 02:46:36.959   907   983 D StylusManager: Stylus InputDevice changed: 7 virtio_input_multi_touch_4
+11-15 02:46:36.962   908  1078 I Role    : com.google.android.gms not qualified for android.app.role.SYSTEM_CALL_STREAMING due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.telecom.CallStreamingService', mCategories='[]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='android.permission.BIND_CALL_STREAMING_SERVICE', mQueryFlags=0, mMetaData=[]}
+11-15 02:46:36.962   908  1078 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.SYSTEM_CALL_STREAMING
+11-15 02:46:36.963   908  1078 W Role    : Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
+11-15 02:46:36.967   907   983 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+11-15 02:46:36.977   907   983 D StylusManager: Stylus InputDevice changed: 4 virtio_input_multi_touch_1
+11-15 02:46:36.981   907   983 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+11-15 02:46:36.990   907   983 D StylusManager: Stylus InputDevice changed: 10 virtio_input_multi_touch_7
+11-15 02:46:36.992   907   983 D StylusManager: Stylus InputDevice changed: 9 virtio_input_multi_touch_6
+11-15 02:46:36.994   907   983 D StylusManager: Stylus InputDevice changed: 12 virtio_input_multi_touch_9
+11-15 02:46:36.997   907   983 D StylusManager: Stylus InputDevice changed: 8 virtio_input_multi_touch_5
+11-15 02:46:36.999   907   983 D StylusManager: Stylus InputDevice changed: 6 virtio_input_multi_touch_3
+11-15 02:46:37.001   907   983 D StylusManager: Stylus InputDevice changed: 14 virtio_input_multi_touch_11
+11-15 02:46:37.107  1648  1648 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.googlequicksearchbox.
+11-15 02:46:37.114  1648  2764 I AiAiEcho: AppIndexer Package:[com.google.android.googlequicksearchbox] UserProfile:[0] Enabled:[true].
+11-15 02:46:37.114  1648  2764 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.googlequicksearchbox], userId:[0], reason:[package is updated.].
+11-15 02:46:37.311  1716  2455 I A       : Scheduled one-off task for batch; batchId=1 taskId=-1000006 corpora=[1004,1008,1014,1015]
+11-15 02:46:37.311  1716  2455 I A       : Pending callbacks: 1
+11-15 02:46:37.428  4195  4307 I Bugle   : BroadcastReceiverAsyncWorkTracker: Acknowledging broadcast of bdxy@8393672
+11-15 02:46:37.453  5175  5317 W Icing   : Package com.google.android.googlequicksearchbox targets Android P and isn't allowed to use AppDataSearch indexing API
+11-15 02:46:37.457  5116  5277 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+11-15 02:46:37.458  5116  5301 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+11-15 02:46:37.473  5116  5279 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_CHANGED [CONTEXT service_id=17 ]
+11-15 02:46:37.475  5116  5301 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+11-15 02:46:37.532  5175  5316 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+11-15 02:46:37.543  5175  5316 I Icing   : Indexing done com.google.android.gms-apps
+11-15 02:46:37.730  5497  5522 D CompatibilityChangeReporter: Compat change id reported: 247079863; UID 10192; state: ENABLED
+11-15 02:46:38.111   337   372 I netd    : tetherGetStats() -> {[]} <0.51ms>
+11-15 02:46:38.117   337   372 I netd    : bandwidthSetGlobalAlert(2097152) <0.19ms>
+11-15 02:46:38.120   337   372 I netd    : bandwidthRemoveInterfaceQuota(eth0) <0.46ms>
+11-15 02:46:38.120   337   372 I netd    : bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <0.32ms>
+11-15 02:46:38.124   337   372 I netd    : bandwidthRemoveInterfaceQuota(eth0) <0.23ms>
+11-15 02:46:38.125   337   372 I netd    : bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <0.18ms>
+11-15 02:46:38.126   523   906 D NetworkStatsObservers: Unregistering RequestInfo from pid/uid:523/1000(android) for DataUsageRequest [ requestId=10, networkTemplate=NetworkTemplate: matchRule=MOBILE, matchSubscriberIds=[310260...], matchWifiNetworkKeys=[], metered=YES, defaultNetwork=NO, thresholdInBytes=3548611 ] accessLevel:3
+11-15 02:46:38.126   523   831 D NetworkStatsObservers: Registering observer for RequestInfo from pid/uid:523/1000(android) for DataUsageRequest [ requestId=11, networkTemplate=NetworkTemplate: matchRule=MOBILE, matchSubscriberIds=[310260...], matchWifiNetworkKeys=[], metered=YES, defaultNetwork=NO, thresholdInBytes=3545376 ] accessLevel:3
+11-15 02:46:38.142   337   372 I netd    : tetherGetStats() -> {[]} <0.30ms>
+11-15 02:46:38.266  5497  5522 I TestRunner: finished: drawsEveryClockStyle(com.prostellis.awe.ClockRenderTest)

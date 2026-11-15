@@ -1,0 +1,148 @@
+11-15 02:46:30.926  5497  5522 I TestRunner: started: drawsColorsAndGlow(com.prostellis.awe.ClockRenderTest)
+11-15 02:46:30.929  5175  5297 I Icing   : Indexing done com.google.android.gms-apps
+11-15 02:46:30.930  5175  5297 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+11-15 02:46:30.931  5175  5297 I Icing   : Indexing done com.google.android.gms-apps
+11-15 02:46:30.967  5497  5522 W PathParser: Points are too far apart 4.733727810650888
+11-15 02:46:30.969  5497  5522 W PathParser: Points are too far apart 5.010973215696723
+11-15 02:46:30.976  5116  5207 D nativeloader: Configuring clns-10 for other apk . target_sdk_version=33, uses_libraries=ALL, library_path=/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.apk!/lib/x86_64:/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+11-15 02:46:30.984   523  3029 D ConnectivityService: requestNetwork for uid/pid:10131/5116 activeRequest: null callbackRequest: 137 [NetworkRequest [ REQUEST id=138, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10131 RequestorUid: 10131 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+11-15 02:46:30.986   523   833 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=138, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10131 RequestorUid: 10131 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+11-15 02:46:30.986   523   833 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=138, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10131 RequestorUid: 10131 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+11-15 02:46:30.986   523   833 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=138, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10131 RequestorUid: 10131 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+11-15 02:46:30.986   523   833 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=138, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10131 RequestorUid: 10131 RequestorPkg: com.google.android.gms UnderlyingNetworks: Null] ]
+11-15 02:46:30.987   523   840 D ConnectivityService: NetReassign [138 : null → 100] [c 0] [a 1] [i 1]
+11-15 02:46:30.988   523   840 D ConnectivityService: NetReassign [no changes] [c 0] [a 0] [i 1]
+11-15 02:46:30.994  5116  5207 I cr_CronetLibraryLoader: Cronet version: 113.0.5672.51, arch: x86_64
+11-15 02:46:30.996  5175  5297 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+11-15 02:46:31.008  5175  5297 I Icing   : Indexing done com.google.android.gms-apps
+11-15 02:46:31.015  5175  5297 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+11-15 02:46:31.027  5175  5297 I Icing   : Indexing done com.google.android.gms-apps
+11-15 02:46:31.032  5175  5297 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+11-15 02:46:31.033  5175  5297 I Icing   : Indexing done com.google.android.gms-apps
+11-15 02:46:31.037  5116  5207 W GmsUrlRequestImpl: Content-Type header is overwritten.
+11-15 02:46:31.039  5175  5297 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+11-15 02:46:31.040  5175  5297 I Icing   : Indexing done com.google.android.gms-apps
+11-15 02:46:31.057   337  5533 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+11-15 02:46:31.059   337  5535 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-15 02:46:31.059   337  5535 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7cab3f72eb30
+11-15 02:46:31.059   337  5535 I resolv  : doQuery: rcode=0, ancount=8, return value=168
+11-15 02:46:31.064   337  5534 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+11-15 02:46:31.064   337  5534 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x7cabaf729bd0
+11-15 02:46:31.064   337  5534 I resolv  : doQuery: rcode=0, ancount=8, return value=264
+11-15 02:46:31.065  5116  5531 D TrafficStats: tagSocket(182) with statsTag=0x401, statsUid=10131
+11-15 02:46:31.069  5116  5531 D TrafficStats: tagSocket(182) with statsTag=0x401, statsUid=10131
+11-15 02:46:31.070  5116  5531 D TrafficStats: tagSocket(182) with statsTag=0x401, statsUid=10131
+11-15 02:46:31.071  5116  5531 D TrafficStats: tagSocket(182) with statsTag=0x401, statsUid=10131
+11-15 02:46:31.073  5116  5531 D TrafficStats: tagSocket(182) with statsTag=0x401, statsUid=10131
+11-15 02:46:31.074  5116  5531 D TrafficStats: tagSocket(182) with statsTag=0x401, statsUid=10131
+11-15 02:46:31.075  5116  5531 D TrafficStats: tagSocket(182) with statsTag=0x401, statsUid=10131
+11-15 02:46:31.076  5116  5531 D TrafficStats: tagSocket(182) with statsTag=0x401, statsUid=10131
+11-15 02:46:31.077  5116  5531 D TrafficStats: tagSocket(182) with statsTag=0x401, statsUid=10131
+11-15 02:46:31.164  5116  5122 W .gms.persistent: Cleared Reference was only reachable from finalizer (only reported once)
+11-15 02:46:31.186  5116  5207 W GLSUser : [AppCertManager] Exception while requesting key:
+11-15 02:46:31.186  5116  5207 W GLSUser : java.util.concurrent.ExecutionException: avvw: Parse Proto Exception.
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dlnv.s(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dlnv.get(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at oub.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):78)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at otz.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):8)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at otv.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at otx.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at otx.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at abxk.r(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at abxw.e(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at abxw.g(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at cyeg.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):27)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at czpd.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):78)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at java.lang.Thread.run(Thread.java:1012)
+11-15 02:46:31.186  5116  5207 W GLSUser : Caused by: avvw: Parse Proto Exception.
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at avwn.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at avxk.onSucceeded(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at jf.onSucceeded(:com.google.android.gms.dynamite_cronetdynamite@231818047@23.18.18 (190800-0):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at ie.run(:com.google.android.gms.dynamite_cronetdynamite@231818047@23.18.18 (190800-0):4)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	... 6 more
+11-15 02:46:31.186  5116  5207 W GLSUser : Caused by: dzfz: Protocol message contained an invalid tag (zero).
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dzdb.k(:com.google.android.gms@231818047@23.18.18 (190800-535401451):13)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dzha.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):47)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dzha.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):45)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dzfd.A(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dzex.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dzcx.d(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dzcx.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at dzcx.n(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at avwn.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	at avwn.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+11-15 02:46:31.186  5116  5207 W GLSUser : 	... 9 more
+11-15 02:46:31.187  5116  5207 W GLSUser : [DeviceKeyStore] Cannot load key: Device key file not found.
+11-15 02:46:31.200   337  5539 I resolv  : GetAddrInfoHandler::run: {100 786532 100 983140 10131 0}
+11-15 02:46:31.205   337  5541 I resolv  : res_nmkquery: (QUERY, IN, A)
+11-15 02:46:31.205   337  5540 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+11-15 02:46:31.235   337  5541 I resolv  : res_nsend: used send_dg 173 terrno: 0
+11-15 02:46:31.235   337  5541 I resolv  : doQuery: rcode=0, ancount=8, return value=173
+11-15 02:46:31.250   337  5540 I resolv  : res_nsend: used send_dg 269 terrno: 0
+11-15 02:46:31.250   337  5540 I resolv  : doQuery: rcode=0, ancount=8, return value=269
+11-15 02:46:31.261  5116  5209 D TrafficStats: tagSocket(6) with statsTag=0x34000609, statsUid=10125
+11-15 02:46:31.265  1903  1903 V ContactsProvider: Scheduled notifyChange started.
+11-15 02:46:31.266  1099  1099 D BluetoothPbapService:  onChange on contact uri
+11-15 02:46:31.267  5116  5208 D CompatibilityChangeReporter: Compat change id reported: 150939131; UID 10131; state: ENABLED
+11-15 02:46:31.267  5175  5187 D CompatibilityChangeReporter: Compat change id reported: 150939131; UID 10131; state: ENABLED
+11-15 02:46:31.276  5116  5209 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-15 02:46:31.284  1099  5543 D BluetoothPbapUtils: primaryVersionCounter = 0, secondaryVersionCounter=0
+11-15 02:46:31.284  5116  5209 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:31.284  5116  5209 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.348  5116  5205 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.phenotype.service.sync.PhenotypeConfigurator started execution. cause:9 exec_start_elapsed_seconds: 97 [CONTEXT service_id=218 ]
+11-15 02:46:31.353  5116  5208 W ExecutionCriteria: Running in whitelist mode. Ignoring task: com.google.android.gms/.tapandpay.gcmtask.TapAndPayGcmTaskService{u=0 tag="keyguard.check" trigger=window{period=3600s,flex=1200s,earliest=2394s,latest=3594s} requirements=[NET_CONNECTED] attributes=[PERSISTED,RECURRING] scheduled=-5s last_run=N/A exec_window_multiplier=1.0000 jid=N/A status=PENDING retries=0 client_lib=GMS_TASK_SCHEDULER-231818000} [CONTEXT service_id=218 ]
+11-15 02:46:31.370  5116  5211 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.icing.proxy.IcingInternalCorporaUpdateService started execution. cause:9 exec_start_elapsed_seconds: 97 [CONTEXT service_id=218 ]
+11-15 02:46:31.386  5116  5211 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.icing.proxy.IcingInternalCorporaUpdateService finished executing. cause:9 result: 1 elapsed_millis: 34 uptime_millis: 34 exec_start_elapsed_seconds: 97 [CONTEXT service_id=218 ]
+11-15 02:46:31.779  5116  5209 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-15 02:46:31.785  5116  5209 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:31.786  5116  5209 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.793  1116  1116 D CarrierSvcBindHelper: onPackageModified: com.prostellis.awe
+11-15 02:46:31.794  1099  1099 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-15 02:46:31.794  1099  1099 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-15 02:46:31.795   907   907 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+11-15 02:46:31.796   908  4378 I PermissionControllerServiceImpl: Updating user sensitive for uid 10192
+11-15 02:46:31.797  1116  1116 D CarrierSvcBindHelper: No carrier app for: 0
+11-15 02:46:31.797   523   696 I InputReader: Reconfiguring input devices, changes=KEYBOARD_LAYOUTS
+11-15 02:46:31.798   523   684 I RoleService: Granting default roles...
+11-15 02:46:31.802   907   983 D StylusManager: Stylus InputDevice changed: 11 virtio_input_multi_touch_8
+11-15 02:46:31.803   907   983 D StylusManager: Stylus InputDevice changed: 7 virtio_input_multi_touch_4
+11-15 02:46:31.804   907   983 D StylusManager: Stylus InputDevice changed: 5 virtio_input_multi_touch_2
+11-15 02:46:31.805   907   983 D StylusManager: Stylus InputDevice changed: 4 virtio_input_multi_touch_1
+11-15 02:46:31.806   907   983 D StylusManager: Stylus InputDevice changed: 13 virtio_input_multi_touch_10
+11-15 02:46:31.807   907   983 D StylusManager: Stylus InputDevice changed: 10 virtio_input_multi_touch_7
+11-15 02:46:31.807   907   983 D StylusManager: Stylus InputDevice changed: 9 virtio_input_multi_touch_6
+11-15 02:46:31.808   907   983 D StylusManager: Stylus InputDevice changed: 12 virtio_input_multi_touch_9
+11-15 02:46:31.809   908  1078 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
+11-15 02:46:31.811   908  1078 I Role    : com.google.android.gms not qualified for android.app.role.SYSTEM_CALL_STREAMING due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.telecom.CallStreamingService', mCategories='[]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='android.permission.BIND_CALL_STREAMING_SERVICE', mQueryFlags=0, mMetaData=[]}
+11-15 02:46:31.811   908  1078 E RoleControllerServiceImpl: Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.SYSTEM_CALL_STREAMING
+11-15 02:46:31.811   908  1078 W Role    : Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
+11-15 02:46:31.812  1116  1383 D ImsResolver: maybeAddedImsService, packageName: com.prostellis.awe
+11-15 02:46:31.818   907   983 D StylusManager: Stylus InputDevice changed: 8 virtio_input_multi_touch_5
+11-15 02:46:31.825   907   983 D StylusManager: Stylus InputDevice changed: 6 virtio_input_multi_touch_3
+11-15 02:46:31.841   907   983 D StylusManager: Stylus InputDevice changed: 14 virtio_input_multi_touch_11
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: Voilatile gRPC failure INVALID_ARGUMENT: Application credential header not valid. Please fix the client to pass a valid application credential header. [CONTEXT service_id=6 ]
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: enms: INVALID_ARGUMENT: Application credential header not valid. Please fix the client to pass a valid application credential header.
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at enmr.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at abxw.u(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at abxw.e(:com.google.android.gms@231818047@23.18.18 (190800-535401451):17)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at abxw.g(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at cyeg.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):27)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at czpd.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):78)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:31.857  5116  5207 W GlsClientGrpc: 	at java.lang.Thread.run(Thread.java:1012)
+11-15 02:46:31.866  1648  1648 I AiAiEcho: AppFetcherImpl onPackageChanged com.prostellis.awe.
+11-15 02:46:31.867  1648  2764 I AiAiEcho: AppIndexer Package:[com.prostellis.awe] UserProfile:[0] Enabled:[true].
+11-15 02:46:31.867  1648  2764 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.prostellis.awe], userId:[0], reason:[package is updated.].
+11-15 02:46:31.892  1165  1722 D EGL_emulation: app_time_stats: avg=1116.34ms min=47.82ms max=2184.87ms count=2
+11-15 02:46:31.899  5497  5522 I TestRunner: finished: drawsColorsAndGlow(com.prostellis.awe.ClockRenderTest)

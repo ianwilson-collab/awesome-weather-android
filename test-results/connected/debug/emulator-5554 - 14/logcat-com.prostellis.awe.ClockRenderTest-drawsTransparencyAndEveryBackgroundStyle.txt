@@ -1,0 +1,85 @@
+11-15 02:46:35.072  5497  5522 I TestRunner: started: drawsTransparencyAndEveryBackgroundStyle(com.prostellis.awe.ClockRenderTest)
+11-15 02:46:35.094  5175  5246 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-15 02:46:35.096  5175  5246 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:35.096  5175  5246 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:35.100  5116  5562 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.gass.chimera.SchedulePeriodicTasksService finished executing. cause:5 result: 1 elapsed_millis: 90 uptime_millis: 90 exec_start_elapsed_seconds: 100 [CONTEXT service_id=218 ]
+11-15 02:46:35.119   523   608 I RemoteProvisionSysSvc: getRegistration(android.hardware.security.keymint.IRemotelyProvisionedComponent/default)
+11-15 02:46:35.124   523   523 I RegistrationProxy: onServiceConnected: com.android.rkpdapp.service.RemoteProvisioningService
+11-15 02:46:35.127   523   984 I RegistrationProxy: IGetRegistrationCallback.onSuccess
+11-15 02:46:35.128   523  3031 I RemoteProvisionSysSvc: Fetching key 10131 for client 26024995
+11-15 02:46:35.128   523  3031 I RegistrationProxy: getKeyAsync operation started with callback 230282528
+11-15 02:46:35.128  3789  3890 I RkpdRegistrationBinder: Key requested for : android.hardware.security.keymint.IRemotelyProvisionedComponent/default, clientUid: 1017, keyId: 10131, callback: 36114260
+11-15 02:46:35.129  3789  3890 I RkpdRegistrationBinder: Key successfully assigned to client
+11-15 02:46:35.129   523   523 I RemoteProvisionSysSvc: Successfully fetched key for client 26024995
+11-15 02:46:35.148  1648  1648 I AiAiEcho: AppFetcherImpl onPackageChanged com.google.android.gms.
+11-15 02:46:35.148  1648  2516 I AiAiEcho: AppIndexer Package:[com.google.android.gms] UserProfile:[0] Enabled:[true].
+11-15 02:46:35.149  1648  2516 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.google.android.gms], userId:[0], reason:[package is updated.].
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: Retrieving snapshot for com.google.android.gms.playlog.uploader failed
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: java.util.concurrent.TimeoutException: Timed out waiting for Task
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at cfsz.o(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at bwch.e(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at bwch.j(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at bwch.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at com.google.android.gms.clearcut.init.ClearcutInitChimeraIntentService.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at zdm.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at com.google.android.gms.clearcut.init.DefaultPriorityClearcutInitChimeraIntentService.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at zhv.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at hjm.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at hjl.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):11)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at dfhf.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-15 02:46:35.157  5175  5255 E PhenotypeFlagCommitter: 	at java.lang.Thread.run(Thread.java:1012)
+11-15 02:46:35.197  5116  5207 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.pay.gcmtask.PayGcmTaskService started execution. cause:5 exec_start_elapsed_seconds: 101 [CONTEXT service_id=218 ]
+11-15 02:46:35.198  5175  5297 I Pay     : Device does not support HCE. [CONTEXT service_id=198 ]
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: Could not register for notifications with InnerTube:
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: abqx: zvm: Precondition check failed.
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at abqn.apply(Unknown Source:4)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at yyi.r(PG:5)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at yyi.b(PG:2)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at abqp.d(PG:4)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at agsb.c(PG:63)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at agsb.i(PG:4)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at agsb.c(PG:92)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at agsb.j(PG:38)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at agsb.d(PG:3)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at agrz.run(Unknown Source:2)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at smg.run(PG:2)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at java.lang.Thread.run(Thread.java:1012)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at snu.run(PG:5)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: Caused by: zvm: Precondition check failed.
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at abpb.e(PG:5)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at zhp.f(PG:1)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at zhp.e(PG:1)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at zgl.run(PG:19)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at aosb.run(PG:3)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at yxr.run(PG:11)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at java.lang.Thread.run(Thread.java:1012)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: Caused by: efc
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	at zgl.run(PG:13)
+11-15 02:46:35.201  1715  2519 W YouTubeMusic: 	... 5 more
+11-15 02:46:35.205  3217  3217 W binder:3217_3: type=1400 audit(0.0:193): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=292 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+11-15 02:46:35.214  5116  5277 W SystemServiceRegistry: No service published for: contexthub
+11-15 02:46:35.219  5116  5277 W ChimeraUtils: Module com.google.android.gms.location__nonwearable missing resource location_module_display_name(0)
+11-15 02:46:35.219  3217  3270 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+11-15 02:46:35.217  3217  3217 W binder:3217_3: type=1400 audit(0.0:194): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=60 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+11-15 02:46:35.224  3217  3270 W libc    : Access denied finding property "service.adb.tls.port"
+11-15 02:46:35.239  3217  3270 D TrafficStats: tagSocket(81) with statsTag=0x1809, statsUid=-1
+11-15 02:46:35.240  3217  3270 D TrafficStats: tagSocket(81) with statsTag=0x1809, statsUid=-1
+11-15 02:46:35.241  3217  3270 D TrafficStats: tagSocket(81) with statsTag=0x1809, statsUid=-1
+11-15 02:46:35.256  5116  5205 I NetworkScheduler.Stats: Task com.google.android.gms/com.google.android.gms.pay.gcmtask.PayGcmTaskService finished executing. cause:5 result: 2 elapsed_millis: 70 uptime_millis: 70 exec_start_elapsed_seconds: 101 [CONTEXT service_id=218 ]
+11-15 02:46:35.288  5175  5246 I Checkin : [CheckinRequestProcessor] updateCheckinIdTokenFileFromResponse, Reading existing AID
+11-15 02:46:35.305  5175  5246 I Checkin : [CheckinRequestProcessor] Default Task : Checkin Succeeded: https://android.googleapis.com/checkin (fragment #1).
+11-15 02:46:35.332  5175  5246 I Checkin : [CheckinOperation] Checkin Operation finished with result: SUCCESS finish time: 101260.
+11-15 02:46:35.345  5116  5562 I GCoreUlr: WorldUpdater received intent Intent { act=com.google.android.location.reporting.ACTION_UPDATE_WORLD cmp=com.google.android.gms/com.google.android.location.reporting.service.DispatchingService (has extras) } with receiverAction init
+11-15 02:46:35.361  5175  5258 I AccountSeedingPrefetchI: AccountSeedingPrefetchInit intent operation started. [CONTEXT service_id=42 ]
+11-15 02:46:35.373  5116  5277 I Fitness : OnPackageChangedOperation got intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 pkg=com.google.android.gms cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) } [CONTEXT service_id=17 ]
+11-15 02:46:35.381  5116  5301 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+11-15 02:46:35.382  5497  5522 I TestRunner: finished: drawsTransparencyAndEveryBackgroundStyle(com.prostellis.awe.ClockRenderTest)

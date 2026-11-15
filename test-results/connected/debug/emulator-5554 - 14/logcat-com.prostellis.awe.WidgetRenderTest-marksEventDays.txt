@@ -1,0 +1,2 @@
+11-15 02:47:01.188  5497  5522 I TestRunner: started: marksEventDays(com.prostellis.awe.WidgetRenderTest)
+11-15 02:47:01.636  5497  5522 I TestRunner: finished: marksEventDays(com.prostellis.awe.WidgetRenderTest)

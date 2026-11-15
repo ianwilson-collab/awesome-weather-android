@@ -1,0 +1,31 @@
+11-15 02:46:38.268  5497  5522 I TestRunner: started: drawsEveryGlowStrength(com.prostellis.awe.WidgetRenderTest)
+11-15 02:46:38.569  5175  5175 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.findmydevice.spot.service.management.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsApiService }
+11-15 02:46:38.620  5116  5122 I .gms.persistent: Background concurrent copying GC freed 231497(12MB) AllocSpace objects, 0(0B) LOS objects, 49% free, 12MB/25MB, paused 118us,177us total 106.388ms
+11-15 02:46:39.270   337   372 I netd    : tetherGetStats() -> {[]} <0.35ms>
+11-15 02:46:39.277   337   372 I netd    : bandwidthSetGlobalAlert(2097152) <0.09ms>
+11-15 02:46:39.280   337   372 I netd    : bandwidthRemoveInterfaceQuota(eth0) <0.50ms>
+11-15 02:46:39.281   337   372 I netd    : bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <0.35ms>
+11-15 02:46:39.982   523  1823 D WifiNl80211Manager: Scan result ready event
+11-15 02:46:39.984   523  1823 D WifiNative: Scan result ready event
+11-15 02:46:40.418   337   372 I netd    : tetherGetStats() -> {[]} <0.38ms>
+11-15 02:46:40.421   337   372 I netd    : bandwidthSetGlobalAlert(2097152) <0.07ms>
+11-15 02:46:40.489  2115  5659 D DownloadManager: [13] Finished with status SUCCESS
+11-15 02:46:40.497  1716  2455 W BlobLobber: Not processing download id 13, not a BlobLobber blob
+11-15 02:46:40.497  1716  2455 W BlobLobber: Notification for download id 13 which we didn't know or failed
+11-15 02:46:40.501  1716  1716 I BgTaskExecutorImpl: Starting NONEXCLUSIVE background task ZIP_DOWNLOAD_PROCESSOR.
+11-15 02:46:40.504  1716  2331 I ModelDnldProcssHelpr: #handleDownloadComplete, downloadId=13
+11-15 02:46:40.504  1716  2331 E ModelDnldProcssHelpr: pending download info for pending_hotword_model_download_info is null
+11-15 02:46:40.504  1716  2331 E ModelDnldProcssHelpr: pending download info for pending_xgoogle_hotword_model_download_info is null
+11-15 02:46:40.598  1716  2314 I ZipDownloadProcessorTsk: cacheDestination: /data/user/0/com.google.android.googlequicksearchbox/app_g3_models/en-US.zip
+11-15 02:46:40.934  5497  5506 I .prostellis.awe: NativeAlloc concurrent copying GC freed 12051(418KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 3795KB/7590KB, paused 27us,6us total 110.082ms
+11-15 02:46:41.294  1716  2331 I A       : #handleLocale  en-US
+11-15 02:46:41.298  1716  2331 I A       : available language pack of en-US is version 1001
+11-15 02:46:41.324  2115  2758 V DownloadManager: Deleting /storage/emulated/0/Android/data/com.google.android.googlequicksearchbox/files/download_cache/soda-en-US-v1001.zip via provider delete
+11-15 02:46:41.401  1658  1852 I MediaProvider: Scanned external_primary due to REASON_DEMAND, found 0 items in 51ms, 0 inserts 0 updates 0 deletes
+11-15 02:46:41.695  5116  5276 W .gms.persistent: Long monitor contention with owner [com.google.android.gms.chimera.container.intentoperation.PersistentIntentOperationChimeraService-Executor] idle (5298) at void hjm.run()(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3) waiters=0 in void hjm.run() for 8.955s
+11-15 02:46:41.772  1716  1716 V ClearcutMetricXmitter: Transmission is done.
+11-15 02:46:41.776  1716  1716 V ClearcutMetricXmitter: Transmission is done.
+11-15 02:46:41.823  5116  5151 I HeterodyneSyncer: Removed 0 invalid users [CONTEXT service_id=51 ]
+11-15 02:46:42.186   907   907 D StatusBarIconController: ignoring old pipeline callbacks, because the new mobile icons are enabled
+11-15 02:46:42.187   907   986 D EGL_emulation: app_time_stats: avg=5939.56ms min=5939.56ms max=5939.56ms count=1
+11-15 02:46:42.415  5497  5522 I TestRunner: finished: drawsEveryGlowStrength(com.prostellis.awe.WidgetRenderTest)

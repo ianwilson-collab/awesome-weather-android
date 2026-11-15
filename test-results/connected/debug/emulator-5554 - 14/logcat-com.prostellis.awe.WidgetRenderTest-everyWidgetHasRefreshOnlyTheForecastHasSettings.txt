@@ -1,0 +1,3 @@
+11-15 02:46:56.984  5497  5522 I TestRunner: started: everyWidgetHasRefreshOnlyTheForecastHasSettings(com.prostellis.awe.WidgetRenderTest)
+11-15 02:46:57.433  1648  2436 I IPCThreadState: oneway function results for code 2 on binder at 0x7bab9b40e0a0 will be dropped but finished with status UNKNOWN_TRANSACTION
+11-15 02:46:57.485  5497  5522 I TestRunner: finished: everyWidgetHasRefreshOnlyTheForecastHasSettings(com.prostellis.awe.WidgetRenderTest)
